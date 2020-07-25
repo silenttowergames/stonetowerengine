@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:\\C\\SDL2-2.0.12\\x86_64-w64-mingw32\\include",
+                "C:\\C\\FNA3D\\include",
+                "C:\\C\\FNA3D\\MojoShader",
+                "C:\\C\\flecs-master\\include",
+                "C:\\C\\soloud20200207\\include",
+                "C:\\C\\json-c-master"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.19041.0",
+            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.26.28801/bin/Hostx64/x64/cl.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "msvc-x64"
+        }
+    ],
+    "version": 4
+}
