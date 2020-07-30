@@ -32,16 +32,32 @@
 // JSON-C
 #include <json.h>
 
+// ===
+
 // Engine Code
 // Application
 #include "Application/ApplicationState.h"
+#include "Application/ApplicationStateFunctions.c"
+
 // ECS
+// Systems
+#include "ECS/Systems/SDLEventsSystem.c"
 #include "ECS/Systems/SystemPrintHelloWorld.c"
 #include "ECS/Systems/Test1System.c"
 #include "ECS/Systems/Test2System.c"
 #include "ECS/Systems/Test3System.c"
+// .
+#include "ECS/FlecsFunctions.c"
+
 // Logger
 #include "Logging/Logger.h"
 #include "Logging/LoggerFunctions.c"
+
+// Rendering
+#include "Rendering/RenderingFunctions.c"
+#include "Rendering/RenderState.h"
+#include "Rendering/RenderStateFunctions.c"
+
 // Utilities
-//
+#include "Utilities/Map.h"
+#include "Utilities/MapFunctions.c"

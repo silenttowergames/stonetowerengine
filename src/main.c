@@ -1,47 +1,32 @@
 #include "includes.c"
 
-ecs_world_t* createWorld(ApplicationState* app)
+void initWorld(ecs_world_t* world)
 {
-    ecs_world_t* world = ecs_init(); // flecs.world.create
-    
-    ecs_set_context(world, app);
-    ecs_set_target_fps(world, 1);
-    
-    ECS_SYSTEM(world, Test1System, EcsOnUpdate);
-    
-    return world;
+    ECS_COMPONENT(world, int);
+    ECS_COMPONENT(world, float);
+    ECS_SYSTEM(world, Test1System, EcsOnUpdate, int);
+    //ECS_SYSTEM(world, Test2System, EcsOnUpdate, float);
+    ECS_SYSTEM(world, SDLEventsSystem, EcsOnUpdate, int);
 }
+
+void initScene(ecs_world_t* world)
+{
+    ECS_COMPONENT(world, int);
+    ecs_new(world, int);
+}
+
+typedef struct TestStruct
+{
+    int hello;
+} TestStruct;
 
 int main(int arcg, char* argv[])
 {
-    ApplicationState app = { 0, 0, };
+    ApplicationState app = ApplicationState_Create(NULL, 60, initWorld, initScene);
     
-    Logger logger = {
-        "log.txt",
-    };
+    ApplicationState_Loop(&app);
     
-    Logger_Log(&logger, "ERROR", "This is a test error");
-    
-    ecs_world_t* world;
-    
-    while(!app.quit)
-    {
-        world = createWorld(&app);
-        
-        while(ecs_progress(world, 0))
-        {
-            if(app.quit)
-            {
-                app.quit = 0;
-                
-                app.counter = 0;
-                
-                break;
-            }
-        }
-        
-        ecs_fini(world); // flecs.world.free
-    }
+    ApplicationState_Free(&app);
     
     return 0;
 }
