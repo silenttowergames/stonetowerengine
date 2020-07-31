@@ -4,7 +4,7 @@
 
 typedef struct Shader
 {
-	const char* key;
+	char* key;
     char* filename;
     FNA3D_Effect* effect;
     MOJOSHADER_effect* effectData;

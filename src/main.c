@@ -29,5 +29,7 @@ int main(int arcg, char* argv[])
     
     loop();
     
+    Shader_Free(&shader);
+    
     quit();
 }

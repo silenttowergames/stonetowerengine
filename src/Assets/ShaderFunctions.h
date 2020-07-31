@@ -2,4 +2,5 @@
 
 #include "Shader.h"
 
-Shader Shader_Create(ApplicationState* app, const char* key);
+Shader Shader_Create(ApplicationState* app, char* key);
+void Shader_Free(Shader* shader);
