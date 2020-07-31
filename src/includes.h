@@ -39,8 +39,13 @@
 #include "Application/ApplicationState.h"
 #include "Application/ApplicationStateFunctions.c"
 
+// Assets
+#include "Assets/Shader.h"
+#include "Assets/ShaderFunctions.c"
+
 // ECS
 // Systems
+#include "ECS/Systems/DrawSystem.c"
 #include "ECS/Systems/SDLEventsSystem.c"
 #include "ECS/Systems/SystemPrintHelloWorld.c"
 #include "ECS/Systems/Test1System.c"
@@ -54,10 +59,16 @@
 #include "Logging/LoggerFunctions.c"
 
 // Rendering
+#include "Rendering/Camera.h"
+#include "Rendering/CameraFunctions.c"
+#include "Rendering/Matrix.h"
+#include "Rendering/MatrixFunctions.c"
 #include "Rendering/RenderingFunctions.c"
 #include "Rendering/RenderState.h"
 #include "Rendering/RenderStateFunctions.c"
 
 // Utilities
+#include "Utilities/float2d.h"
+#include "Utilities/int2d.h"
 #include "Utilities/Map.h"
 #include "Utilities/MapFunctions.c"

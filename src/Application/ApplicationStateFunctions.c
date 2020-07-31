@@ -4,7 +4,7 @@
 #include "../Rendering/RenderingFunctions.h"
 #include "../Rendering/RenderStateFunctions.h"
 
-ApplicationState ApplicationState_Create(const char* graphicsDriver, int FPS, void (*flecsInit)(ecs_world_t*), void (*flecsScene)(ecs_world_t*))
+ApplicationState ApplicationState_Create(const char* graphicsDriver, int FPS, int sizeX, int sizeY, int resX, int resY, void (*flecsInit)(ecs_world_t*), void (*flecsScene)(ecs_world_t*))
 {
 	ApplicationState app;
 	memset(&app, 0, sizeof(ApplicationState));
@@ -17,7 +17,7 @@ ApplicationState ApplicationState_Create(const char* graphicsDriver, int FPS, vo
 	
 	Rendering_Init(&app);
 	
-	app.renderState = RenderState_New();
+	app.renderState = RenderState_New(&app, sizeX, sizeY, resX, resY);
 	
 	return app;
 }
@@ -51,5 +51,9 @@ void ApplicationState_Loop(ApplicationState* app)
 
 void ApplicationState_Free(ApplicationState* app)
 {
-    //RenderState_Free(app->renderState);
+    RenderState_Free(&app->renderState);
 }
+
+#define init(...) ApplicationState app = ApplicationState_Create(__VA_ARGS__)
+#define loop() ApplicationState_Loop(&app)
+#define quit() ApplicationState_Free(&app); return 0

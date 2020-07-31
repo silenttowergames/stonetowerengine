@@ -1,12 +1,10 @@
-#include "includes.c"
+#include "StoneTower.h"
 
 void initWorld(ecs_world_t* world)
 {
     ECS_COMPONENT(world, int);
-    ECS_COMPONENT(world, float);
-    ECS_SYSTEM(world, Test1System, EcsOnUpdate, int);
-    //ECS_SYSTEM(world, Test2System, EcsOnUpdate, float);
     ECS_SYSTEM(world, SDLEventsSystem, EcsOnUpdate, int);
+    ECS_SYSTEM(world, DrawSystem, EcsOnUpdate, int);
 }
 
 void initScene(ecs_world_t* world)
@@ -15,18 +13,21 @@ void initScene(ecs_world_t* world)
     ecs_new(world, int);
 }
 
-typedef struct TestStruct
-{
-    int hello;
-} TestStruct;
-
 int main(int arcg, char* argv[])
 {
-    ApplicationState app = ApplicationState_Create(NULL, 60, initWorld, initScene);
+    init(
+        "OpenGL",
+        60,
+        1280, 720,
+        320, 180,
+        initWorld,
+        initScene
+    );
     
-    ApplicationState_Loop(&app);
+    Shader shader = Shader_Create(&app, "SpriteEffect");
+    // TODO: shader compilation pipeline
     
-    ApplicationState_Free(&app);
+    loop();
     
-    return 0;
+    quit();
 }
