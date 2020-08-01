@@ -16,6 +16,8 @@ void initScene(ecs_world_t* world)
 int main(int arcg, char* argv[])
 {
     init(
+        "Engine Test",
+        "v1.0.0",
         "OpenGL",
         60,
         1280, 720,
@@ -24,12 +26,7 @@ int main(int arcg, char* argv[])
         initScene
     );
     
-    Shader shader = Shader_Create(&app, "SpriteEffect");
-    // TODO: shader compilation pipeline
-    
     loop();
-    
-    Shader_Free(&shader);
     
     quit();
 }

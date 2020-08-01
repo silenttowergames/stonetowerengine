@@ -3,4 +3,4 @@
 #include "Camera.h"
 
 Camera Camera_Create();
-void Camera_Load(void* dest);
+void Camera_LoadInto(Camera* camera, void* dest);

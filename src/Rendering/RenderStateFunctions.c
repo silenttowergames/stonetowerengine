@@ -1,6 +1,7 @@
 #include <FNA3D.h>
 #include <SDL2/SDL.h>
 #include "RenderStateFunctions.h"
+#include "../Assets/ShaderFunctions.h"
 
 RenderState RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int resY)
 {
@@ -13,7 +14,10 @@ RenderState RenderState_New(ApplicationState* app, int sizeX, int sizeY, int res
 	renderState.resolution.X = resX;
 	renderState.resolution.Y = resY;
 	
-	renderState.window = SDL_CreateWindow("Test", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, FNA3D_PrepareWindowAttributes()); // RenderState.window allocate
+	renderState.windowTitle = malloc(sizeof(char) * (strlen(app->gameTitle) + 1 + strlen(app->gameVersion) + 1)); // RenderState.windowTitle.allocate
+	sprintf(renderState.windowTitle, "%s %s", app->gameTitle, app->gameVersion);
+	
+	renderState.window = SDL_CreateWindow(renderState.windowTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, FNA3D_PrepareWindowAttributes()); // RenderState.window allocate
 	
 	FNA3D_PresentationParameters presentationParameters;
 	memset(&presentationParameters, 0, sizeof(presentationParameters));
@@ -34,10 +38,14 @@ RenderState RenderState_New(ApplicationState* app, int sizeX, int sizeY, int res
 	
 	renderState.device = FNA3D_CreateDevice(&renderState.presentationParameters, STE_DEBUG);
 	
+	renderState.shaderSpriteEffect = Shader_Create(renderState.device, "SpriteEffect");
+	
 	return renderState;
 }
 
 void RenderState_Free(RenderState* renderState)
 {
+	free(renderState->windowTitle); // RenderState.windowTitle free
 	SDL_DestroyWindow(renderState->window); // RenderState.window free
+	Shader_Free(&renderState->shaderSpriteEffect);
 }

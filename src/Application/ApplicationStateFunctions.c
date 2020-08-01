@@ -4,10 +4,24 @@
 #include "../Rendering/RenderingFunctions.h"
 #include "../Rendering/RenderStateFunctions.h"
 
-ApplicationState ApplicationState_Create(const char* graphicsDriver, int FPS, int sizeX, int sizeY, int resX, int resY, void (*flecsInit)(ecs_world_t*), void (*flecsScene)(ecs_world_t*))
+ApplicationState ApplicationState_Create(
+    const char* gameTitle,
+    const char* gameVersion,
+    const char* graphicsDriver,
+    int FPS,
+    int sizeX,
+    int sizeY,
+    int resX,
+    int resY,
+    void (*flecsInit)(ecs_world_t*),
+    void (*flecsScene)(ecs_world_t*)
+)
 {
 	ApplicationState app;
 	memset(&app, 0, sizeof(ApplicationState));
+    
+    app.gameTitle = gameTitle;
+    app.gameVersion = gameVersion;
 	
 	app.FPS = FPS;
 	app.graphicsDriver = graphicsDriver;

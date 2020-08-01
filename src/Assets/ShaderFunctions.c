@@ -1,8 +1,8 @@
 #include <stdio.h>
+#include <FNA3D.h>
 #include "ShaderFunctions.h"
-#include "../Application/ApplicationState.h"
 
-Shader Shader_Create(ApplicationState* app, char* key)
+Shader Shader_Create(FNA3D_Device* device, char* key)
 {
 	Shader shader;
 	memset(&shader, 0, sizeof(Shader));
@@ -10,8 +10,8 @@ Shader Shader_Create(ApplicationState* app, char* key)
 	const char* formatStr = "assets/shaders/%s.fxb";
 	
 	shader.key = key;
-	shader.filename = malloc(sizeof(char) * (strlen(formatStr) + strlen(key) + 1 - 2)); // Shader.filename allocate
 	
+	shader.filename = malloc(sizeof(char) * (strlen(formatStr) + strlen(key) + 1 - 2)); // Shader.filename allocate
 	sprintf(shader.filename, formatStr, shader.key);
 	
 	FILE *effectFile = fopen(shader.filename, "rb");
@@ -21,7 +21,9 @@ Shader Shader_Create(ApplicationState* app, char* key)
 	uint8_t *effectCode = malloc(effectCodeLength);
 	fread(effectCode, 1, effectCodeLength, effectFile);
 	fclose(effectFile);
-	FNA3D_CreateEffect(app->renderState.device, effectCode, effectCodeLength, &shader.effect, &shader.effectData);
+	
+	FNA3D_CreateEffect(device, effectCode, effectCodeLength, &shader.effect, &shader.effectData);
+	
 	free(effectCode);
 	
 	return shader;

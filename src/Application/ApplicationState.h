@@ -6,6 +6,8 @@
 
 typedef struct ApplicationState
 {
+    const char* gameTitle;
+    const char* gameVersion;
     int quit;
     int counter;
     int sceneCount;
