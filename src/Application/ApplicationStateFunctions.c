@@ -68,6 +68,6 @@ void ApplicationState_Free(ApplicationState* app)
     RenderState_Free(&app->renderState);
 }
 
-#define init(...) ApplicationState app = ApplicationState_Create(__VA_ARGS__)
+#define init(...) ApplicationState app = ApplicationState_Create(__VA_ARGS__); freopen(app.logger.filename, "a", stderr)
 #define loop() ApplicationState_Loop(&app)
 #define quit() ApplicationState_Free(&app); return 0

@@ -26,6 +26,8 @@ int main(int arcg, char* argv[])
         initScene
     );
     
+    Shader shader = Shader_Create(app.renderState.device, "CRTShader");
+    
     loop();
     
     quit();

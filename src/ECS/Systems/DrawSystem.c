@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <flecs.h>
 #include "../../Application/ApplicationState.h"
 #include "../../Rendering/CameraFunctions.h"
@@ -5,6 +6,8 @@
 void DrawSystem(ecs_iter_t* it)
 {
 	ApplicationState* app = (ApplicationState*)ecs_get_context(it->world);
+	
+	// TODO: Draw all render targets, then to the window
 	
 	FNA3D_SetViewport(app->renderState.device, &app->renderState.viewport);
 	
@@ -27,22 +30,15 @@ void DrawSystem(ecs_iter_t* it)
 		0
 	);
 	
-	for (int i = 0; i < app->renderState.shaderSpriteEffect.effectData->param_count; i++)
-	{
-		if (strcmp("MatrixTransform", app->renderState.shaderSpriteEffect.effectData->params[i].value.name) == 0)
-		{
-			// OrthographicOffCenter Matrix - value copied from XNA project
-			// todo: Do I need to worry about row-major/column-major?
-			
-			Camera_LoadInto(&app->renderState.camera, app->renderState.shaderSpriteEffect.effectData->params[i].value.values);
-			
-			break;
-		}
-	}
+	MOJOSHADER_effectParam* shaderMatrix = Shader_ParamGet(&app->renderState.shaderSpriteEffect, "MatrixTransform");
+	assert(shaderMatrix != NULL);
+	Camera_LoadInto(&app->renderState.camera, shaderMatrix->value.values);
 	
 	MOJOSHADER_effectStateChanges stateChanges;
 	memset(&stateChanges, 0, sizeof(stateChanges));
 	FNA3D_ApplyEffect(app->renderState.device, app->renderState.shaderSpriteEffect.effect, 0, &stateChanges);
+	
+	// TODO: Draw sprites here
 	
 	FNA3D_SwapBuffers(app->renderState.device, NULL, NULL, app->renderState.window);
 }
