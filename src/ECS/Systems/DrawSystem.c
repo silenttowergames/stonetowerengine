@@ -14,10 +14,8 @@ void DrawSystem(ecs_iter_t* it)
 	
 	SpriteBatch_Begin(&app->renderState.spriteBatch);
 	
-	quad pos = quad_Easy(-8, -8, 16, 16);
+	quad pos = quad_Easy(-160, -90, 320, 180);
 	quad src = quad_Frame(&app->renderState.texture, 1, 0);
-	src.bottomRight.X -= 0.05f;
-	src.bottomRight.Y -= 0.05f;
 	SpriteBatch_AddQuad(&app->renderState.spriteBatch, pos, src);
 	
 	FNA3D_SetViewport(app->renderState.device, &app->renderState.viewport);

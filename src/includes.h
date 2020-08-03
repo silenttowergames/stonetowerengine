@@ -57,6 +57,10 @@
 #include "Assets/TextureFunctions.c"
 
 // ECS
+// Components
+#include "ECS/Components/Body.h"
+#include "ECS/Components/Renderable.h"
+#include "ECS/Components/RenderableFunctions.c"
 // Systems
 #include "ECS/Systems/DrawSystem.c"
 #include "ECS/Systems/SDLEventsSystem.c"
