@@ -1,6 +1,5 @@
-Assertion failed!
-
-Program: C:\Users\Silent Tower Games\Projects\_libs\stonetowerengine\bin\win64\main.exe
+apitrace: unloaded from C:\Users\Silent Tower Games\Projects\_libs\stonetowerengine\bin\win64\main.exe
+.exe
 File: src/ECS/Systems/DrawSystem.c, Line 34
 
 Expression: shaderMatrix != NULL

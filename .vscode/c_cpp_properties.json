@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "Win64",
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:\\C\\SDL2-2.0.12\\x86_64-w64-mingw32\\include",

@@ -2,7 +2,8 @@
 
 #include "ApplicationState.h"
 
-ApplicationState ApplicationState_Create(
+void ApplicationState_Create(
+    ApplicationState* app,
     const char* gameTitle,
     const char* gameVersion,
     const char* graphicsDriver,

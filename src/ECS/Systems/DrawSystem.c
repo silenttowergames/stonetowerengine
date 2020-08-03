@@ -2,12 +2,31 @@
 #include <flecs.h>
 #include "../../Application/ApplicationState.h"
 #include "../../Rendering/CameraFunctions.h"
+#include "../../Rendering/SpriteBatchFunctions.h"
+#include "../../Utilities/float4d.h"
 
 void DrawSystem(ecs_iter_t* it)
 {
 	ApplicationState* app = (ApplicationState*)ecs_get_context(it->world);
 	
 	// TODO: Draw all render targets, then to the window
+	
+	SpriteBatch_Begin(&app->renderState.spriteBatch);
+	
+	quad q = {
+		{ 32, 32, },
+		{ 64, 32, },
+		{ 32, 64, },
+		{ 64, 65, },
+	};
+	quad q2 = {
+		{ -80, -80, },
+		{ -12, -16, },
+		{ -16, -12, },
+		{ -0, -0, },
+	};
+	SpriteBatch_AddQuad(&app->renderState.spriteBatch, q);
+	SpriteBatch_AddQuad(&app->renderState.spriteBatch, q2);
 	
 	FNA3D_SetViewport(app->renderState.device, &app->renderState.viewport);
 	
@@ -38,7 +57,9 @@ void DrawSystem(ecs_iter_t* it)
 	memset(&stateChanges, 0, sizeof(stateChanges));
 	FNA3D_ApplyEffect(app->renderState.device, app->renderState.shaderSpriteEffect.effect, 0, &stateChanges);
 	
-	// TODO: Draw sprites here
+	SpriteBatch_Flush(&app->renderState);
 	
 	FNA3D_SwapBuffers(app->renderState.device, NULL, NULL, app->renderState.window);
+	
+	SpriteBatch_End(&app->renderState.spriteBatch);
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <flecs.h>
+#include "../Assets/Texture.h"
 #include "../Logging/LoggerFunctions.h"
 #include "../Rendering/RenderState.h"
 

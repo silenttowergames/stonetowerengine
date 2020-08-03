@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <FNA3D.h>
 #include "Camera.h"
+#include "SpriteBatch.h"
 #include "../Assets/Shader.h"
 #include "../Utilities/int2d.h"
 
@@ -17,4 +18,9 @@ typedef struct RenderState
 	int2d size;
 	Camera camera;
 	Shader shaderSpriteEffect;
+	SpriteBatch spriteBatch;
+	FNA3D_Buffer* vertexBuffer;
+	FNA3D_VertexBufferBinding vertexBufferBinding;
+	FNA3D_VertexElement vertexElements[3];
+	Texture texture;
 } RenderState;

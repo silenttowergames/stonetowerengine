@@ -32,6 +32,17 @@
 // JSON-C
 #include <json.h>
 
+// Vendor
+// STB Image
+#define STB_IMAGE_IMPLEMENTATION
+#ifdef __MINGW32__
+#define STBI_NO_THREAD_LOCALS
+#endif
+#include "vendor/stb_image.h"
+// FontStash
+#define FONTSTASH_IMPLEMENTATION
+#include "vendor/fontstash/fontstash.h"
+
 // ===
 
 // Engine Code
@@ -42,6 +53,8 @@
 // Assets
 #include "Assets/Shader.h"
 #include "Assets/ShaderFunctions.c"
+#include "Assets/Texture.h"
+#include "Assets/TextureFunctions.c"
 
 // ECS
 // Systems
@@ -66,9 +79,13 @@
 #include "Rendering/RenderingFunctions.c"
 #include "Rendering/RenderState.h"
 #include "Rendering/RenderStateFunctions.c"
+#include "Rendering/SpriteBatch.h"
+#include "Rendering/SpriteBatchFunctions.c"
 
 // Utilities
 #include "Utilities/float2d.h"
+#include "Utilities/float4d.h"
 #include "Utilities/int2d.h"
 #include "Utilities/Map.h"
 #include "Utilities/MapFunctions.c"
+#include "Utilities/quad.h"

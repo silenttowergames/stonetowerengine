@@ -4,7 +4,8 @@
 #include "../Rendering/RenderingFunctions.h"
 #include "../Rendering/RenderStateFunctions.h"
 
-ApplicationState ApplicationState_Create(
+void ApplicationState_Create(
+    ApplicationState* app,
     const char* gameTitle,
     const char* gameVersion,
     const char* graphicsDriver,
@@ -17,23 +18,20 @@ ApplicationState ApplicationState_Create(
     void (*flecsScene)(ecs_world_t*)
 )
 {
-	ApplicationState app;
-	memset(&app, 0, sizeof(ApplicationState));
+	memset(app, 0, sizeof(ApplicationState));
     
-    app.gameTitle = gameTitle;
-    app.gameVersion = gameVersion;
+    app->gameTitle = gameTitle;
+    app->gameVersion = gameVersion;
 	
-	app.FPS = FPS;
-	app.graphicsDriver = graphicsDriver;
-	app.logger.filename = "log.txt";
-	app.flecsInit = flecsInit;
-	app.flecsScene = flecsScene;
+	app->FPS = FPS;
+	app->graphicsDriver = graphicsDriver;
+	app->logger.filename = "log.txt";
+	app->flecsInit = flecsInit;
+	app->flecsScene = flecsScene;
 	
-	Rendering_Init(&app);
+	Rendering_Init(app);
 	
-	app.renderState = RenderState_New(&app, sizeX, sizeY, resX, resY);
-	
-	return app;
+	RenderState_New(app, sizeX, sizeY, resX, resY);
 }
 
 void ApplicationState_Loop(ApplicationState* app)
@@ -68,6 +66,6 @@ void ApplicationState_Free(ApplicationState* app)
     RenderState_Free(&app->renderState);
 }
 
-#define init(...) ApplicationState app = ApplicationState_Create(__VA_ARGS__); freopen(app.logger.filename, "a", stderr)
+#define init(...) ApplicationState app; ApplicationState_Create(&app, __VA_ARGS__); freopen(app.logger.filename, "a", stderr)
 #define loop() ApplicationState_Loop(&app)
 #define quit() ApplicationState_Free(&app); return 0
