@@ -27,7 +27,20 @@ Texture Texture_NewBlank(FNA3D_Device* device, int width, int height, int channe
 	return Texture_NewFromData(device, width, height, pixels, channels, isRenderTarget);
 }
 
-Texture Texture_Load(FNA3D_Device* device, const char* key, bool isRenderTarget)
+Texture Texture_Load(FNA3D_Device* device, const char* key)
 {
-	//
+	char* filename;
+	int2d size;
+	int channels;
+	
+	filename = malloc(sizeof(char) * (strlen(key) + 20));
+	sprintf(filename, "assets/sprites/%s.png", key);
+	
+	stbi_uc* pixels = stbi_load(filename, &size.X, &size.Y, &channels, 4);
+	
+	Texture texture = Texture_NewFromData(device, size.X, size.Y, pixels, channels, false);
+	
+	stbi_image_free(pixels);
+	
+	return texture;
 }

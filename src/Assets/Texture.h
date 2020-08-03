@@ -11,4 +11,6 @@ typedef struct Texture
 	int2d tilesize;
 	int2d border;
 	int2d padding;
+	const char* key;
+	char* filename;
 } Texture;

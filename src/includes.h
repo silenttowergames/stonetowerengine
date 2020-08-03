@@ -89,3 +89,4 @@
 #include "Utilities/Map.h"
 #include "Utilities/MapFunctions.c"
 #include "Utilities/quad.h"
+#include "Utilities/quadFunctions.c"

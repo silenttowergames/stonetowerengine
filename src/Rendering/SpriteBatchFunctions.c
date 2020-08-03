@@ -13,7 +13,7 @@ bool SpriteBatch_Begin(SpriteBatch* spriteBatch)
 	spriteBatch->opened = true;
 }
 
-void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, quad q)
+void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, quad pos, quad src)
 {
 	assert(spriteBatch->indicesThisFrame <= (MAX_INDICES - 6));
 	
@@ -21,40 +21,40 @@ void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, quad q)
 	
 	uint32_t color = 0xFFFFFFFF;
 	
-	spriteBatch->vertices[i + 0].x = q.topLeft.X;
-	spriteBatch->vertices[i + 0].y = q.topLeft.Y;
-	spriteBatch->vertices[i + 0].u = 0;
-	spriteBatch->vertices[i + 0].v = 0;
+	spriteBatch->vertices[i + 0].x = pos.topLeft.X;
+	spriteBatch->vertices[i + 0].y = pos.topLeft.Y;
+	spriteBatch->vertices[i + 0].u = src.topLeft.X;
+	spriteBatch->vertices[i + 0].v = src.topLeft.Y;
 	spriteBatch->vertices[i + 0].color = color;
 	
-	spriteBatch->vertices[i + 1].x = q.topRight.X;
-	spriteBatch->vertices[i + 1].y = q.topRight.Y;
-	spriteBatch->vertices[i + 1].u = 32;
-	spriteBatch->vertices[i + 1].v = 0;
+	spriteBatch->vertices[i + 1].x = pos.topRight.X;
+	spriteBatch->vertices[i + 1].y = pos.topRight.Y;
+	spriteBatch->vertices[i + 1].u = src.topRight.X;
+	spriteBatch->vertices[i + 1].v = src.topRight.Y;
 	spriteBatch->vertices[i + 1].color = color;
 	
-	spriteBatch->vertices[i + 2].x = q.bottomRight.X;
-	spriteBatch->vertices[i + 2].y = q.bottomRight.Y;
-	spriteBatch->vertices[i + 2].u = 32;
-	spriteBatch->vertices[i + 2].v = 32;
+	spriteBatch->vertices[i + 2].x = pos.bottomRight.X;
+	spriteBatch->vertices[i + 2].y = pos.bottomRight.Y;
+	spriteBatch->vertices[i + 2].u = src.bottomRight.X;
+	spriteBatch->vertices[i + 2].v = src.bottomRight.Y;
 	spriteBatch->vertices[i + 2].color = color;
 	
-	spriteBatch->vertices[i + 3].x = q.bottomRight.X;
-	spriteBatch->vertices[i + 3].y = q.bottomRight.Y;
-	spriteBatch->vertices[i + 3].u = 32;
-	spriteBatch->vertices[i + 3].v = 32;
+	spriteBatch->vertices[i + 3].x = pos.bottomRight.X;
+	spriteBatch->vertices[i + 3].y = pos.bottomRight.Y;
+	spriteBatch->vertices[i + 3].u = src.bottomRight.X;
+	spriteBatch->vertices[i + 3].v = src.bottomRight.Y;
 	spriteBatch->vertices[i + 3].color = color;
 	
-	spriteBatch->vertices[i + 4].x = q.bottomLeft.X;
-	spriteBatch->vertices[i + 4].y = q.bottomLeft.Y;
-	spriteBatch->vertices[i + 4].u = 0;
-	spriteBatch->vertices[i + 4].v = 32;
+	spriteBatch->vertices[i + 4].x = pos.bottomLeft.X;
+	spriteBatch->vertices[i + 4].y = pos.bottomLeft.Y;
+	spriteBatch->vertices[i + 4].u = src.bottomLeft.X;
+	spriteBatch->vertices[i + 4].v = src.bottomLeft.Y;
 	spriteBatch->vertices[i + 4].color = color;
 	
-	spriteBatch->vertices[i + 5].x = q.topLeft.X;
-	spriteBatch->vertices[i + 5].y = q.topLeft.Y;
-	spriteBatch->vertices[i + 5].u = 0;
-	spriteBatch->vertices[i + 5].v = 0;
+	spriteBatch->vertices[i + 5].x = pos.topLeft.X;
+	spriteBatch->vertices[i + 5].y = pos.topLeft.Y;
+	spriteBatch->vertices[i + 5].u = src.topLeft.X;
+	spriteBatch->vertices[i + 5].v = src.topLeft.Y;
 	spriteBatch->vertices[i + 5].color = color;
 	
 	spriteBatch->indicesThisFrame += 6;

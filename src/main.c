@@ -18,7 +18,7 @@ int main(int arcg, char* argv[])
     init(
         "Engine Test",
         "v1.0.0",
-        "Metal",
+        "OpenGL",
         60,
         1280, 720,
         320, 180,
@@ -26,7 +26,9 @@ int main(int arcg, char* argv[])
         initScene
     );
     
-    app.renderState.texture = Texture_NewBlank(app.renderState.device, 64, 64, 4, false);
+    app.renderState.texture = Texture_Load(app.renderState.device, "16x16");
+    app.renderState.texture.tilesize.X = 16;
+    app.renderState.texture.tilesize.Y = 16;
     
     loop();
     

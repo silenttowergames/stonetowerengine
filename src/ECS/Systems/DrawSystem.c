@@ -4,6 +4,7 @@
 #include "../../Rendering/CameraFunctions.h"
 #include "../../Rendering/SpriteBatchFunctions.h"
 #include "../../Utilities/float4d.h"
+#include "../../Utilities/quadFunctions.h"
 
 void DrawSystem(ecs_iter_t* it)
 {
@@ -13,20 +14,11 @@ void DrawSystem(ecs_iter_t* it)
 	
 	SpriteBatch_Begin(&app->renderState.spriteBatch);
 	
-	quad q = {
-		{ 32, 32, },
-		{ 64, 32, },
-		{ 32, 64, },
-		{ 64, 65, },
-	};
-	quad q2 = {
-		{ -80, -80, },
-		{ -12, -16, },
-		{ -16, -12, },
-		{ -0, -0, },
-	};
-	SpriteBatch_AddQuad(&app->renderState.spriteBatch, q);
-	SpriteBatch_AddQuad(&app->renderState.spriteBatch, q2);
+	quad pos = quad_Easy(-8, -8, 16, 16);
+	quad src = quad_Frame(&app->renderState.texture, 1, 0);
+	src.bottomRight.X -= 0.05f;
+	src.bottomRight.Y -= 0.05f;
+	SpriteBatch_AddQuad(&app->renderState.spriteBatch, pos, src);
 	
 	FNA3D_SetViewport(app->renderState.device, &app->renderState.viewport);
 	
