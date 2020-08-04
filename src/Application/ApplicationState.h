@@ -9,8 +9,7 @@ typedef struct ApplicationState
 {
     const char* gameTitle;
     const char* gameVersion;
-    int quit;
-    int counter;
+    bool quit;
     int sceneCount;
     bool focused;
     Logger logger;

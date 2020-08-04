@@ -1,12 +1,15 @@
 #include "quadFunctions.h"
 
-quad quad_Easy(float x, float y, float width, float height)
+quad quad_Easy(float x, float y, float width, float height, float offsetX, float offsetY)
 {
+	float wd2 = width / 2;
+	float hd2 = height / 2;
+	
 	return (quad){
-		{ x, y, },
-		{ x + width, y, },
-		{ x, y + height, },
-		{ x + width, y + height, },
+		{ x - offsetX, y - offsetY, },
+		{ x + width - offsetX, y - offsetY, },
+		{ x - offsetX, y + height - offsetY, },
+		{ x + width - offsetX, y + height - offsetY, },
 	};
 }
 
@@ -21,7 +24,9 @@ quad quad_Frame(Texture* texture, int x, int y)
 		pos.X, 
 		pos.Y,
 		texture->tilesize.X,
-		texture->tilesize.Y
+		texture->tilesize.Y,
+		0,
+		0
 	);
 	
 	q.topLeft.X = 1.0f / (texture->size.X / q.topLeft.X);

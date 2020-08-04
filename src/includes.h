@@ -64,10 +64,6 @@
 // Systems
 #include "ECS/Systems/DrawSystem.c"
 #include "ECS/Systems/SDLEventsSystem.c"
-#include "ECS/Systems/SystemPrintHelloWorld.c"
-#include "ECS/Systems/Test1System.c"
-#include "ECS/Systems/Test2System.c"
-#include "ECS/Systems/Test3System.c"
 // .
 #include "ECS/FlecsFunctions.c"
 

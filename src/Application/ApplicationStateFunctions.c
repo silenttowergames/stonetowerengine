@@ -46,13 +46,11 @@ void ApplicationState_Loop(ApplicationState* app)
             app->flecsScene = NULL;
         }
         
-        if(ecs_progress(app->world, 0))
+        while(ecs_progress(app->world, 0))
         {
             // FIXME: Is it an issue that it plays two frames when you change scenes?
             if(app->quit || app->flecsScene != NULL)
             {
-                app->counter = 0;
-                
                 break;
             }
         }
