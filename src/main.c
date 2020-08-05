@@ -22,9 +22,12 @@ void initScene(ecs_world_t* world)
     });
     ecs_set(world, e, Renderable, {
         &app->renderState.texture,
+        { 1, 0, },
         { 0, 0, },
-        { 8, 8, },
         { 1, 1, },
+        false,
+        false,
+        45,
         NULL,
         Renderable_Sprite_Render,
     });

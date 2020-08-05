@@ -1,6 +1,4 @@
 # ok
-cp build.ps1 build.sh
-cp build-full.ps1 build-full.sh
 rm -r -fo bin/win64
 mkdir bin/win64
 ./build-shaders.ps1

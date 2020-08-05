@@ -1,15 +1,24 @@
 #include "quadFunctions.h"
 
-quad quad_Easy(float x, float y, float width, float height, float offsetX, float offsetY)
+quad quad_Easy(float x, float y, float width, float height, float offsetX, float offsetY, float rotation)
 {
+	rotation *= -1;
+	
 	float wd2 = width / 2;
 	float hd2 = height / 2;
 	
+	float rTopLeft = (rotation + 180 + 90 + 45) * (M_PI / 180);
+	float rTopRight = (rotation + 45) * (M_PI / 180);
+	float rBottomLeft = (rotation + 180 + 45) * (M_PI / 180);
+	float rBottomRight = (rotation + 90 + 45) * (M_PI / 180);
+	
+	float hypo = sqrtf((wd2 * wd2) + (hd2 * hd2));
+	
 	return (quad){
-		{ x - offsetX, y - offsetY, },
-		{ x + width - offsetX, y - offsetY, },
-		{ x - offsetX, y + height - offsetY, },
-		{ x + width - offsetX, y + height - offsetY, },
+		{ x + (hypo * sin(rTopLeft)) - offsetX, y + (hypo * cos(rTopLeft)) - offsetY, },
+		{ x + (hypo * sin(rTopRight)) - offsetX, y + (hypo * cos(rTopRight)) - offsetY, },
+		{ x + (hypo * sin(rBottomLeft)) - offsetX, y + (hypo * cos(rBottomLeft)) - offsetY, },
+		{ x + (hypo * sin(rBottomRight)) - offsetX, y + (hypo * cos(rBottomRight)) - offsetY, },
 	};
 }
 
@@ -25,7 +34,8 @@ quad quad_Frame(Texture* texture, int x, int y)
 		pos.Y,
 		texture->tilesize.X,
 		texture->tilesize.Y,
-		0,
+		-(texture->tilesize.X / 2),
+		-(texture->tilesize.Y / 2),
 		0
 	);
 	
