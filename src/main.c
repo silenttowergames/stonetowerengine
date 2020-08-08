@@ -21,8 +21,7 @@ void initScene(ecs_world_t* world)
         { 0, 0, },
     });
     ecs_set(world, e, Renderable, {
-        //ecs_map_get(app->assetManager.mapTexture, Texture, "16x16"),
-        &app->assetManager.arrayTexture[0],
+        ecs_map_get(app->assetManager.mapTexture, Texture, "16x16"),
         { 1, 0, },
         { 0, 0, },
         { 1, 1, },
@@ -38,8 +37,7 @@ void initScene(ecs_world_t* world)
         { 64, 64, },
     });
     ecs_set(world, f, Renderable, {
-        //ecs_map_get(app->assetManager.mapTexture, Texture, "16x16"),
-        &app->assetManager.arrayTexture[1],
+        ecs_map_get(app->assetManager.mapTexture, Texture, "8x8"),
         { 0, 0, },
         { 0, 0, },
         { 1, 1, },
@@ -64,19 +62,11 @@ int main(int arcg, char* argv[])
         initScene
     );
     
-    //*
     textures(
         2,
         Texture_Create(app.renderState.device, "16x16", 16, 16, 0, 0, 0, 0),
         Texture_Create(app.renderState.device, "8x8", 8, 8, 0, 0, 0, 0)
     );
-    //*/
-    
-    //Texture* t = ecs_map_get(app.assetManager.mapTexture, Texture, "16x16");
-    //Texture tt = Texture_Create(app.renderState.device, "16x16", 16, 16, 0, 0, 0, 0);
-    //Texture* t = &tt;
-    Texture* t = &app.assetManager.arrayTexture[0];
-    printf("%dx%d\n", t->tilesize.X, t->tilesize.Y);
     
     loop();
     

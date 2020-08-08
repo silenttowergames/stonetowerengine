@@ -39,6 +39,8 @@ Texture Texture_Load(FNA3D_Device* device, const char* key)
 	stbi_uc* pixels = stbi_load(filename, &size.X, &size.Y, &channels, 4);
 	
 	Texture texture = Texture_NewFromData(device, size.X, size.Y, pixels, channels, false);
+	texture.key = key;
+	texture.filename = filename;
 	
 	stbi_image_free(pixels);
 	
