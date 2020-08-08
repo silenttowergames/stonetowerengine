@@ -1,7 +1,7 @@
 #pragma once
 
 #include <flecs.h>
-#include "../Assets/Texture.h"
+#include "../Assets/AssetManager.h"
 #include "../Logging/LoggerFunctions.h"
 #include "../Rendering/RenderState.h"
 
@@ -19,4 +19,5 @@ typedef struct ApplicationState
     void (*flecsScene)(ecs_world_t*);
     int FPS;
     RenderState renderState;
+    AssetManager assetManager;
 } ApplicationState;

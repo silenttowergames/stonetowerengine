@@ -1,4 +1,5 @@
 #include "ApplicationStateFunctions.h"
+#include "../Assets/AssetManagerFunctions.h"
 #include "../ECS/FlecsFunctions.h"
 #include "../Logging/LoggerFunctions.h"
 #include "../Rendering/RenderingFunctions.h"
@@ -28,10 +29,14 @@ void ApplicationState_Create(
 	app->logger.filename = "log.txt";
 	app->flecsInit = flecsInit;
 	app->flecsScene = flecsScene;
+    
+    app->assetManager = AssetManager_Create();
 	
 	Rendering_Init(app);
 	
 	RenderState_New(app, sizeX, sizeY, resX, resY);
+    
+    ecs_os_set_api_defaults();
 }
 
 void ApplicationState_Loop(ApplicationState* app)
@@ -63,7 +68,3 @@ void ApplicationState_Free(ApplicationState* app)
 {
     RenderState_Free(&app->renderState);
 }
-
-#define init(...) ApplicationState app; ApplicationState_Create(&app, __VA_ARGS__); freopen(app.logger.filename, "a", stderr)
-#define loop() ApplicationState_Loop(&app)
-#define quit() ApplicationState_Free(&app); return 0

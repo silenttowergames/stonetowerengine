@@ -13,13 +13,20 @@ bool SpriteBatch_Begin(SpriteBatch* spriteBatch)
 	spriteBatch->opened = true;
 }
 
-void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, quad pos, quad src)
+void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, FNA3D_Texture* texture, quad pos, quad src)
 {
 	assert(spriteBatch->indicesThisFrame <= (MAX_INDICES - 6));
 	
 	int i = spriteBatch->indicesThisFrame;
 	
 	uint32_t color = 0xFFFFFFFF;
+	
+	spriteBatch->textures[i + 0] = texture;
+	spriteBatch->textures[i + 1] = texture;
+	spriteBatch->textures[i + 2] = texture;
+	spriteBatch->textures[i + 3] = texture;
+	spriteBatch->textures[i + 4] = texture;
+	spriteBatch->textures[i + 5] = texture;
 	
 	spriteBatch->vertices[i + 0].x = pos.topLeft.X;
 	spriteBatch->vertices[i + 0].y = pos.topLeft.Y;
@@ -77,11 +84,27 @@ void SpriteBatch_Flush(RenderState* renderState)
 	
 	FNA3D_ApplyVertexBufferBindings(renderState->device, &renderState->vertexBufferBinding, 1, 0, 0);
 	
-	// Set texture
-	FNA3D_VerifySampler(renderState->device, 0, renderState->texture.asset, &samplerState);
+	FNA3D_Texture* texture = NULL;
+	int thisTextureStartsAt = 0;
 	
-	// Draw
-	FNA3D_DrawPrimitives(renderState->device, FNA3D_PRIMITIVETYPE_TRIANGLELIST, 0, (renderState->spriteBatch.indicesThisFrame / 3));
+	for(int i = 0; i < renderState->spriteBatch.indicesThisFrame; i++)
+	{
+		if(i == 0 || texture != renderState->spriteBatch.textures[i])
+		{
+			if(i > 0)
+			{
+				FNA3D_DrawPrimitives(renderState->device, FNA3D_PRIMITIVETYPE_TRIANGLELIST, thisTextureStartsAt, (i - thisTextureStartsAt) / 3);
+				
+				thisTextureStartsAt = i;
+			}
+			
+			texture = renderState->spriteBatch.textures[i];
+			
+			FNA3D_VerifySampler(renderState->device, 0, texture, &samplerState);
+		}
+	}
+	
+	FNA3D_DrawPrimitives(renderState->device, FNA3D_PRIMITIVETYPE_TRIANGLELIST, thisTextureStartsAt, (renderState->spriteBatch.indicesThisFrame - thisTextureStartsAt) / 3);
 }
 
 bool SpriteBatch_End(SpriteBatch* spriteBatch)

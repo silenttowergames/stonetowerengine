@@ -22,5 +22,4 @@ typedef struct RenderState
 	FNA3D_Buffer* vertexBuffer;
 	FNA3D_VertexBufferBinding vertexBufferBinding;
 	FNA3D_VertexElement vertexElements[3];
-	Texture texture;
 } RenderState;

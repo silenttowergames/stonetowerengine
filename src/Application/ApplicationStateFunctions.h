@@ -17,3 +17,7 @@ void ApplicationState_Create(
 );
 void ApplicationState_Loop(ApplicationState* app);
 void ApplicationState_Free(ApplicationState* app);
+
+#define init(...) ApplicationState app; ApplicationState_Create(&app, __VA_ARGS__); freopen(app.logger.filename, "a", stderr)
+#define loop() ApplicationState_Loop(&app)
+#define quit() ApplicationState_Free(&app); return 0

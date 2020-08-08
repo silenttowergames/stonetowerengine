@@ -44,3 +44,17 @@ Texture Texture_Load(FNA3D_Device* device, const char* key)
 	
 	return texture;
 }
+
+Texture Texture_Create(FNA3D_Device* device, const char* key, int tilesizeX, int tilesizeY, int paddingX, int paddingY, int borderX, int borderY)
+{
+	Texture texture = Texture_Load(device, key);
+	
+	texture.tilesize.X = tilesizeX;
+	texture.tilesize.Y = tilesizeY;
+	texture.padding.X = paddingX;
+	texture.padding.Y = paddingY;
+	texture.border.X = borderX;
+	texture.border.Y = borderY;
+	
+	return texture;
+}

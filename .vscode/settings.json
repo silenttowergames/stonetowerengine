@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "cmath": "c",
-        "xiosbase": "c"
+        "xiosbase": "c",
+        "xlocale": "cpp",
+        "xstring": "cpp"
     }
 }

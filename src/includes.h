@@ -51,6 +51,8 @@
 #include "Application/ApplicationStateFunctions.c"
 
 // Assets
+#include "Assets/AssetManager.h"
+#include "Assets/AssetManagerFunctions.c"
 #include "Assets/Shader.h"
 #include "Assets/ShaderFunctions.c"
 #include "Assets/Texture.h"
@@ -86,7 +88,5 @@
 #include "Utilities/float2d.h"
 #include "Utilities/float4d.h"
 #include "Utilities/int2d.h"
-#include "Utilities/Map.h"
-#include "Utilities/MapFunctions.c"
 #include "Utilities/quad.h"
 #include "Utilities/quadFunctions.c"

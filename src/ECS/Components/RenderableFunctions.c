@@ -45,7 +45,7 @@ void Renderable_Sprite_Render(SpriteBatch* spriteBatch, void* _renderable, Body*
 		}
 	}
 	
-	SpriteBatch_AddQuad(spriteBatch, pos, src);
+	SpriteBatch_AddQuad(spriteBatch, renderable->texture->asset, pos, src);
 }
 
 Renderable Renderable_Sprite_New(Texture* texture)
