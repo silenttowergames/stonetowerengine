@@ -19,7 +19,6 @@ void AssetManager_AddTexture(AssetManager* assetManager, Texture texture)
 {
 	assetManager->arrayTexture[assetManager->lengthSoFarTexture] = texture;
 	
-	printf("Set map: %s\n", texture.key);
 	ecs_map_set(assetManager->mapTexture, texture.key, &assetManager->arrayTexture[assetManager->lengthSoFarTexture]);
 	
 	assetManager->lengthSoFarTexture++;

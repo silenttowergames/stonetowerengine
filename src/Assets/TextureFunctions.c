@@ -1,5 +1,6 @@
 #include <FNA3D_Image.h>
 #include "TextureFunctions.h"
+#include "ASEpriteJSONFunctions.h"
 
 Texture Texture_NewFromData(FNA3D_Device* device, int width, int height, stbi_uc* pixels, int channels, bool isRenderTarget)
 {
@@ -41,6 +42,8 @@ Texture Texture_Load(FNA3D_Device* device, const char* key)
 	Texture texture = Texture_NewFromData(device, size.X, size.Y, pixels, channels, false);
 	texture.key = key;
 	texture.filename = filename;
+	
+	texture.aseprite = ASEpriteJSON_Load(key);
 	
 	stbi_image_free(pixels);
 	

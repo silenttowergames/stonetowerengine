@@ -2,6 +2,7 @@
 
 #include <FNA3D.h>
 #include <flecs.h>
+#include "ASEpriteJSON.h"
 #include "../Utilities/int2d.h"
 
 typedef struct Texture
@@ -13,4 +14,5 @@ typedef struct Texture
 	int2d padding;
 	const char* key;
 	char* filename;
+	ASEpriteJSON aseprite;
 } Texture;
