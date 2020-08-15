@@ -17,13 +17,7 @@ void AnimateSystem(ecs_iter_t* it)
             
             for(int j = 0; j < s[i].texture->aseprite.animationsCount; j++)
             {
-				printf("%s ? %s", s[i].texture->aseprite.animations[j].name, a[i].nextAnimationKey);
-				if(a[i].nextAnimationKey == NULL)
-				{
-					printf("NULL");
-				}
-				printf("\n");
-                if(strcmp(s[i].texture->aseprite.animations[j].name, a[i].nextAnimationKey) != 0)
+				if(strcmp(s[i].texture->aseprite.animations[j].name, a[i].nextAnimationKey) != 0)
                 {
                     continue;
                 }
@@ -44,7 +38,7 @@ void AnimateSystem(ecs_iter_t* it)
         }
         else
         {
-            a[i].progress += 1000.0 / app->FPS;
+            a[i].progress += (1000.0 / app->FPS) * a[i].speed;
             
             if(a[i].progress > s[i].texture->aseprite.frames[a[i].frame].duration)
             {

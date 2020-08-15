@@ -23,7 +23,7 @@ void DrawSystem(ecs_iter_t* it)
 	float2d size;
 	for(int i = 0; i < it->count; i++)
 	{
-		renderable[i].render(&app->renderState.spriteBatch, &renderable[i], &body[i]);
+		renderable[i].render(&app->renderState.spriteBatch, &renderable[i], body[i].position);
 	}
 	
 	FNA3D_SetViewport(app->renderState.device, &app->renderState.viewport);

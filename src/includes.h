@@ -59,6 +59,10 @@
 #include "Assets/ShaderFunctions.c"
 #include "Assets/Texture.h"
 #include "Assets/TextureFunctions.c"
+#include "Assets/TiledJSON.h"
+#include "Assets/TiledJSONFunctions.c"
+#include "Assets/TiledJSONLayer.h"
+#include "Assets/TiledJSONObject.h"
 
 // ECS
 // Components
@@ -66,6 +70,10 @@
 #include "ECS/Components/Body.h"
 #include "ECS/Components/Renderable.h"
 #include "ECS/Components/RenderableFunctions.c"
+// Entities
+#include "ECS/Entities/Factory.h"
+#include "ECS/Entities/NPCFactory.c"
+#include "ECS/Entities/PlayerFactory.c"
 // Systems
 #include "ECS/Systems/AnimateSystem.c"
 #include "ECS/Systems/DrawSystem.c"

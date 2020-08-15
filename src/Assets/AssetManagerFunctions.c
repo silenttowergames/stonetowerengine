@@ -37,3 +37,33 @@ void AssetManager_AddTextures(AssetManager* assetManager, int length, ...)
 	
 	va_end(args);
 }
+
+void AssetManager_InitMap(AssetManager* assetManager, int length)
+{
+	assetManager->arrayTiled = malloc(sizeof(TiledJSON) * length);
+	assetManager->mapTiled = ecs_map_new(TiledJSON, length);
+	assetManager->lengthTiled = length;
+}
+
+void AssetManager_AddMap(AssetManager* assetManager, TiledJSON map)
+{
+	assetManager->arrayTiled[assetManager->lengthSoFarTiled] = map;
+	
+	ecs_map_set(assetManager->mapTiled, map.key, &assetManager->arrayTiled[assetManager->lengthSoFarTiled]);
+	
+	assetManager->lengthSoFarTiled++;
+}
+
+void AssetManager_AddMaps(AssetManager* assetManager, int length, ...)
+{
+	va_list args;
+	
+	va_start(args, length);
+	
+	for(int i = 0; i < length; i++)
+	{
+		AssetManager_AddMap(assetManager, va_arg(args, TiledJSON));
+	}
+	
+	va_end(args);
+}

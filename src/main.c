@@ -13,56 +13,17 @@ void initWorld(ecs_world_t* world)
 
 void initScene(ecs_world_t* world)
 {
-    ApplicationState* app = (ApplicationState*)ecs_get_context(world);
+    ctx();
     
     ECS_COMPONENT(world, Animate);
     ECS_COMPONENT(world, Body);
     ECS_COMPONENT(world, Renderable);
     
-    ECS_ENTITY(world, e, Animate, Body, Renderable);
-    ecs_set(world, e, Animate, {
-        "protag-walk",
-        NULL,
-        0,
-        0,
-    });
-    ecs_set(world, e, Body, {
-        { 0, 0, },
-    });
-    ecs_set(world, e, Renderable, {
-        ecs_map_get(app->assetManager.mapTexture, Texture, "16x16"),
-        { 0, 0, },
-        { 0, 0, },
-        { 1, 1, },
-        false,
-        false,
-        0,
-        NULL,
-        Renderable_Sprite_Render,
-    });
+    //PlayerFactory(world, 0, 0);
+    //NPCFactory(world, 32, 32);
     
-    ECS_ENTITY(world, f, Animate, Body, Renderable);
-    ecs_set(world, f, Animate, {
-        "man-die",
-        NULL,
-        0,
-        0,
-    });
-    ecs_set(world, f, Body, {
-        { 64, 64, },
-    });
-    ecs_set(world, f, Renderable, {
-        ecs_map_get(app->assetManager.mapTexture, Texture, "8x8"),
-        { 0, 0, },
-        { 0, 0, },
-        { 1, 1, },
-        false,
-        false,
-        0,
-        NULL,
-        Renderable_Sprite_Render,
-    });
-    //
+    factoryRun(app, Player, 0, 0);
+    factoryRun(app, NPC, 32, 0);
 }
 
 int main(int arcg, char* argv[])
@@ -83,6 +44,16 @@ int main(int arcg, char* argv[])
         Texture_Create(app.renderState.device, "16x16", 16, 16, 0, 0, 0, 0),
         Texture_Create(app.renderState.device, "8x8", 8, 8, 0, 0, 0, 0)
     );
+    
+    maps(
+        2,
+        TiledJSON_Load(&app, "map0"),
+        TiledJSON_Load(&app, "map1")
+    );
+    
+    factoriesInit(2);
+    factory(Player);
+    factory(NPC);
     
     loop();
     

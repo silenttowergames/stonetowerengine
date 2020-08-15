@@ -1,15 +1,14 @@
 #include <math.h>
 #include "RenderableFunctions.h"
-#include "Body.h"
 #include "../../Rendering/SpriteBatchFunctions.h"
 #include "../../Utilities/quadFunctions.h"
 
-void Renderable_Sprite_Render(SpriteBatch* spriteBatch, void* _renderable, Body* body)
+void Renderable_Sprite_Render(SpriteBatch* spriteBatch, void* _renderable, float2d position)
 {
 	Renderable* renderable = (Renderable*)_renderable;
 	quad pos = quad_Easy(
-		body->position.X,
-		body->position.Y,
+		position.X,
+		position.Y,
 		renderable->texture->tilesize.X * renderable->scale.X,
 		renderable->texture->tilesize.Y * renderable->scale.Y,
 		renderable->offset.X * renderable->scale.X,
@@ -48,15 +47,7 @@ void Renderable_Sprite_Render(SpriteBatch* spriteBatch, void* _renderable, Body*
 	SpriteBatch_AddQuad(spriteBatch, renderable->texture->asset, pos, src);
 }
 
-Renderable Renderable_Sprite_New(Texture* texture)
+void Renderable_Tilemap_Render(SpriteBatch* spriteBatch, void* _renderable, Body* body)
 {
-	Renderable renderable;
-	memset(&renderable, 0, sizeof(Renderable));
-	
-	renderable.texture = texture;
-	renderable.scale.X = 1;
-	renderable.scale.Y = 1;
-	renderable.render = Renderable_Sprite_Render;
-	
-	return renderable;
+	Renderable* renderable = (Renderable*)_renderable;
 }

@@ -2,6 +2,7 @@
 
 #include <flecs.h>
 #include "../Assets/AssetManager.h"
+#include "../ECS/Entities/Factory.h"
 #include "../Logging/LoggerFunctions.h"
 #include "../Rendering/RenderState.h"
 
@@ -20,4 +21,8 @@ typedef struct ApplicationState
     int FPS;
     RenderState renderState;
     AssetManager assetManager;
+    ecs_map_t* entityFactories;
+    Factory* entityFactoriesArray;
+    int entityFactoriesLength;
+    int entityFactoriesLengthSoFar;
 } ApplicationState;

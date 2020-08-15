@@ -8,4 +8,5 @@ typedef struct Animate
     Animation* animation;
     int frame;
     int progress;
+    float speed;
 } Animate;

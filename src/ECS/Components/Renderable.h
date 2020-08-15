@@ -16,5 +16,5 @@ typedef struct Renderable
 	bool flipY;
 	float rotation;
 	void* data;
-	void (*render)(SpriteBatch*, void*, Body*);
+	void (*render)(SpriteBatch*, void*, float2d);
 } Renderable;

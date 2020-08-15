@@ -50,7 +50,7 @@
                  "id":1,
                  "name":"",
                  "rotation":0,
-                 "type":"NPCFactory",
+                 "type":"npc",
                  "visible":true,
                  "width":8,
                  "x":16,
@@ -92,7 +92,7 @@
                          "value":"hello!"
                         }],
                  "rotation":0,
-                 "type":"PlayerFactory",
+                 "type":"player",
                  "visible":true,
                  "width":8,
                  "x":56,
@@ -126,7 +126,7 @@
         {
          "columns":8,
          "firstgid":1,
-         "image":"8x8.png",
+         "image":"..\/sprites\/8x8.png",
          "imageheight":32,
          "imagewidth":64,
          "margin":0,

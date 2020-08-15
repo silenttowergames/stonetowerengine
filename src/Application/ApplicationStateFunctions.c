@@ -68,3 +68,23 @@ void ApplicationState_Free(ApplicationState* app)
 {
     RenderState_Free(&app->renderState);
 }
+
+void ApplicationState_InitFactories(ApplicationState* app, int length)
+{
+    app->entityFactoriesLength = length;
+    app->entityFactoriesLengthSoFar = 0;
+    app->entityFactories = ecs_map_new(Factory, length);
+    app->entityFactoriesArray = malloc(sizeof(Factory) * length);
+}
+
+void ApplicationState_AddFactory(ApplicationState* app, Factory callable)
+{
+    app->entityFactoriesArray[app->entityFactoriesLengthSoFar] = callable;
+    ecs_map_set(app->entityFactories, callable.key, &app->entityFactoriesArray[app->entityFactoriesLengthSoFar]);
+    app->entityFactoriesLengthSoFar++;
+}
+
+Factory* ApplicationState_GetFactory(ApplicationState* app, const char* key)
+{
+    return ecs_map_get(app->entityFactories, Factory, key);
+}
