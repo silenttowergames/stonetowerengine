@@ -77,6 +77,22 @@ void ApplicationState_InitFactories(ApplicationState* app, int length)
     app->entityFactoriesArray = malloc(sizeof(Factory) * length);
 }
 
+void ApplicationState_AddFactories(ApplicationState* app, int length, ...)
+{
+    ApplicationState_InitFactories(app, length);
+    
+    va_list args;
+    
+    va_start(args, length);
+    
+    for(int i = 0; i < length; i++)
+    {
+        ApplicationState_AddFactory(app, va_arg(args, Factory));
+    }
+    
+    va_end(args);
+}
+
 void ApplicationState_AddFactory(ApplicationState* app, Factory callable)
 {
     app->entityFactoriesArray[app->entityFactoriesLengthSoFar] = callable;

@@ -15,13 +15,6 @@ void initScene(ecs_world_t* world)
 {
     ctx();
     
-    ECS_COMPONENT(world, Animate);
-    ECS_COMPONENT(world, Body);
-    ECS_COMPONENT(world, Renderable);
-    
-    //PlayerFactory(world, 0, 0);
-    //NPCFactory(world, 32, 32);
-    
     factoryRun(app, Player, 0, 0);
     factoryRun(app, NPC, 32, 0);
 }
@@ -51,9 +44,11 @@ int main(int arcg, char* argv[])
         TiledJSON_Load(&app, "map1")
     );
     
-    factoriesInit(2);
-    factory(Player);
-    factory(NPC);
+    factories(
+        2,
+        factory(Player),
+        factory(NPC)
+    );
     
     loop();
     

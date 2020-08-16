@@ -19,6 +19,7 @@ void ApplicationState_Loop(ApplicationState* app);
 void ApplicationState_Free(ApplicationState* app);
 
 void ApplicationState_InitFactories(ApplicationState* app, int length);
+void ApplicationState_AddFactories(ApplicationState* app, int length, ...);
 void ApplicationState_AddFactory(ApplicationState* app, Factory callable);
 Factory* ApplicationState_GetFactory(ApplicationState* app, const char* key);
 
@@ -26,8 +27,8 @@ Factory* ApplicationState_GetFactory(ApplicationState* app, const char* key);
 #define loop() ApplicationState_Loop(&app)
 #define quit() ApplicationState_Free(&app); return 0
 
-#define factoriesInit(l) ApplicationState_InitFactories(&app, l); Factory factoryUse; memset(&factoryUse, 0, sizeof(Factory))
-#define factory(c) factoryUse.key = #c; factoryUse.callable = c ## Factory; ApplicationState_AddFactory(&app, factoryUse)
+#define factories(l, ...) ApplicationState_AddFactories(&app, l, __VA_ARGS__);
+#define factory(c) (Factory){ #c, c ## Factory, }
 #define factoryRun(app, key, X, Y) Factory* key ## FactoryVar = ApplicationState_GetFactory(app, #key); key ## FactoryVar->callable(app->world, X, Y)
 
 #define ctx() ApplicationState* app = (ApplicationState*)ecs_get_context(world)
