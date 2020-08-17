@@ -3,13 +3,13 @@
 #include "../Components/Animate.h"
 #include "../Components/Body.h"
 #include "../Components/RenderableFunctions.h"
+#include "../../Application/ApplicationStateFunctions.h"
 
 void NPCFactory(ecs_world_t* world, float X, float Y, int layer)
 {
 	ctx();
 	
-    ECS_COMPONENT(world, AIPlayer);
-	ECS_COMPONENT(world, Animate);
+    ECS_COMPONENT(world, Animate);
     ECS_COMPONENT(world, Body);
     ECS_COMPONENT(world, Renderable);
 	
@@ -37,6 +37,6 @@ void NPCFactory(ecs_world_t* world, float X, float Y, int layer)
         NULL,
         Renderable_Sprite_Render,
         0,
-        0.51f,
+        (rand() % 10) / 10.0f,
     });
 }

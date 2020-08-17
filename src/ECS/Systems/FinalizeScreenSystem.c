@@ -9,8 +9,6 @@
 
 void FinalizeScreenSystem(ecs_iter_t* it)
 {
-	printf("test\n");
-	
 	ecs_world_t* world = it->world;
 	
 	ctx();

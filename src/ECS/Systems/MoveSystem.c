@@ -7,9 +7,7 @@
 
 void MoveSystem(ecs_iter_t* it)
 {
-	ecs_world_t* world = it->world;
-	
-	ctx();
+	fctx();
 	
 	AIPlayer* a = ecs_column(it, AIPlayer, 1);
 	Body* b = ecs_column(it, Body, 2);
@@ -19,6 +17,21 @@ void MoveSystem(ecs_iter_t* it)
 		if(key(Down, RIGHT))
 		{
 			b[i].position.X += a[i].speed;
+		}
+		
+		if(key(Down, LEFT))
+		{
+			b[i].position.X -= a[i].speed;
+		}
+		
+		if(key(Down, DOWN))
+		{
+			b[i].position.Y += a[i].speed;
+		}
+		
+		if(key(Down, UP))
+		{
+			b[i].position.Y -= a[i].speed;
 		}
 	}
 }

@@ -24,10 +24,8 @@ void DrawSystem(ecs_iter_t* it)
 	Renderable* renderable = ecs_column(it, Renderable, 2);
 	quad pos, src;
 	float2d size;
-	//printf("===\n");
 	for(int i = 0; i < it->count; i++)
 	{
-		//printf("%d\n", i);
 		renderable[i].render(&app->renderState.spriteBatch, &renderable[i], body[i].position);
 	}
 }
