@@ -17,4 +17,6 @@ typedef struct Renderable
 	float rotation;
 	void* data;
 	void (*render)(SpriteBatch*, void*, float2d);
+	int layer;
+	float depth;
 } Renderable;

@@ -1,17 +1,20 @@
+#include <stdlib.h>
 #include "NPCFactory.h"
 #include "../Components/Animate.h"
 #include "../Components/Body.h"
 #include "../Components/RenderableFunctions.h"
 
-void NPCFactory(ecs_world_t* world, float X, float Y)
+void NPCFactory(ecs_world_t* world, float X, float Y, int layer)
 {
 	ctx();
 	
+    ECS_COMPONENT(world, AIPlayer);
 	ECS_COMPONENT(world, Animate);
     ECS_COMPONENT(world, Body);
     ECS_COMPONENT(world, Renderable);
 	
-	ECS_ENTITY(world, f, Animate, Body, Renderable);
+	ecs_entity_t f = ecs_new(world, 0);
+    
     ecs_set(world, f, Animate, {
         "man-die",
         NULL,
@@ -21,6 +24,7 @@ void NPCFactory(ecs_world_t* world, float X, float Y)
     });
     ecs_set(world, f, Body, {
         { X, Y, },
+        "npc",
     });
     ecs_set(world, f, Renderable, {
         ecs_map_get(app->assetManager.mapTexture, Texture, "8x8"),
@@ -32,5 +36,7 @@ void NPCFactory(ecs_world_t* world, float X, float Y)
         0,
         NULL,
         Renderable_Sprite_Render,
+        0,
+        0.51f,
     });
 }

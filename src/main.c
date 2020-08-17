@@ -2,21 +2,29 @@
 
 void initWorld(ecs_world_t* world)
 {
-    ECS_COMPONENT(world, int);
+    ECS_COMPONENT(world, AIPlayer);
     ECS_COMPONENT(world, Animate);
     ECS_COMPONENT(world, Body);
     ECS_COMPONENT(world, Renderable);
+    
     ECS_SYSTEM(world, SDLEventsSystem, EcsOnUpdate, 0);
+    ECS_SYSTEM(world, MoveSystem, EcsOnUpdate, AIPlayer, Body);
     ECS_SYSTEM(world, AnimateSystem, EcsOnUpdate, Animate, Renderable);
     ECS_SYSTEM(world, DrawSystem, EcsOnUpdate, Body, Renderable);
+    ECS_SYSTEM(world, FinalizeScreenSystem, EcsOnUpdate, 0);
+    
+    const EcsQuery* sort = ecs_get(world, DrawSystem, EcsQuery);
+	ecs_query_order_by(world, sort->query, ecs_entity(Renderable), SortByLayerThenY);
 }
 
 void initScene(ecs_world_t* world)
 {
     ctx();
     
-    factoryRun(app, Player, 0, 0);
-    factoryRun(app, NPC, 32, 0);
+    factoryRun(app, Player, 0, 0, 0);
+    factoryRun(app, NPC, 32, 0, 0);
+    factoryRun(app, NPC, 0, 32, 0);
+    factoryRun(app, NPC, 32, 32, 0);
 }
 
 int main(int arcg, char* argv[])

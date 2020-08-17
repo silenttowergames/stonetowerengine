@@ -1,10 +1,12 @@
 #include <flecs.h>
-#include "../../Application/ApplicationState.h"
+#include "../../Application/ApplicationStateFunctions.h"
 #include "AnimateSystem.h"
 
 void AnimateSystem(ecs_iter_t* it)
 {
-	ApplicationState* app = (ApplicationState*)ecs_get_context(it->world);
+    ecs_world_t* world = it->world;
+    
+	ctx();
 	
     Animate* a = ecs_column(it, Animate, 1);
     Renderable* s = ecs_column(it, Renderable, 2);
@@ -42,7 +44,7 @@ void AnimateSystem(ecs_iter_t* it)
             
             if(a[i].progress > s[i].texture->aseprite.frames[a[i].frame].duration)
             {
-                a[i].progress -= s[i].texture->aseprite.frames[a[i].frame].duration;
+                a[i].progress = a[i].progress % s[i].texture->aseprite.frames[a[i].frame].duration;
                 
                 a[i].frame++;
                 

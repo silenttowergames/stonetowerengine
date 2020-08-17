@@ -1,9 +1,11 @@
 #include "ApplicationStateFunctions.h"
 #include "../Assets/AssetManagerFunctions.h"
 #include "../ECS/FlecsFunctions.h"
+#include "../ECS/Systems/DrawSystem.h"
 #include "../Logging/LoggerFunctions.h"
 #include "../Rendering/RenderingFunctions.h"
 #include "../Rendering/RenderStateFunctions.h"
+#include "../Input/InputManagerFunctions.h"
 
 void ApplicationState_Create(
     ApplicationState* app,
@@ -35,6 +37,8 @@ void ApplicationState_Create(
 	Rendering_Init(app);
 	
 	RenderState_New(app, sizeX, sizeY, resX, resY);
+    
+    app->inputManager = InputManager_Create();
     
     ecs_os_set_api_defaults();
 }

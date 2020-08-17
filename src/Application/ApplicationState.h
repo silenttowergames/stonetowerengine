@@ -2,6 +2,7 @@
 
 #include <flecs.h>
 #include "../Assets/AssetManager.h"
+#include "../Input/InputManager.h"
 #include "../ECS/Entities/Factory.h"
 #include "../Logging/LoggerFunctions.h"
 #include "../Rendering/RenderState.h"
@@ -25,4 +26,5 @@ typedef struct ApplicationState
     Factory* entityFactoriesArray;
     int entityFactoriesLength;
     int entityFactoriesLengthSoFar;
+    InputManager inputManager;
 } ApplicationState;

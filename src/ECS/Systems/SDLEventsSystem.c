@@ -2,6 +2,7 @@
 #include <flecs.h>
 #include "SDLEventsSystem.h"
 #include "../../Application/ApplicationState.h"
+#include "../../Input/KeyboardStateFunctions.h"
 
 void SDLEventsSystem(ecs_iter_t* it)
 {
@@ -46,12 +47,12 @@ void SDLEventsSystem(ecs_iter_t* it)
 			case SDL_KEYDOWN:
 			case SDL_KEYUP:
 			{
-				//KeyboardState_Event(&app->keyboardState, event.key);
+				KeyboardState_Event(&app->inputManager.keyboardState, event.key);
 			} break;
 			
 			case SDL_TEXTINPUT:
 			{
-				//KeyboardState_Type(&app->keyboardState, event.text.text[0]);
+				KeyboardState_Type(&app->inputManager.keyboardState, event.text.text[0]);
 			} break;
 			
 			case SDL_CONTROLLERBUTTONDOWN:
@@ -66,4 +67,6 @@ void SDLEventsSystem(ecs_iter_t* it)
 			}
 		}
 	}
+	
+	KeyboardState_Update(&app->inputManager.keyboardState);
 }

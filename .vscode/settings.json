@@ -3,6 +3,8 @@
         "cmath": "c",
         "xiosbase": "c",
         "xlocale": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "algorithm": "c",
+        "list": "c"
     }
 }

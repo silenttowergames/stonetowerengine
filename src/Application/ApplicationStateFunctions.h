@@ -29,6 +29,6 @@ Factory* ApplicationState_GetFactory(ApplicationState* app, const char* key);
 
 #define factories(l, ...) ApplicationState_AddFactories(&app, l, __VA_ARGS__);
 #define factory(c) (Factory){ #c, c ## Factory, }
-#define factoryRun(app, key, X, Y) Factory* key ## FactoryVar = ApplicationState_GetFactory(app, #key); key ## FactoryVar->callable(app->world, X, Y)
+#define factoryRun(app, key, X, Y, layer) Factory* key ## FactoryVarX ## X ## xY ## Y = ApplicationState_GetFactory(app, #key); key ## FactoryVarX ## X ## xY ## Y->callable(app->world, X, Y, layer)
 
 #define ctx() ApplicationState* app = (ApplicationState*)ecs_get_context(world)

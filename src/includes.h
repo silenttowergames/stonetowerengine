@@ -66,6 +66,7 @@
 
 // ECS
 // Components
+#include "ECS/Components/AIPlayer.h"
 #include "ECS/Components/Animate.h"
 #include "ECS/Components/Body.h"
 #include "ECS/Components/Renderable.h"
@@ -77,9 +78,19 @@
 // Systems
 #include "ECS/Systems/AnimateSystem.c"
 #include "ECS/Systems/DrawSystem.c"
+#include "ECS/Systems/FinalizeScreenSystem.c"
+#include "ECS/Systems/MoveSystem.c"
 #include "ECS/Systems/SDLEventsSystem.c"
+#include "ECS/Systems/TestSystem.c"
 // .
 #include "ECS/FlecsFunctions.c"
+#include "ECS/SortByLayerThenY.c"
+
+// Input
+#include "Input/InputManager.h"
+#include "Input/InputManagerFunctions.c"
+#include "Input/KeyboardState.h"
+#include "Input/KeyboardStateFunctions.c"
 
 // Logger
 #include "Logging/Logger.h"
