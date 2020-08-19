@@ -78,6 +78,7 @@
 // Systems
 #include "ECS/Systems/AnimateSystem.c"
 #include "ECS/Systems/DrawSystem.c"
+#include "ECS/Systems/EngineUpdateSystem.c"
 #include "ECS/Systems/FinalizeScreenSystem.c"
 #include "ECS/Systems/MoveSystem.c"
 #include "ECS/Systems/SDLEventsSystem.c"
@@ -87,6 +88,10 @@
 #include "ECS/SortByLayerThenY.c"
 
 // Input
+#include "Input/GamepadButtons.h"
+#include "Input/GamepadButtonsFunctions.c"
+#include "Input/GamepadState.h"
+#include "Input/GamepadStateFunctions.c"
 #include "Input/InputManager.h"
 #include "Input/InputManagerFunctions.c"
 #include "Input/KeyboardState.h"

@@ -1,12 +1,12 @@
 #include <SDL2/SDL.h>
 #include <flecs.h>
 #include "SDLEventsSystem.h"
-#include "../../Application/ApplicationState.h"
+#include "../../Application/ApplicationStateFunctions.h"
 #include "../../Input/KeyboardStateFunctions.h"
 
 void SDLEventsSystem(ecs_iter_t* it)
 {
-	ApplicationState* app = (ApplicationState*)ecs_get_context(it->world);
+	fctx();
 	
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
@@ -58,15 +58,13 @@ void SDLEventsSystem(ecs_iter_t* it)
 			case SDL_CONTROLLERBUTTONDOWN:
 			case SDL_CONTROLLERBUTTONUP:
 			{
-				//GamepadManager_EventButton(&app->gamepadManager, event.cbutton);
+				InputManager_GamepadEventButton(&app->inputManager, event.cbutton);
 			} break;
 			
 			case SDL_CONTROLLERAXISMOTION:
 			{
-				//GamepadManager_EventAxis(&app->gamepadManager, event.caxis);
+				InputManager_GamepadEventAxis(&app->inputManager, event.caxis);
 			}
 		}
 	}
-	
-	KeyboardState_Update(&app->inputManager.keyboardState);
 }

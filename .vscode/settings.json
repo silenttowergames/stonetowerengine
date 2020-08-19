@@ -5,6 +5,9 @@
         "xlocale": "cpp",
         "xstring": "cpp",
         "algorithm": "c",
-        "list": "c"
+        "list": "c",
+        "xutility": "c",
+        "cstring": "c",
+        "xlocinfo": "c"
     }
 }
