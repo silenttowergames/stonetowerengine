@@ -131,6 +131,44 @@ void GamepadState_EventButton(GamepadState* gamepadState, SDL_ControllerButtonEv
     }
 }
 
+void GamepadState_UpdateAxis(GamepadState* gamepadState, GamepadButtons button, bool positive)
+{
+    int down = gamepadState->down[button];
+    SDL_GameControllerAxis axis = GamepadButton_ToSDLAxis(button);
+    float axisValue = GamepadState_AxisF(gamepadState, axis);
+    bool axisDown = positive ? axisValue >= 0.25f : axisValue <= -0.25f;
+    
+    if(down > 0 && !axisDown)
+    {
+        gamepadState->down[button] = -1;
+        
+        return;
+    }
+    
+    if(down < 0 && axisDown)
+    {
+        gamepadState->down[button] = 1;
+        
+        return;
+    }
+}
+
+void GamepadState_UpdateAxes(GamepadState* gamepadState)
+{
+    GamepadState_UpdateAxis(gamepadState, GPB_TRIGGER_RIGHT, true);
+    GamepadState_UpdateAxis(gamepadState, GPB_TRIGGER_LEFT, true);
+    
+    GamepadState_UpdateAxis(gamepadState, GPB_STICK_LEFT_RIGHT, true);
+    GamepadState_UpdateAxis(gamepadState, GPB_STICK_LEFT_LEFT, false);
+    GamepadState_UpdateAxis(gamepadState, GPB_STICK_LEFT_DOWN, true);
+    GamepadState_UpdateAxis(gamepadState, GPB_STICK_LEFT_UP, false);
+    
+    GamepadState_UpdateAxis(gamepadState, GPB_STICK_RIGHT_RIGHT, true);
+    GamepadState_UpdateAxis(gamepadState, GPB_STICK_RIGHT_LEFT, false);
+    GamepadState_UpdateAxis(gamepadState, GPB_STICK_RIGHT_DOWN, true);
+    GamepadState_UpdateAxis(gamepadState, GPB_STICK_RIGHT_UP, false);
+}
+
 void GamepadState_Update(GamepadState* gamepadState)
 {
     for(int i = 0; i < sizeof(gamepadState->down) / sizeof(int); i++)
@@ -144,6 +182,8 @@ void GamepadState_Update(GamepadState* gamepadState)
             gamepadState->down[i] = fmax(-5000, fmin(-1, gamepadState->down[i] - 1));
         }
     }
+    
+    GamepadState_UpdateAxes(gamepadState);
 }
 
 int GamepadState_GetButton(GamepadState* gamepadState, GamepadButtons button)
@@ -161,4 +201,52 @@ bool GamepadState_Down(GamepadState* gamepadState, GamepadButtons button)
     }
     
     return false;
+}
+
+bool GamepadState_Up(GamepadState* gamepadState, GamepadButtons button)
+{
+    return !GamepadState_Down(gamepadState, button);
+}
+
+bool GamepadState_Pressed(GamepadState* gamepadState, GamepadButtons button)
+{
+    int state = GamepadState_GetButton(gamepadState, button);
+    
+    if(state == 1)
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+bool GamepadState_Released(GamepadState* gamepadState, GamepadButtons button)
+{
+    int state = GamepadState_GetButton(gamepadState, button);
+    
+    if(state == -1)
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+int GamepadState_Axis(GamepadState* gamepadState, SDL_GameControllerAxis axis)
+{
+    int index = GamepadState_GetIndexAxis(gamepadState, axis);
+    
+    if(index < 0)
+    {
+        return 0;
+    }
+    
+    return gamepadState->axesValues[index];
+}
+
+float GamepadState_AxisF(GamepadState* gamepadState, SDL_GameControllerAxis axis)
+{
+    int value = GamepadState_Axis(gamepadState, axis);
+    
+    return value / 32767.0f;
 }
