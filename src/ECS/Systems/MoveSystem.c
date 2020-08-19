@@ -3,6 +3,7 @@
 #include "../Components/AIPlayer.h"
 #include "../Components/Body.h"
 #include "../../Application/ApplicationStateFunctions.h"
+#include "../../Input/GamepadStateFunctions.h"
 #include "../../Input/KeyboardStateFunctions.h"
 
 void MoveSystem(ecs_iter_t* it)
@@ -14,7 +15,7 @@ void MoveSystem(ecs_iter_t* it)
 	
 	for(int i = 0; i < it->count; i++)
 	{
-		if(key(Down, RIGHT) || button(Down, 0, DPAD_RIGHT) || button(Down, 0, STICK_RIGHT_RIGHT) || axis(0, STICK_LEFT_DOWN) >= 0.9f)
+		if(key(Down, RIGHT) || button(Down, 0, DPAD_RIGHT) || button(Down, 1, STICK_RIGHT_RIGHT) || axis(0, STICK_LEFT_DOWN) >= 0.9f)
 		{
 			b[i].position.X += a[i].speed;
 		}

@@ -12,4 +12,5 @@ typedef struct GamepadState
     int down[25];
     SDL_GameControllerAxis axes[6];
     int axesValues[6];
+    int instance;
 } GamepadState;

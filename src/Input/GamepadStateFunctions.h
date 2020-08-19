@@ -3,7 +3,7 @@
 #include "GamepadState.h"
 #include "GamepadButtonsFunctions.h"
 
-GamepadState GamepadState_Create();
+GamepadState GamepadState_Create(int index);
 int GamepadState_GetIndexAxis(GamepadState* gamepadState, SDL_GameControllerAxis axis);
 int GamepadState_GetIndexButton(GamepadState* gamepadState, SDL_GameControllerButton button);
 void GamepadState_EventAxis(GamepadState* gamepadState, SDL_ControllerAxisEvent event);

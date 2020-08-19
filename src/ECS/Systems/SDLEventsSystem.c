@@ -2,6 +2,8 @@
 #include <flecs.h>
 #include "SDLEventsSystem.h"
 #include "../../Application/ApplicationStateFunctions.h"
+#include "../../Input/GamepadStateFunctions.h"
+#include "../../Input/InputManagerFunctions.h"
 #include "../../Input/KeyboardStateFunctions.h"
 
 void SDLEventsSystem(ecs_iter_t* it)
@@ -64,7 +66,33 @@ void SDLEventsSystem(ecs_iter_t* it)
 			case SDL_CONTROLLERAXISMOTION:
 			{
 				InputManager_GamepadEventAxis(&app->inputManager, event.caxis);
-			}
+			} break;
+			
+			case SDL_CONTROLLERDEVICEADDED:
+			{
+				for(int i = 0; i < sizeof(app->inputManager.gamepadStates) / sizeof(GamepadState); i++)
+				{
+					if(app->inputManager.gamepadStates[i].instance == -1)
+					{
+						app->inputManager.gamepadStates[i] = GamepadState_Create(event.cdevice.which);
+						
+						break;
+					}
+				}
+			} break;
+			
+			case SDL_CONTROLLERDEVICEREMOVED:
+			{
+				for(int i = 0; i < sizeof(app->inputManager.gamepadStates) / sizeof(GamepadState); i++)
+				{
+					if(app->inputManager.gamepadStates[i].instance != event.cdevice.which)
+					{
+						continue;
+					}
+					
+					app->inputManager.gamepadStates[i] = GamepadState_Create(event.cdevice.which);
+				}
+			} break;
 		}
 	}
 }

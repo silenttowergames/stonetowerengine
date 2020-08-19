@@ -11,7 +11,7 @@ InputManager InputManager_Create()
 	
 	for(int i = 0; i < sizeof(inputManager.gamepadStates) / sizeof(GamepadState); i++)
 	{
-		inputManager.gamepadStates[i] = GamepadState_Create(i);
+		inputManager.gamepadStates[i] = GamepadState_Create(-1);
 	}
 	
 	return inputManager;
@@ -19,24 +19,32 @@ InputManager InputManager_Create()
 
 void InputManager_GamepadEventButton(InputManager* inputManager, SDL_ControllerButtonEvent event)
 {
+	int count = sizeof(inputManager->gamepadStates) / sizeof(GamepadState);
 	int index = event.which;
 	
-	if(index < 0 || index >= (sizeof(inputManager->gamepadStates) / sizeof(GamepadState)))
+	for(int i = 0; i < count; i++)
 	{
-		return;
+		if(inputManager->gamepadStates[i].instance != index)
+		{
+			continue;
+		}
+		
+		GamepadState_EventButton(&inputManager->gamepadStates[i], event);
 	}
-	
-	GamepadState_EventButton(&inputManager->gamepadStates[index], event);
 }
 
 void InputManager_GamepadEventAxis(InputManager* inputManager, SDL_ControllerAxisEvent event)
 {
+	int count = sizeof(inputManager->gamepadStates) / sizeof(GamepadState);
 	int index = event.which;
 	
-	if(index < 0 || index >= (sizeof(inputManager->gamepadStates) / sizeof(GamepadState)))
+	for(int i = 0; i < count; i++)
 	{
-		return;
+		if(inputManager->gamepadStates[i].instance != index)
+		{
+			continue;
+		}
+		
+		GamepadState_EventAxis(&inputManager->gamepadStates[i], event);
 	}
-	
-	GamepadState_EventAxis(&inputManager->gamepadStates[index], event);
 }

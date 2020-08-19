@@ -66,7 +66,9 @@ GamepadState GamepadState_Create(int index)
 	
 	gamepadState.joystick = SDL_JoystickOpen(index);
 	gamepadState.controller = SDL_GameControllerOpen(index);
-	
+    
+    gamepadState.instance = SDL_JoystickInstanceID(gamepadState.joystick);
+    
 	return gamepadState;
 }
 
