@@ -13,4 +13,5 @@ typedef struct GamepadState
     SDL_GameControllerAxis axes[6];
     int axesValues[6];
     int instance;
+    SDL_Haptic* haptic;
 } GamepadState;

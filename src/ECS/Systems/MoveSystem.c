@@ -34,5 +34,10 @@ void MoveSystem(ecs_iter_t* it)
 		{
 			b[i].position.Y -= a[i].speed;
 		}
+		
+		if(button(Down, 0, X))
+		{
+			rumble(0, 1.0f, 500);
+		}
 	}
 }

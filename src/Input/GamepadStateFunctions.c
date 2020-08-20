@@ -64,13 +64,25 @@ GamepadState GamepadState_Create(int index)
 	};
 	memcpy(&gamepadState.axes, axes, sizeof(axes));
 	
-	gamepadState.joystick = SDL_JoystickOpen(index);
-	gamepadState.controller = SDL_GameControllerOpen(index);
+	gamepadState.joystick = SDL_JoystickOpen(index); // GamepadState.joystick allocate
+    
+    gamepadState.haptic = SDL_HapticOpen(index); // GamepadState.haptic allocate
+    
+    if(gamepadState.haptic != NULL)
+    {
+        printf("haptic: %d\n", index);
+        
+        SDL_HapticRumbleInit(gamepadState.haptic);
+    }
+    
+	gamepadState.controller = SDL_GameControllerOpen(index); // GamepadState.controller allocate
     
     gamepadState.instance = SDL_JoystickInstanceID(gamepadState.joystick);
     
 	return gamepadState;
 }
+
+// TODO: GamepadState_Close
 
 int GamepadState_GetIndexAxis(GamepadState* gamepadState, SDL_GameControllerAxis axis)
 {

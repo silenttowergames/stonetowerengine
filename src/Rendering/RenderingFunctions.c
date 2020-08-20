@@ -10,7 +10,7 @@ bool Rendering_Init(ApplicationState* app)
 		SDL_SetHint("FNA3D_FORCE_DRIVER", app->graphicsDriver);
 	}
 	
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC) < 0)
 	{
 		char* log;
 		sprintf(log, "Failed to initialize SDL\n\t%s\n", SDL_GetError());

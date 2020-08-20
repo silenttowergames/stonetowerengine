@@ -21,3 +21,4 @@ float GamepadState_AxisF(GamepadState* gamepadState, SDL_GameControllerAxis axis
 
 #define button(state, index, button) GamepadState_##state(&app->inputManager.gamepadStates[index], GPB_##button)
 #define axis(index, axis) GamepadState_AxisF(&app->inputManager.gamepadStates[index], GamepadButton_ToSDLAxis(GPB_##axis))
+#define rumble(index, strength, duration) SDL_HapticRumblePlay(app->inputManager.gamepadStates[index].haptic, strength, duration)
