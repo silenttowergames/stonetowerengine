@@ -112,6 +112,9 @@
 #include "Rendering/SpriteBatch.h"
 #include "Rendering/SpriteBatchFunctions.c"
 
+// Scenes
+#include "Scenes/Scene.h"
+
 // Utilities
 #include "Utilities/float2d.h"
 #include "Utilities/float4d.h"

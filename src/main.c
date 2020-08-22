@@ -22,10 +22,17 @@ void initScene(ecs_world_t* world)
 {
     ctx();
     
-    factoryRun(app, Player, 0, 0, 0);
-    factoryRun(app, NPC, 32, 0, 0);
-    factoryRun(app, NPC, 0, 32, 0);
-    factoryRun(app, NPC, 32, 32, 0);
+    factoryRun(app, "Player", 0, 0, 0);
+    factoryRun(app, "NPC", 32, 0, 0);
+    factoryRun(app, "NPC", 0, 32, 0);
+    factoryRun(app, "NPC", 32, 32, 0);
+}
+
+void init2Scene(ecs_world_t* world)
+{
+    ctx();
+    
+    factoryRun(app, "Player", 0, 16, 0);
 }
 
 int main(int arcg, char* argv[])
@@ -38,7 +45,13 @@ int main(int arcg, char* argv[])
         1280, 720,
         320, 180,
         initWorld,
-        initScene
+        "init2"
+    );
+    
+    scenes(
+        2,
+        scene(init),
+        scene(init2)
     );
     
     textures(

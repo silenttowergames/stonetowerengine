@@ -381,4 +381,3 @@ void KeyboardState_Type(KeyboardState* keyboardState, char character)
         }
     }
 }
-

@@ -3,9 +3,9 @@
 
 GamepadState GamepadState_Create(int index)
 {
-	GamepadState gamepadState;
+    GamepadState gamepadState;
 	memset(&gamepadState, 0, sizeof(GamepadState));
-	
+    
 	SDL_GameControllerButton buttons[15] = {
         SDL_CONTROLLER_BUTTON_A,
         SDL_CONTROLLER_BUTTON_B,
@@ -70,8 +70,6 @@ GamepadState GamepadState_Create(int index)
     
     if(gamepadState.haptic != NULL)
     {
-        printf("haptic: %d\n", index);
-        
         SDL_HapticRumbleInit(gamepadState.haptic);
     }
     
@@ -83,6 +81,14 @@ GamepadState GamepadState_Create(int index)
 }
 
 // TODO: GamepadState_Close
+void GamepadState_Close(GamepadState* gamepadState)
+{
+    gamepadState->instance = -1;
+    
+    SDL_JoystickClose(gamepadState->joystick); // GamepadState.joystick free
+    SDL_GameControllerClose(gamepadState->controller); // GamepadState.joystick free
+    SDL_HapticClose(gamepadState->haptic); // GamepadState.haptic free
+}
 
 int GamepadState_GetIndexAxis(GamepadState* gamepadState, SDL_GameControllerAxis axis)
 {
@@ -147,6 +153,11 @@ void GamepadState_EventButton(GamepadState* gamepadState, SDL_ControllerButtonEv
 
 void GamepadState_UpdateAxis(GamepadState* gamepadState, GamepadButtons button, bool positive)
 {
+    if(gamepadState->instance == -1)
+    {
+        return;
+    }
+    
     int down = gamepadState->down[button];
     SDL_GameControllerAxis axis = GamepadButton_ToSDLAxis(button);
     float axisValue = GamepadState_AxisF(gamepadState, axis);
@@ -207,6 +218,11 @@ int GamepadState_GetButton(GamepadState* gamepadState, GamepadButtons button)
 
 bool GamepadState_Down(GamepadState* gamepadState, GamepadButtons button)
 {
+    if(gamepadState->instance == -1)
+    {
+        return false;
+    }
+    
     int state = GamepadState_GetButton(gamepadState, button);
     
     if(state > 0)
@@ -219,11 +235,21 @@ bool GamepadState_Down(GamepadState* gamepadState, GamepadButtons button)
 
 bool GamepadState_Up(GamepadState* gamepadState, GamepadButtons button)
 {
+    if(gamepadState->instance == -1)
+    {
+        return false;
+    }
+    
     return !GamepadState_Down(gamepadState, button);
 }
 
 bool GamepadState_Pressed(GamepadState* gamepadState, GamepadButtons button)
 {
+    if(gamepadState->instance == -1)
+    {
+        return false;
+    }
+    
     int state = GamepadState_GetButton(gamepadState, button);
     
     if(state == 1)
@@ -236,6 +262,11 @@ bool GamepadState_Pressed(GamepadState* gamepadState, GamepadButtons button)
 
 bool GamepadState_Released(GamepadState* gamepadState, GamepadButtons button)
 {
+    if(gamepadState->instance == -1)
+    {
+        return false;
+    }
+    
     int state = GamepadState_GetButton(gamepadState, button);
     
     if(state == -1)
@@ -248,6 +279,11 @@ bool GamepadState_Released(GamepadState* gamepadState, GamepadButtons button)
 
 int GamepadState_Axis(GamepadState* gamepadState, SDL_GameControllerAxis axis)
 {
+    if(gamepadState->instance == -1)
+    {
+        return 0;
+    }
+    
     int index = GamepadState_GetIndexAxis(gamepadState, axis);
     
     if(index < 0)
@@ -260,6 +296,11 @@ int GamepadState_Axis(GamepadState* gamepadState, SDL_GameControllerAxis axis)
 
 float GamepadState_AxisF(GamepadState* gamepadState, SDL_GameControllerAxis axis)
 {
+    if(gamepadState->instance == -1)
+    {
+        return 0;
+    }
+    
     int value = GamepadState_Axis(gamepadState, axis);
     
     return value / 32767.0f;

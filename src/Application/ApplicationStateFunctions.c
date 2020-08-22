@@ -18,7 +18,7 @@ void ApplicationState_Create(
     int resX,
     int resY,
     void (*flecsInit)(ecs_world_t*),
-    void (*flecsScene)(ecs_world_t*)
+    const char* flecsScene
 )
 {
 	memset(app, 0, sizeof(ApplicationState));
@@ -51,7 +51,8 @@ void ApplicationState_Loop(ApplicationState* app)
         
         if(app->flecsScene != NULL)
         {
-            app->flecsScene(app->world);
+            sceneRun(app, app->flecsScene);
+            
             app->flecsScene = NULL;
         }
         
@@ -107,4 +108,39 @@ void ApplicationState_AddFactory(ApplicationState* app, Factory callable)
 Factory* ApplicationState_GetFactory(ApplicationState* app, const char* key)
 {
     return ecs_map_get(app->entityFactories, Factory, key);
+}
+
+void ApplicationState_InitScenes(ApplicationState* app, int length)
+{
+    app->sceneFactoriesLength = length;
+    app->sceneFactories = ecs_map_new(Scene, length);
+    app->sceneFactoriesArray = malloc(sizeof(Scene) * length);
+}
+
+void ApplicationState_AddScenes(ApplicationState* app, int length, ...)
+{
+    ApplicationState_InitScenes(app, length);
+    
+    va_list args;
+    
+    va_start(args, length);
+    
+    for(int i = 0; i < length; i++)
+    {
+        ApplicationState_AddScene(app, va_arg(args, Scene));
+    }
+    
+    va_end(args);
+}
+
+void ApplicationState_AddScene(ApplicationState* app, Scene callable)
+{
+    app->sceneFactoriesArray[app->sceneFactoriesLengthSoFar] = callable;
+    ecs_map_set(app->sceneFactories, callable.key, &app->sceneFactoriesArray[app->sceneFactoriesLengthSoFar]);
+    app->sceneFactoriesLengthSoFar++;
+}
+
+Scene* ApplicationState_GetScene(ApplicationState* app, const char* key)
+{
+    return ecs_map_get(app->sceneFactories, Scene, key);
 }

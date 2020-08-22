@@ -6,6 +6,7 @@
 #include "../ECS/Entities/Factory.h"
 #include "../Logging/LoggerFunctions.h"
 #include "../Rendering/RenderState.h"
+#include "../Scenes/Scene.h"
 
 typedef struct ApplicationState
 {
@@ -18,7 +19,7 @@ typedef struct ApplicationState
     const char* graphicsDriver;
     ecs_world_t* world;
     void (*flecsInit)(ecs_world_t*);
-    void (*flecsScene)(ecs_world_t*);
+    const char* flecsScene;
     int FPS;
     RenderState renderState;
     AssetManager assetManager;
@@ -27,4 +28,8 @@ typedef struct ApplicationState
     int entityFactoriesLength;
     int entityFactoriesLengthSoFar;
     InputManager inputManager;
+    ecs_map_t* sceneFactories;
+    Scene* sceneFactoriesArray;
+    int sceneFactoriesLength;
+    int sceneFactoriesLengthSoFar;
 } ApplicationState;

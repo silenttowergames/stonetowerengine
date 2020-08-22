@@ -90,7 +90,7 @@ void SDLEventsSystem(ecs_iter_t* it)
 						continue;
 					}
 					
-					app->inputManager.gamepadStates[i] = GamepadState_Create(event.cdevice.which);
+					GamepadState_Close(&app->inputManager.gamepadStates[i]);
 				}
 			} break;
 		}
