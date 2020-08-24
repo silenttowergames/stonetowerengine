@@ -5,5 +5,4 @@
 typedef struct Body
 {
 	float2d position;
-	const char* name;
 } Body;

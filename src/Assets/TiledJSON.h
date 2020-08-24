@@ -1,5 +1,6 @@
 #pragma once
 
+#include <flecs.h>
 #include "TiledJSONLayer.h"
 #include "Texture.h"
 
@@ -11,4 +12,5 @@ typedef struct TiledJSON
     int2d tilesize;
     int layerCount;
     TiledJSONLayer* layers;
+    ecs_map_t* layersMap;
 } TiledJSON;

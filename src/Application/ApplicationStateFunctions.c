@@ -1,5 +1,6 @@
 #include "ApplicationStateFunctions.h"
 #include "../Assets/AssetManagerFunctions.h"
+#include "../Assets/TiledJSONFunctions.h"
 #include "../ECS/FlecsFunctions.h"
 #include "../ECS/Systems/DrawSystem.h"
 #include "../Logging/LoggerFunctions.h"
@@ -51,7 +52,7 @@ void ApplicationState_Loop(ApplicationState* app)
         
         if(app->flecsScene != NULL)
         {
-            sceneRun(app, app->flecsScene);
+            ApplicationState_RunScene(app, app->flecsScene);
             
             app->flecsScene = NULL;
         }
@@ -143,4 +144,34 @@ void ApplicationState_AddScene(ApplicationState* app, Scene callable)
 Scene* ApplicationState_GetScene(ApplicationState* app, const char* key)
 {
     return ecs_map_get(app->sceneFactories, Scene, key);
+}
+
+void ApplicationState_RunScene(ApplicationState* app, const char* key)
+{
+    Scene* _scene = ApplicationState_GetScene(app, key);
+    
+    if(_scene == NULL)
+    {
+        return;
+    }
+    
+    if(_scene->tiledMap != NULL)
+    {
+        //TiledJSON* map = ecs_map_get(app->assetManager.mapTiled, TiledJSON, _scene->tiledMap);
+        TiledJSON* map = ecs_map_get(app->assetManager.mapTiled, TiledJSON, "map0");
+        
+        if(map != NULL)
+        {
+            TiledJSON_Build(app, map);
+        }
+        else
+        {
+            printf("test\n");
+        }
+    }
+    
+    if(_scene->callable != NULL)
+    {
+        _scene->callable(app->world);
+    }
 }

@@ -18,7 +18,7 @@ void initWorld(ecs_world_t* world)
 	ecs_query_order_by(world, sort->query, ecs_entity(Renderable), SortByLayerThenY);
 }
 
-void initScene(ecs_world_t* world)
+void initializeScene(ecs_world_t* world)
 {
     ctx();
     
@@ -45,13 +45,13 @@ int main(int arcg, char* argv[])
         1280, 720,
         320, 180,
         initWorld,
-        "init2"
+        "map0"
     );
     
     scenes(
         2,
-        scene(init),
-        scene(init2)
+        scene(initialize),
+        sceneTiled("map0", NULL)
     );
     
     textures(

@@ -82,7 +82,6 @@
 #include "ECS/Systems/FinalizeScreenSystem.c"
 #include "ECS/Systems/MoveSystem.c"
 #include "ECS/Systems/SDLEventsSystem.c"
-#include "ECS/Systems/TestSystem.c"
 // .
 #include "ECS/FlecsFunctions.c"
 #include "ECS/SortByLayerThenY.c"

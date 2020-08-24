@@ -24,7 +24,6 @@ void NPCFactory(ecs_world_t* world, float X, float Y, int layer)
     });
     ecs_set(world, f, Body, {
         { X, Y, },
-        "npc",
     });
     ecs_set(world, f, Renderable, {
         ecs_map_get(app->assetManager.mapTexture, Texture, "8x8"),

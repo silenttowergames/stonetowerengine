@@ -13,6 +13,13 @@ void FinalizeScreenSystem(ecs_iter_t* it)
 	
 	ctx();
 	
+	if(!app->renderState.spriteBatch.opened)
+	{
+		SpriteBatch_Begin(&app->renderState.spriteBatch);
+		
+		return;
+	}
+	
 	FNA3D_SetViewport(app->renderState.device, &app->renderState.viewport);
 	
 	FNA3D_SetRenderTargets(

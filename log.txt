@@ -1,6 +1,0 @@
-Assertion failed!
-
-Program: C:\Users\Silent Tower Games\Projects\_libs\stonetowerengine\bin\win64\main.exe
-File: src/Rendering/SpriteBatchFunctions.c, Line 11
-
-Expression: !spriteBatch->opened

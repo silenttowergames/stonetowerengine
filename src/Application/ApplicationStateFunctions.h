@@ -27,6 +27,7 @@ void ApplicationState_InitScenes(ApplicationState* app, int length);
 void ApplicationState_AddScenes(ApplicationState* app, int length, ...);
 void ApplicationState_AddScene(ApplicationState* app, Scene callable);
 Scene* ApplicationState_GetScene(ApplicationState* app, const char* key);
+void ApplicationState_RunScene(ApplicationState* app, const char* key);
 
 #define init(...) ApplicationState app; ApplicationState_Create(&app, __VA_ARGS__); freopen(app.logger.filename, "a", stderr)
 #define loop() ApplicationState_Loop(&app)
@@ -37,8 +38,8 @@ Scene* ApplicationState_GetScene(ApplicationState* app, const char* key);
 #define factoryRun(app, key, X, Y, layer) ApplicationState_GetFactory(app, key)->callable(app->world, X, Y, layer)
 
 #define scenes(l, ...) ApplicationState_AddScenes(&app, l, __VA_ARGS__)
-#define scene(c) (Scene){ #c, "test", c ## Scene, }
-#define sceneRun(app, key) ApplicationState_GetScene(app, key)->callable(app->world)
+#define scene(c) (Scene){ #c, NULL, c ## Scene, }
+#define sceneTiled(map, c) (Scene){ map, map, c, }
 
 #define ctx() ApplicationState* app = (ApplicationState*)ecs_get_context(world)
 #define fctx() ApplicationState* app = (ApplicationState*)ecs_get_context(it->world)

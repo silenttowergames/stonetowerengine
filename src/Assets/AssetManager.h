@@ -10,7 +10,6 @@ typedef struct AssetManager
 	ecs_map_t* mapTexture;
 	int lengthTexture;
 	int lengthSoFarTexture;
-	
 	TiledJSON* arrayTiled;
 	ecs_map_t* mapTiled;
 	int lengthTiled;
