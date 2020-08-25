@@ -10,6 +10,7 @@ void initWorld(ecs_world_t* world)
     ECS_SYSTEM(world, SDLEventsSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, EngineUpdateSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, MoveSystem, EcsOnUpdate, AIPlayer, Body);
+    ECS_SYSTEM(world, DepthSystem, EcsOnUpdate, Body, Renderable);
     ECS_SYSTEM(world, AnimateSystem, EcsOnUpdate, Animate, Renderable);
     ECS_SYSTEM(world, DrawSystem, EcsOnUpdate, Body, Renderable);
     ECS_SYSTEM(world, FinalizeScreenSystem, EcsOnUpdate, 0);

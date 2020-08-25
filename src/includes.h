@@ -79,6 +79,7 @@
 #include "ECS/Entities/PlayerFactory.c"
 // Systems
 #include "ECS/Systems/AnimateSystem.c"
+#include "ECS/Systems/DepthSystem.c"
 #include "ECS/Systems/DrawSystem.c"
 #include "ECS/Systems/EngineUpdateSystem.c"
 #include "ECS/Systems/FinalizeScreenSystem.c"
