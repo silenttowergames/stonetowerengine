@@ -32,7 +32,7 @@ void init2Scene(ecs_world_t* world)
 {
     ctx();
     
-    factoryRun(app, "Player", 0, 16, 0);
+    factoryRun(app, "Player", 0, 16, 2);
 }
 
 int main(int arcg, char* argv[])
@@ -40,7 +40,7 @@ int main(int arcg, char* argv[])
     init(
         "Engine Test",
         "v1.0.0",
-        "OpenGL",
+        "Vulkan",
         60,
         1280, 720,
         320, 180,

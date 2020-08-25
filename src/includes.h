@@ -42,6 +42,8 @@
 // FontStash
 #define FONTSTASH_IMPLEMENTATION
 #include "vendor/fontstash/fontstash.h"
+// lookup3 for hashing strings
+#include "vendor/lookup3.c"
 
 // ===
 

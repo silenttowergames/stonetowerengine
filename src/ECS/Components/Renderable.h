@@ -19,4 +19,5 @@ typedef struct Renderable
 	void (*render)(SpriteBatch*, void*, float2d);
 	int layer;
 	float depth;
+	float parallax;
 } Renderable;

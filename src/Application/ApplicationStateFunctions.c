@@ -102,13 +102,13 @@ void ApplicationState_AddFactories(ApplicationState* app, int length, ...)
 void ApplicationState_AddFactory(ApplicationState* app, Factory callable)
 {
     app->entityFactoriesArray[app->entityFactoriesLengthSoFar] = callable;
-    ecs_map_set(app->entityFactories, callable.key, &app->entityFactoriesArray[app->entityFactoriesLengthSoFar]);
+    ecs_map_set(app->entityFactories, hashlittle(callable.key, strlen(callable.key), 0), &app->entityFactoriesArray[app->entityFactoriesLengthSoFar]);
     app->entityFactoriesLengthSoFar++;
 }
 
 Factory* ApplicationState_GetFactory(ApplicationState* app, const char* key)
 {
-    return ecs_map_get(app->entityFactories, Factory, key);
+    return ecs_map_get(app->entityFactories, Factory, hashlittle(key, strlen(key), 0));
 }
 
 void ApplicationState_InitScenes(ApplicationState* app, int length)

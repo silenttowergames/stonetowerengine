@@ -152,6 +152,7 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
 void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
 {
     int layer = 0;
+    Factory* factory;
     
     for(int i = 0; i < tiled->layerCount; i++)
     {
@@ -169,7 +170,17 @@ void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
                     continue;
                 }
                 
-                //ApplicationState_Factory_Run(app, tiled->layers[i].objects[j].type, &tiled->layers[i].objects[j]);
+                printf("[%s] : %lu\n", tiled->layers[i].objects[j].type, hashlittle(tiled->layers[i].objects[j].type, strlen(tiled->layers[i].objects[j].type), 0));
+                
+                //ApplicationState_GetFactory(app, tiled->layers[i].objects[j].type, &tiled->layers[i].objects[j]);
+                factory = ApplicationState_GetFactory(app, tiled->layers[i].objects[j].type);
+                
+                factory->callable(
+                    app->world,
+                    tiled->layers[i].objects[j].position.X,
+                    tiled->layers[i].objects[j].position.Y,
+                    layer
+                );
             }
         }
         

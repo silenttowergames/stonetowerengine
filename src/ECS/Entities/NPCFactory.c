@@ -35,7 +35,7 @@ void NPCFactory(ecs_world_t* world, float X, float Y, int layer)
         0,
         NULL,
         Renderable_Sprite_Render,
-        0,
+        layer,
         (rand() % 10) / 10.0f,
     });
 }

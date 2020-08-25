@@ -50,7 +50,7 @@
                  "id":1,
                  "name":"",
                  "rotation":0,
-                 "type":"npc",
+                 "type":"NPC",
                  "visible":true,
                  "width":8,
                  "x":16,
@@ -62,11 +62,11 @@
                  "id":2,
                  "name":"",
                  "rotation":0,
-                 "type":"bed",
+                 "type":"",
                  "visible":true,
                  "width":8,
-                 "x":216,
-                 "y":24
+                 "x":8,
+                 "y":56
                 }, 
                 {
                  "gid":20,
@@ -74,7 +74,7 @@
                  "id":3,
                  "name":"",
                  "rotation":0,
-                 "type":"lamp",
+                 "type":"",
                  "visible":true,
                  "width":8,
                  "x":224,
@@ -92,11 +92,11 @@
                          "value":"hello!"
                         }],
                  "rotation":0,
-                 "type":"player",
+                 "type":"Player",
                  "visible":true,
                  "width":8,
-                 "x":56,
-                 "y":40
+                 "x":8,
+                 "y":32
                 }],
          "opacity":1,
          "type":"objectgroup",
