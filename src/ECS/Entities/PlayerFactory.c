@@ -28,7 +28,7 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer)
         { X, Y, },
     });
     ecs_set(world, e, Renderable, {
-        ecs_map_get(app->assetManager.mapTexture, Texture, "16x16"),
+        getTexture("16x16"),
         { 0, 0, },
         { 0, 0, },
         { 1, 1, },

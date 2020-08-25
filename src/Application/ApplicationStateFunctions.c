@@ -137,13 +137,13 @@ void ApplicationState_AddScenes(ApplicationState* app, int length, ...)
 void ApplicationState_AddScene(ApplicationState* app, Scene callable)
 {
     app->sceneFactoriesArray[app->sceneFactoriesLengthSoFar] = callable;
-    ecs_map_set(app->sceneFactories, callable.key, &app->sceneFactoriesArray[app->sceneFactoriesLengthSoFar]);
+    ecs_map_set(app->sceneFactories, hashlittle(callable.key, strlen(callable.key), 0), &app->sceneFactoriesArray[app->sceneFactoriesLengthSoFar]);
     app->sceneFactoriesLengthSoFar++;
 }
 
 Scene* ApplicationState_GetScene(ApplicationState* app, const char* key)
 {
-    return ecs_map_get(app->sceneFactories, Scene, key);
+    return ecs_map_get(app->sceneFactories, Scene, hashlittle(key, strlen(key), 0));
 }
 
 void ApplicationState_RunScene(ApplicationState* app, const char* key)
@@ -157,8 +157,7 @@ void ApplicationState_RunScene(ApplicationState* app, const char* key)
     
     if(_scene->tiledMap != NULL)
     {
-        //TiledJSON* map = ecs_map_get(app->assetManager.mapTiled, TiledJSON, _scene->tiledMap);
-        TiledJSON* map = ecs_map_get(app->assetManager.mapTiled, TiledJSON, "map0");
+        TiledJSON* map = ecs_map_get(app->assetManager.mapTiled, TiledJSON, hashlittle(_scene->tiledMap, strlen(_scene->tiledMap), 0));
         
         if(map != NULL)
         {

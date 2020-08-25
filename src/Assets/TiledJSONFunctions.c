@@ -45,7 +45,8 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
         obj = json_object_array_get_idx(tilesets, i);
         json_object_object_get_ex(obj, "name", &objEx);
         
-        tiled.texture = ecs_map_get(app->assetManager.mapTexture, Texture, "8x8");//json_object_get_string(objEx));
+        const char* texture = json_object_get_string(objEx);
+        tiled.texture = ecs_map_get(app->assetManager.mapTexture, Texture, hashlittle(texture, strlen(texture), 0));
         
         assert(tiled.texture != NULL);
         
@@ -142,7 +143,7 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
         
         if(tiled.layers[i].name != NULL)
         {
-            ecs_map_set(tiled.layersMap, tiled.layers[i].name, &tiled.layers[i]);
+            ecs_map_set(tiled.layersMap, hashlittle(tiled.layers[i].name, strlen(tiled.layers[i].name), 0), &tiled.layers[i]);
         }
     }
     
@@ -170,8 +171,7 @@ void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
                     continue;
                 }
                 
-                printf("[%s] : %lu\n", tiled->layers[i].objects[j].type, hashlittle(tiled->layers[i].objects[j].type, strlen(tiled->layers[i].objects[j].type), 0));
-                
+                // TODO: Send properties with factory call
                 //ApplicationState_GetFactory(app, tiled->layers[i].objects[j].type, &tiled->layers[i].objects[j]);
                 factory = ApplicationState_GetFactory(app, tiled->layers[i].objects[j].type);
                 
