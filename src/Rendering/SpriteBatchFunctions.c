@@ -69,6 +69,11 @@ void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, FNA3D_Texture* texture, quad 
 
 void SpriteBatch_Flush(RenderState* renderState)
 {
+	if(renderState->spriteBatch.indicesThisFrame <= 0)
+	{
+		return;
+	}
+	
 	FNA3D_SamplerState samplerState;
 	memset(&samplerState, 0, sizeof(samplerState));
 	samplerState.addressU = FNA3D_TEXTUREADDRESSMODE_CLAMP;

@@ -65,6 +65,7 @@
 #include "Assets/TiledJSONFunctions.c"
 #include "Assets/TiledJSONLayer.h"
 #include "Assets/TiledJSONObject.h"
+#include "Assets/TiledJSONProperty.h"
 
 // ECS
 // Components

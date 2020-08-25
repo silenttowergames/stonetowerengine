@@ -46,13 +46,14 @@ int main(int arcg, char* argv[])
         1280, 720,
         320, 180,
         initWorld,
-        "map0"
+        "map1"
     );
     
     scenes(
         2,
         scene(initialize),
-        sceneTiled("map0", NULL)
+        sceneTiled("map1", NULL),
+        sceneTiled("map0", init2Scene)
     );
     
     textures(

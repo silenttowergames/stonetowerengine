@@ -50,7 +50,7 @@
                  "id":1,
                  "name":"",
                  "rotation":0,
-                 "type":"NPCFactory",
+                 "type":"NPC",
                  "visible":true,
                  "width":8,
                  "x":16,
@@ -85,17 +85,11 @@
                  "height":8,
                  "id":4,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"test",
-                         "type":"string",
-                         "value":"hello!"
-                        }],
                  "rotation":0,
-                 "type":"PlayerFactory",
+                 "type":"Player",
                  "visible":true,
                  "width":8,
-                 "x":56,
+                 "x":32,
                  "y":40
                 }],
          "opacity":1,

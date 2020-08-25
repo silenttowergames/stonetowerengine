@@ -1,11 +1,13 @@
 #include <json.h>
 #include "TiledJSONFunctions.h"
+#include "TiledJSONProperty.h"
 #include "../ECS/Components/Body.h"
 #include "../ECS/Components/RenderableFunctions.h"
 
 TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
 {
     TiledJSON tiled;
+    memset(&tiled, 0, sizeof(TiledJSON));
     tiled.key = key;
     
     const char* format = "assets/maps/%s.json";
@@ -62,6 +64,7 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
     for(int i = 0; i < tiled.layerCount; i++)
     {
         TiledJSONLayer tlayer;
+        memset(&tlayer, 0, sizeof(TiledJSONLayer));
         
         layer = json_object_array_get_idx(layers, i);
         
@@ -113,6 +116,7 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
             for(int j = 0; j < tlayer.count; j++)
             {
                 TiledJSONObject object;
+                memset(&object, 0, sizeof(TiledJSONObject));
                 
                 object.layer = i;
                 
@@ -134,6 +138,31 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
                 
                 json_object_object_get_ex(objEx, "type", &item);
                 object.type = json_object_get_string(item);
+                
+                json_object_object_get_ex(objEx, "properties", &item);
+                if(item != NULL)
+                {
+                    json_object* property;
+                    json_object* propertyChild;
+                    TiledJSONProperty* prop;
+                    
+                    object.propertiesCount = json_object_array_length(item);
+                    object.propertiesArray = malloc(sizeof(TiledJSONProperty) * object.propertiesCount);
+                    object.properties = ecs_map_new(TiledJSONProperty, object.propertiesCount);
+                    
+                    for(int p = 0; p < object.propertiesCount; p++)
+                    {
+                        property = json_object_array_get_idx(item, p);
+                        
+                        prop = &object.propertiesArray[p];
+                        memset(prop, 0, sizeof(TiledJSONProperty));
+                        
+                        json_object_object_get_ex(property, "name", &propertyChild);
+                        prop->key = json_object_get_string(propertyChild);
+                        
+                        // TODO: Finish Tiled properties
+                    }
+                }
                 
                 tlayer.objects[j] = object;
             }
@@ -159,7 +188,6 @@ void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
     {
         if(strcmp(tiled->layers[i].type, "tilelayer") == 0)
         {
-            //TiledMapFactory(tiled, i);
             TiledJSON_Map(app->world, &tiled->layers[i], tiled->texture, layer);
         }
         else if(strcmp(tiled->layers[i].type, "objectgroup") == 0)
@@ -174,6 +202,11 @@ void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
                 // TODO: Send properties with factory call
                 //ApplicationState_GetFactory(app, tiled->layers[i].objects[j].type, &tiled->layers[i].objects[j]);
                 factory = ApplicationState_GetFactory(app, tiled->layers[i].objects[j].type);
+                
+                if(factory == NULL)
+                {
+                    continue;
+                }
                 
                 factory->callable(
                     app->world,
@@ -203,7 +236,7 @@ void TiledJSON_Map(ecs_world_t* world, TiledJSONLayer* layer, Texture* texture, 
     ECS_COMPONENT(world, Renderable);
     
     ecs_set(world, e, Body, {
-        { -120, -75, },
+        { 0, 0, },
     });
     ecs_set(world, e, Renderable, {
         texture,

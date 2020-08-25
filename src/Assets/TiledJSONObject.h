@@ -1,5 +1,7 @@
 #pragma once
 
+#include <flecs.h>
+#include "TiledJSONProperty.h"
 #include "../Utilities/float2d.h"
 
 typedef struct TiledJSONObject
@@ -9,4 +11,7 @@ typedef struct TiledJSONObject
     const char* name;
     const char* type;
     int layer;
+    ecs_map_t* properties;
+    TiledJSONProperty* propertiesArray;
+    int propertiesCount;
 } TiledJSONObject;
