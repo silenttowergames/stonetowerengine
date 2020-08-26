@@ -9,5 +9,5 @@ typedef struct TiledJSONProperty
     const char* valueString;
     bool valueBool;
     int valueInt;
-    int valueFloat;
+    double valueDouble;
 } TiledJSONProperty;

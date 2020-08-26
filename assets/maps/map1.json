@@ -49,6 +49,17 @@
                  "height":8,
                  "id":1,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"hello",
+                         "type":"int",
+                         "value":5
+                        }, 
+                        {
+                         "name":"hi",
+                         "type":"float",
+                         "value":5.76
+                        }],
                  "rotation":0,
                  "type":"NPC",
                  "visible":true,

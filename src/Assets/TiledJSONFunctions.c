@@ -48,7 +48,8 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
         json_object_object_get_ex(obj, "name", &objEx);
         
         const char* texture = json_object_get_string(objEx);
-        tiled.texture = ecs_map_get(app->assetManager.mapTexture, Texture, hashlittle(texture, strlen(texture), 0));
+        //tiled.texture = ecs_map_get(app->assetManager.mapTexture, Texture, hashlittle(texture, strlen(texture), 0));
+        tiled.texture = mapGet(app->assetManager.mapTexture, texture, Texture);
         
         assert(tiled.texture != NULL);
         
@@ -145,6 +146,7 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
                     json_object* property;
                     json_object* propertyChild;
                     TiledJSONProperty* prop;
+                    char* propertyType;
                     
                     object.propertiesCount = json_object_array_length(item);
                     object.propertiesArray = malloc(sizeof(TiledJSONProperty) * object.propertiesCount);
@@ -160,7 +162,29 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
                         json_object_object_get_ex(property, "name", &propertyChild);
                         prop->key = json_object_get_string(propertyChild);
                         
-                        // TODO: Finish Tiled properties
+                        json_object_object_get_ex(property, "type", &propertyChild);
+                        prop->type = json_object_get_string(propertyChild);
+                        
+                        json_object_object_get_ex(property, "value", &propertyChild);
+                        if(strcmp(prop->type, "string") == 0)
+                        {
+                            prop->valueString = json_object_get_string(propertyChild);
+                        }
+                        else if(strcmp(prop->type, "bool") == 0)
+                        {
+                            prop->valueBool = json_object_get_boolean(propertyChild);
+                        }
+                        else if(strcmp(prop->type, "int") == 0)
+                        {
+                            prop->valueInt = json_object_get_int(propertyChild);
+                        }
+                        else if(strcmp(prop->type, "float") == 0)
+                        {
+                            prop->valueDouble = json_object_get_double(propertyChild);
+                        }
+                        
+                        //ecs_map_set(object.properties, prop->key, prop);
+                        mapSet(object.properties, prop->key, prop);
                     }
                 }
                 
@@ -172,7 +196,8 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
         
         if(tiled.layers[i].name != NULL)
         {
-            ecs_map_set(tiled.layersMap, hashlittle(tiled.layers[i].name, strlen(tiled.layers[i].name), 0), &tiled.layers[i]);
+            //ecs_map_set(tiled.layersMap, hashlittle(tiled.layers[i].name, strlen(tiled.layers[i].name), 0), &tiled.layers[i]);
+            mapSet(tiled.layersMap, tiled.layers[i].name, &tiled.layers[i]);
         }
     }
     
