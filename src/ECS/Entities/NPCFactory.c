@@ -5,7 +5,7 @@
 #include "../Components/RenderableFunctions.h"
 #include "../../Application/ApplicationStateFunctions.h"
 
-void NPCFactory(ecs_world_t* world, float X, float Y, int layer)
+void NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
 {
 	ctx();
 	

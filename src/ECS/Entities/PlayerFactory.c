@@ -3,7 +3,7 @@
 #include "../Components/Body.h"
 #include "../Components/RenderableFunctions.h"
 
-void PlayerFactory(ecs_world_t* world, float X, float Y, int layer)
+void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
 {
     ctx();
     

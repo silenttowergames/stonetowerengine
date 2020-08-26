@@ -35,7 +35,7 @@ void ApplicationState_RunScene(ApplicationState* app, const char* key);
 
 #define factories(l, ...) ApplicationState_AddFactories(&app, l, __VA_ARGS__)
 #define factory(c) (Factory){ #c, c ## Factory, }
-#define factoryRun(app, key, X, Y, layer) ApplicationState_GetFactory(app, key)->callable(app->world, X, Y, layer)
+#define factoryRun(app, key, X, Y, layer, tiledObject) ApplicationState_GetFactory(app, key)->callable(app->world, X, Y, layer, tiledObject)
 
 #define scenes(l, ...) ApplicationState_AddScenes(&app, l, __VA_ARGS__)
 #define scene(c) (Scene){ #c, NULL, c ## Scene, }

@@ -3,6 +3,7 @@
 #include "TiledJSONProperty.h"
 #include "../ECS/Components/Body.h"
 #include "../ECS/Components/RenderableFunctions.h"
+#include "../ECS/FlecsFunctions.h"
 
 TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
 {
@@ -222,7 +223,6 @@ void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
                 }
                 
                 // TODO: Send properties with factory call
-                //ApplicationState_GetFactory(app, tiled->layers[i].objects[j].type, &tiled->layers[i].objects[j]);
                 factory = ApplicationState_GetFactory(app, tiled->layers[i].objects[j].type);
                 
                 if(factory == NULL)
@@ -234,7 +234,8 @@ void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
                     app->world,
                     tiled->layers[i].objects[j].position.X,
                     tiled->layers[i].objects[j].position.Y,
-                    layer
+                    layer,
+                    &tiled->layers[i].objects[j]
                 );
             }
         }

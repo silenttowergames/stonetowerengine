@@ -23,21 +23,23 @@ void initializeScene(ecs_world_t* world)
 {
     ctx();
     
-    factoryRun(app, "Player", 0, 0, 0);
-    factoryRun(app, "NPC", 32, 0, 0);
-    factoryRun(app, "NPC", 0, 32, 0);
-    factoryRun(app, "NPC", 32, 32, 0);
+    factoryRun(app, "Player", 0, 0, 0, NULL);
+    factoryRun(app, "NPC", 32, 0, 0, NULL);
+    factoryRun(app, "NPC", 0, 32, 0, NULL);
+    factoryRun(app, "NPC", 32, 32, 0, NULL);
 }
 
 void init2Scene(ecs_world_t* world)
 {
     ctx();
     
-    factoryRun(app, "Player", 0, 16, 2);
+    factoryRun(app, "Player", 0, 16, 2, NULL);
 }
 
 int main(int arcg, char* argv[])
 {
+    // TODO: NEXT: Make a macro for getting Tiled properties
+    
     init(
         "Engine Test",
         "v1.0.0",
