@@ -19,7 +19,6 @@ void AssetManager_AddTexture(AssetManager* assetManager, Texture texture)
 {
 	assetManager->arrayTexture[assetManager->lengthSoFarTexture] = texture;
 	
-	//ecs_map_set(assetManager->mapTexture, hashlittle(texture.key, strlen(texture.key), 0), &assetManager->arrayTexture[assetManager->lengthSoFarTexture]);
 	mapSet(assetManager->mapTexture, texture.key, &assetManager->arrayTexture[assetManager->lengthSoFarTexture]);
 	
 	assetManager->lengthSoFarTexture++;
@@ -50,7 +49,6 @@ void AssetManager_AddMap(AssetManager* assetManager, TiledJSON map)
 {
 	assetManager->arrayTiled[assetManager->lengthSoFarTiled] = map;
 	
-	//ecs_map_set(assetManager->mapTiled, hashlittle(map.key, strlen(map.key), 0), &assetManager->arrayTiled[assetManager->lengthSoFarTiled]);
 	mapSet(assetManager->mapTiled, map.key, &assetManager->arrayTiled[assetManager->lengthSoFarTiled]);
 	
 	assetManager->lengthSoFarTiled++;

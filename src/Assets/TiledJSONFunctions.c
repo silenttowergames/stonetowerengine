@@ -48,7 +48,6 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
         json_object_object_get_ex(obj, "name", &objEx);
         
         const char* texture = json_object_get_string(objEx);
-        //tiled.texture = ecs_map_get(app->assetManager.mapTexture, Texture, hashlittle(texture, strlen(texture), 0));
         tiled.texture = mapGet(app->assetManager.mapTexture, texture, Texture);
         
         assert(tiled.texture != NULL);
@@ -183,7 +182,6 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
                             prop->valueDouble = json_object_get_double(propertyChild);
                         }
                         
-                        //ecs_map_set(object.properties, prop->key, prop);
                         mapSet(object.properties, prop->key, prop);
                     }
                 }
@@ -196,7 +194,6 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
         
         if(tiled.layers[i].name != NULL)
         {
-            //ecs_map_set(tiled.layersMap, hashlittle(tiled.layers[i].name, strlen(tiled.layers[i].name), 0), &tiled.layers[i]);
             mapSet(tiled.layersMap, tiled.layers[i].name, &tiled.layers[i]);
         }
     }

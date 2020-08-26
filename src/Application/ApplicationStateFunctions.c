@@ -102,14 +102,12 @@ void ApplicationState_AddFactories(ApplicationState* app, int length, ...)
 void ApplicationState_AddFactory(ApplicationState* app, Factory callable)
 {
     app->entityFactoriesArray[app->entityFactoriesLengthSoFar] = callable;
-    //ecs_map_set(app->entityFactories, hashlittle(callable.key, strlen(callable.key), 0), &app->entityFactoriesArray[app->entityFactoriesLengthSoFar]);
     mapSet(app->entityFactories, callable.key, &app->entityFactoriesArray[app->entityFactoriesLengthSoFar]);
     app->entityFactoriesLengthSoFar++;
 }
 
 Factory* ApplicationState_GetFactory(ApplicationState* app, const char* key)
 {
-    //return ecs_map_get(app->entityFactories, Factory, hashlittle(key, strlen(key), 0));
     return mapGet(app->entityFactories, key, Factory);
 }
 
@@ -139,14 +137,12 @@ void ApplicationState_AddScenes(ApplicationState* app, int length, ...)
 void ApplicationState_AddScene(ApplicationState* app, Scene callable)
 {
     app->sceneFactoriesArray[app->sceneFactoriesLengthSoFar] = callable;
-    //ecs_map_set(app->sceneFactories, hashlittle(callable.key, strlen(callable.key), 0), &app->sceneFactoriesArray[app->sceneFactoriesLengthSoFar]);
     mapSet(app->sceneFactories, callable.key, &app->sceneFactoriesArray[app->sceneFactoriesLengthSoFar]);
     app->sceneFactoriesLengthSoFar++;
 }
 
 Scene* ApplicationState_GetScene(ApplicationState* app, const char* key)
 {
-    //return ecs_map_get(app->sceneFactories, Scene, hashlittle(key, strlen(key), 0));
     return mapGet(app->sceneFactories, key, Scene);
 }
 
@@ -161,7 +157,6 @@ void ApplicationState_RunScene(ApplicationState* app, const char* key)
     
     if(_scene->tiledMap != NULL)
     {
-        //TiledJSON* map = ecs_map_get(app->assetManager.mapTiled, TiledJSON, hashlittle(_scene->tiledMap, strlen(_scene->tiledMap), 0));
         TiledJSON* map = mapGet(app->assetManager.mapTiled, _scene->tiledMap, TiledJSON);
         
         if(map != NULL)
