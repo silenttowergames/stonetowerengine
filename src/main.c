@@ -5,11 +5,13 @@ void initWorld(ecs_world_t* world)
     ECS_COMPONENT(world, AIPlayer);
     ECS_COMPONENT(world, Animate);
     ECS_COMPONENT(world, Body);
+    ECS_COMPONENT(world, CameraFollow);
     ECS_COMPONENT(world, Renderable);
     
     ECS_SYSTEM(world, SDLEventsSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, EngineUpdateSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, MoveSystem, EcsOnUpdate, AIPlayer, Body);
+    ECS_SYSTEM(world, CameraFollowSystem, EcsOnUpdate, Body, CameraFollow);
     ECS_SYSTEM(world, DepthSystem, EcsOnUpdate, Body, Renderable);
     ECS_SYSTEM(world, AnimateSystem, EcsOnUpdate, Animate, Renderable);
     ECS_SYSTEM(world, DrawSystem, EcsOnUpdate, Body, Renderable);

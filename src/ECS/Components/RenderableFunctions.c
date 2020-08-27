@@ -74,10 +74,25 @@ void Renderable_Tilemap_Render(SpriteBatch* spriteBatch, Camera* camera, void* _
 	int tile;
 	int2d frame;
 	
-	for(int Y = 0; Y < tilemap->size.Y; Y++)
+	int Left = ((camera->position.X - (camera->resolution.X / 2)) / renderable->texture->tilesize.X) + 1;
+	int Top = ((camera->position.Y - (camera->resolution.Y / 2)) / renderable->texture->tilesize.Y) + 1;
+	int Right = ((camera->position.X + (camera->resolution.X / 2)) / renderable->texture->tilesize.X) + 2;
+	int Bottom = ((camera->position.Y + (camera->resolution.Y / 2)) / renderable->texture->tilesize.Y) + 2;
+	
+	for(int Y = max(0, Top); Y < Bottom; Y++)
 	{
-		for(int X = 0; X < tilemap->size.X; X++)
+		if(Y >= tilemap->size.Y)
 		{
+			break;
+		}
+		
+		for(int X = max(0, Left); X < Right; X++)
+		{
+			if(X >= tilemap->size.X)
+			{
+				break;
+			}
+			
 			index = (Y * tilemap->size.X) + X;
 			
 			if(tilemap->tiles[index] == 0)

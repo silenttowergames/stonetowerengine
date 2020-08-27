@@ -72,6 +72,7 @@
 #include "ECS/Components/AIPlayer.h"
 #include "ECS/Components/Animate.h"
 #include "ECS/Components/Body.h"
+#include "ECS/Components/CameraFollow.h"
 #include "ECS/Components/Renderable.h"
 #include "ECS/Components/RenderableFunctions.c"
 // Entities
@@ -80,6 +81,7 @@
 #include "ECS/Entities/PlayerFactory.c"
 // Systems
 #include "ECS/Systems/AnimateSystem.c"
+#include "ECS/Systems/CameraFollowSystem.c"
 #include "ECS/Systems/DepthSystem.c"
 #include "ECS/Systems/DrawSystem.c"
 #include "ECS/Systems/EngineUpdateSystem.c"

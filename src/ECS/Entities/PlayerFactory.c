@@ -11,6 +11,7 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObj
     ECS_COMPONENT(world, AIPlayer);
 	ECS_COMPONENT(world, Animate);
     ECS_COMPONENT(world, Body);
+    ECS_COMPONENT(world, CameraFollow);
     ECS_COMPONENT(world, Renderable);
     
     ecs_entity_t e = ecs_new(world, 0);
@@ -34,6 +35,9 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObj
     });
     ecs_set(world, e, Body, {
         { X, Y, },
+    });
+    ecs_set(world, e, CameraFollow, {
+        { 0, 0, },
     });
     ecs_set(world, e, Renderable, {
         getTexture("16x16"),
