@@ -51,3 +51,30 @@ quad quad_Frame(Texture* texture, int x, int y)
 	
 	return q;
 }
+
+bool quad_Intersects(float ALeft, float ARight, float ATop, float ABottom, float BLeft, float BRight, float BTop, float BBottom)
+{
+	if(
+		!(ARight >= BLeft && ALeft <= BLeft)
+		&&
+		!(ARight >= BRight && ALeft <= BRight)
+	)
+	{
+		return false;
+	}
+	
+	// If we've made it this far, we're intersecting on X
+	
+	if(
+		!(ABottom >= BTop && ATop <= BTop)
+		&&
+		!(ABottom >= BBottom && ATop <= BBottom)
+	)
+	{
+		return false;
+	}
+	
+	// If we've made it this far, we're intersecting on X and Y
+	
+	return true;
+}

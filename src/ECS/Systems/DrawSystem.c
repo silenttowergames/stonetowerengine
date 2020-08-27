@@ -26,6 +26,6 @@ void DrawSystem(ecs_iter_t* it)
 	float2d size;
 	for(int i = 0; i < it->count; i++)
 	{
-		renderable[i].render(&app->renderState.spriteBatch, &renderable[i], body[i].position);
+		renderable[i].render(&app->renderState.spriteBatch, &app->renderState.camera, &renderable[i], body[i].position);
 	}
 }

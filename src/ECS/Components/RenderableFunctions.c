@@ -4,7 +4,7 @@
 #include "../../Rendering/SpriteBatchFunctions.h"
 #include "../../Utilities/quadFunctions.h"
 
-void Renderable_Sprite_Render(SpriteBatch* spriteBatch, void* _renderable, float2d position)
+void Renderable_Sprite_Render(SpriteBatch* spriteBatch, Camera* camera, void* _renderable, float2d position)
 {
 	Renderable* renderable = (Renderable*)_renderable;
 	quad pos = quad_Easy(
@@ -45,10 +45,10 @@ void Renderable_Sprite_Render(SpriteBatch* spriteBatch, void* _renderable, float
 		}
 	}
 	
-	SpriteBatch_AddQuad(spriteBatch, renderable->texture->asset, pos, src);
+	SpriteBatch_AddQuad(spriteBatch, camera, renderable->texture->asset, pos, src);
 }
 
-void Renderable_Tilemap_Render(SpriteBatch* spriteBatch, void* _renderable, float2d position)
+void Renderable_Tilemap_Render(SpriteBatch* spriteBatch, Camera* camera, void* _renderable, float2d position)
 {
 	Renderable* renderable = (Renderable*)_renderable;
 	
@@ -101,7 +101,7 @@ void Renderable_Tilemap_Render(SpriteBatch* spriteBatch, void* _renderable, floa
 			);
 			src = quad_Frame(renderable->texture, frame.X, frame.Y);
 			
-			SpriteBatch_AddQuad(spriteBatch, renderable->texture->asset, pos, src);
+			SpriteBatch_AddQuad(spriteBatch, camera, renderable->texture->asset, pos, src);
 		}
 	}
 }

@@ -13,9 +13,23 @@ bool SpriteBatch_Begin(SpriteBatch* spriteBatch)
 	spriteBatch->opened = true;
 }
 
-void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, FNA3D_Texture* texture, quad pos, quad src)
+void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, Camera* camera, FNA3D_Texture* texture, quad pos, quad src)
 {
 	assert(spriteBatch->indicesThisFrame <= (MAX_INDICES - 6));
+	
+	if(!quad_Intersects(
+		camera->position.X - (camera->resolution.X / 2),
+		camera->position.X + (camera->resolution.X / 2),
+		camera->position.Y - (camera->resolution.Y / 2),
+		camera->position.Y + (camera->resolution.Y / 2),
+		pos.topLeft.X,
+		pos.bottomRight.X,
+		pos.topRight.Y,
+		pos.bottomLeft.Y
+	))
+	{
+		return;
+	}
 	
 	int i = spriteBatch->indicesThisFrame;
 	
