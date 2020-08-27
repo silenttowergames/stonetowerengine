@@ -2,6 +2,7 @@
 #include "../Components/Animate.h"
 #include "../Components/Body.h"
 #include "../Components/RenderableFunctions.h"
+#include "../../Assets/TiledJSONProperty.h"
 
 void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
 {
@@ -13,6 +14,13 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObj
     ECS_COMPONENT(world, Renderable);
     
     ecs_entity_t e = ecs_new(world, 0);
+    
+    // Example of using properties
+    TiledJSONProperty* prop = getProperty(object, "modify");
+    if(prop != NULL && prop->valueBool)
+    {
+        X += 32;
+    }
     
     ecs_set(world, e, AIPlayer, {
         1.0f,

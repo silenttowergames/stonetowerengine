@@ -38,8 +38,6 @@ void init2Scene(ecs_world_t* world)
 
 int main(int arcg, char* argv[])
 {
-    // TODO: NEXT: Make a macro for getting Tiled properties
-    
     init(
         "Engine Test",
         "v1.0.0",

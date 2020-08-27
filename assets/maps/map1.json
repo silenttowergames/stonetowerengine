@@ -96,6 +96,12 @@
                  "height":8,
                  "id":4,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"modify",
+                         "type":"bool",
+                         "value":false
+                        }],
                  "rotation":0,
                  "type":"Player",
                  "visible":true,
