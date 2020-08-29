@@ -150,10 +150,16 @@ void ApplicationState_RunScene(ApplicationState* app, const char* key)
 {
     Scene* _scene = ApplicationState_GetScene(app, key);
     
+    printf("scene?\n");
+    
     if(_scene == NULL)
     {
+        printf("no.\n");
+        
         return;
     }
+    
+    printf("yes!\n");
     
     if(_scene->tiledMap != NULL)
     {
@@ -161,11 +167,8 @@ void ApplicationState_RunScene(ApplicationState* app, const char* key)
         
         if(map != NULL)
         {
+            printf("map!\n");
             TiledJSON_Build(app, map);
-        }
-        else
-        {
-            printf("test\n");
         }
     }
     

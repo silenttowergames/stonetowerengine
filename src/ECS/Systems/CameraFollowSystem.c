@@ -11,7 +11,7 @@ void CameraFollowSystem(ecs_iter_t* it)
 	
 	for(int i = 0; i < it->count; i++)
 	{
-		app->renderState.camera.position.X = b[i].position.X;
-		app->renderState.camera.position.Y = b[i].position.Y;
+		app->renderState.camera.position.X = b[i].position.X + c[i].offset.X;
+		app->renderState.camera.position.Y = b[i].position.Y + c[i].offset.Y;
 	}
 }

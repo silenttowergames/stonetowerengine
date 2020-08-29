@@ -79,6 +79,7 @@
 #include "ECS/Entities/Factory.h"
 #include "ECS/Entities/NPCFactory.c"
 #include "ECS/Entities/PlayerFactory.c"
+#include "ECS/Entities/TextBoxFactory.c"
 // Systems
 #include "ECS/Systems/AnimateSystem.c"
 #include "ECS/Systems/CameraFollowSystem.c"

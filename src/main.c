@@ -35,7 +35,7 @@ void init2Scene(ecs_world_t* world)
 {
     ctx();
     
-    factoryRun(app, "Player", 0, 16, 2, NULL);
+    //factoryRun(app, "TextBox", 0, 16, 2, NULL);
 }
 
 int main(int arcg, char* argv[])
@@ -48,14 +48,15 @@ int main(int arcg, char* argv[])
         1280, 720,
         320, 180,
         initWorld,
-        "map1"
+        "initialize"
     );
     
     scenes(
         2,
         scene(initialize),
         sceneTiled("map1", NULL),
-        sceneTiled("map0", init2Scene)
+        //sceneTiled("map0", init2Scene)
+        sceneTiled("map0", NULL)
     );
     
     textures(
@@ -73,7 +74,8 @@ int main(int arcg, char* argv[])
     factories(
         2,
         factory(Player),
-        factory(NPC)
+        factory(NPC),
+        factory(TextBox)
     );
     
     loop();

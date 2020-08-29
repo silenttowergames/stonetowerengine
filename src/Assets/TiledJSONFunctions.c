@@ -207,6 +207,8 @@ void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
     int layer = 0;
     Factory* factory;
     
+    printf("build...\n");
+    
     for(int i = 0; i < tiled->layerCount; i++)
     {
         if(strcmp(tiled->layers[i].type, "tilelayer") == 0)
