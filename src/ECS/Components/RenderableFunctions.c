@@ -45,7 +45,7 @@ void Renderable_Sprite_Render(SpriteBatch* spriteBatch, Camera* camera, void* _r
 		}
 	}
 	
-	SpriteBatch_AddQuad(spriteBatch, camera, renderable->texture->asset, pos, src);
+	SpriteBatch_AddQuad(spriteBatch, camera, renderable->texture->asset, pos, src, renderable->color);
 }
 
 void Renderable_Tilemap_Render(SpriteBatch* spriteBatch, Camera* camera, void* _renderable, float2d position)
@@ -116,7 +116,7 @@ void Renderable_Tilemap_Render(SpriteBatch* spriteBatch, Camera* camera, void* _
 			);
 			src = quad_Frame(renderable->texture, frame.X, frame.Y);
 			
-			SpriteBatch_AddQuad(spriteBatch, camera, renderable->texture->asset, pos, src);
+			SpriteBatch_AddQuad(spriteBatch, camera, renderable->texture->asset, pos, src, renderable->color);
 		}
 	}
 }

@@ -13,7 +13,7 @@ bool SpriteBatch_Begin(SpriteBatch* spriteBatch)
 	spriteBatch->opened = true;
 }
 
-void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, Camera* camera, FNA3D_Texture* texture, quad pos, quad src)
+void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, Camera* camera, FNA3D_Texture* texture, quad pos, quad src, uint32_t color)
 {
 	assert(spriteBatch->indicesThisFrame <= (MAX_INDICES - 6));
 	
@@ -32,8 +32,6 @@ void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, Camera* camera, FNA3D_Texture
 	}
 	
 	int i = spriteBatch->indicesThisFrame;
-	
-	uint32_t color = 0xFFFFFFFF;
 	
 	spriteBatch->textures[i + 0] = texture;
 	spriteBatch->textures[i + 1] = texture;

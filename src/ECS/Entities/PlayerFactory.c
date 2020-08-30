@@ -51,5 +51,7 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObj
         Renderable_Sprite_Render,
         layer,
         0.5f,
+        0,
+        0xFFFFFFFF,
     });
 }

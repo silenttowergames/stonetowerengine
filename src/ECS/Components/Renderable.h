@@ -21,4 +21,5 @@ typedef struct Renderable
 	int layer;
 	float depth;
 	float parallax;
+	uint32_t color;
 } Renderable;

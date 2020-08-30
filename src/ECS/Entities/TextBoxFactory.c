@@ -27,5 +27,7 @@ void TextBoxFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONOb
         Renderable_Sprite_Render,
         layer,
         0.5f,
+        0,
+        0xFFFFFFFF,
     });
 }
