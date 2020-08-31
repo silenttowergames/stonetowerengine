@@ -62,24 +62,13 @@ void FontStashFNA3D_RenderDraw(void* uptr, const float* verts, const float* tcoo
     
     for(int i = 0; i < nverts * 2; i += 12)
     {
-        /*
-        q.X = verts[i + 0];
-        q.Y = verts[i + 1];
-        q.Width = verts[i + 2];
-        q.Height = verts[i + 3];
-        
-        pos.X = tcoords[i + 0];
-        pos.Y = tcoords[i + 1];
-        size.X = tcoords[i + 2] - pos.X;
-        size.Y = tcoords[i + 3] - pos.Y;
-        */
-        
         SpriteBatch_AddQuad(
             &fna->app->renderState.spriteBatch,
             &fna->app->renderState.camera,
             fna->texture.asset,
             pos,
-            src
+            src,
+            colors[i / 2]
         );
     }
 }
@@ -89,14 +78,14 @@ void FontStashFNA3D_RenderDelete(void* uptr)
     // TODO: FontStashFNA3D_RenderDelete
 }
 
-FONScontext* FontStashFNA3D_Create(Texture* texture, int width, int height, int flags)
+FONScontext* FontStashFNA3D_Create(ApplicationState* app, int width, int height, int flags)
 {
     FONSparams params;
     
     FontStashFNA3D* fna = malloc(sizeof(FontStashFNA3D));
     memset(fna, 0, sizeof(FontStashFNA3D));
     
-    fna->texture = texture;
+    fna->texture = Texture_NewBlank(fna->app->renderState.device, width, height, 4, false);
     
     memset(&params, 0, sizeof(params));
     params.width = width;

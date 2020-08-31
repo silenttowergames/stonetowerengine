@@ -207,8 +207,6 @@ void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
     int layer = 0;
     Factory* factory;
     
-    printf("build...\n");
-    
     for(int i = 0; i < tiled->layerCount; i++)
     {
         if(strcmp(tiled->layers[i].type, "tilelayer") == 0)
@@ -224,7 +222,6 @@ void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
                     continue;
                 }
                 
-                // TODO: Send properties with factory call
                 factory = ApplicationState_GetFactory(app, tiled->layers[i].objects[j].type);
                 
                 if(factory == NULL)
@@ -275,5 +272,7 @@ void TiledJSON_Map(ecs_world_t* world, TiledJSONLayer* layer, Texture* texture, 
         Renderable_Tilemap_Render,
         layerID,
         0.0f,
+        0,
+        0xFFFFFFFF,
     });
 }
