@@ -37,7 +37,7 @@ void init2Scene(ecs_world_t* world)
 {
     ctx();
     
-    factoryRun(app, "TextBox", 48, 64, 5, NULL);
+    factoryRun(app, "TextBox", 0, -20, 5, NULL);
 }
 
 int main(int arcg, char* argv[])

@@ -44,7 +44,7 @@ void FontStashFNA3D_RenderUpdate(void* uptr, int* rect, const unsigned char* dat
     
     for(int i = 0; i < size; i++)
     {
-        int val = data[i];
+        unsigned int val = data[i];
         
         for(int c = 0; c < channels; c++)
         {
@@ -58,29 +58,24 @@ void FontStashFNA3D_RenderUpdate(void* uptr, int* rect, const unsigned char* dat
 void FontStashFNA3D_RenderDraw(void* uptr, const float* verts, const float* tcoords, const unsigned int* colors, int nverts)
 {
     FontStashFNA3D* fna = (FontStashFNA3D*)uptr;
+    float2d spos, ssize;
     quad pos;
     quad src;
     
     for(int i = 0; i < nverts * 2; i += 12)
     {
-        pos = quad_Easy(
-            verts[i + 0],
-            verts[i + 1],
-            verts[i + 2],
-            verts[i + 3],
-            0,
-            0,
-            0
-        );
-        src = quad_Easy(
-            tcoords[i + 0],
-            tcoords[i + 1],
-            tcoords[i + 2] - tcoords[i + 0],
-            tcoords[i + 3] - tcoords[i + 1],
-            0,
-            0,
-            0
-        );
+        pos = (quad){
+            { verts[i + 0], verts[i + 1], },
+            { verts[i + 2], verts[i + 1], },
+            { verts[i + 0], verts[i + 3], },
+            { verts[i + 2], verts[i + 3], },
+        };
+        src = (quad){
+            { tcoords[i + 0], tcoords[i + 1], },
+            { tcoords[i + 2], tcoords[i + 1], },
+            { tcoords[i + 0], tcoords[i + 3], },
+            { tcoords[i + 2], tcoords[i + 3], },
+        };
         
         SpriteBatch_AddQuad(
             &fna->app->renderState.spriteBatch,
@@ -108,6 +103,7 @@ FONScontext* FontStashFNA3D_Create(ApplicationState* app, int width, int height,
     fna->app = app;
     
     fna->texture = Texture_NewBlank(fna->app->renderState.device, width, height, 4, false);
+    fna->texture.tilesize = (int2d){ width, height, };
     
     memset(&params, 0, sizeof(params));
     params.width = width;

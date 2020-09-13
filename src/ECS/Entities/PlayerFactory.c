@@ -40,7 +40,8 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObj
         { 0, 0, },
     });
     ecs_set(world, e, Renderable, {
-        getTexture("16x16"),
+        //getTexture("16x16"),
+        &((FontStashFNA3D*)app->fons->params.userPtr)->texture,
         { 0, 0, },
         { 0, 0, },
         { 1, 1, },
