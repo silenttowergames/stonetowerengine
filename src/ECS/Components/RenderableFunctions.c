@@ -4,7 +4,7 @@
 #include "../../Rendering/SpriteBatchFunctions.h"
 #include "../../Utilities/quadFunctions.h"
 
-void Renderable_Sprite_Render(SpriteBatch* spriteBatch, Camera* camera, void* _renderable, float2d position)
+void Renderable_Sprite_Render(ApplicationState* app, SpriteBatch* spriteBatch, Camera* camera, void* _renderable, float2d position)
 {
 	Renderable* renderable = (Renderable*)_renderable;
 	quad pos = quad_Easy(
@@ -48,7 +48,16 @@ void Renderable_Sprite_Render(SpriteBatch* spriteBatch, Camera* camera, void* _r
 	SpriteBatch_AddQuad(spriteBatch, camera, renderable->texture->asset, pos, src, renderable->color);
 }
 
-void Renderable_Tilemap_Render(SpriteBatch* spriteBatch, Camera* camera, void* _renderable, float2d position)
+void Renderable_TextBox_Render(ApplicationState* app, SpriteBatch* spriteBatch, Camera* camera, void* _renderable, float2d position)
+{
+	Renderable* renderable = (Renderable*)_renderable;
+	
+	fonsSetSize(app->fons, 8);
+	fonsSetColor(app->fons, renderable->color);
+	fonsDrawText(app->fons, position.X, position.Y, (const char*)renderable->data, NULL);
+}
+
+void Renderable_Tilemap_Render(ApplicationState* app, SpriteBatch* spriteBatch, Camera* camera, void* _renderable, float2d position)
 {
 	Renderable* renderable = (Renderable*)_renderable;
 	

@@ -1,8 +1,9 @@
 #include "FontStashFNA3DFunctions.h"
-#include "SpriteBatchFunctions.h"
 #include "TextureFunctions.h"
+#include "../Rendering/SpriteBatchFunctions.h"
 #include "../Utilities/float2d.h"
 #include "../Utilities/quad.h"
+#include "../Utilities/quadFunctions.h"
 
 int FontStashFNA3D_RenderCreate(void* uptr, int width, int height)
 {
@@ -62,6 +63,25 @@ void FontStashFNA3D_RenderDraw(void* uptr, const float* verts, const float* tcoo
     
     for(int i = 0; i < nverts * 2; i += 12)
     {
+        pos = quad_Easy(
+            verts[i + 0],
+            verts[i + 1],
+            verts[i + 2],
+            verts[i + 3],
+            0,
+            0,
+            0
+        );
+        src = quad_Easy(
+            tcoords[i + 0],
+            tcoords[i + 1],
+            tcoords[i + 2] - tcoords[i + 0],
+            tcoords[i + 3] - tcoords[i + 1],
+            0,
+            0,
+            0
+        );
+        
         SpriteBatch_AddQuad(
             &fna->app->renderState.spriteBatch,
             &fna->app->renderState.camera,
@@ -84,6 +104,8 @@ FONScontext* FontStashFNA3D_Create(ApplicationState* app, int width, int height,
     
     FontStashFNA3D* fna = malloc(sizeof(FontStashFNA3D));
     memset(fna, 0, sizeof(FontStashFNA3D));
+    
+    fna->app = app;
     
     fna->texture = Texture_NewBlank(fna->app->renderState.device, width, height, 4, false);
     

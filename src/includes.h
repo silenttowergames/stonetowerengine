@@ -57,6 +57,7 @@
 #include "Assets/ASEpriteJSONFunctions.c"
 #include "Assets/AssetManager.h"
 #include "Assets/AssetManagerFunctions.c"
+#include "Assets/FontStashFNA3DFunctions.c"
 #include "Assets/Shader.h"
 #include "Assets/ShaderFunctions.c"
 #include "Assets/Texture.h"

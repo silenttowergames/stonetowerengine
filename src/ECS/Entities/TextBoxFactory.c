@@ -16,15 +16,15 @@ void TextBoxFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONOb
         { X, Y, },
     });
     ecs_set(world, e, Renderable, {
-        getTexture("16x16"),
+        NULL,
         { 0, 0, },
         { 0, 0, },
         { 1, 1, },
         false,
         false,
         0,
-        NULL,
-        Renderable_Sprite_Render,
+        (void*)"a",
+        Renderable_TextBox_Render,
         layer,
         0.5f,
         0,

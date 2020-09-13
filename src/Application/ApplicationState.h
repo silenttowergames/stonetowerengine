@@ -32,4 +32,5 @@ typedef struct ApplicationState
     Scene* sceneFactoriesArray;
     int sceneFactoriesLength;
     int sceneFactoriesLengthSoFar;
+    FONScontext* fons;
 } ApplicationState;

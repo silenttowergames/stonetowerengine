@@ -1,5 +1,6 @@
 #include "ApplicationStateFunctions.h"
 #include "../Assets/AssetManagerFunctions.h"
+#include "../Assets/FontStashFNA3DFunctions.h"
 #include "../Assets/TiledJSONFunctions.h"
 #include "../ECS/FlecsFunctions.h"
 #include "../ECS/Systems/DrawSystem.h"
@@ -42,6 +43,10 @@ void ApplicationState_Create(
     app->inputManager = InputManager_Create();
     
     ecs_os_set_api_defaults();
+    
+    app->fons = FontStashFNA3D_Create(app, 512, 512, FONS_ZERO_TOPLEFT);
+    int fontP2P = fonsAddFont(app->fons, "sans", "assets/fonts/PressStart2P/PressStart2P.ttf");
+    fonsSetFont(app->fons, fontP2P);
 }
 
 void ApplicationState_Loop(ApplicationState* app)

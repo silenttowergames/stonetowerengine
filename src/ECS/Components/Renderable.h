@@ -17,7 +17,7 @@ typedef struct Renderable
 	bool flipY;
 	float rotation;
 	void* data;
-	void (*render)(SpriteBatch*, Camera*, void*, float2d);
+	void (*render)(ApplicationState*, SpriteBatch*, Camera*, void*, float2d);
 	int layer;
 	float depth;
 	float parallax;

@@ -8,4 +8,4 @@ void FontStashFNA3D_RenderUpdate(void* uptr, int* rect, const unsigned char* dat
 void FontStashFNA3D_RenderDraw(void* uptr, const float* verts, const float* tcoords, const unsigned int* colors, int nverts);
 void FontStashFNA3D_RenderDelete(void* uptr);
 
-FONScontext* FontStashFNA3D_Create(Texture* texture, int width, int height, int flags);
+FONScontext* FontStashFNA3D_Create(ApplicationState* app, int width, int height, int flags);
