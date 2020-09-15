@@ -22,4 +22,6 @@ typedef struct Renderable
 	float depth;
 	float parallax;
 	uint32_t color;
+	float2d (*renderOffset)(int, int);
+	int duration;
 } Renderable;

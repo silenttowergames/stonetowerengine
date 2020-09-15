@@ -52,9 +52,23 @@ void Renderable_TextBox_Render(ApplicationState* app, SpriteBatch* spriteBatch, 
 {
 	Renderable* renderable = (Renderable*)_renderable;
 	
+	const char* message = (const char*)renderable->data;
+	
+	if(message == NULL || strlen(message) == 0)
+	{
+		renderable->duration = 0;
+	}
+	
+	renderable->duration++;
+	
+	FontStashFNA3D* fna = (FontStashFNA3D*)app->fons->params.userPtr;
+	
+	fna->renderOffset = renderable->renderOffset;
+	fna->duration = renderable->duration;
+	
 	fonsSetSize(app->fons, 8);
 	fonsSetColor(app->fons, renderable->color);
-	fonsDrawText(app->fons, position.X, position.Y, (const char*)renderable->data, NULL);
+	fonsDrawText(app->fons, position.X, position.Y, message, NULL);
 }
 
 void Renderable_Tilemap_Render(ApplicationState* app, SpriteBatch* spriteBatch, Camera* camera, void* _renderable, float2d position)

@@ -58,17 +58,28 @@ void FontStashFNA3D_RenderUpdate(void* uptr, int* rect, const unsigned char* dat
 void FontStashFNA3D_RenderDraw(void* uptr, const float* verts, const float* tcoords, const unsigned int* colors, int nverts)
 {
     FontStashFNA3D* fna = (FontStashFNA3D*)uptr;
-    float2d spos, ssize;
+    
+    float2d offset;
+    
     quad pos;
     quad src;
     
     for(int i = 0; i < nverts * 2; i += 12)
     {
+        if(fna->renderOffset != NULL)
+        {
+            offset = fna->renderOffset(i / 12, fna->duration);
+        }
+        else
+        {
+            memset(&offset, 0, sizeof(float2d));
+        }
+        
         pos = (quad){
-            { verts[i + 0], verts[i + 1], },
-            { verts[i + 2], verts[i + 1], },
-            { verts[i + 0], verts[i + 3], },
-            { verts[i + 2], verts[i + 3], },
+            { verts[i + 0] + offset.X, verts[i + 1] + offset.Y, },
+            { verts[i + 2] + offset.X, verts[i + 1] + offset.Y, },
+            { verts[i + 0] + offset.X, verts[i + 3] + offset.Y, },
+            { verts[i + 2] + offset.X, verts[i + 3] + offset.Y, },
         };
         src = (quad){
             { tcoords[i + 0], tcoords[i + 1], },

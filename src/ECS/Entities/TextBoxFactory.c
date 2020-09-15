@@ -1,7 +1,9 @@
 #include "TextBoxFactory.h"
 #include "../Components/Body.h"
 #include "../Components/RenderableFunctions.h"
+#include "../Components/RenderOffsetFunctions.h"
 #include "../../Application/ApplicationStateFunctions.h"
+#include "../../Utilities/colorFunctions.h"
 
 void TextBoxFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
 {
@@ -28,6 +30,8 @@ void TextBoxFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONOb
         layer,
         0.5f,
         0,
-        0xFFFFFFFF,
+        colorU(0, 255, 0, 255),
+        RenderOffset_Sine,
+        0
     });
 }

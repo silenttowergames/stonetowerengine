@@ -76,6 +76,7 @@
 #include "ECS/Components/CameraFollow.h"
 #include "ECS/Components/Renderable.h"
 #include "ECS/Components/RenderableFunctions.c"
+#include "ECS/Components/RenderOffsetFunctions.c"
 // Entities
 #include "ECS/Entities/Factory.h"
 #include "ECS/Entities/NPCFactory.c"
@@ -123,6 +124,8 @@
 #include "Scenes/Scene.h"
 
 // Utilities
+#include "Utilities/color.h"
+#include "Utilities/colorFunctions.c"
 #include "Utilities/float2d.h"
 #include "Utilities/float4d.h"
 #include "Utilities/int2d.h"

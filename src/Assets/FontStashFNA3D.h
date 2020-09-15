@@ -12,4 +12,6 @@ typedef struct FontStashFNA3D
 {
     ApplicationState* app;
     Texture texture;
+    float2d (*renderOffset)(int, int);
+    int duration;
 } FontStashFNA3D;
