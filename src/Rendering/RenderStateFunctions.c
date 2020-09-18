@@ -38,7 +38,7 @@ void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int 
 	
 	app->renderState.device = FNA3D_CreateDevice(&app->renderState.presentationParameters, STE_DEBUG);
 	
-	app->renderState.shaderSpriteEffect = Shader_Create(app->renderState.device, "SpriteEffect");
+	app->renderState.shaderSpriteEffect = Shader_Create(app->renderState.device, "SpriteEffect", NULL);
 	
 	app->renderState.vertexBuffer = FNA3D_GenVertexBuffer(app->renderState.device, 1, FNA3D_BUFFERUSAGE_WRITEONLY, MAX_INDICES * sizeof(Vertex)); // RenderState.vertexBuffer allocate
 	

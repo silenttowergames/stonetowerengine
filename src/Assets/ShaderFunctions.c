@@ -3,10 +3,12 @@
 #include <flecs.h>
 #include "ShaderFunctions.h"
 
-Shader Shader_Create(FNA3D_Device* device, char* key)
+Shader Shader_Create(FNA3D_Device* device, char* key, void (*update)(void*))
 {
 	Shader shader;
 	memset(&shader, 0, sizeof(Shader));
+	
+	shader.update = update;
 	
 	const char* formatStr = "assets/shaders/%s.fxb";
 	

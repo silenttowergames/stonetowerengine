@@ -1,5 +1,3 @@
-float Green, Blue;
-
 int Width, Height;
 
 Texture2D SpriteTexture;

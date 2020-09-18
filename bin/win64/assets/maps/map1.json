@@ -49,8 +49,19 @@
                  "height":8,
                  "id":1,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"hello",
+                         "type":"int",
+                         "value":5
+                        }, 
+                        {
+                         "name":"hi",
+                         "type":"float",
+                         "value":5.76
+                        }],
                  "rotation":0,
-                 "type":"NPCFactory",
+                 "type":"NPC",
                  "visible":true,
                  "width":8,
                  "x":16,
@@ -87,15 +98,15 @@
                  "name":"",
                  "properties":[
                         {
-                         "name":"test",
-                         "type":"string",
-                         "value":"hello!"
+                         "name":"modify",
+                         "type":"bool",
+                         "value":false
                         }],
                  "rotation":0,
-                 "type":"PlayerFactory",
+                 "type":"Player",
                  "visible":true,
                  "width":8,
-                 "x":56,
+                 "x":32,
                  "y":40
                 }],
          "opacity":1,
@@ -126,7 +137,7 @@
         {
          "columns":8,
          "firstgid":1,
-         "image":"8x8.png",
+         "image":"..\/sprites\/8x8.png",
          "imageheight":32,
          "imagewidth":64,
          "margin":0,

@@ -48,6 +48,14 @@ void FinalizeScreenSystem(ecs_iter_t* it)
 	MOJOSHADER_effectStateChanges stateChanges;
 	memset(&stateChanges, 0, sizeof(stateChanges));
 	FNA3D_ApplyEffect(app->renderState.device, app->renderState.shaderSpriteEffect.effect, 0, &stateChanges);
+	if(app->assetManager.arrayShader[0].update != NULL)
+	{
+		app->assetManager.arrayShader[0].update(&app->assetManager.arrayShader[0]);
+	}
+	if(!app->assetManager.arrayShader[0].disabled)
+	{
+		FNA3D_ApplyEffect(app->renderState.device, app->assetManager.arrayShader[0].effect, 0, &stateChanges);
+	}
 	
 	SpriteBatch_Flush(&app->renderState);
 	

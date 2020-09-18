@@ -1,6 +1,8 @@
 // Stone Tower Engine
 // Silent Tower Games LLC
 
+#define STONE_TOWER_ENGINE_VERSION "v1.0.0"
+
 // OS
 // Windows
 #ifdef _WIN32

@@ -1,4 +1,7 @@
 #include <assert.h>
+#include "Camera.h"
+#include "RenderState.h"
+#include "RenderTarget.h"
 #include "SpriteBatchFunctions.h"
 
 void SpriteBatch_Create(SpriteBatch* spriteBatch)

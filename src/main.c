@@ -40,11 +40,23 @@ void init2Scene(ecs_world_t* world)
     factoryRun(app, "TextBox", 0, -20, 5, NULL);
 }
 
+void ShaderUpdate_Disable(void* _shader)
+{
+    sctx();
+    
+    //shader->disabled = !shader->disabled;
+    
+    int width = 640;
+    int height = 360;
+    Shader_ParamCopy(shader, "Width", &width, sizeof(width));
+    Shader_ParamCopy(shader, "Height", &height, sizeof(height));
+}
+
 int main(int arcg, char* argv[])
 {
     init(
         "Engine Test",
-        "v1.0.0",
+        STONE_TOWER_ENGINE_VERSION,
         "OpenGL",
         60,
         1280, 720,
@@ -70,6 +82,11 @@ int main(int arcg, char* argv[])
         2,
         TiledJSON_Load(&app, "map0"),
         TiledJSON_Load(&app, "map1")
+    );
+    
+    shaders(
+        1,
+        Shader_Create(app.renderState.device, "CRTShader", ShaderUpdate_Disable)
     );
     
     factories(
