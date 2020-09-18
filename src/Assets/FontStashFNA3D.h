@@ -5,13 +5,13 @@
 #include "../vendor/fontstash/fontstash.h"
 #endif
 
-#include "../Application/ApplicationState.h"
 #include "Texture.h"
+#include "../Application/ApplicationState.h"
+#include "../ECS/Components/Renderable.h"
 
 typedef struct FontStashFNA3D
 {
     ApplicationState* app;
     Texture texture;
-    float2d (*renderOffset)(int, int);
-    int duration;
+    Renderable* renderable;
 } FontStashFNA3D;

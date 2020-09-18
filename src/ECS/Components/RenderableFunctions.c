@@ -63,8 +63,7 @@ void Renderable_TextBox_Render(ApplicationState* app, SpriteBatch* spriteBatch, 
 	
 	FontStashFNA3D* fna = (FontStashFNA3D*)app->fons->params.userPtr;
 	
-	fna->renderOffset = renderable->renderOffset;
-	fna->duration = renderable->duration;
+	fna->renderable = renderable;
 	
 	fonsSetSize(app->fons, 8);
 	fonsSetColor(app->fons, renderable->color);

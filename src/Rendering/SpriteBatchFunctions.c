@@ -4,6 +4,9 @@
 void SpriteBatch_Create(SpriteBatch* spriteBatch)
 {
 	memset(spriteBatch, 0, sizeof(SpriteBatch));
+	
+	spriteBatch->vertices = malloc(sizeof(Vertex) * MAX_INDICES); // SpriteBatch.vertices allocate
+	spriteBatch->textures = malloc(sizeof(FNA3D_Texture*) * MAX_INDICES); // SpriteBatch.textures allocate
 }
 
 bool SpriteBatch_Begin(SpriteBatch* spriteBatch)

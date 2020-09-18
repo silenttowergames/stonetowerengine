@@ -4,7 +4,7 @@
 #include "Vertex.h"
 
 #ifndef MAX_SPRITES
-#define MAX_SPRITES 1024
+#define MAX_SPRITES 10000
 #endif
 
 #ifndef MAX_INDICES
@@ -13,8 +13,12 @@
 
 typedef struct SpriteBatch
 {
+	/*
 	Vertex vertices[MAX_INDICES];
 	FNA3D_Texture* textures[MAX_INDICES];
+	//*/
+	Vertex* vertices;
+	FNA3D_Texture** textures;
 	int indicesThisFrame;
 	bool opened;
 } SpriteBatch;
