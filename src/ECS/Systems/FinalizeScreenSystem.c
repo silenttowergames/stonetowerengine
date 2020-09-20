@@ -16,7 +16,16 @@ static void FinalizeScreenSystem_ToRTs(ApplicationState* app)
 		return;
 	}
 	
-	FNA3D_SetViewport(app->renderState.device, &app->renderState.viewport);
+	// TODO: RenderTarget viewport
+	FNA3D_Viewport viewport;
+	viewport.w = app->renderState.size.X;
+	viewport.h = app->renderState.size.Y;
+	viewport.x = 0;//-viewport.w / 2;
+	viewport.y = 0;//-viewport.h / 2;
+	FNA3D_SetViewport(
+		app->renderState.device,
+		&viewport
+	);
 	
 	FNA3D_SetRenderTargets(
 		app->renderState.device,
@@ -44,14 +53,6 @@ static void FinalizeScreenSystem_ToRTs(ApplicationState* app)
 	MOJOSHADER_effectStateChanges stateChanges;
 	memset(&stateChanges, 0, sizeof(stateChanges));
 	FNA3D_ApplyEffect(app->renderState.device, app->renderState.shaderSpriteEffect.effect, 0, &stateChanges);
-	if(app->assetManager.arrayShader[0].update != NULL)
-	{
-		app->assetManager.arrayShader[0].update(&app->assetManager.arrayShader[0]);
-	}
-	if(!app->assetManager.arrayShader[0].disabled)
-	{
-		FNA3D_ApplyEffect(app->renderState.device, app->assetManager.arrayShader[0].effect, 0, &stateChanges);
-	}
 	
 	SpriteBatch_Flush(&app->renderState);
 	
@@ -60,15 +61,7 @@ static void FinalizeScreenSystem_ToRTs(ApplicationState* app)
 
 static void FinalizeScreenSystem_ToWindow(ApplicationState* app)
 {
-	FNA3D_Viewport viewport;
-	viewport.w = app->renderState.resolution.X;
-	viewport.h = app->renderState.resolution.Y;
-	viewport.x = 0;
-	viewport.y = 0;
-	FNA3D_SetViewport(
-		app->renderState.device,
-		&viewport
-	);
+	FNA3D_SetViewport(app->renderState.device, &app->renderState.viewport);
 	
 	FNA3D_SetRenderTargets(
 		app->renderState.device,
@@ -91,28 +84,31 @@ static void FinalizeScreenSystem_ToWindow(ApplicationState* app)
 	
 	SpriteBatch_Begin(&app->renderState.spriteBatch);
 	
-	quad pos = quad_Easy(
-		app->renderState.mainRenderTarget.position.X,
-		app->renderState.mainRenderTarget.position.Y,
-		app->renderState.mainRenderTarget.size.X,
-		app->renderState.mainRenderTarget.size.Y,
-		0,
-		0,
-		0
-	);
+	int2d size = (int2d){
+		app->renderState.resolution.X / 2,
+		app->renderState.resolution.Y / 2,
+	};
+	printf("%dx%d\n", size.X, size.Y);
+	quad pos = (quad){
+		{ -size.X, -size.Y, },
+		{ size.X, -size.Y, },
+		{ -size.X, size.Y, },
+		{ size.X, size.Y, },
+	};
 	quad src = (quad){
 		{ 0, 0, },
 		{ 1, 0, },
 		{ 0, 1, },
 		{ 1, 1, },
 	};
+	
 	SpriteBatch_AddQuad(
 		&app->renderState.spriteBatch,
 		&app->renderState.camera,
 		app->renderState.mainRenderTarget.texture.asset,
 		pos,
 		src,
-		colorU(255, 255, 255, 255)
+		0xFFFFFFFF
 	);
 	
 	MOJOSHADER_effectParam* shaderMatrix = Shader_ParamGet(&app->renderState.shaderSpriteEffect, "MatrixTransform");

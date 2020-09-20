@@ -8,6 +8,8 @@ RenderTarget RenderTarget_Create(FNA3D_Device* device, int2d size, int2d resolut
 	memset(&renderTarget, 0, sizeof(renderTarget));
 	
 	renderTarget.texture = Texture_NewBlank(device, size.X, size.Y, 4, true); // RenderTarget.texture allocate
+	renderTarget.texture.tilesize.X = size.X;
+	renderTarget.texture.tilesize.Y = size.Y;
 	
 	renderTarget.binding.type = FNA3D_RENDERTARGET_TYPE_2D;
 	renderTarget.binding.texture = renderTarget.texture.asset;
@@ -15,6 +17,9 @@ RenderTarget RenderTarget_Create(FNA3D_Device* device, int2d size, int2d resolut
 	renderTarget.camera.resolution = resolution;
 	renderTarget.camera.zoom.X = 1.0f;
 	renderTarget.camera.zoom.Y = 1.0f;
+	
+	renderTarget.size = size;
+	renderTarget.position = position;
 	
 	return renderTarget;
 }

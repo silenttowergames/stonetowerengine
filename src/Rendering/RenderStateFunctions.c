@@ -20,7 +20,7 @@ void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int 
 	app->renderState.windowTitle = malloc(sizeof(char) * (strlen(app->gameTitle) + 1 + strlen(app->gameVersion) + 1)); // RenderState.windowTitle.allocate
 	sprintf(app->renderState.windowTitle, "%s %s", app->gameTitle, app->gameVersion);
 	
-	app->renderState.window = SDL_CreateWindow(app->renderState.windowTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, FNA3D_PrepareWindowAttributes()); // RenderState.window allocate
+	app->renderState.window = SDL_CreateWindow(app->renderState.windowTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, sizeX, sizeY, FNA3D_PrepareWindowAttributes()); // RenderState.window allocate
 	
 	FNA3D_PresentationParameters presentationParameters;
 	memset(&presentationParameters, 0, sizeof(presentationParameters));
