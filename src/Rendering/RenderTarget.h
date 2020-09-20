@@ -2,6 +2,7 @@
 
 #include <FNA3D.h>
 #include "../Assets/Shader.h"
+#include "../Assets/Texture.h"
 #include "../Rendering/Camera.h"
 #include "../Utilities/int2d.h"
 
@@ -13,4 +14,6 @@ typedef struct RenderTarget
 	int2d size;
 	int2d position;
 	Shader* shaders;
+	int shadersCount;
+	Texture texture;
 } RenderTarget;

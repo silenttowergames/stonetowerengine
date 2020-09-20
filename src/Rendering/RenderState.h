@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "SpriteBatch.h"
 #include "../Assets/Shader.h"
+#include "../Rendering/RenderTarget.h"
 #include "../Utilities/int2d.h"
 
 typedef struct RenderState
@@ -23,4 +24,5 @@ typedef struct RenderState
 	FNA3D_VertexBufferBinding vertexBufferBinding;
 	FNA3D_VertexElement vertexElements[3];
 	ecs_query_t* sortQuery;
+	RenderTarget mainRenderTarget;
 } RenderState;

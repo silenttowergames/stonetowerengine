@@ -119,6 +119,8 @@
 #include "Rendering/RenderingFunctions.c"
 #include "Rendering/RenderState.h"
 #include "Rendering/RenderStateFunctions.c"
+#include "Rendering/RenderTarget.h"
+#include "Rendering/RenderTargetFunctions.c"
 #include "Rendering/SpriteBatch.h"
 #include "Rendering/SpriteBatchFunctions.c"
 

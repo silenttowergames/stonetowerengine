@@ -1,0 +1,13 @@
+apitrace: unloaded from C:\Users\Silent Tower Games\Projects\_libs\stonetowerengine\bin\win64\main.exe
+Assertion failed!
+
+Program: C:\Users\Silent Tower Games\Projects\_libs\stonetowerengine\bin\win64\main.exe
+File: src/Rendering/SpriteBatchFunctions.c, Line 17
+
+Expression: !spriteBatch->opened
+Assertion failed!
+
+Program: C:\Users\Silent Tower Games\Projects\_libs\stonetowerengine\bin\win64\main.exe
+File: src/Rendering/SpriteBatchFunctions.c, Line 17
+
+Expression: !spriteBatch->opened

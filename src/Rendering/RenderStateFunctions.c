@@ -1,6 +1,8 @@
 #include <FNA3D.h>
 #include <SDL2/SDL.h>
+#include "CameraFunctions.h"
 #include "RenderStateFunctions.h"
+#include "RenderTargetFunctions.h"
 #include "SpriteBatchFunctions.h"
 #include "../Application/ApplicationState.h"
 #include "../Assets/ShaderFunctions.h"
@@ -83,6 +85,8 @@ void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int 
 	app->renderState.vertexBufferBinding.vertexDeclaration = vertexDeclaration;
 	
 	SpriteBatch_Create(&app->renderState.spriteBatch);
+	
+	app->renderState.mainRenderTarget = RenderTarget_Create(app->renderState.device, app->renderState.size, app->renderState.resolution, (int2d){ 0, 0, });
 }
 
 void RenderState_Free(RenderState* renderState)

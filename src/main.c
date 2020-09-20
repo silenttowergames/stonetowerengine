@@ -37,7 +37,7 @@ void init2Scene(ecs_world_t* world)
 {
     ctx();
     
-    factoryRun(app, "TextBox", 0, -20, 5, NULL);
+    factoryRun(app, "TextBox", -20, 32, 2, NULL);
 }
 
 void ShaderUpdate_Disable(void* _shader)
