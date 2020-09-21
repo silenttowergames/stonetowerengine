@@ -25,4 +25,7 @@ typedef struct RenderState
 	FNA3D_VertexElement vertexElements[3];
 	ecs_query_t* sortQuery;
 	RenderTarget mainRenderTarget;
+	RenderTarget* renderTargets;
+	int renderTargetsCount;
+	int renderTargetsCountSoFar;
 } RenderState;

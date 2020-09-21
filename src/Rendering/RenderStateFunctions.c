@@ -96,3 +96,30 @@ void RenderState_Free(RenderState* renderState)
 	SDL_DestroyWindow(renderState->window); // RenderState.window free
 	Shader_Free(&renderState->shaderSpriteEffect);
 }
+
+void RenderState_InitRenderTargets(RenderState* renderState, int count)
+{
+	renderState->renderTargetsCount = count;
+	renderState->renderTargetsCountSoFar = 0;
+	renderState->renderTargets = malloc(sizeof(RenderTarget) * count);
+}
+
+void RenderState_AddRenderTarget(RenderState* renderState, RenderTarget renderTarget)
+{
+	renderState->renderTargets[renderState->renderTargetsCountSoFar] = renderTarget;
+	renderState->renderTargetsCountSoFar++;
+}
+
+void RenderState_AddRenderTargets(RenderState* renderState, int count, ...)
+{
+	va_list args;
+	
+	va_start(args, count);
+	
+	for(int i = 0; i < count; i++)
+	{
+		RenderState_AddRenderTarget(renderState, va_arg(args, RenderTarget));
+	}
+	
+	va_end(args);
+}

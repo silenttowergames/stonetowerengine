@@ -18,3 +18,12 @@ ecs_world_t* Flecs_Free(ecs_world_t* world)
 	
 	return NULL;
 }
+
+uint64_t Flecs_Map_Key(const char* key)
+{
+	uint32_t a, b;
+	hashlittle2(key, strlen(key), &a, &b);
+	uint64_t db = b;
+	
+	return a + (db << 32);
+}

@@ -88,7 +88,6 @@ static void FinalizeScreenSystem_ToWindow(ApplicationState* app)
 		app->renderState.resolution.X / 2,
 		app->renderState.resolution.Y / 2,
 	};
-	printf("%dx%d\n", size.X, size.Y);
 	quad pos = (quad){
 		{ -size.X, -size.Y, },
 		{ size.X, -size.Y, },
