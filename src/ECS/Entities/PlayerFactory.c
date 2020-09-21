@@ -53,5 +53,8 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObj
         0.5f,
         0,
         0xFFFFFFFF,
+        NULL,
+        0,
+        0,
     });
 }

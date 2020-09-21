@@ -54,11 +54,6 @@ void ShaderUpdate_Disable(void* _shader)
 
 int main(int arcg, char* argv[])
 {
-    const char* keyTest = "This is a test! asdfkljhasdkfj alskdj fa sdflkjasdfklj asdfjk asdflkj asdlj asdflkj asdf";
-    uint32_t keyInt = hashlittle(keyTest, strlen(keyTest), 0);
-    uint64_t keyDouble = Flecs_Map_Key(keyTest);
-    printf("%u\n%u\n", keyInt, keyDouble);
-    
     init(
         "Engine Test",
         STONE_TOWER_ENGINE_VERSION,
@@ -103,7 +98,8 @@ int main(int arcg, char* argv[])
     
     renderTargets(
         1,
-        RenderTarget_Create(app.renderState.device, (int2d){ 320, 180, }, (int2d){ 320, 180, }, (int2d){ 0, 0, })
+        RenderTarget_Create(app.renderState.device, (int2d){ 160, 180, }, (int2d){ 160, 180, }, (int2d){ 0, 0, }),
+        RenderTarget_Create(app.renderState.device, (int2d){ 160, 180, }, (int2d){ 160, 180, }, (int2d){ 160, 0, })
     );
     
     loop();

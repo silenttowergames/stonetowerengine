@@ -16,6 +16,8 @@ static void FinalizeScreenSystem_ToRTs(ApplicationState* app)
 		return;
 	}
 	
+	int renderTargetID = 0;
+	
 	// TODO: RenderTarget viewport
 	FNA3D_Viewport viewport;
 	viewport.w = app->renderState.size.X;

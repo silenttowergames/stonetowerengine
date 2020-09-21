@@ -99,15 +99,15 @@ void RenderState_Free(RenderState* renderState)
 
 void RenderState_InitRenderTargets(RenderState* renderState, int count)
 {
-	renderState->renderTargetsCount = count;
-	renderState->renderTargetsCountSoFar = 0;
-	renderState->renderTargets = malloc(sizeof(RenderTarget) * count);
+	renderState->targetsCount = count;
+	renderState->targetsCountSoFar = 0;
+	renderState->targets = malloc(sizeof(RenderTarget) * count);
 }
 
 void RenderState_AddRenderTarget(RenderState* renderState, RenderTarget renderTarget)
 {
-	renderState->renderTargets[renderState->renderTargetsCountSoFar] = renderTarget;
-	renderState->renderTargetsCountSoFar++;
+	renderState->targets[renderState->targetsCountSoFar] = renderTarget;
+	renderState->targetsCountSoFar++;
 }
 
 void RenderState_AddRenderTargets(RenderState* renderState, int count, ...)

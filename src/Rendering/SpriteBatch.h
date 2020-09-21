@@ -19,6 +19,7 @@ typedef struct SpriteBatch
 	//*/
 	Vertex* vertices;
 	FNA3D_Texture** textures;
+	//
 	int indicesThisFrame;
 	bool opened;
 } SpriteBatch;

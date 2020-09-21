@@ -24,4 +24,5 @@ typedef struct Renderable
 	uint32_t color;
 	float2d (*renderOffset)(int, int);
 	int duration;
+	int renderTargetID;
 } Renderable;
