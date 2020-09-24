@@ -18,34 +18,29 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 {
 	float2
 		coords = input.TextureCoordinates,
-		rc = float2(round(coords.x * Width), round(coords.y * Height))
+		rc = float2(coords.x * Width, coords.y * Height)
 	;
 	
 	float4 c = tex2D(SpriteTextureSampler, coords) * input.Color;
 	
-	if(coords.x > 0.5){
-		return c;
-	}
-	
 	float Mult = 1.4;
 	
-	if(rc.y % 2 >= 1){
+	if(rc.y % 2 >= 1)
+	{
 		Mult = 0.7;
 	}
 	
-	if(rc.x % 3 < 1){
+	if(rc.x % 3 >= 2)
+	{
 		return float4(c.r * Mult, c.g * 0.5, c.b * 0.5, c.a);
 	}
 	
-	if(rc.x % 3 < 2){
+	if(rc.x % 3 >= 1)
+	{
 		return float4(c.r * 0.5, c.g * Mult, c.b * 0.5, c.a);
 	}
 	
-	if(rc.x % 3 < 3){
-		return float4(c.r * 0.5, c.g * 0.5, c.b * Mult, c.a);
-	}
-	
-	return c;
+	return float4(c.r * 0.5, c.g * 0.5, c.b * Mult, c.a);
 }
 
 technique SpriteDrawing

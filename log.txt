@@ -137,3 +137,16 @@ Program: C:\Users\Silent Tower Games\Projects\_libs\stonetowerengine\bin\win64\m
 File: src/Assets/TiledJSONFunctions.c, Line 54
 
 Expression: tiled.texture != NULL
+Assertion failed!
+
+Program: C:\Users\Silent Tower Games\Projects\_libs\stonetowerengine\bin\win64\main.exe
+File: src/Rendering/SpriteBatchFunctions.c, Line 17
+
+Expression: !spriteBatch->opened
+Assertion failed!
+
+Program: C:\Users\Silent Tower Games\Projects\_libs\stonetowerengine\bin\win64\main.exe
+File: src/Rendering/SpriteBatchFunctions.c, Line 17
+
+Expression: !spriteBatch->opened
+[0;35minfo[0;49m: [0;37m[0;49massert(elem_size == map->type_elem_size) C:\C\flecs-master\src\map.c:[0;32m281[0;49m: invalid parameters

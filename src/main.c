@@ -46,8 +46,8 @@ void ShaderUpdate_Disable(void* _shader)
     
     //shader->disabled = !shader->disabled;
     
-    int width = 640;
-    int height = 360;
+    int width = 1280;
+    int height = 720;
     Shader_ParamCopy(shader, "Width", &width, sizeof(width));
     Shader_ParamCopy(shader, "Height", &height, sizeof(height));
 }
@@ -97,10 +97,15 @@ int main(int arcg, char* argv[])
     );
     
     renderTargets(
-        1,
-        RenderTarget_Create(app.renderState.device, (int2d){ 160, 180, }, (int2d){ 160, 180, }, (int2d){ 0, 0, }),
-        RenderTarget_Create(app.renderState.device, (int2d){ 160, 180, }, (int2d){ 160, 180, }, (int2d){ 160, 0, })
+        2,
+        RenderTarget_Create(app.renderState.device, (int2d){ 1280, 720, }, (int2d){ 320, 180, }, (int2d){ 0, 0, }),
+        RenderTarget_Create(app.renderState.device, (int2d){ 160, 180, }, (int2d){ 160, 180, }, (int2d){ -80, 0, })
+        //RenderTarget_Create(app.renderState.device, (int2d){ 160, 180, }, (int2d){ 160, 180, }, (int2d){ 160, 0, })
     );
+    
+    //app.renderState.mainRenderTarget.shadersCount = 1;
+    //app.renderState.mainRenderTarget.shaders = malloc(sizeof(Shader*) * app.renderState.mainRenderTarget.shadersCount);
+    //app.renderState.mainRenderTarget.shaders[0] = mapGet(app.assetManager.mapShader, "CRTShader", Shader);
     
     loop();
     

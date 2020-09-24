@@ -16,4 +16,4 @@ typedef struct TiledJSONObject
     int propertiesCount;
 } TiledJSONObject;
 
-#define getProperty(obj, key) obj == NULL ? NULL : mapGet(obj->properties, key, TiledJSONProperty)
+#define getProperty(obj, key) (obj == NULL ? NULL : mapGet(obj->properties, key, TiledJSONProperty))

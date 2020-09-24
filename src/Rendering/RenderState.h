@@ -28,4 +28,6 @@ typedef struct RenderState
 	RenderTarget* targets;
 	int targetsCount;
 	int targetsCountSoFar;
+	int currentRenderTargetID;
+	Shader** shaders;
 } RenderState;

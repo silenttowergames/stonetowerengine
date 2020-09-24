@@ -90,8 +90,7 @@ void FontStashFNA3D_RenderDraw(void* uptr, const float* verts, const float* tcoo
         
         SpriteBatch_AddQuad(
             &fna->app->renderState.spriteBatch,
-            // TODO: Replace with renderable's RenderTarget
-            &fna->app->renderState.mainRenderTarget.camera,
+            &fna->app->renderState.targets[fna->app->renderState.currentRenderTargetID].camera,
             fna->texture.asset,
             pos,
             src,

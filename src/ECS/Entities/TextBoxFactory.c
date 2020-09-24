@@ -33,6 +33,6 @@ void TextBoxFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONOb
         colorU(0, 255, 0, 255),
         RenderOffset_Stagger,
         0,
-        1,
+        0,
     });
 }

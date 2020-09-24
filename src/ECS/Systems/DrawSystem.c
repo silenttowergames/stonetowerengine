@@ -8,6 +8,7 @@
 #include "../../Rendering/SpriteBatchFunctions.h"
 #include "../../Utilities/float4d.h"
 #include "../../Utilities/quadFunctions.h"
+#include "../../Rendering/RenderTargetFunctions.h"
 
 void DrawSystem(ecs_iter_t* it)
 {
@@ -24,8 +25,19 @@ void DrawSystem(ecs_iter_t* it)
 	Renderable* renderable = ecs_column(it, Renderable, 2);
 	quad pos, src;
 	float2d size;
+	app->renderState.currentRenderTargetID = -1;
 	for(int i = 0; i < it->count; i++)
 	{
-		renderable[i].render(app, &app->renderState.spriteBatch, &app->renderState.mainRenderTarget.camera, &renderable[i], body[i].position);
+		if(app->renderState.currentRenderTargetID != renderable[i].renderTargetID)
+		{
+			if(app->renderState.currentRenderTargetID >= 0)
+			{
+				RenderTarget_Stop(app);
+			}
+			
+			RenderTarget_Start(app, renderable[i].renderTargetID);
+		}
+		
+		renderable[i].render(app, &app->renderState.spriteBatch, &app->renderState.targets[app->renderState.currentRenderTargetID].camera, &renderable[i], body[i].position);
 	}
 }

@@ -13,7 +13,8 @@ typedef struct RenderTarget
 	Camera camera;
 	int2d size;
 	int2d position;
-	Shader* shaders;
+	Shader** shaders;
 	int shadersCount;
 	Texture texture;
+	uint32_t backgroundColor;
 } RenderTarget;
