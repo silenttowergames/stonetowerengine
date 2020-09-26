@@ -16,6 +16,6 @@ typedef struct RenderTarget
 	Shader** shaders;
 	int shadersCount;
 	Texture texture;
-	uint32_t backgroundColor;
+	FNA3D_Vec4 backgroundColor;
 	bool scale;
 } RenderTarget;

@@ -2,8 +2,9 @@
 #include "RenderTargetFunctions.h"
 #include "../Application/ApplicationState.h"
 #include "../Assets/TextureFunctions.h"
+#include "../Utilities/colorFunctions.h"
 
-RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d position, bool scale)
+RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d position, bool scale, FNA3D_Vec4 backgroundColor)
 {
 	RenderTarget renderTarget;
 	memset(&renderTarget, 0, sizeof(renderTarget));
@@ -32,6 +33,7 @@ RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d 
 	
 	renderTarget.viewport.w = size.X;
 	renderTarget.viewport.h = size.Y;
+	renderTarget.backgroundColor = backgroundColor;
 	
 	return renderTarget;
 }
@@ -107,7 +109,18 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 	// Clear the screen with this color
 	
 	// TODO: Use RenderTarget color
-	FNA3D_Vec4 color = { 0, 0, 0, 1, };
+	FNA3D_Vec4 color;
+	
+	if(renderTarget == NULL)
+	{
+		color = (FNA3D_Vec4){ 0, 0, 0, 1, };
+	}
+	else
+	{
+		color = renderTarget->backgroundColor;
+	}
+	
+	
 	FNA3D_Clear(
 		app->renderState.device,
 		FNA3D_CLEAROPTIONS_TARGET,

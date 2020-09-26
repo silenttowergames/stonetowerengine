@@ -57,11 +57,11 @@ int main(int arcg, char* argv[])
         STONE_TOWER_ENGINE_VERSION,
         "OpenGL",
         60,
-        1440, 810,
+        1280, 720,
         320, 180,
         initWorld,
         "map0",
-        RSZ_Fill
+        RSZ_Floor
     );
     
     scenes(
@@ -97,8 +97,8 @@ int main(int arcg, char* argv[])
     
     renderTargets(
         2,
-        RenderTarget_Create(&app, (int2d){ 320, 180, }, (int2d){ 0, 0, }, true),
-        RenderTarget_Create(&app, (int2d){ 100, 180, }, (int2d){ 80, 0, }, true)
+        RenderTarget_Create(&app, (int2d){ 320, 180, }, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 1, 0, 1, 1, }),
+        RenderTarget_Create(&app, (int2d){ 100, 100, }, (int2d){ 80, 0, }, true, (FNA3D_Vec4){ 0, 1, 0, 1, })
         //RenderTarget_Create(app.renderState.device, (int2d){ 160, 180, }, (int2d){ 160, 180, }, (int2d){ 160, 0, })
     );
     

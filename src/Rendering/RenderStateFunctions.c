@@ -30,12 +30,6 @@ void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int 
 	presentationParameters.backBufferFormat = FNA3D_SURFACEFORMAT_COLOR;
 	app->renderState.presentationParameters = presentationParameters;
 	
-	FNA3D_Viewport viewport;
-	memset(&viewport, 0, sizeof(FNA3D_Viewport));
-	viewport.w = sizeX;
-	viewport.h = sizeY;
-	app->renderState.viewport = viewport;
-	
 	app->renderState.camera = Camera_Create(resX, resY);
 	
 	app->renderState.device = FNA3D_CreateDevice(&app->renderState.presentationParameters, STE_DEBUG);
@@ -114,7 +108,15 @@ void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int 
 		}
 	}
 	
-	app->renderState.mainRenderTarget = RenderTarget_Create(app, app->renderState.resolution, (int2d){ 0, 0, }, true);
+	FNA3D_Viewport viewport;
+	memset(&viewport, 0, sizeof(FNA3D_Viewport));
+	viewport.w = app->renderState.resolution.X * app->renderState.windowZoom.X;
+	viewport.h = app->renderState.resolution.Y * app->renderState.windowZoom.Y;
+	viewport.x = (app->renderState.size.X - viewport.w) / 2;
+	viewport.y = (app->renderState.size.Y - viewport.h) / 2;
+	app->renderState.viewport = viewport;
+	
+	app->renderState.mainRenderTarget = RenderTarget_Create(app, app->renderState.resolution, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 0, 0, 0, 1, });
 	
 	app->renderState.currentRenderTargetID = -1;
 }

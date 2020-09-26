@@ -10,19 +10,12 @@ unsigned int colorToU(color c)
 	return *((unsigned int*)&c);
 }
 
-/*
 color colorUToColor(unsigned int c)
 {
-    //
+    return (color){
+        c,
+        c >> 8,
+        c >> 16,
+        c >> 24,
+    };
 }
-
-FNA3D_Vec4 colorUToFNA(unsigned int)
-{
-    //
-}
-
-FNA3D_Vec4 colorToFNA(color c)
-{
-    //
-}
-*/
