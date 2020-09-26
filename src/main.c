@@ -40,16 +40,14 @@ void init2Scene(ecs_world_t* world)
     factoryRun(app, "TextBox", -20, 32, 2, NULL);
 }
 
-void ShaderUpdate_Disable(void* _shader)
+void ShaderUpdate_Disable(void* _app, void* _shader)
 {
     sctx();
     
     //shader->disabled = !shader->disabled;
     
-    int width = 1280;
-    int height = 720;
-    Shader_ParamCopy(shader, "Width", &width, sizeof(width));
-    Shader_ParamCopy(shader, "Height", &height, sizeof(height));
+    Shader_ParamCopy(shader, "Width", &app->renderState.size.X, sizeof(int));
+    Shader_ParamCopy(shader, "Height", &app->renderState.size.Y, sizeof(int));
 }
 
 int main(int arcg, char* argv[])
@@ -59,10 +57,11 @@ int main(int arcg, char* argv[])
         STONE_TOWER_ENGINE_VERSION,
         "OpenGL",
         60,
-        1280, 720,
+        1440, 810,
         320, 180,
         initWorld,
-        "map0"
+        "map0",
+        RSZ_Fill
     );
     
     scenes(
@@ -98,8 +97,8 @@ int main(int arcg, char* argv[])
     
     renderTargets(
         2,
-        RenderTarget_Create(app.renderState.device, (int2d){ 1280, 720, }, (int2d){ 320, 180, }, (int2d){ 0, 0, }),
-        RenderTarget_Create(app.renderState.device, (int2d){ 160, 180, }, (int2d){ 160, 180, }, (int2d){ -80, 0, })
+        RenderTarget_Create(&app, (int2d){ 320, 180, }, (int2d){ 0, 0, }, true),
+        RenderTarget_Create(&app, (int2d){ 100, 180, }, (int2d){ 80, 0, }, true)
         //RenderTarget_Create(app.renderState.device, (int2d){ 160, 180, }, (int2d){ 160, 180, }, (int2d){ 160, 0, })
     );
     

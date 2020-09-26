@@ -3,12 +3,20 @@
 #include "../Application/ApplicationState.h"
 #include "../Assets/TextureFunctions.h"
 
-RenderTarget RenderTarget_Create(FNA3D_Device* device, int2d size, int2d resolution, int2d position)
+RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d position, bool scale)
 {
 	RenderTarget renderTarget;
 	memset(&renderTarget, 0, sizeof(renderTarget));
 	
-	renderTarget.texture = Texture_NewBlank(device, size.X, size.Y, 4, true); // RenderTarget.texture allocate
+	renderTarget.scale = scale;
+	
+	int2d size = {
+		resolution.X * (scale ? app->renderState.windowZoom.X : 1),
+		resolution.Y * (scale ? app->renderState.windowZoom.Y : 1),
+	};
+	printf("%dx%d\n", size.X, size.Y);
+	
+	renderTarget.texture = Texture_NewBlank(app->renderState.device, size.X, size.Y, 4, true); // RenderTarget.texture allocate
 	renderTarget.texture.tilesize.X = size.X;
 	renderTarget.texture.tilesize.Y = size.Y;
 	
@@ -139,7 +147,7 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 			
 			if(shader->update != NULL)
 			{
-				shader->update(shader);
+				shader->update(app, shader);
 			}
 			
 			if(!shader->disabled)

@@ -17,4 +17,5 @@ typedef struct RenderTarget
 	int shadersCount;
 	Texture texture;
 	uint32_t backgroundColor;
+	bool scale;
 } RenderTarget;

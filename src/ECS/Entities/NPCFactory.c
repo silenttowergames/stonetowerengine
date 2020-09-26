@@ -4,6 +4,7 @@
 #include "../Components/Body.h"
 #include "../Components/RenderableFunctions.h"
 #include "../../Application/ApplicationStateFunctions.h"
+#include "../../Utilities/colorFunctions.h"
 
 void NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
 {
@@ -38,7 +39,7 @@ void NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject
         layer,
         (rand() % 10) / 10.0f,
         0,
-        0xFFFFFFFF,
+        colorU(255, 255, 0, 100),//0xFFFFFFFF,
         NULL,
         0,
         1,

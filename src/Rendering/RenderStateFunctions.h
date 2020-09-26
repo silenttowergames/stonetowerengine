@@ -2,7 +2,7 @@
 
 #include "RenderState.h"
 
-void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int resY);
+void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int resY, RenderState_Zoom windowZoomType);
 void RenderState_Free(RenderState* renderState);
 
 void RenderState_InitRenderTargets(RenderState* renderState, int count);

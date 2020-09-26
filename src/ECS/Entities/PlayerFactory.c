@@ -26,7 +26,7 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObj
     }
     
     ecs_set(world, e, AIPlayer, {
-        1.0f,
+        0.15f,
     });
     ecs_set(world, e, Animate, {
         "protag-walk",

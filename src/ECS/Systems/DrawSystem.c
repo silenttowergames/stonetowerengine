@@ -14,13 +14,6 @@ void DrawSystem(ecs_iter_t* it)
 {
 	ApplicationState* app = (ApplicationState*)ecs_get_context(it->world);
 	
-	// TODO: Draw all render targets, then to the window
-	
-	if(!app->renderState.spriteBatch.opened)
-	{
-		SpriteBatch_Begin(&app->renderState.spriteBatch);
-	}
-	
 	Body* body = ecs_column(it, Body, 1);
 	Renderable* renderable = ecs_column(it, Renderable, 2);
 	quad pos, src;
@@ -35,8 +28,6 @@ void DrawSystem(ecs_iter_t* it)
 			}
 			
 			RenderTarget_Start(app, renderable[i].renderTargetID);
-			
-			printf("%d\n", app->renderState.currentRenderTargetID);
 		}
 		
 		renderable[i].render(app, &app->renderState.spriteBatch, &app->renderState.targets[app->renderState.currentRenderTargetID].camera, &renderable[i], body[i].position);

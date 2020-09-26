@@ -7,7 +7,7 @@
 #include "../Application/ApplicationState.h"
 #include "../Assets/ShaderFunctions.h"
 
-void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int resY)
+void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int resY, RenderState_Zoom windowZoomType)
 {
 	memset(&app->renderState, 0, sizeof(RenderState));
 	
@@ -86,7 +86,35 @@ void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int 
 	
 	SpriteBatch_Create(&app->renderState.spriteBatch);
 	
-	app->renderState.mainRenderTarget = RenderTarget_Create(app->renderState.device, app->renderState.size, app->renderState.resolution, (int2d){ 0, 0, });
+	app->renderState.windowZoom.X = app->renderState.size.X / app->renderState.resolution.X;
+	app->renderState.windowZoom.Y = app->renderState.size.Y / app->renderState.resolution.Y;
+	
+	app->renderState.windowZoomType = windowZoomType;
+	
+	switch(app->renderState.windowZoomType)
+	{
+		case RSZ_Floor:
+		{
+			float windowZoom = fmin(app->renderState.windowZoom.X, app->renderState.windowZoom.Y);
+			
+			app->renderState.windowZoom.X = windowZoom;
+			app->renderState.windowZoom.Y = windowZoom;
+			
+			break;
+		}
+		
+		case RSZ_Fill:
+		{
+			float windowZoom = fmin(app->renderState.windowZoom.X, app->renderState.windowZoom.Y);
+			
+			app->renderState.windowZoom.X = floor(windowZoom);
+			app->renderState.windowZoom.Y = floor(windowZoom);
+			
+			break;
+		}
+	}
+	
+	app->renderState.mainRenderTarget = RenderTarget_Create(app, app->renderState.resolution, (int2d){ 0, 0, }, true);
 	
 	app->renderState.currentRenderTargetID = -1;
 }

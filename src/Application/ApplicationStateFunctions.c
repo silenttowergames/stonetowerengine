@@ -20,7 +20,8 @@ void ApplicationState_Create(
     int resX,
     int resY,
     void (*flecsInit)(ecs_world_t*),
-    const char* flecsScene
+    const char* flecsScene,
+    RenderState_Zoom windowZoomType
 )
 {
 	memset(app, 0, sizeof(ApplicationState));
@@ -38,7 +39,7 @@ void ApplicationState_Create(
 	
 	Rendering_Init(app);
 	
-	RenderState_New(app, sizeX, sizeY, resX, resY);
+	RenderState_New(app, sizeX, sizeY, resX, resY, windowZoomType);
     
     app->inputManager = InputManager_Create();
     

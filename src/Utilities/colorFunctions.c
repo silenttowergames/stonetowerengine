@@ -2,10 +2,27 @@
 
 unsigned int colorU(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
-    return (a << 24) + (r << 16) + (g << 8) + b;
+    return (a << 24) + (r) + (g << 8) + (b << 16);
 }
 
 unsigned int colorToU(color c)
 {
 	return *((unsigned int*)&c);
 }
+
+/*
+color colorUToColor(unsigned int c)
+{
+    //
+}
+
+FNA3D_Vec4 colorUToFNA(unsigned int)
+{
+    //
+}
+
+FNA3D_Vec4 colorToFNA(color c)
+{
+    //
+}
+*/

@@ -6,7 +6,15 @@
 #include "SpriteBatch.h"
 #include "../Assets/Shader.h"
 #include "../Rendering/RenderTarget.h"
+#include "../Utilities/float2d.h"
 #include "../Utilities/int2d.h"
+
+typedef enum RenderState_Zoom
+{
+	RSZ_Fill,
+	RSZ_Floor,
+	RSZ_Stretch,
+} RenderState_Zoom;
 
 typedef struct RenderState
 {
@@ -30,4 +38,6 @@ typedef struct RenderState
 	int targetsCountSoFar;
 	int currentRenderTargetID;
 	Shader** shaders;
+	float2d windowZoom;
+	RenderState_Zoom windowZoomType;
 } RenderState;
