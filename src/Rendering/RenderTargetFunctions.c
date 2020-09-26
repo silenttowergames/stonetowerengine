@@ -1,5 +1,6 @@
 #include <flecs.h>
 #include "RenderTargetFunctions.h"
+#include "../Application/ApplicationState.h"
 #include "../Assets/TextureFunctions.h"
 
 RenderTarget RenderTarget_Create(FNA3D_Device* device, int2d size, int2d resolution, int2d position)

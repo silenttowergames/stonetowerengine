@@ -39,5 +39,8 @@ void NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject
         (rand() % 10) / 10.0f,
         0,
         0xFFFFFFFF,
+        NULL,
+        0,
+        1,
     });
 }
