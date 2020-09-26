@@ -57,7 +57,8 @@ int main(int arcg, char* argv[])
         STONE_TOWER_ENGINE_VERSION,
         "OpenGL",
         60,
-        1280, 720,
+        // FIXME: For some reason, camera position (or viewport position) seems broken, but only on RenderTarget 0, and only on window sizes that don't match the resolution!
+        320, 800,
         320, 180,
         initWorld,
         "map0",
@@ -98,7 +99,7 @@ int main(int arcg, char* argv[])
     renderTargets(
         2,
         RenderTarget_Create(&app, (int2d){ 320, 180, }, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 1, 0, 1, 1, }),
-        RenderTarget_Create(&app, (int2d){ 100, 100, }, (int2d){ 80, 0, }, true, (FNA3D_Vec4){ 0, 1, 0, 1, })
+        RenderTarget_Create(&app, (int2d){ 100, 100, }, (int2d){ 80, 0, }, false, (FNA3D_Vec4){ 0, 1, 0, 1, })
         //RenderTarget_Create(app.renderState.device, (int2d){ 160, 180, }, (int2d){ 160, 180, }, (int2d){ 160, 0, })
     );
     
