@@ -117,6 +117,7 @@ void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int 
 	app->renderState.viewport = viewport;
 	
 	app->renderState.mainRenderTarget = RenderTarget_Create(app, app->renderState.resolution, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 0, 0, 0, 1, });
+	app->renderState.mainRenderTarget.viewport.y = 0;
 	
 	app->renderState.currentRenderTargetID = -1;
 }

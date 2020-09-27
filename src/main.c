@@ -57,8 +57,7 @@ int main(int arcg, char* argv[])
         STONE_TOWER_ENGINE_VERSION,
         "OpenGL",
         60,
-        // FIXME: For some reason, camera position (or viewport position) seems broken, but only on RenderTarget 0, and only on window sizes that don't match the resolution!
-        320, 800,
+        1280, 360,
         320, 180,
         initWorld,
         "map0",

@@ -33,6 +33,8 @@ RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d 
 	
 	renderTarget.viewport.w = size.X;
 	renderTarget.viewport.h = size.Y;
+	renderTarget.viewport.y = app->renderState.viewport.y * 2;
+	
 	renderTarget.backgroundColor = backgroundColor;
 	
 	return renderTarget;
