@@ -41,8 +41,19 @@ void MoveSystem(ecs_iter_t* it)
 		}
 	}
 	
-	if(key(Pressed, z))
+	if(
+		(key(Down, LALT) && key(Pressed, RETURN))
+		||
+		(key(Down, LCTRL) && key(Pressed, f))
+	)
 	{
-		RenderState_Resize(app, 1280, 800);
+		if(app->config.fullscreen)
+		{
+			Config_Resize(app, 1280, 720, false);
+		}
+		else
+		{
+			Config_Resize(app, 2560, 1080, true);
+		}
 	}
 }

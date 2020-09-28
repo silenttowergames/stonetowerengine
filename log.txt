@@ -1,14 +1,12 @@
 INFO: Using EXT_swap_control_tear VSync!
 INFO: Using EXT_swap_control_tear VSync!
 INFO: Using EXT_swap_control_tear VSync!
-race: unloaded from C:\Users\Silent Tower Games\Projects\_libs\stonetowerengine\bin\win64\main.exe
-le: glsl120
-eBatchFunctions.c, Line 17
-
-Expression: !spriteBatch->opened
-Assertion failed!
-
-Program: C:\Users\Silent Tower Games\Projects\_libs\stonetowerengine\bin\win64\main.exe
+INFO: Using EXT_swap_control_tear VSync!
+INFO: Using EXT_swap_control_tear VSync!
+INFO: Using EXT_swap_control_tear VSync!
+INFO: Using EXT_swap_control_tear VSync!
+INFO: Using EXT_swap_control_tear VSync!
+Users\Silent Tower Games\Projects\_libs\stonetowerengine\bin\win64\main.exe
 File: src/Rendering/SpriteBatchFunctions.c, Line 17
 
 Expression: !spriteBatch->opened

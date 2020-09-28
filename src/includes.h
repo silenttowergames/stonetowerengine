@@ -54,6 +54,7 @@
 #include "Application/ApplicationState.h"
 #include "Application/ApplicationStateFunctions.c"
 #include "Application/Config.h"
+#include "Application/ConfigFunctions.c"
 
 // Assets
 #include "Assets/ASEpriteJSON.h"

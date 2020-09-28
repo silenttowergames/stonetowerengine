@@ -1,6 +1,7 @@
 #pragma once
 
 #include <flecs.h>
+#include "Config.h"
 #include "../Assets/AssetManager.h"
 #include "../Input/InputManager.h"
 #include "../ECS/Entities/Factory.h"
@@ -33,4 +34,5 @@ typedef struct ApplicationState
     int sceneFactoriesLength;
     int sceneFactoriesLengthSoFar;
     FONScontext* fons;
+    Config config;
 } ApplicationState;

@@ -41,6 +41,8 @@ void ApplicationState_Create(
 	
 	RenderState_New(app, sizeX, sizeY, resX, resY, windowZoomType);
     
+    app->config.size = (int2d){ sizeX, sizeY, };
+    
     app->inputManager = InputManager_Create();
     
     ecs_os_set_api_defaults();
