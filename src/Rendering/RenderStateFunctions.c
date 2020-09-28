@@ -11,32 +11,15 @@ void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int 
 {
 	memset(&app->renderState, 0, sizeof(RenderState));
 	
-	app->renderState.size.X = sizeX;
-	app->renderState.size.Y = sizeY;
-	
 	app->renderState.resolution.X = resX;
 	app->renderState.resolution.Y = resY;
 	
 	app->renderState.windowTitle = malloc(sizeof(char) * (strlen(app->gameTitle) + 1 + strlen(app->gameVersion) + 1)); // RenderState.windowTitle.allocate
 	sprintf(app->renderState.windowTitle, "%s %s", app->gameTitle, app->gameVersion);
 	
-	app->renderState.window = SDL_CreateWindow(app->renderState.windowTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, sizeX, sizeY, FNA3D_PrepareWindowAttributes()); // RenderState.window allocate
+	app->renderState.windowZoomType = windowZoomType;
 	
-	FNA3D_PresentationParameters presentationParameters;
-	memset(&presentationParameters, 0, sizeof(presentationParameters));
-	presentationParameters.backBufferWidth = app->renderState.size.X;
-	presentationParameters.backBufferHeight = app->renderState.size.Y;
-	presentationParameters.deviceWindowHandle = app->renderState.window;
-	presentationParameters.backBufferFormat = FNA3D_SURFACEFORMAT_COLOR;
-	app->renderState.presentationParameters = presentationParameters;
-	
-	app->renderState.camera = Camera_Create(resX, resY);
-	
-	app->renderState.device = FNA3D_CreateDevice(&app->renderState.presentationParameters, STE_DEBUG);
-	
-	app->renderState.shaderSpriteEffect = Shader_Create(app->renderState.device, "SpriteEffect", NULL);
-	
-	app->renderState.vertexBuffer = FNA3D_GenVertexBuffer(app->renderState.device, 1, FNA3D_BUFFERUSAGE_WRITEONLY, MAX_INDICES * sizeof(Vertex)); // RenderState.vertexBuffer allocate
+	RenderState_Resize(app, sizeX, sizeY);
 	
 	FNA3D_BlendState blendState;
 	memset(&blendState, 0, sizeof(blendState));
@@ -79,11 +62,85 @@ void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int 
 	app->renderState.vertexBufferBinding.vertexDeclaration = vertexDeclaration;
 	
 	SpriteBatch_Create(&app->renderState.spriteBatch);
+}
+
+void RenderState_Free(RenderState* renderState)
+{
+	FNA3D_AddDisposeVertexBuffer(renderState->device, renderState->vertexBuffer); // RenderState.VertexBuffer free
+	free(renderState->windowTitle); // RenderState.windowTitle free
+	SDL_DestroyWindow(renderState->window); // RenderState.window free
+	Shader_Free(&renderState->shaderSpriteEffect);
+	FNA3D_DestroyDevice(renderState->device); // RenderState.device free
+}
+
+void RenderState_InitRenderTargets(RenderState* renderState, int count)
+{
+	renderState->targetsCount = count;
+	renderState->targetsCountSoFar = 0;
+	renderState->targets = malloc(sizeof(RenderTarget) * count);
+}
+
+void RenderState_AddRenderTarget(RenderState* renderState, RenderTarget renderTarget)
+{
+	renderState->targets[renderState->targetsCountSoFar] = renderTarget;
+	renderState->targetsCountSoFar++;
+}
+
+void RenderState_AddRenderTargets(RenderState* renderState, int count, ...)
+{
+	va_list args;
+	
+	va_start(args, count);
+	
+	for(int i = 0; i < count; i++)
+	{
+		RenderState_AddRenderTarget(renderState, va_arg(args, RenderTarget));
+	}
+	
+	va_end(args);
+}
+
+void RenderState_Resize(ApplicationState* app, int sizeX, int sizeY)
+{
+	if(app->renderState.window == NULL)
+	{
+		app->renderState.window = SDL_CreateWindow(app->renderState.windowTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, sizeX, sizeY, FNA3D_PrepareWindowAttributes()); // RenderState.window allocate
+		
+		app->renderState.camera = Camera_Create(app->renderState.resolution.X, app->renderState.resolution.Y);
+	}
+	else
+	{
+		SDL_SetWindowSize(app->renderState.window, sizeX, sizeY);
+	}
+	
+	FNA3D_GetDrawableSize(app->renderState.window, &app->renderState.size.X, &app->renderState.size.Y);
+	
+	FNA3D_PresentationParameters presentationParameters;
+	memset(&presentationParameters, 0, sizeof(presentationParameters));
+	presentationParameters.backBufferWidth = app->renderState.size.X;
+	presentationParameters.backBufferHeight = app->renderState.size.Y;
+	presentationParameters.deviceWindowHandle = app->renderState.window;
+	presentationParameters.backBufferFormat = FNA3D_SURFACEFORMAT_COLOR;
+	app->renderState.presentationParameters = presentationParameters;
+	
+	if(app->renderState.device == NULL)
+	{
+		app->renderState.device = FNA3D_CreateDevice(&app->renderState.presentationParameters, STE_DEBUG); // ApplicationState.RenderState.device allocate
+	}
+	else
+	{
+		FNA3D_ResetBackbuffer(app->renderState.device, &app->renderState.presentationParameters);
+	}
+	
+	if(app->renderState.shaderSpriteEffect.effect == NULL)
+	{
+		app->renderState.shaderSpriteEffect = Shader_Create(app->renderState.device, "SpriteEffect", NULL);
+	}
+	
+	app->renderState.vertexBuffer = FNA3D_GenVertexBuffer(app->renderState.device, 1, FNA3D_BUFFERUSAGE_WRITEONLY, MAX_INDICES * sizeof(Vertex)); // RenderState.vertexBuffer allocate
 	
 	app->renderState.windowZoom.X = app->renderState.size.X / app->renderState.resolution.X;
 	app->renderState.windowZoom.Y = app->renderState.size.Y / app->renderState.resolution.Y;
-	
-	app->renderState.windowZoomType = windowZoomType;
 	
 	switch(app->renderState.windowZoomType)
 	{
@@ -116,43 +173,22 @@ void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int 
 	viewport.y = (app->renderState.size.Y - viewport.h) / 2;
 	app->renderState.viewport = viewport;
 	
-	app->renderState.mainRenderTarget = RenderTarget_Create(app, app->renderState.resolution, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 0, 0, 0, 1, });
-	app->renderState.mainRenderTarget.viewport.y = 0;
-	
-	app->renderState.currentRenderTargetID = -1;
-}
-
-void RenderState_Free(RenderState* renderState)
-{
-	FNA3D_AddDisposeVertexBuffer(renderState->device, renderState->vertexBuffer);
-	free(renderState->windowTitle); // RenderState.windowTitle free
-	SDL_DestroyWindow(renderState->window); // RenderState.window free
-	Shader_Free(&renderState->shaderSpriteEffect);
-}
-
-void RenderState_InitRenderTargets(RenderState* renderState, int count)
-{
-	renderState->targetsCount = count;
-	renderState->targetsCountSoFar = 0;
-	renderState->targets = malloc(sizeof(RenderTarget) * count);
-}
-
-void RenderState_AddRenderTarget(RenderState* renderState, RenderTarget renderTarget)
-{
-	renderState->targets[renderState->targetsCountSoFar] = renderTarget;
-	renderState->targetsCountSoFar++;
-}
-
-void RenderState_AddRenderTargets(RenderState* renderState, int count, ...)
-{
-	va_list args;
-	
-	va_start(args, count);
-	
-	for(int i = 0; i < count; i++)
+	if(app->renderState.mainRenderTarget.texture.asset != NULL)
 	{
-		RenderState_AddRenderTarget(renderState, va_arg(args, RenderTarget));
+		app->renderState.mainRenderTarget = RenderTarget_Refresh(app, &app->renderState.mainRenderTarget);
+	}
+	else
+	{
+		app->renderState.mainRenderTarget = RenderTarget_Create(app, app->renderState.resolution, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 0, 0, 0, 1, });
 	}
 	
-	va_end(args);
+	app->renderState.currentRenderTargetID = -1;
+	
+	if(app->renderState.targets != NULL)
+	{
+		for(int i = 0; i < app->renderState.targetsCount; i++)
+		{
+			app->renderState.targets[i] = RenderTarget_Refresh(app, &app->renderState.targets[i]);
+		}
+	}
 }

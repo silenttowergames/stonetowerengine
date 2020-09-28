@@ -10,7 +10,7 @@ typedef struct Shader
     FNA3D_Effect* effect;
     MOJOSHADER_effect* effectData;
     bool disabled;
-    void (*update)(void*, void*);
+    void (*update)(void*, void*, void*);
 } Shader;
 
-#define sctx() ApplicationState* app = (ApplicationState*)_app; Shader* shader = (Shader*)_shader;
+#define sctx() ApplicationState* app = (ApplicationState*)_app; RenderTarget* renderTarget = (RenderTarget*)_renderTarget; Shader* shader = (Shader*)_shader;

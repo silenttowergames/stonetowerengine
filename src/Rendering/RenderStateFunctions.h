@@ -9,4 +9,6 @@ void RenderState_InitRenderTargets(RenderState* renderState, int count);
 void RenderState_AddRenderTarget(RenderState* renderState, RenderTarget renderTarget);
 void RenderState_AddRenderTargets(RenderState* renderState, int count, ...);
 
+void RenderState_Resize(ApplicationState* app, int sizeX, int sizeY);
+
 #define renderTargets(l, ...) RenderState_InitRenderTargets(&app.renderState, l); RenderState_AddRenderTargets(&app.renderState, l, __VA_ARGS__)

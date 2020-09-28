@@ -40,14 +40,14 @@ void init2Scene(ecs_world_t* world)
     factoryRun(app, "TextBox", -20, 32, 2, NULL);
 }
 
-void ShaderUpdate_Disable(void* _app, void* _shader)
+void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
 {
     sctx();
     
     //shader->disabled = !shader->disabled;
     
-    Shader_ParamCopy(shader, "Width", &app->renderState.size.X, sizeof(int));
-    Shader_ParamCopy(shader, "Height", &app->renderState.size.Y, sizeof(int));
+    Shader_ParamCopy(shader, "Width", &renderTarget->size.X, sizeof(int));
+    Shader_ParamCopy(shader, "Height", &renderTarget->size.Y, sizeof(int));
 }
 
 int main(int arcg, char* argv[])
@@ -57,7 +57,7 @@ int main(int arcg, char* argv[])
         STONE_TOWER_ENGINE_VERSION,
         "OpenGL",
         60,
-        1280, 360,
+        1280, 720,
         320, 180,
         initWorld,
         "map0",
@@ -98,13 +98,13 @@ int main(int arcg, char* argv[])
     renderTargets(
         2,
         RenderTarget_Create(&app, (int2d){ 320, 180, }, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 1, 0, 1, 1, }),
-        RenderTarget_Create(&app, (int2d){ 100, 100, }, (int2d){ 80, 0, }, false, (FNA3D_Vec4){ 0, 1, 0, 1, })
+        RenderTarget_Create(&app, (int2d){ 80, 80, }, (int2d){ 80, -40, }, false, (FNA3D_Vec4){ 0, 1, 0, 1, })
         //RenderTarget_Create(app.renderState.device, (int2d){ 160, 180, }, (int2d){ 160, 180, }, (int2d){ 160, 0, })
     );
     
-    //app.renderState.mainRenderTarget.shadersCount = 1;
-    //app.renderState.mainRenderTarget.shaders = malloc(sizeof(Shader*) * app.renderState.mainRenderTarget.shadersCount);
-    //app.renderState.mainRenderTarget.shaders[0] = mapGet(app.assetManager.mapShader, "CRTShader", Shader);
+    app.renderState.mainRenderTarget.shadersCount = 1;
+    app.renderState.mainRenderTarget.shaders = malloc(sizeof(Shader*) * app.renderState.mainRenderTarget.shadersCount);
+    app.renderState.mainRenderTarget.shaders[0] = mapGet(app.assetManager.mapShader, "CRTShader", Shader);
     
     loop();
     

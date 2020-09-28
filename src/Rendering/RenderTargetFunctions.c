@@ -33,11 +33,35 @@ RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d 
 	
 	renderTarget.viewport.w = size.X;
 	renderTarget.viewport.h = size.Y;
-	renderTarget.viewport.y = app->renderState.viewport.y * 2;
+	
+	if(renderTarget.scale)
+	{
+		renderTarget.viewport.y = app->renderState.viewport.y * 2;
+	}
+	else
+	{
+		renderTarget.viewport.y = app->renderState.size.Y - renderTarget.size.Y;
+	}
+	
+	renderTarget.viewport.y = 0;
 	
 	renderTarget.backgroundColor = backgroundColor;
 	
 	return renderTarget;
+}
+
+RenderTarget RenderTarget_Refresh(ApplicationState* app, RenderTarget* renderTarget)
+{
+	RenderTarget ret = RenderTarget_Create(app, renderTarget->camera.resolution, renderTarget->position, renderTarget->scale, renderTarget->backgroundColor);
+	
+	size_t shadersSize = sizeof(Shader*) * renderTarget->shadersCount;
+	ret.shadersCount = renderTarget->shadersCount;
+	ret.shaders = malloc(shadersSize);
+	memcpy(ret.shaders, renderTarget->shaders, shadersSize);
+	
+	RenderTarget_Destroy(renderTarget, app->renderState.device);
+	
+	return ret;
 }
 
 void RenderTarget_Start(ApplicationState* app, int renderTargetID)
@@ -162,7 +186,7 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 			
 			if(shader->update != NULL)
 			{
-				shader->update(app, shader);
+				shader->update(app, renderTarget, shader);
 			}
 			
 			if(!shader->disabled)
@@ -183,5 +207,6 @@ void RenderTarget_Stop(ApplicationState* app)
 void RenderTarget_Destroy(RenderTarget* renderTarget, FNA3D_Device* device)
 {
 	FNA3D_AddDisposeTexture(device, renderTarget->binding.texture); // RenderTarget.texture free
+	
+	free(renderTarget->shaders); // RenderTarget.shaders free
 }
-

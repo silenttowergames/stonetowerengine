@@ -40,4 +40,9 @@ void MoveSystem(ecs_iter_t* it)
 			rumble(0, 1.0f, 500);
 		}
 	}
+	
+	if(key(Pressed, z))
+	{
+		RenderState_Resize(app, 800, 450);
+	}
 }

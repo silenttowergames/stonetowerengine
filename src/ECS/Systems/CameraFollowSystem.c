@@ -14,5 +14,8 @@ void CameraFollowSystem(ecs_iter_t* it)
 		// TODO: Replace this with the Renderable's chosen RenderTarget
 		app->renderState.targets[0].camera.position.X = b[i].position.X + c[i].offset.X;
 		app->renderState.targets[0].camera.position.Y = b[i].position.Y + c[i].offset.Y;
+		
+		app->renderState.targets[1].camera.position.X = b[i].position.X + c[i].offset.X;
+		app->renderState.targets[1].camera.position.Y = b[i].position.Y + c[i].offset.Y;
 	}
 }
