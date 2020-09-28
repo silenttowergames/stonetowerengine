@@ -43,6 +43,6 @@ void MoveSystem(ecs_iter_t* it)
 	
 	if(key(Pressed, z))
 	{
-		RenderState_Resize(app, 800, 450);
+		RenderState_Resize(app, 1280, 800);
 	}
 }

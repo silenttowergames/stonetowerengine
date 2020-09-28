@@ -53,6 +53,7 @@
 // Application
 #include "Application/ApplicationState.h"
 #include "Application/ApplicationStateFunctions.c"
+#include "Application/Config.h"
 
 // Assets
 #include "Assets/ASEpriteJSON.h"
