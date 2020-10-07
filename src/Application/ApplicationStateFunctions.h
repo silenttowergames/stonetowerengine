@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ApplicationState.h"
+#include "Config.h"
 
 void ApplicationState_Create(
     ApplicationState* app,
@@ -8,8 +9,7 @@ void ApplicationState_Create(
     const char* gameVersion,
     const char* graphicsDriver,
     int FPS,
-    int sizeX,
-    int sizeY,
+    Config config,
     int resX,
     int resY,
     void (*flecsInit)(ecs_world_t*),
@@ -32,7 +32,7 @@ void ApplicationState_RunScene(ApplicationState* app, const char* key);
 
 #define init(...) ApplicationState app; ApplicationState_Create(&app, __VA_ARGS__); freopen(app.logger.filename, "a", stderr)
 #define loop() ApplicationState_Loop(&app)
-#define quit() ApplicationState_Free(&app); return 0
+#define quit() Config_Save(&app, app.config); ApplicationState_Free(&app); return 0
 
 #define factories(l, ...) ApplicationState_AddFactories(&app, l, __VA_ARGS__)
 #define factory(c) (Factory){ #c, c ## Factory, }

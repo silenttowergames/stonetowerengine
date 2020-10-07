@@ -1,4 +1,5 @@
 #include "ApplicationStateFunctions.h"
+#include "ConfigFunctions.h"
 #include "../Assets/AssetManagerFunctions.h"
 #include "../Assets/FontStashFNA3DFunctions.h"
 #include "../Assets/TiledJSONFunctions.h"
@@ -15,8 +16,7 @@ void ApplicationState_Create(
     const char* gameVersion,
     const char* graphicsDriver,
     int FPS,
-    int sizeX,
-    int sizeY,
+    Config config,
     int resX,
     int resY,
     void (*flecsInit)(ecs_world_t*),
@@ -35,13 +35,21 @@ void ApplicationState_Create(
 	app->flecsInit = flecsInit;
 	app->flecsScene = flecsScene;
     
+    app->savePath = SDL_GetPrefPath("Silent Tower Games", app->gameTitle);
+    
+    char* configFilename = "config.bin";
+    app->savePathConfig = malloc(sizeof(char) * (strlen(app->savePath) + strlen(configFilename) + 2));
+    sprintf(app->savePathConfig, "%s/%s", app->savePath, configFilename);
+    
+    app->config = config;
+    
+    app->config = Config_Load(app);
+    
     app->assetManager = AssetManager_Create();
 	
 	Rendering_Init(app);
 	
-	RenderState_New(app, sizeX, sizeY, resX, resY, windowZoomType);
-    
-    app->config.size = (int2d){ sizeX, sizeY, };
+	RenderState_New(app, app->config.size.X, app->config.size.Y, resX, resY, windowZoomType);
     
     app->inputManager = InputManager_Create();
     

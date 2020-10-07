@@ -7,4 +7,5 @@ typedef struct Config
 {
     int2d size;
     bool fullscreen;
+    const char* language;
 } Config;

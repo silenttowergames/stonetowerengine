@@ -52,13 +52,18 @@ void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
 
 int main(int arcg, char* argv[])
 {
+    Config config;
+    config.size.X = 640;
+    config.size.Y = 360;
+    config.fullscreen = false;
+    config.language = "en";
+    
     init(
         "Engine Test",
         STONE_TOWER_ENGINE_VERSION,
         "OpenGL",
         60,
-        //1280, 720,
-        640, 360,
+        config,
         320, 180,
         initWorld,
         "map0",
