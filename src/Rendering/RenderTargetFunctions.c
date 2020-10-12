@@ -15,7 +15,6 @@ RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d 
 		resolution.X * (scale ? app->renderState.windowZoom.X : 1),
 		resolution.Y * (scale ? app->renderState.windowZoom.Y : 1),
 	};
-	printf("%dx%d\n", size.X, size.Y);
 	
 	renderTarget.texture = Texture_NewBlank(app->renderState.device, size.X, size.Y, 4, true); // RenderTarget.texture allocate
 	renderTarget.texture.tilesize.X = size.X;

@@ -10,7 +10,6 @@ Config Config_Load(ApplicationState* app)
     
     if(r == NULL)
     {
-        printf("f is null\n");
         return app->config;
     }
     
@@ -20,15 +19,11 @@ Config Config_Load(ApplicationState* app)
     
     if(rLength != sizeof(config))
     {
-        printf("f is wrong size\n");
-        
         return app->config;
     }
     
     fread(&config, sizeof(config), 1, r);
     fclose(r);
-    
-    printf("%dx%d\n", config.size.X, config.size.Y);
     
     return config;
 }

@@ -88,6 +88,7 @@ void ApplicationState_Loop(ApplicationState* app)
 
 void ApplicationState_Free(ApplicationState* app)
 {
+    AssetManager_Destroy(&app->assetManager);
     RenderState_Free(&app->renderState);
 }
 

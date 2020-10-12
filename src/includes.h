@@ -33,6 +33,10 @@
 #include <soloud_c.h>
 // JSON-C
 #include <json.h>
+// Lua
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
 
 // Vendor
 // STB Image
@@ -62,6 +66,8 @@
 #include "Assets/AssetManager.h"
 #include "Assets/AssetManagerFunctions.c"
 #include "Assets/FontStashFNA3DFunctions.c"
+#include "Assets/LuaScript.h"
+#include "Assets/LuaScriptFunctions.c"
 #include "Assets/Shader.h"
 #include "Assets/ShaderFunctions.c"
 #include "Assets/Texture.h"

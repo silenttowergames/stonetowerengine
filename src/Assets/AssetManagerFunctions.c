@@ -5,7 +5,15 @@ AssetManager AssetManager_Create()
 	AssetManager assetManager;
 	memset(&assetManager, 0, sizeof(AssetManager));
 	
+	assetManager.lua = luaL_newstate();
+	luaL_openlibs(assetManager.lua);
+	
 	return assetManager;
+}
+
+void AssetManager_Destroy(AssetManager* assetManager)
+{
+	lua_close(assetManager->lua);
 }
 
 void AssetManager_InitTexture(AssetManager* assetManager, int length)
@@ -96,6 +104,37 @@ void AssetManager_AddShaders(AssetManager* assetManager, int length, ...)
 	for(int i = 0; i < length; i++)
 	{
 		AssetManager_AddShader(assetManager, va_arg(args, Shader));
+	}
+	
+	va_end(args);
+}
+
+void AssetManager_InitLua(AssetManager* assetManager, int length)
+{
+	assetManager->arrayLua = malloc(sizeof(LuaScript) * length);
+	assetManager->mapLua = ecs_map_new(LuaScript, length);
+	assetManager->lengthLua = length;
+	assetManager->lengthSoFarLua = 0;
+}
+
+void AssetManager_AddLua(AssetManager* assetManager, LuaScript script)
+{
+	assetManager->arrayLua[assetManager->lengthSoFarLua] = script;
+	
+	mapSet(assetManager->mapLua, script.key, &assetManager->arrayLua[assetManager->lengthSoFarLua]);
+	
+	assetManager->lengthSoFarLua++;
+}
+
+void AssetManager_AddLuas(AssetManager* assetManager, int length, ...)
+{
+	va_list args;
+	
+	va_start(args, length);
+	
+	for(int i = 0; i < length; i++)
+	{
+		AssetManager_AddLua(assetManager, va_arg(args, LuaScript));
 	}
 	
 	va_end(args);

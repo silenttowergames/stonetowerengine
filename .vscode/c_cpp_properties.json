@@ -9,7 +9,8 @@
                 "C:\\C\\FNA3D\\MojoShader",
                 "C:\\C\\flecs-master\\include",
                 "C:\\C\\soloud20200207\\include",
-                "C:\\C\\json-c-master"
+                "C:\\C\\json-c-master",
+                "C:\\C\\lua-5.4.0\\include"
             ],
             "defines": [
                 "_DEBUG",

@@ -70,6 +70,9 @@ int main(int arcg, char* argv[])
         RSZ_Floor
     );
     
+    LuaScript script = LuaScript_Load("test");
+    LuaScript_Execute(&app, &script);
+    
     scenes(
         3,
         scene(initialize),
