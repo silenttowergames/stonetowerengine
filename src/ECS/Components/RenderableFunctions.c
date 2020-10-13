@@ -101,14 +101,14 @@ void Renderable_Tilemap_Render(ApplicationState* app, SpriteBatch* spriteBatch, 
 	int Right = ((camera->position.X + (camera->resolution.X / 2)) / renderable->texture->tilesize.X) + 2;
 	int Bottom = ((camera->position.Y + (camera->resolution.Y / 2)) / renderable->texture->tilesize.Y) + 2;
 	
-	for(int Y = max(0, Top); Y < Bottom; Y++)
+	for(int Y = fmax(0, Top); Y < Bottom; Y++)
 	{
 		if(Y >= tilemap->size.Y)
 		{
 			break;
 		}
 		
-		for(int X = max(0, Left); X < Right; X++)
+		for(int X = fmax(0, Left); X < Right; X++)
 		{
 			if(X >= tilemap->size.X)
 			{

@@ -1,4 +1,6 @@
-[2020-9-7@11:31:33] ERROR_LUA: [string "a = 7 + asdfasdfasdfasdf11 - 8"]:1: attempt to perform arithmetic on a nil value (global 'asdfasdfasdfasdf11')
-[2020-9-11@11:21:47] ERROR_LUA: [string "a = 7 + asdfasdfasdfasdf11 - 8"]:1: attempt to perform arithmetic on a nil value (global 'asdfasdfasdfasdf11')
-[2020-9-11@11:27:20] ERROR_LUA: [string "a = 7 + asdfasdfasdfasdf11 - 8"]:1: attempt to perform arithmetic on a nil value (global 'asdfasdfasdfasdf11')
-[2020-9-11@11:32:2] ERROR_LUA: [string "a = 7 + asdfasdfasdfasdf11 - 8"]:1: attempt to perform arithmetic on a nil value (global 'asdfasdfasdfasdf11')
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.

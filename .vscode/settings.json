@@ -8,6 +8,15 @@
         "list": "c",
         "xutility": "c",
         "cstring": "c",
-        "xlocinfo": "c"
+        "xlocinfo": "c",
+        "bit": "c",
+        "*.tcc": "c",
+        "chrono": "c",
+        "functional": "c",
+        "string_view": "c",
+        "random": "c",
+        "istream": "c",
+        "limits": "c",
+        "numeric": "c"
     }
 }

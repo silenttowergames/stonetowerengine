@@ -22,6 +22,19 @@
             "cStandard": "c11",
             "cppStandard": "c++17",
             "intelliSenseMode": "msvc-x64"
+        },
+        {
+            "name": "Linux64",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/C/flecs-master/include",
+                "/C/FNA3D-master/include",
+                "/C/FNA3D-master/MojoShader",
+                "/C/soloud20200207/include",
+                "/C/json-c-master",
+                "/C/lua-5.4.0/include"
+            ],
+            "cStandard": "c11"
         }
     ],
     "version": 4

@@ -4,7 +4,7 @@ void KeyboardState_Create(KeyboardState* keyboardState)
 {
 	memset(keyboardState, 0, sizeof(KeyboardState));
 	
-	SDL_KeyCode codes[240] = {
+	SDL_Keycode codes[240] = {
         SDLK_UNKNOWN,
         SDLK_RETURN,
         SDLK_ESCAPE,

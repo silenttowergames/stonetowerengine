@@ -52,7 +52,7 @@ void FontStashFNA3D_RenderUpdate(void* uptr, int* rect, const unsigned char* dat
         }
     }
     
-    FNA3D_SetTextureData2D(fna->app->renderState.device, fna->texture.asset, FNA3D_SURFACEFORMAT_COLOR, 0, 0, width, height, 0, _data, size * channels);
+    FNA3D_SetTextureData2D(fna->app->renderState.device, fna->texture.asset, 0, 0, width, height, 0, _data, size * channels);
 }
 
 void FontStashFNA3D_RenderDraw(void* uptr, const float* verts, const float* tcoords, const unsigned int* colors, int nverts)

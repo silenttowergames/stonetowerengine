@@ -11,7 +11,7 @@ Texture Texture_NewFromData(FNA3D_Device* device, int width, int height, stbi_uc
 	texture.tilesize = texture.size;
 	
 	FNA3D_Texture* asset = FNA3D_CreateTexture2D(device, FNA3D_SURFACEFORMAT_COLOR, width, height, 1, isRenderTarget);
-	FNA3D_SetTextureData2D(device, asset, FNA3D_SURFACEFORMAT_COLOR, 0, 0, width, height, 0, pixels, width * height * channels);
+	FNA3D_SetTextureData2D(device, asset, 0, 0, width, height, 0, pixels, width * height * channels);
 	texture.asset = asset;
 	
 	return texture;

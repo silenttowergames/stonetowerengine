@@ -113,7 +113,8 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 			NULL,
 			0,
 			NULL,
-			FNA3D_DEPTHFORMAT_NONE
+			FNA3D_DEPTHFORMAT_NONE,
+			0
 		);
 	}
 	else
@@ -125,11 +126,10 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 			&renderTarget->binding,
 			1,
 			NULL,
-			FNA3D_DEPTHFORMAT_NONE
+			FNA3D_DEPTHFORMAT_NONE,
+			0
 		);
 	}
-	
-	FNA3D_BeginFrame(app->renderState.device);
 	
 	// Clear the screen with this color
 	
