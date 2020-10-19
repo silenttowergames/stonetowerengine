@@ -66,10 +66,17 @@ void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int 
 
 void RenderState_Free(RenderState* renderState)
 {
+	for(int i = 0; i < renderState->targetsCount; i++)
+	{
+		RenderTarget_Destroy(&renderState->targets[i], renderState->device);
+	}
+	
+	RenderTarget_Destroy(&renderState->mainRenderTarget, renderState->device);
+	
 	FNA3D_AddDisposeVertexBuffer(renderState->device, renderState->vertexBuffer); // RenderState.VertexBuffer free
 	free(renderState->windowTitle); // RenderState.windowTitle free
 	SDL_DestroyWindow(renderState->window); // RenderState.window free
-	Shader_Free(&renderState->shaderSpriteEffect);
+	Shader_Free(renderState->device, &renderState->shaderSpriteEffect);
 	FNA3D_DestroyDevice(renderState->device); // RenderState.device free
 }
 

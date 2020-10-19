@@ -53,15 +53,15 @@ void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
 int main(int arcg, char* argv[])
 {
     Config config;
-    config.size.X = 640;
-    config.size.Y = 360;
+    config.size.X = 1280;
+    config.size.Y = 720;
     config.fullscreen = false;
     config.language = "en";
     
     init(
         "Engine Test",
         STONE_TOWER_ENGINE_VERSION,
-        "OpenGL",
+        NULL,
         60,
         config,
         320, 180,
@@ -70,8 +70,17 @@ int main(int arcg, char* argv[])
         RSZ_Floor
     );
     
+    printf("%s\n", app.savePathConfig);
+    
     LuaScript script = LuaScript_Load("test");
     LuaScript_Execute(&app, &script);
+    LuaScript_Execute(&app, &script);
+    
+    AudioManager audioManager;
+    AudioManager_create(&audioManager);
+    
+    //Sound s;
+    //Sound_create_load(&s, "assets/sounds/hit.ogg", Play_Default);
     
     scenes(
         3,
@@ -116,6 +125,8 @@ int main(int arcg, char* argv[])
     app.renderState.mainRenderTarget.shaders[0] = mapGet(app.assetManager.mapShader, "CRTShader", Shader);
     
     loop();
+    
+    //Sound_play(&s, audioManager.soloud);
     
     quit();
 }

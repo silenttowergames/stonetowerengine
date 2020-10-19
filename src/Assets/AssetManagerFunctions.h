@@ -2,9 +2,13 @@
 
 #include <stdarg.h>
 #include "AssetManager.h"
+#include "LuaScriptFunctions.h"
+#include "ShaderFunctions.h"
+#include "TextureFunctions.h"
+#include "TiledJSONFunctions.h"
 
 AssetManager AssetManager_Create();
-void AssetManager_Destroy(AssetManager* assetManager);
+void AssetManager_Destroy(FNA3D_Device* device, AssetManager* assetManager);
 
 void AssetManager_InitTexture(AssetManager* assetManager, int length);
 void AssetManager_AddTexture(AssetManager* assetManager, Texture texture);

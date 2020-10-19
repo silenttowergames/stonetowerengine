@@ -27,6 +27,7 @@
             "name": "Linux64",
             "includePath": [
                 "${workspaceFolder}/**",
+                "/usr/include",
                 "/C/flecs-master/include",
                 "/C/FNA3D-master/include",
                 "/C/FNA3D-master/MojoShader",
@@ -34,7 +35,7 @@
                 "/C/json-c-master",
                 "/C/lua-5.4.0/include"
             ],
-            "cStandard": "c11"
+            "cStandard": "c99"
         }
     ],
     "version": 4

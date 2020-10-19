@@ -11,8 +11,35 @@ AssetManager AssetManager_Create()
 	return assetManager;
 }
 
-void AssetManager_Destroy(AssetManager* assetManager)
+void AssetManager_Destroy(FNA3D_Device* device, AssetManager* assetManager)
 {
+	int i;
+	
+	ecs_map_free(assetManager->mapLua);
+	ecs_map_free(assetManager->mapShader);
+	ecs_map_free(assetManager->mapTexture);
+	ecs_map_free(assetManager->mapTiled);
+	
+	for(i = 0; i < assetManager->lengthLua; i++)
+	{
+		LuaScript_Free(&assetManager->arrayLua[i]);
+	}
+	
+	for(i = 0; i < assetManager->lengthShader; i++)
+	{
+		Shader_Free(device, &assetManager->arrayShader[i]);
+	}
+	
+	for(i = 0; i < assetManager->lengthTexture; i++)
+	{
+		Texture_Free(device, &assetManager->arrayTexture[i]);
+	}
+	
+	for(i = 0; i < assetManager->lengthTiled; i++)
+	{
+		TiledJSON_Free(&assetManager->arrayTiled[i]);
+	}
+	
 	lua_close(assetManager->lua);
 }
 

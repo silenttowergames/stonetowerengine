@@ -1,4 +1,7 @@
-a = 19 + 20
+if a == nil then
+    a = 19 + 20
+end
+
 b = 11 - 12
 a = a + b
 

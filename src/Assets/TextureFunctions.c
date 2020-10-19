@@ -25,7 +25,11 @@ Texture Texture_NewBlank(FNA3D_Device* device, int width, int height, int channe
 	stbi_uc* pixels = malloc(sizeWithType);
 	memset(pixels, 0xFF, sizeWithType);
 	
-	return Texture_NewFromData(device, width, height, pixels, channels, isRenderTarget);
+	Texture texture = Texture_NewFromData(device, width, height, pixels, channels, isRenderTarget);
+	
+	stbi_image_free(pixels);
+	
+	return texture;
 }
 
 Texture Texture_Load(FNA3D_Device* device, const char* key)
@@ -62,4 +66,9 @@ Texture Texture_Create(FNA3D_Device* device, const char* key, int tilesizeX, int
 	texture.border.Y = borderY;
 	
 	return texture;
+}
+
+void Texture_Free(FNA3D_Device* device, Texture* texture)
+{
+	FNA3D_AddDisposeTexture(device, texture->asset);
 }

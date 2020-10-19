@@ -112,7 +112,7 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
             json_object_object_get_ex(layer, "objects", &obj);
             tlayer.count = json_object_array_length(obj);
             
-            tlayer.objects = malloc(sizeof(TiledJSONObject) * tlayer.count);
+            tlayer.objects = malloc(sizeof(TiledJSONObject) * tlayer.count); // TiledJSONLayer.objects allocate
             
             for(int j = 0; j < tlayer.count; j++)
             {
@@ -149,7 +149,7 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
                     char* propertyType;
                     
                     object.propertiesCount = json_object_array_length(item);
-                    object.propertiesArray = malloc(sizeof(TiledJSONProperty) * object.propertiesCount);
+                    object.propertiesArray = malloc(sizeof(TiledJSONProperty) * object.propertiesCount); // TiledJSONObject.propertiesArray allocate
                     object.properties = ecs_map_new(TiledJSONProperty, object.propertiesCount);
                     
                     for(int p = 0; p < object.propertiesCount; p++)
@@ -198,6 +198,8 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
             mapSet(tiled.layersMap, tiled.layers[i].name, &tiled.layers[i]);
         }
     }
+    
+    free(buffer);
     
     return tiled;
 }
@@ -275,4 +277,32 @@ void TiledJSON_Map(ecs_world_t* world, TiledJSONLayer* layer, Texture* texture, 
         0,
         0xFFFFFFFF,
     });
+}
+
+void TiledJSON_Free(TiledJSON* tiled)
+{
+    for(int i = 0; i < tiled->layerCount; i++)
+    {
+        free(tiled->layers[i].tiles);
+        
+        if(tiled->layers[i].objects == NULL)
+        {
+            continue;
+        }
+        
+        for(int j = 0; j < tiled->layers[i].count; j++)
+        {
+            if(tiled->layers[i].objects[j].propertiesArray == NULL)
+            {
+                continue;
+            }
+            
+            free(tiled->layers[i].objects[j].propertiesArray);
+            ecs_map_free(tiled->layers[i].objects[j].properties);
+        }
+    }
+    
+    ecs_map_free(tiled->layersMap);
+    free(tiled->layers);
+    free(tiled->filename);
 }

@@ -78,6 +78,13 @@
 #include "Assets/TiledJSONObject.h"
 #include "Assets/TiledJSONProperty.h"
 
+// Audio
+#include "Audio/AudioManager.h"
+#include "Audio/AudioManagerFunctions.c"
+#include "Audio/Play.h"
+#include "Audio/Sound.h"
+#include "Audio/SoundFunctions.c"
+
 // ECS
 // Components
 #include "ECS/Components/AIPlayer.h"

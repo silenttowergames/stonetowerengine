@@ -59,7 +59,9 @@ bool Shader_ParamCopy(Shader* shader, const char* key, void* payload, size_t siz
 	return true;
 }
 
-void Shader_Free(Shader* shader)
+void Shader_Free(FNA3D_Device* device, Shader* shader)
 {
 	free(shader->filename);
+	
+	FNA3D_AddDisposeEffect(device, shader->effect);
 }

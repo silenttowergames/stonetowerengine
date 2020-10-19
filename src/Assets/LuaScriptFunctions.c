@@ -39,6 +39,15 @@ void LuaScript_Execute(ApplicationState* app, LuaScript* script)
             
             printf("%1.5f\n", a);
         }
+		
+		lua_getglobal(app->assetManager.lua, "b");
+        
+        if(lua_isnumber(app->assetManager.lua, -1))
+        {
+            float b = (float)lua_tonumber(app->assetManager.lua, -1);
+            
+            printf("%1.5f\n", b);
+        }
     }
     else
     {
