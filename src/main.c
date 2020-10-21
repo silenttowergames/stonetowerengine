@@ -52,6 +52,11 @@ void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
 
 int main(int arcg, char* argv[])
 {
+    AudioManager audioManager;
+    AudioManager_create(&audioManager);
+    
+    printf("ALSA: %d; SDL2: %d; USING: %d\n", SOLOUD_ALSA, SOLOUD_SDL2, Soloud_getBackendId(audioManager.soloud));
+    
     Config config;
     config.size.X = 1280;
     config.size.Y = 720;
@@ -76,11 +81,8 @@ int main(int arcg, char* argv[])
     LuaScript_Execute(&app, &script);
     LuaScript_Execute(&app, &script);
     
-    AudioManager audioManager;
-    AudioManager_create(&audioManager);
-    
-    //Sound s;
-    //Sound_create_load(&s, "assets/sounds/hit.ogg", Play_Default);
+    Sound s;
+    Sound_create_load(&s, "assets/sounds/hit.ogg", Play_Default);
     
     scenes(
         3,
@@ -126,7 +128,9 @@ int main(int arcg, char* argv[])
     
     loop();
     
-    //Sound_play(&s, audioManager.soloud);
+    Sound_play(&s, audioManager.soloud);
+    
+    SDL_Delay(1000);
     
     quit();
 }
