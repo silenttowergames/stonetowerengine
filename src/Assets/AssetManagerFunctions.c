@@ -167,4 +167,35 @@ void AssetManager_AddLuas(AssetManager* assetManager, int length, ...)
 	va_end(args);
 }
 
-#define getTexture(key) mapGet(app->assetManager.mapTexture, key, Texture)
+void AssetManager_InitSound(AssetManager* assetManager, int length)
+{
+	AudioManager_create(&assetManager->audioManager);
+	
+	assetManager->arraySound = malloc(sizeof(Sound) * length);
+	assetManager->mapSound = ecs_map_new(Sound, length);
+	assetManager->lengthSound = length;
+	assetManager->lengthSoFarSound = 0;
+}
+
+void AssetManager_AddSound(AssetManager* assetManager, Sound sound)
+{
+	assetManager->arraySound[assetManager->lengthSoFarSound] = sound;
+	
+	mapSet(assetManager->mapSound, sound.key, &assetManager->arraySound[assetManager->lengthSoFarSound]);
+	
+	assetManager->lengthSoFarSound++;
+}
+
+void AssetManager_AddSounds(AssetManager* assetManager, int length, ...)
+{
+	va_list args;
+	
+	va_start(args, length);
+	
+	for(int i = 0; i < length; i++)
+	{
+		AssetManager_AddSound(assetManager, va_arg(args, Sound));
+	}
+	
+	va_end(args);
+}

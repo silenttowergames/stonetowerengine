@@ -10,4 +10,6 @@ typedef struct Sound
     unsigned int instances[8];
     bool instancesPausedTimer[8];
     bool instancesPausedFocus[8];
+    const char* key;
+    char* filename;
 } Sound;

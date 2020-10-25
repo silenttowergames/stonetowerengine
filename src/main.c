@@ -52,11 +52,6 @@ void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
 
 int main(int arcg, char* argv[])
 {
-    AudioManager audioManager;
-    AudioManager_create(&audioManager);
-    
-    printf("ALSA: %d; SDL2: %d; USING: %d\n", SOLOUD_ALSA, SOLOUD_SDL2, Soloud_getBackendId(audioManager.soloud));
-    
     Config config;
     config.size.X = 1280;
     config.size.Y = 720;
@@ -74,15 +69,6 @@ int main(int arcg, char* argv[])
         "map0",
         RSZ_Floor
     );
-    
-    printf("%s\n", app.savePathConfig);
-    
-    LuaScript script = LuaScript_Load("test");
-    LuaScript_Execute(&app, &script);
-    LuaScript_Execute(&app, &script);
-    
-    Sound s;
-    Sound_create_load(&s, "assets/sounds/hit.ogg", Play_Default);
     
     scenes(
         3,
@@ -108,6 +94,20 @@ int main(int arcg, char* argv[])
         Shader_Create(app.renderState.device, "CRTShader", ShaderUpdate_Disable)
     );
     
+    scripts(
+        1,
+        LuaScript_Load("test")
+    );
+    LuaScript_Execute(&app, mapGet(app.assetManager.mapLua, "test", LuaScript));
+    
+    sounds(
+        4,
+        Sound_create_load("calm-example.ogg", Play_Default),
+        Sound_create_load("hit.ogg", Play_Default),
+        Sound_create_speech("speech0", "This is a test!", Play_Default),
+        Sound_create_sfxr("sfxr", Play_Default)
+    );
+    
     factories(
         3,
         factory(Player),
@@ -119,7 +119,6 @@ int main(int arcg, char* argv[])
         2,
         RenderTarget_Create(&app, (int2d){ 320, 180, }, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 1, 0, 1, 1, }),
         RenderTarget_Create(&app, (int2d){ 80, 80, }, (int2d){ 80, -40, }, false, (FNA3D_Vec4){ 0, 1, 0, 1, })
-        //RenderTarget_Create(app.renderState.device, (int2d){ 160, 180, }, (int2d){ 160, 180, }, (int2d){ 160, 0, })
     );
     
     app.renderState.mainRenderTarget.shadersCount = 1;
@@ -127,10 +126,6 @@ int main(int arcg, char* argv[])
     app.renderState.mainRenderTarget.shaders[0] = mapGet(app.assetManager.mapShader, "CRTShader", Shader);
     
     loop();
-    
-    Sound_play(&s, audioManager.soloud);
-    
-    SDL_Delay(1000);
     
     quit();
 }

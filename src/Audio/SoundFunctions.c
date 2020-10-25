@@ -1,34 +1,47 @@
 #include <soloud_c.h>
 #include "SoundFunctions.h"
 
-void Sound_reset(Sound* sound, Play play)
+Sound Sound_create_load(const char* key, Play play)
 {
-    memset(sound, 0, sizeof(Sound));
+    Sound sound;
+    memset(&sound, 0, sizeof(Sound));
+    sound.play = play;
+    sound.key = key;
     
-    sound->play = play;
+    const char* filepath = "assets/sounds/%s";
+    
+    sound.filename = malloc(sizeof(char*) * (strlen(filepath) + strlen(key) - 2 + 1));
+    sprintf(sound.filename, filepath, key);
+    
+    sound.source = Wav_create();
+    Wav_load(sound.source, sound.filename);
+    
+    return sound;
 }
 
-void Sound_create_load(Sound* sound, const char* filename, Play play)
+Sound Sound_create_speech(const char* key, const char* words, Play play)
 {
-    Sound_reset(sound, play);
+    Sound sound;
+    memset(&sound, 0, sizeof(Sound));
+    sound.play = play;
+    sound.key = key;
     
-    sound->source = Wav_create();
-    Wav_load(sound->source, filename);
+    sound.source = Speech_create();
+    Speech_setText(sound.source, words);
+    
+    return sound;
 }
 
-void Sound_create_speech(Sound* sound, const char* words, Play play)
+Sound Sound_create_sfxr(const char* key, Play play)
 {
-    Sound_reset(sound, play);
+    Sound sound;
+    memset(&sound, 0, sizeof(Sound));
+    sound.play = play;
+    sound.key = key;
     
-    sound->source = Speech_create();
-    Speech_setText(sound->source, words);
-}
-
-void Sound_create_sfxr(Sound* sound, Play play)
-{
-    Sound_reset(sound, play);
+    sound.source = Sfxr_create();
     
-    sound->source = Sfxr_create();
+    return sound;
 }
 
 bool Sound_play(Sound* sound, Soloud* soloud)

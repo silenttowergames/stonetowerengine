@@ -56,4 +56,12 @@ void MoveSystem(ecs_iter_t* it)
 			Config_Resize(app, 2560, 1080, true);
 		}
 	}
+	
+	if(key(Pressed, x))
+	{
+		//Sound_play(mapGet(app->assetManager.mapSound, "hit.ogg", Sound), app->assetManager.audioManager.soloud);
+		//Sound_play(mapGet(app->assetManager.mapSound, "speech0", Sound), app->assetManager.audioManager.soloud);
+		
+		Sound_play(mapGet(app->assetManager.mapSound, "sfxr", Sound), app->assetManager.audioManager.soloud);
+	}
 }

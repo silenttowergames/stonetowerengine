@@ -6,6 +6,8 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "TiledJSON.h"
+#include "../Audio/AudioManager.h"
+#include "../Audio/Sound.h"
 
 // This is really ugly lol
 // That could certainly be pared down
@@ -32,4 +34,10 @@ typedef struct AssetManager
 	ecs_map_t* mapLua;
 	int lengthLua;
 	int lengthSoFarLua;
+	
+	AudioManager audioManager;
+	Sound* arraySound;
+	ecs_map_t* mapSound;
+	int lengthSound;
+	int lengthSoFarSound;
 } AssetManager;
