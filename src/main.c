@@ -98,7 +98,6 @@ int main(int arcg, char* argv[])
         1,
         LuaScript_Load("test")
     );
-    LuaScript_Execute(&app, mapGet(app.assetManager.mapLua, "test", LuaScript));
     
     sounds(
         4,

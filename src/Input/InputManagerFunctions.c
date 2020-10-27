@@ -7,6 +7,7 @@ InputManager InputManager_Create()
 	InputManager inputManager;
 	memset(&inputManager, 0, sizeof(InputManager));
 	
+	MouseState_Create(&inputManager.mouseState);
 	KeyboardState_Create(&inputManager.keyboardState);
 	
 	for(int i = 0; i < sizeof(inputManager.gamepadStates) / sizeof(GamepadState); i++)

@@ -121,6 +121,8 @@
 #include "Input/InputManagerFunctions.c"
 #include "Input/KeyboardState.h"
 #include "Input/KeyboardStateFunctions.c"
+#include "Input/MouseState.h"
+#include "Input/MouseStateFunctions.c"
 
 // Logger
 #include "Logging/Logger.h"

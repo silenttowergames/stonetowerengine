@@ -39,6 +39,21 @@ void MoveSystem(ecs_iter_t* it)
 		{
 			rumble(0, 1.0f, 500);
 		}
+		
+		if(mouse(Pressed, LEFT))
+		{
+			b[i].position.X += 16;
+		}
+		
+		if(mouse(Down, RIGHT))
+		{
+			b[i].position.Y++;
+		}
+		
+		if(mouse(Pressed, MIDDLE))
+		{
+			b[i].position.Y += 16;
+		}
 	}
 	
 	if(

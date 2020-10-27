@@ -26,33 +26,18 @@ LuaScript LuaScript_Load(const char* key)
 	return script;
 }
 
-void LuaScript_Execute(ApplicationState* app, LuaScript* script)
+bool LuaScript_Execute(ApplicationState* app, LuaScript* script)
 {
 	int r = luaL_dostring(app->assetManager.lua, script->data);
-    if(r == LUA_OK)
-    {
-        lua_getglobal(app->assetManager.lua, "a");
-        
-        if(lua_isnumber(app->assetManager.lua, -1))
-        {
-            float a = (float)lua_tonumber(app->assetManager.lua, -1);
-            
-            printf("%1.5f\n", a);
-        }
-		
-		lua_getglobal(app->assetManager.lua, "b");
-        
-        if(lua_isnumber(app->assetManager.lua, -1))
-        {
-            float b = (float)lua_tonumber(app->assetManager.lua, -1);
-            
-            printf("%1.5f\n", b);
-        }
-    }
-    else
+	
+    if(r != LUA_OK)
     {
 		Logger_Log(&app->logger, "ERROR_LUA", lua_tostring(app->assetManager.lua, -1));
+		
+		return false;
     }
+	
+	return true;
 }
 
 void LuaScript_Free(LuaScript* script)
