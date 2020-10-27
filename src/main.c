@@ -12,7 +12,7 @@ void initWorld(ecs_world_t* world)
     ECS_SYSTEM(world, SDLEventsSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, EngineUpdateSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, MoveSystem, EcsOnUpdate, AIPlayer, Body);
-    ECS_SYSTEM(world, BasicAABBSystem, EcsOnUpdate, BasicAABB, Body);
+    ECS_SYSTEM(world, BasicAABBSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, CameraFollowSystem, EcsOnUpdate, Body, CameraFollow);
     ECS_SYSTEM(world, DepthSystem, EcsOnUpdate, Body, Renderable);
     ECS_SYSTEM(world, AnimateSystem, EcsOnUpdate, Animate, Renderable);
@@ -21,6 +21,8 @@ void initWorld(ecs_world_t* world)
     
     const EcsQuery* sort = ecs_get(world, DrawSystem, EcsQuery);
 	ecs_query_order_by(world, sort->query, ecs_entity(Renderable), SortByLayerThenY);
+    
+    aabbQuery = ecs_query_new(world, "BasicAABB, Body");
 }
 
 void initializeScene(ecs_world_t* world)
