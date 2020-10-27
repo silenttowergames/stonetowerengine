@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "NPCFactory.h"
 #include "../Components/Animate.h"
+#include "../Components/BasicAABB.h"
 #include "../Components/Body.h"
 #include "../Components/RenderableFunctions.h"
 #include "../../Application/ApplicationStateFunctions.h"
@@ -10,12 +11,17 @@ void NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject
 {
 	ctx();
 	
+    ECS_COMPONENT(world, AINPC);
     ECS_COMPONENT(world, Animate);
+    ECS_COMPONENT(world, BasicAABB);
     ECS_COMPONENT(world, Body);
     ECS_COMPONENT(world, Renderable);
 	
 	ecs_entity_t f = ecs_new(world, 0);
     
+    ecs_set(world, f, AINPC, {
+        0.25f,
+    });
     ecs_set(world, f, Animate, {
         "man-die",
         NULL,
@@ -23,6 +29,7 @@ void NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject
         0,
         1.0f,
     });
+    ecs_set(world, f, BasicAABB, BasicAABB_Create(1, Hitbox_CreateSquare(8)));
     ecs_set(world, f, Body, {
         { X, Y, },
     });

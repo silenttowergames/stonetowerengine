@@ -85,6 +85,7 @@
 
 // ECS
 // Components
+#include "ECS/Components/AINPC.h"
 #include "ECS/Components/AIPlayer.h"
 #include "ECS/Components/Animate.h"
 #include "ECS/Components/BasicAABB.h"
@@ -101,6 +102,7 @@
 #include "ECS/Entities/PlayerFactory.c"
 #include "ECS/Entities/TextBoxFactory.c"
 // Systems
+#include "ECS/Systems/AINPCSystem.c"
 #include "ECS/Systems/AnimateSystem.c"
 #include "ECS/Systems/BasicAABBSystem.c"
 #include "ECS/Systems/CameraFollowSystem.c"

@@ -1,0 +1,3 @@
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
