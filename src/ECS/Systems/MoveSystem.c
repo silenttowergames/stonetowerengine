@@ -15,24 +15,26 @@ void MoveSystem(ecs_iter_t* it)
 	
 	for(int i = 0; i < it->count; i++)
 	{
+		memset(&b[i].velocity, 0, sizeof(float2d));
+		
 		if(key(Down, RIGHT) || button(Down, 0, DPAD_RIGHT) || button(Down, 1, STICK_RIGHT_RIGHT) || axis(0, STICK_LEFT_DOWN) >= 0.9f)
 		{
-			b[i].position.X += a[i].speed;
+			b[i].velocity.X += a[i].speed;
 		}
 		
 		if(key(Down, LEFT) || button(Down, 0, DPAD_LEFT) || button(Down, 0, STICK_RIGHT_LEFT) || button(Released, 0, STICK_LEFT_RIGHT))
 		{
-			b[i].position.X -= a[i].speed;
+			b[i].velocity.X -= a[i].speed;
 		}
 		
 		if(key(Down, DOWN) || button(Down, 0, DPAD_DOWN) || button(Down, 0, STICK_RIGHT_DOWN))
 		{
-			b[i].position.Y += a[i].speed;
+			b[i].velocity.Y += a[i].speed;
 		}
 		
 		if(key(Down, UP) || button(Down, 0, DPAD_UP) || button(Down, 0, STICK_RIGHT_UP))
 		{
-			b[i].position.Y -= a[i].speed;
+			b[i].velocity.Y -= a[i].speed;
 		}
 		
 		if(button(Down, 0, X))
@@ -42,17 +44,17 @@ void MoveSystem(ecs_iter_t* it)
 		
 		if(mouse(Pressed, LEFT))
 		{
-			b[i].position.X += 16;
+			b[i].velocity.X += 16;
 		}
 		
 		if(mouse(Down, RIGHT))
 		{
-			b[i].position.Y++;
+			b[i].velocity.Y++;
 		}
 		
 		if(mouse(Pressed, MIDDLE))
 		{
-			b[i].position.Y += 16;
+			b[i].velocity.Y += 16;
 		}
 	}
 	

@@ -5,4 +5,5 @@
 typedef struct Body
 {
 	float2d position;
+	float2d velocity;
 } Body;

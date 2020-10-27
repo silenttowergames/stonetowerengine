@@ -4,6 +4,7 @@ void initWorld(ecs_world_t* world)
 {
     ECS_COMPONENT(world, AIPlayer);
     ECS_COMPONENT(world, Animate);
+    ECS_COMPONENT(world, BasicAABB);
     ECS_COMPONENT(world, Body);
     ECS_COMPONENT(world, CameraFollow);
     ECS_COMPONENT(world, Renderable);
@@ -11,6 +12,7 @@ void initWorld(ecs_world_t* world)
     ECS_SYSTEM(world, SDLEventsSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, EngineUpdateSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, MoveSystem, EcsOnUpdate, AIPlayer, Body);
+    ECS_SYSTEM(world, BasicAABBSystem, EcsOnUpdate, BasicAABB, Body);
     ECS_SYSTEM(world, CameraFollowSystem, EcsOnUpdate, Body, CameraFollow);
     ECS_SYSTEM(world, DepthSystem, EcsOnUpdate, Body, Renderable);
     ECS_SYSTEM(world, AnimateSystem, EcsOnUpdate, Animate, Renderable);
@@ -60,7 +62,7 @@ int main(int arcg, char* argv[])
     
     init(
         "Engine Test",
-        STONE_TOWER_ENGINE_VERSION,
+        STE_VERSION,
         NULL,
         60,
         config,
@@ -115,14 +117,16 @@ int main(int arcg, char* argv[])
     );
     
     renderTargets(
-        2,
-        RenderTarget_Create(&app, (int2d){ 320, 180, }, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 1, 0, 1, 1, }),
-        RenderTarget_Create(&app, (int2d){ 80, 80, }, (int2d){ 80, -40, }, false, (FNA3D_Vec4){ 0, 1, 0, 1, })
+        1,
+        RenderTarget_Create(&app, (int2d){ 320, 180, }, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 1, 0, 1, 1, })
+        //RenderTarget_Create(&app, (int2d){ 80, 80, }, (int2d){ 80, -40, }, false, (FNA3D_Vec4){ 0, 1, 0, 1, })
     );
     
+    /*
     app.renderState.mainRenderTarget.shadersCount = 1;
     app.renderState.mainRenderTarget.shaders = malloc(sizeof(Shader*) * app.renderState.mainRenderTarget.shadersCount);
     app.renderState.mainRenderTarget.shaders[0] = mapGet(app.assetManager.mapShader, "CRTShader", Shader);
+    //*/
     
     loop();
     

@@ -1,6 +1,7 @@
 #include "PlayerFactory.h"
 #include "../Components/AIPlayer.h"
 #include "../Components/Animate.h"
+#include "../Components/BasicAABB.h"
 #include "../Components/Body.h"
 #include "../Components/CameraFollow.h"
 #include "../Components/RenderableFunctions.h"
@@ -12,6 +13,7 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObj
     
     ECS_COMPONENT(world, AIPlayer);
 	ECS_COMPONENT(world, Animate);
+    ECS_COMPONENT(world, BasicAABB);
     ECS_COMPONENT(world, Body);
     ECS_COMPONENT(world, CameraFollow);
     ECS_COMPONENT(world, Renderable);
@@ -34,6 +36,9 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObj
         0,
         0,
         1.0f,
+    });
+    ecs_set(world, e, BasicAABB, {
+        Hitbox_CreateList(1, Hitbox_CreateSquare(8)),
     });
     ecs_set(world, e, Body, {
         { X, Y, },

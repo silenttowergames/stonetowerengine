@@ -4,9 +4,7 @@
 
 void AnimateSystem(ecs_iter_t* it)
 {
-    ecs_world_t* world = it->world;
-    
-	ctx();
+    fctx();
 	
     Animate* a = ecs_column(it, Animate, 1);
     Renderable* s = ecs_column(it, Renderable, 2);

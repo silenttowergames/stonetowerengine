@@ -1,8 +1,6 @@
 // Stone Tower Engine
 // Silent Tower Games LLC
 
-#define STONE_TOWER_ENGINE_VERSION "v1.0.0"
-
 // OS
 // Windows
 #ifdef _WIN32
@@ -89,8 +87,11 @@
 // Components
 #include "ECS/Components/AIPlayer.h"
 #include "ECS/Components/Animate.h"
+#include "ECS/Components/BasicAABB.h"
 #include "ECS/Components/Body.h"
 #include "ECS/Components/CameraFollow.h"
+#include "ECS/Components/Hitbox.h"
+#include "ECS/Components/HitboxFunctions.c"
 #include "ECS/Components/Renderable.h"
 #include "ECS/Components/RenderableFunctions.c"
 #include "ECS/Components/RenderOffsetFunctions.c"
@@ -101,6 +102,7 @@
 #include "ECS/Entities/TextBoxFactory.c"
 // Systems
 #include "ECS/Systems/AnimateSystem.c"
+#include "ECS/Systems/BasicAABBSystem.c"
 #include "ECS/Systems/CameraFollowSystem.c"
 #include "ECS/Systems/DepthSystem.c"
 #include "ECS/Systems/DrawSystem.c"

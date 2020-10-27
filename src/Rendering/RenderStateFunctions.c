@@ -30,7 +30,7 @@ void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int 
 	blendState.blendFactor = blendFactor;
 	blendState.colorBlendFunction = FNA3D_BLENDFUNCTION_ADD;
 	blendState.colorDestinationBlend = FNA3D_BLEND_INVERSESOURCEALPHA;
-	blendState.colorSourceBlend = FNA3D_BLEND_ONE;
+	blendState.colorSourceBlend = FNA3D_BLEND_SOURCEALPHA;
 	blendState.colorWriteEnable = FNA3D_COLORWRITECHANNELS_ALL;
 	blendState.colorWriteEnable1 = FNA3D_COLORWRITECHANNELS_ALL;
 	blendState.colorWriteEnable2 = FNA3D_COLORWRITECHANNELS_ALL;

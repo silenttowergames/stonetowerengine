@@ -42,6 +42,6 @@ void NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject
         colorU(255, 255, 0, 100),//0xFFFFFFFF,
         NULL,
         0,
-        1,
+        0,
     });
 }
