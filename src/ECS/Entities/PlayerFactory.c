@@ -28,7 +28,7 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObj
     }
     
     ecs_set(world, e, AIPlayer, {
-        1.3f,
+        1.0f,
     });
     ecs_set(world, e, Animate, {
         "protag-walk",
@@ -37,7 +37,7 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObj
         0,
         1.0f,
     });
-    ecs_set(world, e, BasicAABB, BasicAABB_Create(1, Hitbox_CreateSquare(8)));
+    ecs_set(world, e, BasicAABB, BasicAABB_Create(1, Hitbox_CreateSquare(16)));
     ecs_set(world, e, Body, {
         { X, Y, },
     });

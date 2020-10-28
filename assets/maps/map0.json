@@ -47,18 +47,6 @@
                 {
                  "gid":1,
                  "height":8,
-                 "id":1,
-                 "name":"",
-                 "rotation":0,
-                 "type":"NPC",
-                 "visible":true,
-                 "width":8,
-                 "x":32,
-                 "y":40
-                }, 
-                {
-                 "gid":1,
-                 "height":8,
                  "id":4,
                  "name":"",
                  "properties":[
@@ -71,92 +59,8 @@
                  "type":"Player",
                  "visible":true,
                  "width":8,
-                 "x":96,
-                 "y":88
-                }, 
-                {
-                 "gid":1,
-                 "height":8,
-                 "id":5,
-                 "name":"",
-                 "rotation":0,
-                 "type":"NPC",
-                 "visible":true,
-                 "width":8,
-                 "x":24,
-                 "y":56
-                }, 
-                {
-                 "gid":1,
-                 "height":8,
-                 "id":6,
-                 "name":"",
-                 "rotation":0,
-                 "type":"NPC",
-                 "visible":true,
-                 "width":8,
-                 "x":16,
+                 "x":72,
                  "y":48
-                }, 
-                {
-                 "gid":1,
-                 "height":8,
-                 "id":7,
-                 "name":"",
-                 "rotation":0,
-                 "type":"NPC",
-                 "visible":true,
-                 "width":8,
-                 "x":8,
-                 "y":56
-                }, 
-                {
-                 "gid":1,
-                 "height":8,
-                 "id":8,
-                 "name":"",
-                 "rotation":0,
-                 "type":"NPC",
-                 "visible":true,
-                 "width":8,
-                 "x":8,
-                 "y":64
-                }, 
-                {
-                 "gid":1,
-                 "height":8,
-                 "id":9,
-                 "name":"",
-                 "rotation":0,
-                 "type":"NPC",
-                 "visible":true,
-                 "width":8,
-                 "x":8,
-                 "y":48
-                }, 
-                {
-                 "gid":1,
-                 "height":8,
-                 "id":10,
-                 "name":"",
-                 "rotation":0,
-                 "type":"NPC",
-                 "visible":true,
-                 "width":8,
-                 "x":24,
-                 "y":48
-                }, 
-                {
-                 "gid":1,
-                 "height":8,
-                 "id":11,
-                 "name":"",
-                 "rotation":0,
-                 "type":"NPC",
-                 "visible":true,
-                 "width":8,
-                 "x":40,
-                 "y":64
                 }, 
                 {
                  "gid":1,
@@ -167,20 +71,8 @@
                  "type":"NPC",
                  "visible":true,
                  "width":8,
-                 "x":56,
-                 "y":64
-                }, 
-                {
-                 "gid":1,
-                 "height":8,
-                 "id":13,
-                 "name":"",
-                 "rotation":0,
-                 "type":"NPC",
-                 "visible":true,
-                 "width":8,
-                 "x":48,
-                 "y":48
+                 "x":80,
+                 "y":56
                 }],
          "opacity":1,
          "type":"objectgroup",

@@ -73,7 +73,7 @@
    },
    {
     "filename": "16x16 8.aseprite",
-    "frame": { "x": 0, "y": 16, "w": 16, "h": 16 },
+    "frame": { "x": 128, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
@@ -82,7 +82,7 @@
    },
    {
     "filename": "16x16 9.aseprite",
-    "frame": { "x": 16, "y": 16, "w": 16, "h": 16 },
+    "frame": { "x": 144, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
@@ -91,7 +91,7 @@
    },
    {
     "filename": "16x16 10.aseprite",
-    "frame": { "x": 32, "y": 16, "w": 16, "h": 16 },
+    "frame": { "x": 160, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
@@ -100,7 +100,7 @@
    },
    {
     "filename": "16x16 11.aseprite",
-    "frame": { "x": 48, "y": 16, "w": 16, "h": 16 },
+    "frame": { "x": 176, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
@@ -109,7 +109,7 @@
    },
    {
     "filename": "16x16 12.aseprite",
-    "frame": { "x": 64, "y": 16, "w": 16, "h": 16 },
+    "frame": { "x": 192, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
@@ -118,7 +118,7 @@
    },
    {
     "filename": "16x16 13.aseprite",
-    "frame": { "x": 80, "y": 16, "w": 16, "h": 16 },
+    "frame": { "x": 208, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
@@ -127,7 +127,7 @@
    },
    {
     "filename": "16x16 14.aseprite",
-    "frame": { "x": 96, "y": 16, "w": 16, "h": 16 },
+    "frame": { "x": 224, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
@@ -136,7 +136,7 @@
    },
    {
     "filename": "16x16 15.aseprite",
-    "frame": { "x": 112, "y": 16, "w": 16, "h": 16 },
+    "frame": { "x": 240, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
@@ -145,7 +145,7 @@
    },
    {
     "filename": "16x16 16.aseprite",
-    "frame": { "x": 0, "y": 32, "w": 16, "h": 16 },
+    "frame": { "x": 256, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
@@ -155,10 +155,10 @@
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.21-x64",
+  "version": "1.2.25-x64",
   "image": "16x16.png",
   "format": "RGBA8888",
-  "size": { "w": 128, "h": 48 },
+  "size": { "w": 272, "h": 16 },
   "scale": "1",
   "frameTags": [
    { "name": "grass", "from": 0, "to": 0, "direction": "forward" },

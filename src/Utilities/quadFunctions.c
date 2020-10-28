@@ -1,4 +1,5 @@
 #include "quadFunctions.h"
+#include <SDL2/SDL.h>
 
 quad quad_Easy(float x, float y, float width, float height, float offsetX, float offsetY, float rotation)
 {

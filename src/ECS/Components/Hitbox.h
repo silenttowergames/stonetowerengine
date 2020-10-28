@@ -11,4 +11,5 @@ typedef struct Hitbox
     bool solidLeft;
     bool solidRight;
     bool solidTop;
+    bool active;
 } Hitbox;

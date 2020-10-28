@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include "AINPCSystem.h"
+#include "../Components/AINPC.h"
+#include "../Components/Body.h"
 
 void AINPCSystem(ecs_iter_t* it)
 {
@@ -12,6 +14,7 @@ void AINPCSystem(ecs_iter_t* it)
     
     for(int i = 0; i < it->count; i++)
     {
+        break;
         b[i].velocity.X = 0;
         b[i].velocity.Y = 0;
         
