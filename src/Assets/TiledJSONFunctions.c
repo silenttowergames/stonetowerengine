@@ -3,6 +3,7 @@
 #include "TiledJSONProperty.h"
 #include "../ECS/Components/Body.h"
 #include "../ECS/Components/RenderableFunctions.h"
+#include "../ECS/Components/TileLayerCollides.h"
 #include "../ECS/FlecsFunctions.h"
 
 TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
@@ -77,6 +78,53 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
         
         json_object_object_get_ex(layer, "id", &obj);
         tlayer.id = json_object_get_int(obj);
+        
+        json_object_object_get_ex(layer, "properties", &obj);
+        if(obj != NULL)
+        {
+            json_object* property;
+            json_object* propertyChild;
+            TiledJSONProperty* prop;
+            char* propertyType;
+            
+            tlayer.propertiesCount = json_object_array_length(obj);
+            tlayer.propertiesArray = malloc(sizeof(TiledJSONProperty) * tlayer.propertiesCount); // TiledJSONLayer.propertiesArray allocate
+            tlayer.properties = ecs_map_new(TiledJSONProperty, tlayer.propertiesCount);
+            
+            for(int p = 0; p < tlayer.propertiesCount; p++)
+            {
+                property = json_object_array_get_idx(obj, p);
+                
+                prop = &tlayer.propertiesArray[p];
+                memset(prop, 0, sizeof(TiledJSONProperty));
+                
+                json_object_object_get_ex(property, "name", &propertyChild);
+                prop->key = json_object_get_string(propertyChild);
+                
+                json_object_object_get_ex(property, "type", &propertyChild);
+                prop->type = json_object_get_string(propertyChild);
+                
+                json_object_object_get_ex(property, "value", &propertyChild);
+                if(strcmp(prop->type, "string") == 0)
+                {
+                    prop->valueString = json_object_get_string(propertyChild);
+                }
+                else if(strcmp(prop->type, "bool") == 0)
+                {
+                    prop->valueBool = json_object_get_boolean(propertyChild);
+                }
+                else if(strcmp(prop->type, "int") == 0)
+                {
+                    prop->valueInt = json_object_get_int(propertyChild);
+                }
+                else if(strcmp(prop->type, "float") == 0)
+                {
+                    prop->valueDouble = json_object_get_double(propertyChild);
+                }
+                
+                mapSet(tlayer.properties, prop->key, prop);
+            }
+        }
         
         if(strcmp(tlayer.type, "tilelayer") == 0)
         {
@@ -258,6 +306,7 @@ void TiledJSON_Map(ecs_world_t* world, TiledJSONLayer* layer, Texture* texture, 
     
     ECS_COMPONENT(world, Body);
     ECS_COMPONENT(world, Renderable);
+    ECS_COMPONENT(world, TileLayerCollides);
     
     ecs_set(world, e, Body, {
         { 0, 0, },
@@ -277,6 +326,12 @@ void TiledJSON_Map(ecs_world_t* world, TiledJSONLayer* layer, Texture* texture, 
         0,
         0xFFFFFFFF,
     });
+    
+    TiledJSONProperty* prop = getProperty(layer, "collisions");
+    if(prop != NULL && prop->valueBool)
+    {
+        ecs_set(world, e, TileLayerCollides, { true, });
+    }
 }
 
 void TiledJSON_Free(TiledJSON* tiled)

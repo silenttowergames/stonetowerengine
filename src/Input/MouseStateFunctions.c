@@ -6,9 +6,9 @@ void MouseState_Create(MouseState* mouseState)
     memset(mouseState, 0, sizeof(MouseState));
     
     MouseButtons codes[3] = {
-        MBs_LEFT,
-        MBs_MIDDLE,
-        MBs_RIGHT,
+        MOUSEBUTTONS_LEFTCLICK,
+        MOUSEBUTTONS_MIDDLECLICK,
+        MOUSEBUTTONS_RIGHTCLICK,
     };
     memcpy(&mouseState->codes, &codes, sizeof(codes));
 }

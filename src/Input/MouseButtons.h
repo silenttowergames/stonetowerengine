@@ -2,8 +2,8 @@
 
 typedef enum MouseButtons
 {
-    MBs_INVALID = -1,
-    MBs_LEFT,
-    MBs_MIDDLE,
-    MBs_RIGHT,
+    MOUSEBUTTONS_INVALID = -1,
+    MOUSEBUTTONS_LEFTCLICK,
+    MOUSEBUTTONS_MIDDLECLICK,
+    MOUSEBUTTONS_RIGHTCLICK,
 } MouseButtons;

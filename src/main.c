@@ -9,6 +9,7 @@ void initWorld(ecs_world_t* world)
     ECS_COMPONENT(world, Body);
     ECS_COMPONENT(world, CameraFollow);
     ECS_COMPONENT(world, Renderable);
+    ECS_COMPONENT(world, TileLayerCollides);
     
     ECS_SYSTEM(world, SDLEventsSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, EngineUpdateSystem, EcsOnUpdate, 0);
@@ -25,6 +26,7 @@ void initWorld(ecs_world_t* world)
 	ecs_query_order_by(world, sort->query, ecs_entity(Renderable), SortByLayerThenY);
     
     aabbQuery = ecs_query_new(world, "BasicAABB, Body");
+    aabbMapQuery = ecs_query_new(world, "TileLayerCollides, Renderable");
 }
 
 void initializeScene(ecs_world_t* world)

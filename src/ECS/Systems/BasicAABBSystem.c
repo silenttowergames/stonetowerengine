@@ -8,18 +8,42 @@
 #include "../../Utilities/walls.h"
 
 ecs_query_t* aabbQuery = NULL;
+ecs_query_t* aabbMapQuery = NULL;
 static ecs_entity_t* aabbEnitities = NULL;
 static BasicAABB** aabbBasics = NULL;
 static Body** aabbBodies = NULL;
 static ecs_map_t* aabbHashTable = NULL;
 static int entitiesCount;
+static Renderable* tileMapSolid = NULL;
 
 void BasicAABBSystem(ecs_iter_t* it)
 {
     fctx();
     
+    assert(aabbQuery != NULL);
+    assert(aabbMapQuery != NULL);
+    
+    BasicAABBSystem_FindSolidMapLayer();
     BasicAABBSystem_GetAllEntities();
     BasicAABBSystem_Phase_Narrow();
+}
+
+static void BasicAABBSystem_FindSolidMapLayer()
+{
+    tileMapSolid = NULL;
+    
+    ecs_iter_t iter = ecs_query_iter(aabbMapQuery);
+    while(ecs_query_next(&iter))
+    {
+        if(iter.count <= 0)
+        {
+            return;
+        }
+        
+        tileMapSolid = &ecs_column(&iter, Renderable, 2)[0];
+        
+        break;
+    }
 }
 
 static void BasicAABBSystem_GetAllEntities()
@@ -80,6 +104,11 @@ static void BasicAABBSystem_Phase_Narrow()
         {
             for(int h0 = 0; h0 < aabbBasics[e0]->hitboxesCount; h0++)
             {
+                if(!aabbBasics[e0]->hitboxes[h0].active)
+                {
+                    continue;
+                }
+                
                 for(int e1 = 0; e1 < entitiesCount; e1++)
                 {
                     if(e0 == e1 || aabbBasics[e1]->hitboxesCount <= 0)
@@ -89,6 +118,11 @@ static void BasicAABBSystem_Phase_Narrow()
                     
                     for(int h1 = 0; h1 < aabbBasics[e1]->hitboxesCount; h1++)
                     {
+                        if(!aabbBasics[e1]->hitboxes[h1].active)
+                        {
+                            continue;
+                        }
+                        
                         BasicAABB_TryHitboxes(
                             aabbBasics[e0],
                             aabbBodies[e0],

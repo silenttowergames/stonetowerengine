@@ -96,6 +96,7 @@
 #include "ECS/Components/Renderable.h"
 #include "ECS/Components/RenderableFunctions.c"
 #include "ECS/Components/RenderOffsetFunctions.c"
+#include "ECS/Components/TileLayerCollides.h"
 // Entities
 #include "ECS/Entities/Factory.h"
 #include "ECS/Entities/NPCFactory.c"

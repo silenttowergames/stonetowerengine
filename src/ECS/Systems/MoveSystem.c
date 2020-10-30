@@ -42,17 +42,17 @@ void MoveSystem(ecs_iter_t* it)
 			rumble(0, 1.0f, 500);
 		}
 		
-		if(mouse(Pressed, LEFT))
+		if(mouse(Pressed, LEFTCLICK))
 		{
 			b[i].velocity.X += 16;
 		}
 		
-		if(mouse(Down, RIGHT))
+		if(mouse(Down, RIGHTCLICK))
 		{
 			b[i].velocity.Y++;
 		}
 		
-		if(mouse(Pressed, MIDDLE))
+		if(mouse(Pressed, MIDDLECLICK))
 		{
 			b[i].velocity.Y += 16;
 		}

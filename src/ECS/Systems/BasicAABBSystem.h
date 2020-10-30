@@ -3,6 +3,7 @@
 #include <flecs.h>
 
 void BasicAABBSystem(ecs_iter_t* it);
+static void BasicAABBSystem_FindSolidMapLayer();
 static void BasicAABBSystem_GetAllEntities();
 static void BasicAABBSystem_Phase_Broad();
 static void BasicAABBSystem_Phase_Narrow();
