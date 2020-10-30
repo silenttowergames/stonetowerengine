@@ -14,7 +14,6 @@ void AINPCSystem(ecs_iter_t* it)
     
     for(int i = 0; i < it->count; i++)
     {
-        break;
         b[i].velocity.X = 0;
         b[i].velocity.Y = 0;
         

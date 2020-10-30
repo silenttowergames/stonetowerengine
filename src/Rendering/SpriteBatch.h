@@ -13,13 +13,8 @@
 
 typedef struct SpriteBatch
 {
-	/*
-	Vertex vertices[MAX_INDICES];
-	FNA3D_Texture* textures[MAX_INDICES];
-	//*/
 	Vertex* vertices;
 	FNA3D_Texture** textures;
-	//
 	int indicesThisFrame;
 	bool opened;
 } SpriteBatch;

@@ -4,11 +4,122 @@
 #include "../Components/BasicAABB.h"
 #include "../Components/Body.h"
 #include "../Components/HitboxFunctions.h"
+#include "../../Rendering/SpriteBatch.h"
 #include "../../Utilities/walls.h"
 
 ecs_query_t* aabbQuery = NULL;
+static ecs_entity_t* aabbEnitities = NULL;
+static BasicAABB** aabbBasics = NULL;
+static Body** aabbBodies = NULL;
+static ecs_map_t* aabbHashTable = NULL;
+static int entitiesCount;
 
 void BasicAABBSystem(ecs_iter_t* it)
+{
+    fctx();
+    
+    BasicAABBSystem_GetAllEntities();
+    BasicAABBSystem_Phase_Narrow();
+}
+
+static void BasicAABBSystem_GetAllEntities()
+{
+    if(aabbEnitities == NULL)
+    {
+        aabbEnitities = malloc(sizeof(ecs_entity_t) * MAX_SPRITES); // aabbEnitities allocate
+        aabbBasics = malloc(sizeof(BasicAABB*) * MAX_SPRITES); // aabbBasics allocate
+        aabbBodies = malloc(sizeof(Body*) * MAX_SPRITES); // aabbBodies allocate
+    }
+    
+    ecs_iter_t iter = ecs_query_iter(aabbQuery);
+    
+    entitiesCount = 0;
+    while(ecs_query_next(&iter))
+    {
+        BasicAABB* basicAABB = ecs_column(&iter, BasicAABB, 1);
+        Body* body = ecs_column(&iter, Body, 2);
+        
+        for(int i = 0; i < iter.count; i++)
+        {
+            aabbEnitities[entitiesCount] = iter.entities[i];
+            aabbBasics[entitiesCount] = &basicAABB[i];
+            aabbBodies[entitiesCount] = &body[i];
+            
+            entitiesCount++;
+            
+            if(entitiesCount >= MAX_SPRITES)
+            {
+                break;
+            }
+        }
+        
+        if(entitiesCount >= MAX_SPRITES)
+        {
+            break;
+        }
+    }
+    
+    if(entitiesCount < MAX_SPRITES)
+    {
+        aabbEnitities[entitiesCount] = -1;
+    }
+}
+
+static void BasicAABBSystem_Phase_Narrow()
+{
+    // TODO: Hash table. For now it brute-forces
+    
+    for(int e0 = 0; e0 < entitiesCount; e0++)
+    {
+        if(aabbBasics[e0]->hitboxesCount <= 0)
+        {
+            continue;
+        }
+        
+        for(int isY = 0; isY <= 1; isY++)
+        {
+            for(int h0 = 0; h0 < aabbBasics[e0]->hitboxesCount; h0++)
+            {
+                for(int e1 = 0; e1 < entitiesCount; e1++)
+                {
+                    if(e0 == e1 || aabbBasics[e1]->hitboxesCount <= 0)
+                    {
+                        continue;
+                    }
+                    
+                    for(int h1 = 0; h1 < aabbBasics[e1]->hitboxesCount; h1++)
+                    {
+                        BasicAABB_TryHitboxes(
+                            aabbBasics[e0],
+                            aabbBodies[e0],
+                            &aabbBasics[e0]->hitboxes[h0],
+                            aabbBasics[e1],
+                            aabbBodies[e1],
+                            &aabbBasics[e1]->hitboxes[h1],
+                            isY
+                        );
+                    }
+                }
+                
+                if(!isY)
+                {
+                    aabbBodies[e0]->position.X += aabbBodies[e0]->velocity.X;
+                }
+                else
+                {
+                    aabbBodies[e0]->position.Y += aabbBodies[e0]->velocity.Y;
+                }
+            }
+        }
+    }
+}
+
+void BasicAABBSystemFree()
+{
+    free(aabbEnitities);
+}
+
+void BasicAABBSystemOld(ecs_iter_t* it)
 {
     fctx();
     

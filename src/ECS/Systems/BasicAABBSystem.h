@@ -3,6 +3,9 @@
 #include <flecs.h>
 
 void BasicAABBSystem(ecs_iter_t* it);
+static void BasicAABBSystem_GetAllEntities();
+static void BasicAABBSystem_Phase_Broad();
+static void BasicAABBSystem_Phase_Narrow();
 static void BasicAABB_TryHitboxes(
     BasicAABB* a0,
     Body* b0,
@@ -12,3 +15,4 @@ static void BasicAABB_TryHitboxes(
     Hitbox* hitbox1,
     bool isY
 );
+void BasicAABBSystemFree();

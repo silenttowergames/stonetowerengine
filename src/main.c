@@ -43,7 +43,15 @@ void init2Scene(ecs_world_t* world)
 {
     ctx();
     
-    factoryRun(app, "TextBox", -20, 32, 2, NULL);
+    //factoryRun(app, "TextBox", -20, 32, 2, NULL);
+    
+    for(int x = 0; x < 24; x++)
+    {
+        for(int y = 0; y < 16; y++)
+        {
+            factoryRun(app, "NPC", 80 + (x * 12), 80 + (y * 12), 2, NULL);
+        }
+    }
 }
 
 void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)

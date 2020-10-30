@@ -33,7 +33,7 @@
                 "/C/FNA3D-master/MojoShader",
                 "/C/soloud20200207/include",
                 "/C/json-c-master",
-                "/C/lua-5.4.0/include",
+                "/C/lua-5.4.0/include"
             ],
             "cStandard": "c99"
         }
