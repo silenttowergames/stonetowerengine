@@ -1,4 +1,3 @@
-#include "Body.h"
 #include "HitboxFunctions.h"
 
 Hitbox Hitbox_CreateBasic(float2d size)
@@ -41,7 +40,7 @@ Hitbox* Hitbox_CreateList(int length, ...)
     return hitboxes;
 }
 
-walls Hitbox_GetWalls(Hitbox* hitbox, Body* body)
+walls Hitbox_GetWalls(Hitbox* hitbox, float2d position)
 {
     walls h;
     memset(&h, 0, sizeof(h));
@@ -50,10 +49,10 @@ walls Hitbox_GetWalls(Hitbox* hitbox, Body* body)
     sUnit.X = hitbox->size.X / 2;
     sUnit.Y = hitbox->size.Y / 2;
     
-    h.top = body->position.Y + hitbox->offset.Y - (hitbox->size.X / 2);
+    h.top = position.Y + hitbox->offset.Y - (hitbox->size.X / 2);
     h.bottom = h.top + hitbox->size.X;
     
-    h.left = body->position.X + hitbox->offset.X - (hitbox->size.Y / 2);
+    h.left = position.X + hitbox->offset.X - (hitbox->size.Y / 2);
     h.right = h.left + hitbox->size.Y;
     
     return h;

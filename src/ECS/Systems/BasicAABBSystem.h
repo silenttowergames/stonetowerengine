@@ -11,9 +11,11 @@ static void BasicAABB_TryHitboxes(
     BasicAABB* a0,
     Body* b0,
     Hitbox* hitbox0,
+    walls* w0,
     BasicAABB* a1,
     Body* b1,
     Hitbox* hitbox1,
+    walls* w1,
     bool isY
 );
 void BasicAABBSystemFree();

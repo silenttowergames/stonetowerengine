@@ -26,7 +26,7 @@ void initWorld(ecs_world_t* world)
 	ecs_query_order_by(world, sort->query, ecs_entity(Renderable), SortByLayerThenY);
     
     aabbQuery = ecs_query_new(world, "BasicAABB, Body");
-    aabbMapQuery = ecs_query_new(world, "TileLayerCollides, Renderable");
+    aabbMapQuery = ecs_query_new(world, "TileLayerCollides, Renderable, Body");
 }
 
 void initializeScene(ecs_world_t* world)
@@ -45,7 +45,7 @@ void init2Scene(ecs_world_t* world)
 {
     ctx();
     
-    //factoryRun(app, "TextBox", -20, 32, 2, NULL);
+    factoryRun(app, "TextBox", -20, 32, 2, NULL);
     
     for(int x = 0; x < 24; x++)
     {

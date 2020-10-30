@@ -8,4 +8,4 @@ Hitbox Hitbox_CreateSquare(float size);
 
 Hitbox* Hitbox_CreateList(int length, ...);
 
-walls Hitbox_GetWalls(Hitbox* hitbox, Body* body);
+walls Hitbox_GetWalls(Hitbox* hitbox, float2d position);
