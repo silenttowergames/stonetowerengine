@@ -11,4 +11,4 @@ bool MouseState_Up(MouseState* mouseState, MouseButtons mouseButton);
 bool MouseState_Pressed(MouseState* mouseState, MouseButtons mouseButton);
 bool MouseState_Released(MouseState* mouseState, MouseButtons mouseButton);
 
-#define mouse(state, button) MouseState_##state(&app->inputManager.mouseState, MB_##button)
+#define mouse(state, button) MouseState_##state(&app->inputManager.mouseState, MBs_##button)

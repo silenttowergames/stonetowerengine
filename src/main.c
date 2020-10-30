@@ -75,7 +75,7 @@ int main(int arcg, char* argv[])
     init(
         "Engine Test",
         STE_VERSION,
-        NULL,
+        "OpenGL",
         60,
         config,
         320, 180,
