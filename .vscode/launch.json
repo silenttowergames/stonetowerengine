@@ -47,17 +47,17 @@
             "preLaunchTask": "Windows 64-bit Build & Move"
         },
         {
-            "name": "Linux64 Build",
+            "name": "GCC Linux 64-bit Build",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/bin/linux64/main",
+            "program": "${workspaceRoot}/bin/linux64/gcc/main",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "preLaunchTask": "Linux 64-bit Build"
+            "preLaunchTask": "GCC Linux 64-bit Build"
         }
     ]
 }

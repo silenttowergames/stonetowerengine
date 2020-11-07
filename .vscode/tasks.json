@@ -5,18 +5,8 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "Windows 64-bit Build",
-            "command": "./build.ps1",
-        },
-        {
-            "type": "shell",
-            "label": "Windows 64-bit Build & Move",
-            "command": "./build-full.ps1",
-        },
-        {
-            "type": "shell",
-            "label": "Linux 64-bit Build",
-            "command": "./build-linux64-gcc.sh"
+            "label": "GCC Linux 64-bit Build",
+            "command": "./build-linux.sh gcc 64"
         }
     ],
 }
