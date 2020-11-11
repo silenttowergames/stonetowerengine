@@ -1,0 +1,2 @@
+g++ -fpic -fPIC -shared -g -D WITH_SDL2_STATIC -o libsoloud-out.o -pthread -I /C/gcc/64/soloud-custom/include/ ./src/core/*.cpp ./src/audiosource/*/*.cpp ./src/audiosource/*/*.c ./src/backend/sdl2_static/*.cpp ./src/c_api/*.cpp ./src/filter/*.cpp -ldl `sdl2-config --libs --cflags` -std=gnu++0x
+g++ -fpic -fPIC -shared libsoloud-out.o -o libsoloud.so

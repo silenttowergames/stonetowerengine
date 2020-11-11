@@ -1,5 +1,7 @@
 #!/bin/bash
 
+START=`date +%s%N`
+
 function doDir {
     local DIR=$1'/*'
     
@@ -13,7 +15,8 @@ function doDir {
             objf=$filename'.'$COMPILER'.o'
             
             if [ "$filename" -nt "$objf" ]; then
-                gcc -c $filename ${INCS[*]} -o $objf
+                gcc -c $filename ${INCS[*]} -o $objf &
+                PIDS+=$!' '
                 echo "Compiling $objf..."
             fi
             
@@ -23,6 +26,7 @@ function doDir {
     done
 }
 
+PIDS=()
 OBJS=()
 INCS=(
     'flecs-master/include'
@@ -73,4 +77,12 @@ done
 
 doDir ./src
 
+for pid in ${PIDS[*]}; do
+    wait $pid
+done
+
 $COMPILER -m${PLATFORM} -g -pedantic libs/linux${PLATFORM}/${COMPILER}/libsoloud-out.o ${OBJS[*]} -o ./bin/linux${PLATFORM}/${COMPILER}/main ${INCS[*]} ${LIBS[*]} ${LFLAGS[*]} -Wl,-rpath=${DIR}/bin/linux${PLATFORM}/${COMPILER}/libs/
+
+let END=`date +%s%N`-$START
+
+echo That took ${END} NS
