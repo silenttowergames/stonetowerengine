@@ -5,8 +5,13 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "GCC Linux 64-bit Build",
+            "label": "Linux 64-bit Build GCC",
             "command": "./build-linux.sh gcc 64"
+        },
+        {
+            "type": "shell",
+            "label": "Linux 64-bit Build Clang",
+            "command": "./build-linux.sh clang 64"
         }
     ],
 }

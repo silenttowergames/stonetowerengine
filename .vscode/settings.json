@@ -17,6 +17,9 @@
         "random": "c",
         "istream": "c",
         "limits": "c",
-        "numeric": "c"
+        "numeric": "c",
+        "array": "cpp",
+        "string": "cpp",
+        "ranges": "cpp"
     }
 }

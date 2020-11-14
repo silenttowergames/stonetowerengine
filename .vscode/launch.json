@@ -5,49 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Win64 Build",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "C:\\Users\\Silent Tower Games\\Projects\\_libs\\stonetowerengine\\bin\\win64\\main.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "miDebuggerPath": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\gdb.exe",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "Windows 64-bit Build"
-        },
-        {
-            "name": "Win64 Build & Move",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "C:\\Users\\Silent Tower Games\\Projects\\_libs\\stonetowerengine\\bin\\win64\\main.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "miDebuggerPath": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\gdb.exe",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "Windows 64-bit Build & Move"
-        },
-        {
-            "name": "GCC Linux 64-bit Build",
+            "name": "Linux 64-bit Build GCC",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceRoot}/bin/linux64/gcc/main",
@@ -57,7 +15,7 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "preLaunchTask": "GCC Linux 64-bit Build"
+            "preLaunchTask": "Linux 64-bit Build GCC"
         }
     ]
 }

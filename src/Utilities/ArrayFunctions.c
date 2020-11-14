@@ -13,3 +13,24 @@ Array Array_Init(int length, size_t size)
     
     return array;
 }
+
+bool Array_Grow(Array* array, int length, size_t size)
+{
+    if(length <= array->allocated)
+    {
+        return false;
+    }
+    
+    array->allocated = length;
+    
+    array->data = realloc(array->data, length * size);
+    
+    return true;
+}
+
+void Array_Free(Array* array)
+{
+    ecs_map_free(array->map);
+    
+    free(array->data);
+}

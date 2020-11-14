@@ -8,6 +8,7 @@ function doDir {
     for filename in $DIR; do
         if [ -d $filename ]; then
             doDir $filename OBJS
+            
             continue
         fi
         
@@ -21,6 +22,7 @@ function doDir {
             fi
             
             OBJS+=($objf)
+            
             continue
         fi
     done
@@ -31,7 +33,8 @@ OBJS=()
 INCS=(
     'flecs-master/include'
     'FNA3D-master/include'
-    'json-c-master/include'
+    'FNA3D-master/MojoShader'
+    'json-c-master'
     'lua-5.4.0/include'
     'soloud-custom/include'
 )
@@ -46,6 +49,7 @@ LFLAGS=(
     'FNA3D'
     'json-c'
     'lua54'
+    'SDL2'
     'm' # math.h
 )
 DIR=`pwd`
