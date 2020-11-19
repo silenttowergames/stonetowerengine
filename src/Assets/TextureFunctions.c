@@ -1,3 +1,4 @@
+#include <FNA3D_Image.h>
 #include "TextureFunctions.h"
 #include "ASEpriteJSONFunctions.h"
 
@@ -40,7 +41,7 @@ Texture Texture_Load(FNA3D_Device* device, const char* key)
 	filename = malloc(sizeof(char) * (strlen(key) + 20));
 	sprintf(filename, "assets/sprites/%s.png", key);
 	
-	unsigned char* pixels;// = stbi_load(filename, &size.X, &size.Y, &channels, 4);
+	unsigned char* pixels = stbi_load(filename, &size.X, &size.Y, &channels, 4);
 	
 	Texture texture = Texture_NewFromData(device, size.X, size.Y, pixels, channels, false);
 	texture.key = key;
@@ -69,5 +70,12 @@ Texture Texture_Create(FNA3D_Device* device, const char* key, int tilesizeX, int
 
 void Texture_Free(FNA3D_Device* device, Texture* texture)
 {
+	if(texture->aseprite.loaded)
+	{
+		ASEpriteJSON_Free(&texture->aseprite);
+	}
+	
+	free(texture->filename);
+	
 	FNA3D_AddDisposeTexture(device, texture->asset);
 }

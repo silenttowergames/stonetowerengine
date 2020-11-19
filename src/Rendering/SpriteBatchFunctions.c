@@ -1,8 +1,8 @@
 #include <assert.h>
 #include "Camera.h"
+#include "RenderState.h"
 #include "RenderTarget.h"
 #include "SpriteBatchFunctions.h"
-#include "../Utilities/quadFunctions.h"
 
 void SpriteBatch_Create(SpriteBatch* spriteBatch)
 {
@@ -136,4 +136,10 @@ bool SpriteBatch_End(SpriteBatch* spriteBatch)
 	
 	spriteBatch->opened = false;
 	spriteBatch->indicesThisFrame = 0;
+}
+
+void SpriteBatch_Free(SpriteBatch* spriteBatch)
+{
+	free(spriteBatch->textures); // SpriteBatch.textures free
+	free(spriteBatch->vertices); // SpriteBatch.vertices free
 }

@@ -1,7 +1,10 @@
 #pragma once
 
+#include <flecs.h>
 #include "RenderTarget.h"
-#include "../ApplicationState/ApplicationState.h"
+#include "../Application/ApplicationState.h"
+#include "../Assets/TextureFunctions.h"
+#include "../Utilities/colorFunctions.h"
 
 #define RENDERTARGET_MAIN -1
 #define RENDERTARGET_NONE -2

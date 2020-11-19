@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <json.h>
-#include <string.h>
 #include "ASEpriteJSONFunctions.h"
 #include "../Utilities/int2d.h"
 
@@ -29,12 +28,13 @@ ASEpriteJSON ASEpriteJSON_Load(const char* key)
     f = fopen(aseprite.filename, "r");
     fseek(f, 0, SEEK_END);
     int length = ftell(f);
-    buffer = malloc(length);
+    buffer = malloc(length); // buffer allocate
     fseek(f, 0, SEEK_SET);
     fread(buffer, length, 1, f);
     fclose(f);
     
-    parsed_json = json_tokener_parse(buffer);
+    parsed_json = json_tokener_parse(buffer); // parsed_json allocate
+    free(buffer); // buffer free
     
     json_object_object_get_ex(parsed_json, "meta", &meta);
     json_object_object_get_ex(meta, "frameTags", &animations);
@@ -96,6 +96,25 @@ ASEpriteJSON ASEpriteJSON_Load(const char* key)
         
         aseprite.animations[i] = a;
     }
+    
+    aseprite.loaded = true;
+    
+    aseprite.parsed_json = parsed_json;
+    aseprite.meta = meta;
+    aseprite.animationsJSON = animations;
+    aseprite.framesJSON = frames;
+    aseprite.obj = obj;
+    aseprite.objEx = objEx;
+    aseprite.objExEx = objExEx;
 	
 	return aseprite;
+}
+
+void ASEpriteJSON_Free(ASEpriteJSON* aseprite)
+{
+    free(aseprite->animations);
+    free(aseprite->frames);
+    free(aseprite->filename);
+    
+    json_object_put(aseprite->parsed_json);
 }

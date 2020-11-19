@@ -6,12 +6,7 @@
         {
             "type": "shell",
             "label": "Linux 64-bit Build GCC",
-            "command": "./build-linux.sh gcc 64"
-        },
-        {
-            "type": "shell",
-            "label": "Linux 64-bit Build Clang",
-            "command": "./build-linux.sh clang 64"
+            "command": "./build-linux64-gcc.sh"
         }
     ],
 }

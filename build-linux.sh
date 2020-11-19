@@ -85,7 +85,7 @@ for pid in ${PIDS[*]}; do
     wait $pid
 done
 
-$COMPILER -m${PLATFORM} -g -pedantic libs/linux${PLATFORM}/${COMPILER}/libsoloud-out.o ${OBJS[*]} -o ./bin/linux${PLATFORM}/${COMPILER}/main ${INCS[*]} ${LIBS[*]} ${LFLAGS[*]} -Wl,-rpath=${DIR}/bin/linux${PLATFORM}/${COMPILER}/libs/
+$COMPILER -m${PLATFORM} -g -pedantic libs/linux${PLATFORM}/${COMPILER}/libsoloud.o ${OBJS[*]} -o ./bin/linux${PLATFORM}/${COMPILER}/main ${INCS[*]} ${LIBS[*]} ${LFLAGS[*]} -Wl,-rpath=${DIR}/bin/linux${PLATFORM}/${COMPILER}/libs/
 
 let END=`date +%s%N`-$START
 

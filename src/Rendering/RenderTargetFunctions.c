@@ -1,11 +1,10 @@
-#include "../StoneTower.h"
-
+#include <FNA3D.h>
 #include "RenderTargetFunctions.h"
+#include "SpriteBatchFunctions.h"
+#include "../StoneTower.h"
+#include "../includes_libs.h"
 #include "../Assets/ShaderFunctions.h"
-#include "../Assets/TextureFunctions.h"
 #include "../Rendering/CameraFunctions.h"
-#include "../Rendering/SpriteBatchFunctions.h"
-#include "../Utilities/colorFunctions.h"
 
 RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d position, bool scale, FNA3D_Vec4 backgroundColor)
 {
@@ -92,7 +91,7 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 		
 		default:
 		{
-			renderTarget = &((RenderTarget*)app->renderState.targets.data)[renderTargetID];
+			renderTarget = &app->renderState.targets[renderTargetID];
 			
 			break;
 		}

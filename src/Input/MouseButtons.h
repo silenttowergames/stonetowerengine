@@ -1,0 +1,9 @@
+#pragma once
+
+typedef enum MouseButtons
+{
+    MOUSEBUTTONS_INVALID = -1,
+    MOUSEBUTTONS_LEFTCLICK,
+    MOUSEBUTTONS_MIDDLECLICK,
+    MOUSEBUTTONS_RIGHTCLICK,
+} MouseButtons;

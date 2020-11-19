@@ -24,7 +24,7 @@
             "intelliSenseMode": "msvc-x64"
         },
         {
-            "name": "Linux64",
+            "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/include",

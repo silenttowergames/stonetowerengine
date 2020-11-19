@@ -5,9 +5,9 @@
 
 bool Rendering_Init(ApplicationState* app)
 {
-	if(app->renderState.driver != NULL)
+	if(app->graphicsDriver != NULL)
 	{
-		SDL_SetHint("FNA3D_FORCE_DRIVER", app->renderState.driver);
+		SDL_SetHint("FNA3D_FORCE_DRIVER", app->graphicsDriver);
 	}
 	
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC) < 0)

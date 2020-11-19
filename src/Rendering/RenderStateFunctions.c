@@ -1,4 +1,3 @@
-/*
 #include <FNA3D.h>
 #include <SDL2/SDL.h>
 #include "CameraFunctions.h"
@@ -7,6 +6,7 @@
 #include "SpriteBatchFunctions.h"
 #include "../Application/ApplicationState.h"
 #include "../Assets/ShaderFunctions.h"
+#include "../StoneTower.h"
 
 void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int resY, RenderState_Zoom windowZoomType)
 {
@@ -72,7 +72,11 @@ void RenderState_Free(RenderState* renderState)
 		RenderTarget_Destroy(&renderState->targets[i], renderState->device);
 	}
 	
+	free(renderState->targets);
+	
 	RenderTarget_Destroy(&renderState->mainRenderTarget, renderState->device);
+	
+	SpriteBatch_Free(&renderState->spriteBatch);
 	
 	FNA3D_AddDisposeVertexBuffer(renderState->device, renderState->vertexBuffer); // RenderState.VertexBuffer free
 	free(renderState->windowTitle); // RenderState.windowTitle free
@@ -200,4 +204,3 @@ void RenderState_Resize(ApplicationState* app, int sizeX, int sizeY)
 		}
 	}
 }
-*/

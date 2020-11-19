@@ -1,6 +1,5 @@
 #pragma once
 
-/*
 #include <SDL2/SDL.h>
 #include <FNA3D.h>
 #include "Camera.h"
@@ -42,5 +41,3 @@ typedef struct RenderState
 	float2d windowZoom;
 	RenderState_Zoom windowZoomType;
 } RenderState;
-
-*/
