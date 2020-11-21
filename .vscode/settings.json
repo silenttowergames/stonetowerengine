@@ -20,6 +20,11 @@
         "numeric": "c",
         "array": "cpp",
         "string": "cpp",
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "compare": "cpp",
+        "ostream": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp"
     }
 }

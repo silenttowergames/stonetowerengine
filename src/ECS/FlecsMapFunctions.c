@@ -2,13 +2,10 @@
 
 uint64_t Flecs_Map_Key(const char* key)
 {
-	return hashlittle(key, strlen(key), 0);
+	uint32_t a = 0;
+	uint32_t b = 0;
 	
-	/*
-	uint32_t a, b;
 	hashlittle2(key, strlen(key), &a, &b);
-	uint64_t db = b;
 	
-	return a + (db << 32);
-	//*/
+	return ((uint64_t)a) + (((uint64_t)b) << 32);
 }

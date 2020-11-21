@@ -58,3 +58,21 @@ INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
 INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
 INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
 INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+main: src/Assets/TiledJSONFunctions.c:56: TiledJSON_Load: Assertion `tiled.texture != NULL' failed.
+main: src/Assets/TiledJSONFunctions.c:56: TiledJSON_Load: Assertion `tiled.texture != NULL' failed.
+main: src/Assets/TiledJSONFunctions.c:58: TiledJSON_Load: Assertion `tiled.texture != NULL' failed.
+main: src/Assets/TiledJSONFunctions.c:58: TiledJSON_Load: Assertion `tiled.texture != NULL' failed.
+main: src/Assets/TiledJSONFunctions.c:58: TiledJSON_Load: Assertion `tiled.texture != NULL' failed.
+main: src/Assets/TiledJSONFunctions.c:58: TiledJSON_Load: Assertion `tiled.texture != NULL' failed.
+main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
