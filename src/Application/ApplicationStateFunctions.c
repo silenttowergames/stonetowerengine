@@ -49,7 +49,7 @@ void ApplicationState_Create(
 	
 	Rendering_Init(app);
 	
-	RenderState_New(app, app->config.size.X, app->config.size.Y, resX, resY, windowZoomType);
+	RenderState_New(app, app->config.windowedSize.X, app->config.windowedSize.Y, resX, resY, windowZoomType);
     
     app->inputManager = InputManager_Create();
     

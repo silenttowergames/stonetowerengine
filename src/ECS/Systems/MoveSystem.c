@@ -3,6 +3,7 @@
 #include "../FlecsMapFunctions.h"
 #include "../../Application/ApplicationState.h"
 #include "../Components/AIPlayer.h"
+#include "../Components/BasicAABB.h"
 #include "../Components/Body.h"
 #include "../../Audio/SoundFunctions.h"
 #include "../../Application/ConfigFunctions.h"
@@ -10,6 +11,7 @@
 #include "../../Input/GamepadStateFunctions.h"
 #include "../../Input/KeyboardStateFunctions.h"
 #include "../../Input/MouseStateFunctions.h"
+#include "../../Utilities/wallsFunctions.h"
 
 void MoveSystem(ecs_iter_t* it)
 {
@@ -77,7 +79,7 @@ void MoveSystem(ecs_iter_t* it)
 		}
 		else
 		{
-			Config_Resize(app, 2560, 1080, true);
+			Config_Resize(app, -1, -1, true);
 		}
 	}
 	

@@ -114,3 +114,4 @@
 #include "Utilities/int2d.h"
 #include "Utilities/quad.h"
 #include "Utilities/quadFunctions.c"
+#include "Utilities/wallsFunctions.c"

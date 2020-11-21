@@ -1,6 +1,10 @@
+#include <flecs.h>
+#include "BasicAABB.h"
 #include "HitboxFunctions.h"
 
-ECS_DTOR(BasicAABB, ptr, { free(ptr->hitboxes); })
+ECS_DTOR(BasicAABB, ptr, {
+    free(ptr->hitboxes); // Hitbox* free1
+})
 
 Hitbox Hitbox_CreateBasic(float2d size)
 {
@@ -26,7 +30,6 @@ Hitbox Hitbox_CreateSquare(float size)
 
 Hitbox* Hitbox_CreateList(int length, ...)
 {
-    // FIXME: Free hitbox lists on removing component
     Hitbox* hitboxes = malloc(sizeof(Hitbox) * length); // Hitbox* allocate
     
     va_list args;

@@ -1,2 +1,60 @@
 INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
 INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+/usr/bin/../lib64/apitrace/wrappers/glxtrace.so+0x1c0769
+/lib64/libc.so.6+0x3da5f
+/lib64/libpthread.so.0+0xa9d5
+/usr/lib64/libvulkan_radeon.so+0x188293
+/C/plib/stonetowerengine/bin/linux64/gcc/libs/libFNA3D.so.0+0x22cc5
+./bin/linux64/gcc/main: RenderState_Free+0x3c63f: src/Rendering/RenderStateFunctions.c:85
+./bin/linux64/gcc/main: ApplicationState_Free+0x3032a: src/Application/ApplicationStateFunctions.c:103
+./bin/linux64/gcc/main: main+0x3fddf: src/main.c:152
+/lib64/libc.so.6: __libc_start_main+0xf1
+./bin/linux64/gcc/main+0x38bd
+?
+/usr/bin/../lib64/apitrace/wrappers/glxtrace.so+0x1c0769
+/lib64/libc.so.6+0x3da5f
+/lib64/libpthread.so.0+0xa9d5
+/usr/lib64/libvulkan_radeon.so+0x188293
+/C/plib/stonetowerengine/bin/linux64/gcc/libs/libFNA3D.so.0+0x22cc5
+./bin/linux64/gcc/main: RenderState_Free+0x3c63f: src/Rendering/RenderStateFunctions.c:85
+./bin/linux64/gcc/main: ApplicationState_Free+0x3032a: src/Application/ApplicationStateFunctions.c:103
+./bin/linux64/gcc/main: main+0x3fddf: src/main.c:152
+/lib64/libc.so.6: __libc_start_main+0xf1
+./bin/linux64/gcc/main+0x38bd
+?
+/usr/bin/../lib64/apitrace/wrappers/glxtrace.so+0x1c0769
+/lib64/libc.so.6+0x3da5f
+/lib64/libpthread.so.0+0xa9d5
+/usr/lib64/libvulkan_radeon.so+0x188293
+/C/plib/stonetowerengine/bin/linux64/gcc/libs/libFNA3D.so.0+0x22cc5
+./bin/linux64/gcc/main: RenderState_Free+0x3c63f: src/Rendering/RenderStateFunctions.c:85
+./bin/linux64/gcc/main: ApplicationState_Free+0x3032a: src/Application/ApplicationStateFunctions.c:103
+./bin/linux64/gcc/main: main+0x3fddf: src/main.c:152
+/lib64/libc.so.6: __libc_start_main+0xf1
+./bin/linux64/gcc/main+0x38bd
+?
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.

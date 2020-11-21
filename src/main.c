@@ -6,21 +6,18 @@ void initWorld(ecs_world_t* world)
     ECS_COMPONENT(world, AINPC);
     ECS_COMPONENT(world, AIPlayer);
     ECS_COMPONENT(world, Animate);
-    ECS_COMPONENT(world, BasicAABB);
     ECS_COMPONENT(world, Body);
     ECS_COMPONENT(world, CameraFollow);
     ECS_COMPONENT(world, Renderable);
     ECS_COMPONENT(world, TileLayerCollides);
     
-    ecs_set_component_actions(world, BasicAABB, {
-        .dtor = ecs_dtor(BasicAABB),
-    });
-    
     ECS_SYSTEM(world, SDLEventsSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, EngineUpdateSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, AINPCSystem, EcsOnUpdate, AINPC, Body);
     ECS_SYSTEM(world, MoveSystem, EcsOnUpdate, AIPlayer, Body);
-    ECS_SYSTEM(world, BasicAABBSystem, EcsOnUpdate, 0);
+    
+    BasicAABBSystem_Init();
+    
     ECS_SYSTEM(world, CameraFollowSystem, EcsOnUpdate, Body, CameraFollow);
     ECS_SYSTEM(world, DepthSystem, EcsOnUpdate, Body, Renderable);
     ECS_SYSTEM(world, AnimateSystem, EcsOnUpdate, Animate, Renderable);
@@ -65,7 +62,10 @@ void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
 {
     sctx();
     
-    //shader->disabled = !shader->disabled;
+    if(key(Pressed, s))
+    {
+        shader->disabled = !shader->disabled;
+    }
     
     Shader_ParamCopy(shader, "Width", &renderTarget->size.X, sizeof(int));
     Shader_ParamCopy(shader, "Height", &renderTarget->size.Y, sizeof(int));
