@@ -2,16 +2,6 @@
 #include <flecs.h>
 #include "BasicAABBSystem.h"
 
-ecs_query_t* aabbQuery = NULL;
-ecs_query_t* aabbMapQuery = NULL;
-static ecs_entity_t* aabbEnitities = NULL;
-static BasicAABB** aabbBasics = NULL;
-static Body** aabbBodies = NULL;
-static ecs_map_t* aabbHashTable = NULL;
-static int entitiesCount;
-static Renderable* tileMapSolid = NULL;
-static Body* tileMapSolidBody = NULL;
-
 void BasicAABBSystem(ecs_iter_t* it)
 {
     fctx();
@@ -87,6 +77,94 @@ static void BasicAABBSystem_GetAllEntities()
     }
 }
 
+static void BasicAABBSystem_Entity_Tilemap(walls wall, BasicAABB* aabb, int h0, Body* body, Renderable* tileMapSolid, Body* tileMapSolidBody, bool isY)
+{
+    //*
+    TiledJSONLayer* layer = (TiledJSONLayer*)tileMapSolid->data;
+    
+    Hitbox tileHitbox = Hitbox_CreateBasic((float2d){
+        tileMapSolid->texture->tilesize.X,
+        tileMapSolid->texture->tilesize.Y,
+    });
+    tileHitbox.offset.X = -tileMapSolid->texture->tilesize.X / 2;
+    tileHitbox.offset.Y = -tileMapSolid->texture->tilesize.Y / 2;
+    
+    int index;
+    int2d xRange;
+    int2d yRange;
+    
+    xRange.X = wall.left + fmin(body->velocity.X, 0) - tileMapSolidBody->position.X;
+    xRange.Y = wall.right + fmax(body->velocity.X, 0) - tileMapSolidBody->position.X;
+    
+    xRange.X /= tileMapSolid->texture->tilesize.X;
+    xRange.X -= 2;
+    xRange.Y /= tileMapSolid->texture->tilesize.X;
+    xRange.Y += 2;
+    
+    yRange.X = wall.top + fmin(body->velocity.Y, 0) - tileMapSolidBody->position.Y;
+    yRange.Y = wall.bottom + fmax(body->velocity.Y, 0) - tileMapSolidBody->position.Y;
+    
+    yRange.X /= tileMapSolid->texture->tilesize.Y;
+    yRange.X -= 2;
+    yRange.Y /= tileMapSolid->texture->tilesize.Y;
+    yRange.Y += 2;
+    
+    for(int Y = yRange.X; Y < yRange.Y; Y++)
+    {
+        if(Y <= -1)
+        {
+            Y = -1;
+            
+            continue;
+        }
+        
+        if(Y >= layer->size.Y)
+        {
+            break;
+        }
+        
+        for(int X = xRange.X; X < xRange.Y; X++)
+        {
+            if(X <= -1)
+            {
+                X = -1;
+                
+                continue;
+            }
+            
+            if(X >= layer->size.X)
+            {
+                break;
+            }
+            
+            index = (Y * layer->size.X) + X;
+            
+            if(layer->tiles[index] == 0)
+            {
+                continue;
+            }
+            
+            walls w1 = Hitbox_GetWalls(&tileHitbox, (float2d){
+                tileMapSolidBody->position.X + (X * tileMapSolid->texture->tilesize.X),
+                tileMapSolidBody->position.Y + (Y * tileMapSolid->texture->tilesize.Y),
+            });
+            
+            BasicAABB_TryHitboxes(
+                aabb,
+                body,
+                &aabb->hitboxes[h0],
+                &wall,
+                NULL,
+                NULL,
+                &tileHitbox,
+                &w1,
+                isY
+            );
+        }
+    }
+    //*/
+}
+
 static void BasicAABBSystem_Phase_Narrow()
 {
     // TODO: Hash table. For now it brute-forces
@@ -115,88 +193,7 @@ static void BasicAABBSystem_Phase_Narrow()
                 // Map collisions
                 if(tileMapSolid != NULL)
                 {
-                    TiledJSONLayer* layer = (TiledJSONLayer*)tileMapSolid->data;
-                    
-                    Hitbox tileHitbox = Hitbox_CreateBasic((float2d){
-                        tileMapSolid->texture->tilesize.X,
-                        tileMapSolid->texture->tilesize.Y,
-                    });
-                    tileHitbox.offset.X = -tileMapSolid->texture->tilesize.X / 2;
-                    tileHitbox.offset.Y = -tileMapSolid->texture->tilesize.Y / 2;
-                    
-                    int index;
-                    int2d xRange;
-                    int2d yRange;
-                    
-                    xRange.X = w0.left + fmin(aabbBodies[e0]->velocity.X, 0) - tileMapSolidBody->position.X;
-                    xRange.Y = w0.right + fmax(aabbBodies[e0]->velocity.X, 0) - tileMapSolidBody->position.X;
-                    
-                    xRange.X /= tileMapSolid->texture->tilesize.X;
-                    xRange.X -= 2;
-                    xRange.Y /= tileMapSolid->texture->tilesize.X;
-                    xRange.Y += 2;
-                    
-                    yRange.X = w0.top + fmin(aabbBodies[e0]->velocity.Y, 0) - tileMapSolidBody->position.Y;
-                    yRange.Y = w0.bottom + fmax(aabbBodies[e0]->velocity.Y, 0) - tileMapSolidBody->position.Y;
-                    
-                    yRange.X /= tileMapSolid->texture->tilesize.Y;
-                    yRange.X -= 2;
-                    yRange.Y /= tileMapSolid->texture->tilesize.Y;
-                    yRange.Y += 2;
-                    
-                    for(int Y = yRange.X; Y < yRange.Y; Y++)
-                    {
-                        if(Y <= -1)
-                        {
-                            Y = -1;
-                            
-                            continue;
-                        }
-                        
-                        if(Y >= layer->size.Y)
-                        {
-                            break;
-                        }
-                        
-                        for(int X = xRange.X; X < xRange.Y; X++)
-                        {
-                            if(X <= -1)
-                            {
-                                X = -1;
-                                
-                                continue;
-                            }
-                            
-                            if(X >= layer->size.X)
-                            {
-                                break;
-                            }
-                            
-                            index = (Y * layer->size.X) + X;
-                            
-                            if(layer->tiles[index] == 0)
-                            {
-                                continue;
-                            }
-                            
-                            w1 = Hitbox_GetWalls(&tileHitbox, (float2d){
-                                tileMapSolidBody->position.X + (X * tileMapSolid->texture->tilesize.X),
-                                tileMapSolidBody->position.Y + (Y * tileMapSolid->texture->tilesize.Y),
-                            });
-                            
-                            BasicAABB_TryHitboxes(
-                                aabbBasics[e0],
-                                aabbBodies[e0],
-                                &aabbBasics[e0]->hitboxes[h0],
-                                &w0,
-                                NULL,
-                                NULL,
-                                &tileHitbox,
-                                &w1,
-                                isY
-                            );
-                        }
-                    }
+                    BasicAABBSystem_Entity_Tilemap(w0, aabbBasics[e0], h0, aabbBodies[e0], tileMapSolid, tileMapSolidBody, isY);
                 }
                 
                 // Object collisions

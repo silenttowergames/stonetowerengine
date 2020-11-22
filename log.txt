@@ -76,3 +76,9 @@ main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spri
 main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
 main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
 main: src/Rendering/SpriteBatchFunctions.c:135: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
