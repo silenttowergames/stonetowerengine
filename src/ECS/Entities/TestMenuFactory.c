@@ -1,12 +1,10 @@
-#include "TextBoxFactory.h"
+#include "TestMenuFactory.h"
+
 #include "../Components/Body.h"
 #include "../Components/RenderableFunctions.h"
-#include "../Components/RenderOffsetFunctions.h"
-#include "../../Assets/Font.h"
 #include "../../Application/ApplicationStateFunctions.h"
-#include "../../Utilities/colorFunctions.h"
 
-void TextBoxFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
+void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
 {
     ctx();
     
@@ -20,14 +18,14 @@ void TextBoxFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONOb
     });
     ecs_set(world, e, Renderable,
         RenderableText(
-            "PressStart2P/PressStart2P.ttf",
-            8,
+            "Bloodyslime/Bloodyslime.ttf",
+            32,
             5,
             1,
             0,
-            colorU(0, 0, 255, 255),
+            colorU(255, 0, 0, 255),
             0,
-            "Retro"
+            "SLASHER"
         )
     );
 }

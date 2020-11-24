@@ -33,5 +33,6 @@ void AssetManager_AddSounds(AssetManager* assetManager, int length, ...);
 #define shaders(length, ...) AssetManager_InitShader(&app.assetManager, length); AssetManager_AddShaders(&app.assetManager, length, __VA_ARGS__)
 #define scripts(length, ...) AssetManager_InitLua(&app.assetManager, length); AssetManager_AddLuas(&app.assetManager, length, __VA_ARGS__)
 #define sounds(length, ...) AssetManager_InitSound(&app.assetManager, length); AssetManager_AddSounds(&app.assetManager, length, __VA_ARGS__)
+#define fonts(length, ...) AssetManager_InitFont(&app.assetManager, length); AssetManager_AddFonts(&app.assetManager, length, __VA_ARGS__)
 
 #define getTexture(key) mapGet(app->assetManager.mapTexture, key, Texture)

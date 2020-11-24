@@ -12,5 +12,4 @@ typedef struct FontStashFNA3D
     ApplicationState* app;
     Texture texture;
     Renderable* renderable;
-    int font;
 } FontStashFNA3D;

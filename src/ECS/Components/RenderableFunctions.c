@@ -8,9 +8,14 @@
 void Renderable_Sprite_Render(ApplicationState* app, SpriteBatch* spriteBatch, Camera* camera, void* _renderable, float2d position)
 {
 	Renderable* renderable = (Renderable*)_renderable;
+	
+	float2d _position = position;
+	_position.X += (camera->position.X * (1 - renderable->parallax));
+	_position.Y += (camera->position.Y * (1 - renderable->parallax));
+	
 	quad pos = quad_Easy(
-		position.X,
-		position.Y,
+		_position.X,
+		_position.Y,
 		renderable->texture->tilesize.X * renderable->scale.X,
 		renderable->texture->tilesize.Y * renderable->scale.Y,
 		renderable->offset.X * renderable->scale.X,
@@ -53,6 +58,10 @@ void Renderable_TextBox_Render(ApplicationState* app, SpriteBatch* spriteBatch, 
 {
 	Renderable* renderable = (Renderable*)_renderable;
 	
+	float2d _position = position;
+	_position.X += (camera->position.X * (1 - renderable->parallax));
+	_position.Y += (camera->position.Y * (1 - renderable->parallax));
+	
 	const char* message = (const char*)renderable->data;
 	
 	if(message == NULL || strlen(message) == 0)
@@ -66,9 +75,10 @@ void Renderable_TextBox_Render(ApplicationState* app, SpriteBatch* spriteBatch, 
 	
 	fna->renderable = renderable;
 	
-	fonsSetSize(app->fons, 8);
+	fonsSetFont(app->fons, renderable->scale.X);
+	fonsSetSize(app->fons, renderable->scale.Y);
 	fonsSetColor(app->fons, renderable->color);
-	fonsDrawText(app->fons, position.X, position.Y, message, NULL);
+	fonsDrawText(app->fons, _position.X, _position.Y, message, NULL);
 }
 
 void Renderable_Tilemap_Render(ApplicationState* app, SpriteBatch* spriteBatch, Camera* camera, void* _renderable, float2d position)

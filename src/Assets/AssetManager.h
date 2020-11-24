@@ -6,6 +6,7 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "TiledJSON.h"
+#include "Font.h"
 #include "../Audio/AudioManager.h"
 #include "../Audio/Sound.h"
 
@@ -40,4 +41,9 @@ typedef struct AssetManager
 	ecs_map_t* mapSound;
 	int lengthSound;
 	int lengthSoFarSound;
+	
+	Font* arrayFont;
+	ecs_map_t* mapFont;
+	int lengthFont;
+	int lengthSoFarFont;
 } AssetManager;

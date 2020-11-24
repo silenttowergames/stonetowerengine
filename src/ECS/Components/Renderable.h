@@ -27,3 +27,43 @@ typedef struct Renderable
 	int duration;
 	int renderTargetID;
 } Renderable;
+
+#define RenderableSprite(tex, frame, layer, depth, parallax, color, renTarID) \
+{\
+	tex,\
+	frame,\
+	{ 0, 0, },\
+	{ 1, 1, },\
+	false,\
+	false,\
+	0.0f,\
+	NULL,\
+	Renderable_Sprite_Render,\
+	layer,\
+	depth,\
+	parallax,\
+	color,\
+	NULL,\
+	0,\
+	renTarID,\
+}
+
+#define RenderableText(fontName, size, layer, depth, parallax, color, renTarID, string) \
+{\
+	NULL,\
+	{ 0, 0, },\
+	{ 0, 0, },\
+	{ (mapGet(app->assetManager.mapFont, fontName, Font))->fonsID, size, },\
+	false,\
+	false,\
+	0.0f,\
+	(void*)string,\
+	Renderable_TextBox_Render,\
+	layer,\
+	depth,\
+	parallax,\
+	color,\
+	NULL,\
+	0,\
+	renTarID,\
+}

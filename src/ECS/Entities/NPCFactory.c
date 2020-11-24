@@ -34,22 +34,13 @@ void NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject
     ecs_set(world, f, Body, {
         { X, Y, },
     });
-    ecs_set(world, f, Renderable, {
+    ecs_set(world, f, Renderable, RenderableSprite(
         getTexture("8x8"),
-        { 0, 0, },
-        { 0, 0, },
-        { 1, 1, },
-        false,
-        false,
-        0,
-        NULL,
-        Renderable_Sprite_Render,
+        int2dInit(0, 0),
         layer,
         (rand() % 10) / 10.0f,
-        0,
-        colorU(255, 255, 0, 100),//0xFFFFFFFF,
-        NULL,
-        0,
-        0,
-    });
+        1,
+        0xFFFFFFFF,
+        0
+    ));
 }

@@ -47,22 +47,13 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObj
     ecs_set(world, e, CameraFollow, {
         { 0, 0, },
     });
-    ecs_set(world, e, Renderable, {
+    ecs_set(world, e, Renderable, RenderableSprite(
         getTexture("16x16"),
-        { 0, 0, },
-        { 0, 0, },
-        { 1, 1, },
-        false,
-        false,
-        0,
-        NULL,
-        Renderable_Sprite_Render,
+        int2dInit(0, 0),
         layer,
         0.5f,
-        0,
+        1,
         0xFFFFFFFF,
-        NULL,
-        0,
-        0,
-    });
+        0
+    ));
 }

@@ -55,10 +55,7 @@ void ApplicationState_Create(
     
     ecs_os_set_api_defaults();
     
-    app->fons = FontStashFNA3D_Create(app, 80, 80, FONS_ZERO_TOPLEFT);
-    int fontP2P = fonsAddFont(app->fons, "sans", "assets/fonts/PressStart2P/PressStart2P.ttf");
-    ((FontStashFNA3D*)app->fons->params.userPtr)->font = fontP2P;
-    fonsSetFont(app->fons, fontP2P);
+    app->fons = FontStashFNA3D_Create(app, 1024, 1024, FONS_ZERO_TOPLEFT);
 }
 
 void ApplicationState_Loop(ApplicationState* app)
@@ -136,7 +133,11 @@ void ApplicationState_AddFactory(ApplicationState* app, Factory callable)
 
 Factory* ApplicationState_GetFactory(ApplicationState* app, const char* key)
 {
-    return mapGet(app->entityFactories, key, Factory);
+    Factory* fac = mapGet(app->entityFactories, key, Factory);
+    
+    assert(fac != NULL);
+    
+    return fac;
 }
 
 void ApplicationState_InitScenes(ApplicationState* app, int length)

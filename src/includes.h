@@ -20,6 +20,8 @@
 #include "Assets/ASEpriteJSONFunctions.c"
 #include "Assets/AssetManager.h"
 #include "Assets/AssetManagerFunctions.c"
+#include "Assets/Font.h"
+#include "Assets/FontFunctions.c"
 #include "Assets/FontStashFNA3DFunctions.c"
 #include "Assets/LuaScript.h"
 #include "Assets/LuaScriptFunctions.c"
@@ -58,6 +60,7 @@
 #include "ECS/Entities/Factory.h"
 #include "ECS/Entities/NPCFactory.c"
 #include "ECS/Entities/PlayerFactory.c"
+#include "ECS/Entities/TestMenuFactory.c"
 #include "ECS/Entities/TextBoxFactory.c"
 // Systems
 #include "ECS/Systems/AINPCSystem.c"

@@ -4,6 +4,11 @@
 #include "RenderTarget.h"
 #include "SpriteBatchFunctions.h"
 
+static float2d SpriteBatch_Clamp(float clamp, float2d value)
+{
+	return value;
+}
+
 void SpriteBatch_Create(SpriteBatch* spriteBatch)
 {
 	memset(spriteBatch, 0, sizeof(SpriteBatch));
@@ -22,6 +27,9 @@ bool SpriteBatch_Begin(SpriteBatch* spriteBatch)
 void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, Camera* camera, FNA3D_Texture* texture, quad pos, quad src, uint32_t color)
 {
 	assert(spriteBatch->indicesThisFrame <= (MAX_INDICES - 6));
+	
+	// TODO: Clamp drawing positions to zoom to get rid of ugly borders
+	//float2d cameraPosition = SpriteBatch_Clamp(camera->)
 	
 	if(!quad_Intersects(
 		camera->position.X - (camera->resolution.X / 2),

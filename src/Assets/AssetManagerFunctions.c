@@ -21,6 +21,7 @@ void AssetManager_Destroy(FNA3D_Device* device, AssetManager* assetManager)
 	ecs_map_free(assetManager->mapSound); // AssetManager.mapSound free
 	ecs_map_free(assetManager->mapTexture); // AssetManager.mapTexture free
 	ecs_map_free(assetManager->mapTiled); // AssetManager.mapTiled free
+	ecs_map_free(assetManager->mapFont); // AssetManager.mapFont free
 	
 	for(i = 0; i < assetManager->lengthLua; i++)
 	{
@@ -47,11 +48,17 @@ void AssetManager_Destroy(FNA3D_Device* device, AssetManager* assetManager)
 		TiledJSON_Free(&assetManager->arrayTiled[i]);
 	}
 	
+	for(i = 0; i < assetManager->lengthFont; i++)
+	{
+		//Font_Free()
+	}
+	
 	free(assetManager->arrayLua); // AssetManager.arrayLua free
 	free(assetManager->arrayShader); // AssetManager.arrayShader free
 	free(assetManager->arraySound); // AssetManager.arraySound free
 	free(assetManager->arrayTexture); // AssetManager.arrayTexture free
 	free(assetManager->arrayTiled); // AssetManager.arrayTiled free
+	free(assetManager->arrayFont); // AssetManager.arrayFont free
 	
 	lua_close(assetManager->lua); // AssetManager.lua free
 }
@@ -208,6 +215,39 @@ void AssetManager_AddSounds(AssetManager* assetManager, int length, ...)
 	for(int i = 0; i < length; i++)
 	{
 		AssetManager_AddSound(assetManager, va_arg(args, Sound));
+	}
+	
+	va_end(args);
+}
+
+void AssetManager_InitFont(AssetManager* assetManager, int length)
+{
+	AudioManager_create(&assetManager->audioManager);
+	
+	assetManager->arrayFont = malloc(sizeof(Font) * length); // AssetManager.arrayFont allocate
+	assetManager->mapFont = ecs_map_new(Font, length); // AssetManager.mapFont allocate
+	assetManager->lengthFont = length;
+	assetManager->lengthSoFarFont = 0;
+}
+
+void AssetManager_AddFont(AssetManager* assetManager, Font font)
+{
+	assetManager->arrayFont[assetManager->lengthSoFarFont] = font;
+	
+	mapSet(assetManager->mapFont, font.key, &assetManager->arrayFont[assetManager->lengthSoFarFont]);
+	
+	assetManager->lengthSoFarFont++;
+}
+
+void AssetManager_AddFonts(AssetManager* assetManager, int length, ...)
+{
+	va_list args;
+	
+	va_start(args, length);
+	
+	for(int i = 0; i < length; i++)
+	{
+		AssetManager_AddFont(assetManager, va_arg(args, Font));
 	}
 	
 	va_end(args);

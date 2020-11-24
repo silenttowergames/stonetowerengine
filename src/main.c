@@ -47,7 +47,7 @@ void init2Scene(ecs_world_t* world)
 {
     ctx();
     
-    factoryRun(app, "TextBox", -20, 32, 2, NULL);
+    factoryRun(app, "TextBox", -20, -20, 2, NULL);
     
     for(int x = 0; x < 24; x++)
     {
@@ -56,6 +56,12 @@ void init2Scene(ecs_world_t* world)
             factoryRun(app, "NPC", 80 + (x * 12), 80 + (y * 12), 2, NULL);
         }
     }
+    
+    factoryRun(app, "TestMenu", 32, 32, 4, NULL);
+    
+    factoryRun(app, "TextBox", -20, 20, 2, NULL);
+    
+    factoryRun(app, "TestMenu", 32, 64, 4, NULL);
 }
 
 void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
@@ -120,19 +126,26 @@ int main(int arcg, char* argv[])
         LuaScript_Load("test")
     );
     
+    fonts(
+        2,
+        Font_Create(&app, "Bloodyslime/Bloodyslime.ttf"),
+        Font_Create(&app, "PressStart2P/PressStart2P.ttf")
+    );
+    
     sounds(
         4,
         Sound_create_load("calm-example.ogg", Play_Default),
         Sound_create_load("hit.ogg", Play_Default),
-        Sound_create_speech("speech0", "This is a test!", Play_Default),
+        Sound_create_speech("speech0", "You slut", Play_Default),
         Sound_create_sfxr("sfxr", Play_Default)
     );
     
     factories(
-        3,
+        4,
         factory(Player),
         factory(NPC),
-        factory(TextBox)
+        factory(TextBox),
+        factory(TestMenu)
     );
     
     renderTargets(
