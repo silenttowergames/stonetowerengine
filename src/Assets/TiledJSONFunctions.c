@@ -51,7 +51,7 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
         json_object_object_get_ex(obj, "name", &objEx);
         
         const char* texture = json_object_get_string(objEx);
-        tiled.texture = mapGet(app->assetManager.mapTexture, texture, Texture);
+        tiled.texture = *mapGet(app->assetManager.mapTexture, texture, Texture*);
         
         assert(tiled.texture != NULL);
         

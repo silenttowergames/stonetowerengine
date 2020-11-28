@@ -52,6 +52,8 @@
 #include "ECS/Components/CameraFollow.h"
 #include "ECS/Components/Hitbox.h"
 #include "ECS/Components/HitboxFunctions.c"
+#include "ECS/Components/Menu.h"
+#include "ECS/Components/MenuItem.h"
 #include "ECS/Components/Renderable.h"
 #include "ECS/Components/RenderableFunctions.c"
 #include "ECS/Components/RenderOffsetFunctions.c"

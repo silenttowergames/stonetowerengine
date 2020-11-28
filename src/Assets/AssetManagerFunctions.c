@@ -66,7 +66,7 @@ void AssetManager_Destroy(FNA3D_Device* device, AssetManager* assetManager)
 void AssetManager_InitTexture(AssetManager* assetManager, int length)
 {
 	assetManager->arrayTexture = malloc(sizeof(Texture) * length);
-	assetManager->mapTexture = ecs_map_new(Texture, length);
+	assetManager->mapTexture = ecs_map_new(Texture*, length);
 	assetManager->lengthTexture = length;
 	assetManager->lengthSoFarTexture = 0;
 }
@@ -75,7 +75,9 @@ void AssetManager_AddTexture(AssetManager* assetManager, Texture texture)
 {
 	assetManager->arrayTexture[assetManager->lengthSoFarTexture] = texture;
 	
-	mapSet(assetManager->mapTexture, texture.key, &assetManager->arrayTexture[assetManager->lengthSoFarTexture]);
+	Texture* pTex = &assetManager->arrayTexture[assetManager->lengthSoFarTexture];
+	
+	mapSet(assetManager->mapTexture, texture.key, &pTex);
 	
 	assetManager->lengthSoFarTexture++;
 }
@@ -97,7 +99,7 @@ void AssetManager_AddTextures(AssetManager* assetManager, int length, ...)
 void AssetManager_InitMap(AssetManager* assetManager, int length)
 {
 	assetManager->arrayTiled = malloc(sizeof(TiledJSON) * length);
-	assetManager->mapTiled = ecs_map_new(TiledJSON, length);
+	assetManager->mapTiled = ecs_map_new(TiledJSON*, length);
 	assetManager->lengthTiled = length;
 	assetManager->lengthSoFarTiled = 0;
 }
@@ -106,7 +108,8 @@ void AssetManager_AddMap(AssetManager* assetManager, TiledJSON map)
 {
 	assetManager->arrayTiled[assetManager->lengthSoFarTiled] = map;
 	
-	mapSet(assetManager->mapTiled, map.key, &assetManager->arrayTiled[assetManager->lengthSoFarTiled]);
+	TiledJSON* pMap = &assetManager->arrayTiled[assetManager->lengthSoFarTiled];
+	mapSet(assetManager->mapTiled, map.key, &pMap);
 	
 	assetManager->lengthSoFarTiled++;
 }
@@ -128,7 +131,7 @@ void AssetManager_AddMaps(AssetManager* assetManager, int length, ...)
 void AssetManager_InitShader(AssetManager* assetManager, int length)
 {
 	assetManager->arrayShader = malloc(sizeof(Shader) * length);
-	assetManager->mapShader = ecs_map_new(Shader, length);
+	assetManager->mapShader = ecs_map_new(Shader*, length);
 	assetManager->lengthShader = length;
 	assetManager->lengthSoFarShader = 0;
 }
@@ -137,7 +140,8 @@ void AssetManager_AddShader(AssetManager* assetManager, Shader shader)
 {
 	assetManager->arrayShader[assetManager->lengthSoFarShader] = shader;
 	
-	mapSet(assetManager->mapShader, shader.key, &assetManager->arrayShader[assetManager->lengthSoFarShader]);
+	Shader* pShader = &assetManager->arrayShader[assetManager->lengthSoFarShader];
+	mapSet(assetManager->mapShader, shader.key, &pShader);
 	
 	assetManager->lengthSoFarShader++;
 }
@@ -159,7 +163,7 @@ void AssetManager_AddShaders(AssetManager* assetManager, int length, ...)
 void AssetManager_InitLua(AssetManager* assetManager, int length)
 {
 	assetManager->arrayLua = malloc(sizeof(LuaScript) * length);
-	assetManager->mapLua = ecs_map_new(LuaScript, length);
+	assetManager->mapLua = ecs_map_new(LuaScript*, length);
 	assetManager->lengthLua = length;
 	assetManager->lengthSoFarLua = 0;
 }
@@ -168,7 +172,8 @@ void AssetManager_AddLua(AssetManager* assetManager, LuaScript script)
 {
 	assetManager->arrayLua[assetManager->lengthSoFarLua] = script;
 	
-	mapSet(assetManager->mapLua, script.key, &assetManager->arrayLua[assetManager->lengthSoFarLua]);
+	LuaScript* pScript = &assetManager->arrayLua[assetManager->lengthSoFarLua];
+	mapSet(assetManager->mapLua, script.key, &pScript);
 	
 	assetManager->lengthSoFarLua++;
 }
@@ -192,7 +197,7 @@ void AssetManager_InitSound(AssetManager* assetManager, int length)
 	AudioManager_create(&assetManager->audioManager);
 	
 	assetManager->arraySound = malloc(sizeof(Sound) * length); // AssetManager.arraySound allocate
-	assetManager->mapSound = ecs_map_new(Sound, length); // AssetManager.mapSound allocate
+	assetManager->mapSound = ecs_map_new(Sound*, length); // AssetManager.mapSound allocate
 	assetManager->lengthSound = length;
 	assetManager->lengthSoFarSound = 0;
 }
@@ -201,7 +206,8 @@ void AssetManager_AddSound(AssetManager* assetManager, Sound sound)
 {
 	assetManager->arraySound[assetManager->lengthSoFarSound] = sound;
 	
-	mapSet(assetManager->mapSound, sound.key, &assetManager->arraySound[assetManager->lengthSoFarSound]);
+	Sound* pSound = &assetManager->arraySound[assetManager->lengthSoFarSound];
+	mapSet(assetManager->mapSound, sound.key, &pSound);
 	
 	assetManager->lengthSoFarSound++;
 }
@@ -218,6 +224,8 @@ void AssetManager_AddSounds(AssetManager* assetManager, int length, ...)
 	}
 	
 	va_end(args);
+	
+	AudioManager_addSounds(&assetManager->audioManager, assetManager->arraySound, assetManager->lengthSound);
 }
 
 void AssetManager_InitFont(AssetManager* assetManager, int length)
@@ -225,7 +233,7 @@ void AssetManager_InitFont(AssetManager* assetManager, int length)
 	AudioManager_create(&assetManager->audioManager);
 	
 	assetManager->arrayFont = malloc(sizeof(Font) * length); // AssetManager.arrayFont allocate
-	assetManager->mapFont = ecs_map_new(Font, length); // AssetManager.mapFont allocate
+	assetManager->mapFont = ecs_map_new(Font*, length); // AssetManager.mapFont allocate
 	assetManager->lengthFont = length;
 	assetManager->lengthSoFarFont = 0;
 }
@@ -234,7 +242,8 @@ void AssetManager_AddFont(AssetManager* assetManager, Font font)
 {
 	assetManager->arrayFont[assetManager->lengthSoFarFont] = font;
 	
-	mapSet(assetManager->mapFont, font.key, &assetManager->arrayFont[assetManager->lengthSoFarFont]);
+	Font* pFont = &assetManager->arrayFont[assetManager->lengthSoFarFont];
+	mapSet(assetManager->mapFont, font.key, &pFont);
 	
 	assetManager->lengthSoFarFont++;
 }

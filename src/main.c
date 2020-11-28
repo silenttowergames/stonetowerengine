@@ -11,7 +11,7 @@ void initWorld(ecs_world_t* world)
     ECS_COMPONENT(world, Renderable);
     ECS_COMPONENT(world, TileLayerCollides);
     
-    ECS_SYSTEM(world, SDLEventsSystem, EcsOnUpdate, 0);
+    //ECS_SYSTEM(world, SDLEventsSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, EngineUpdateSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, AINPCSystem, EcsOnUpdate, AINPC, Body);
     ECS_SYSTEM(world, MoveSystem, EcsOnUpdate, AIPlayer, Body);
@@ -57,11 +57,7 @@ void init2Scene(ecs_world_t* world)
         }
     }
     
-    factoryRun(app, "TestMenu", 32, 32, 4, NULL);
-    
-    factoryRun(app, "TextBox", -20, 20, 2, NULL);
-    
-    factoryRun(app, "TestMenu", 32, 64, 4, NULL);
+    factoryRun(app, "TestMenu", -120, -40, 5, NULL);
 }
 
 void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
@@ -136,7 +132,7 @@ int main(int arcg, char* argv[])
         4,
         Sound_create_load("calm-example.ogg", Play_Default),
         Sound_create_load("hit.ogg", Play_Default),
-        Sound_create_speech("speech0", "You slut", Play_Default),
+        Sound_create_speech("speech0", "Uncompromised", Play_Default),
         Sound_create_sfxr("sfxr", Play_Default)
     );
     
@@ -157,7 +153,7 @@ int main(int arcg, char* argv[])
     //*
     app.renderState.mainRenderTarget.shadersCount = 1;
     app.renderState.mainRenderTarget.shaders = malloc(sizeof(Shader*) * app.renderState.mainRenderTarget.shadersCount);
-    app.renderState.mainRenderTarget.shaders[0] = mapGet(app.assetManager.mapShader, "CRTShader", Shader);
+    app.renderState.mainRenderTarget.shaders[0] = *mapGet(app.assetManager.mapShader, "CRTShader", Shader*);
     //*/
     
     loop();

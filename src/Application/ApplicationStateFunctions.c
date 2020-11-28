@@ -5,6 +5,7 @@
 #include "../Assets/TiledJSONFunctions.h"
 #include "../ECS/FlecsFunctions.h"
 #include "../ECS/Systems/DrawSystem.h"
+#include "../ECS/Systems/SDLEventsSystem.h"
 #include "../Logging/LoggerFunctions.h"
 #include "../Rendering/RenderingFunctions.h"
 #include "../Rendering/RenderStateFunctions.h"
@@ -25,6 +26,8 @@ void ApplicationState_Create(
 )
 {
 	memset(app, 0, sizeof(ApplicationState));
+    
+    app->focused = true;
     
     app->gameTitle = gameTitle;
     app->gameVersion = gameVersion;
@@ -71,8 +74,15 @@ void ApplicationState_Loop(ApplicationState* app)
             app->flecsScene = NULL;
         }
         
-        while(ecs_progress(app->world, 0))
+        while(true)
         {
+            SDLEventsSystem(app);
+            
+            if(app->focused)
+            {
+                ecs_progress(app->world, 0);
+            }
+            
             // FIXME: Is it an issue that it plays two frames when you change scenes?
             if(app->quit || app->flecsScene != NULL)
             {
@@ -186,7 +196,7 @@ void ApplicationState_RunScene(ApplicationState* app, const char* key)
     
     if(_scene->tiledMap != NULL)
     {
-        TiledJSON* map = mapGet(app->assetManager.mapTiled, _scene->tiledMap, TiledJSON);
+        TiledJSON* map = *mapGet(app->assetManager.mapTiled, _scene->tiledMap, TiledJSON*);
         
         if(map != NULL)
         {

@@ -14,7 +14,5 @@ Font Font_Create(ApplicationState* app, const char* key)
     
     font.fonsID = fonsAddFont(app->fons, key, filename);
     
-    printf("`%s`: %d\n", filename, font.fonsID);
-	
     return font;
 }

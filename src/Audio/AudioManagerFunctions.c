@@ -62,38 +62,40 @@ void AudioManager_update(AudioManager* audioManager)
     }
 }
 
-void AudioManager_focus(AudioManager* audioManager)
+void AudioManager_focus(AssetManager* assetManager)
 {
-    for(int i = 0; i < audioManager->soundsCount; i++)
+    for(int i = 0; i < assetManager->lengthSound; i++)
     {
-        for(int j = 0; j < sizeof(audioManager->sounds[i].instances) / sizeof(unsigned int); j++)
+        for(int j = 0; j < sizeof(assetManager->arraySound[i].instances) / sizeof(unsigned int); j++)
         {
-            if(!audioManager->sounds[i].instancesPausedFocus[j])
+            if(!assetManager->arraySound[i].instancesPausedFocus[j])
             {
                 continue;
             }
             
-            audioManager->sounds[i].instancesPausedFocus[j] = false;
+            //printf("unpause %s # %d (%d)\n", assetManager->arraySound[i].key, j, assetManager->arraySound[i].instances[j] + 1);
             
-            Soloud_setPause(audioManager->soloud, audioManager->sounds[i].instances[j], false);
+            assetManager->arraySound[i].instancesPausedFocus[j] = false;
+            
+            Soloud_setPause(assetManager->audioManager.soloud, assetManager->arraySound[i].instances[j], false);
         }
     }
 }
 
-void AudioManager_blur(AudioManager* audioManager)
+void AudioManager_blur(AssetManager* assetManager)
 {
-    for(int i = 0; i < audioManager->soundsCount; i++)
+    for(int i = 0; i < assetManager->lengthSound; i++)
     {
-        for(int j = 0; j < sizeof(audioManager->sounds[i].instances) / sizeof(unsigned int); j++)
+        for(int j = 0; j < sizeof(assetManager->arraySound[i].instances) / sizeof(unsigned int); j++)
         {
-            if(Soloud_getPause(audioManager->soloud, audioManager->sounds[i].instances[j]))
+            if(Soloud_getPause(assetManager->audioManager.soloud, assetManager->arraySound[i].instances[j]))
             {
                 continue;
             }
             
-            audioManager->sounds[i].instancesPausedFocus[j] = true;
+            assetManager->arraySound[i].instancesPausedFocus[j] = true;
             
-            Soloud_setPause(audioManager->soloud, audioManager->sounds[i].instances[j], true);
+            Soloud_setPause(assetManager->audioManager.soloud, assetManager->arraySound[i].instances[j], true);
         }
     }
 }

@@ -6,10 +6,8 @@
 #include "../../Input/InputManagerFunctions.h"
 #include "../../Input/KeyboardStateFunctions.h"
 
-void SDLEventsSystem(ecs_iter_t* it)
+void SDLEventsSystem(ApplicationState* app)
 {
-	fctx();
-	
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
@@ -28,7 +26,7 @@ void SDLEventsSystem(ecs_iter_t* it)
 				{
 					case SDL_WINDOWEVENT_FOCUS_GAINED:
 					{
-						//AudioManager_focus(&app->audioManager);
+						AudioManager_focus(&app->assetManager);
 						
 						app->focused = true;
 						
@@ -37,7 +35,7 @@ void SDLEventsSystem(ecs_iter_t* it)
 					
 					case SDL_WINDOWEVENT_FOCUS_LOST:
 					{
-						//AudioManager_blur(&app->audioManager);
+						AudioManager_blur(&app->assetManager);
 						
 						app->focused = false;
 						

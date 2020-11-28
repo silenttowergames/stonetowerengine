@@ -1,3 +1,4 @@
+#include <math.h>
 #include <soloud_c.h>
 #include "SoundFunctions.h"
 

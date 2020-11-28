@@ -16,16 +16,10 @@ struct VertexShaderOutput
 
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
-	float xmod = 0;
     float2
 		coords = input.TextureCoordinates,
 		rc = float2(coords.x * Width, coords.y * Height)
 	;
-	
-	if(rc.y % 1 >= 0.5)
-	{
-		coords.x += (0.5 / Width);
-	}
 	
 	float4 c = tex2D(SpriteTextureSampler, coords) * input.Color;
     

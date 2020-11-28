@@ -85,17 +85,16 @@ void MoveSystem(ecs_iter_t* it)
 	
 	if(key(Pressed, x))
 	{
-		//Sound_play(mapGet(app->assetManager.mapSound, "hit.ogg", Sound), app->assetManager.audioManager.soloud);
-		//Sound_play(mapGet(app->assetManager.mapSound, "speech0", Sound), app->assetManager.audioManager.soloud);
-		
-		Sound_play(mapGet(app->assetManager.mapSound, "calm-example.ogg", Sound), app->assetManager.audioManager.soloud);
+		Sound_play(*mapGet(app->assetManager.mapSound, "calm-example.ogg", Sound*), app->assetManager.audioManager.soloud);
 	}
 	
 	if(key(Pressed, z))
 	{
-		//Sound_play(mapGet(app->assetManager.mapSound, "hit.ogg", Sound), app->assetManager.audioManager.soloud);
-		//Sound_play(mapGet(app->assetManager.mapSound, "speech0", Sound), app->assetManager.audioManager.soloud);
-		
-		Sound_play(mapGet(app->assetManager.mapSound, "speech0", Sound), app->assetManager.audioManager.soloud);
+		Sound_play(*mapGet(app->assetManager.mapSound, "speech0", Sound*), app->assetManager.audioManager.soloud);
+	}
+	
+	if(key(Pressed, c))
+	{
+		Sound_play(*mapGet(app->assetManager.mapSound, "hit.ogg", Sound*), app->assetManager.audioManager.soloud);
 	}
 }

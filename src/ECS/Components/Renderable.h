@@ -53,7 +53,7 @@ typedef struct Renderable
 	NULL,\
 	{ 0, 0, },\
 	{ 0, 0, },\
-	{ (mapGet(app->assetManager.mapFont, fontName, Font))->fonsID, size, },\
+	{ (*mapGet(app->assetManager.mapFont, fontName, Font*))->fonsID, size, },\
 	false,\
 	false,\
 	0.0f,\
