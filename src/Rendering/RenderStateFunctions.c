@@ -8,20 +8,8 @@
 #include "../Assets/ShaderFunctions.h"
 #include "../StoneTower.h"
 
-void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int resY, RenderState_Zoom windowZoomType)
+static void RenderState_FNA3D_Init(ApplicationState* app)
 {
-	memset(&app->renderState, 0, sizeof(RenderState));
-	
-	app->renderState.resolution.X = resX;
-	app->renderState.resolution.Y = resY;
-	
-	app->renderState.windowTitle = malloc(sizeof(char) * (strlen(app->gameTitle) + 1 + strlen(app->gameVersion) + 1)); // RenderState.windowTitle.allocate
-	sprintf(app->renderState.windowTitle, "%s %s", app->gameTitle, app->gameVersion);
-	
-	app->renderState.windowZoomType = windowZoomType;
-	
-	RenderState_Resize(app, sizeX, sizeY);
-	
 	FNA3D_BlendState blendState;
 	memset(&blendState, 0, sizeof(blendState));
 	blendState.alphaBlendFunction = FNA3D_BLENDFUNCTION_ADD;
@@ -61,6 +49,23 @@ void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int 
 	
 	app->renderState.vertexBufferBinding.vertexBuffer = app->renderState.vertexBuffer;
 	app->renderState.vertexBufferBinding.vertexDeclaration = vertexDeclaration;
+}
+
+void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int resY, RenderState_Zoom windowZoomType)
+{
+	memset(&app->renderState, 0, sizeof(RenderState));
+	
+	app->renderState.resolution.X = resX;
+	app->renderState.resolution.Y = resY;
+	
+	app->renderState.windowTitle = malloc(sizeof(char) * (strlen(app->gameTitle) + 1 + strlen(app->gameVersion) + 1)); // RenderState.windowTitle.allocate
+	sprintf(app->renderState.windowTitle, "%s %s", app->gameTitle, app->gameVersion);
+	
+	app->renderState.windowZoomType = windowZoomType;
+	
+	RenderState_Resize(app, sizeX, sizeY);
+	
+	RenderState_FNA3D_Init(app);
 	
 	SpriteBatch_Create(&app->renderState.spriteBatch);
 }
@@ -133,6 +138,8 @@ void RenderState_Resize(ApplicationState* app, int sizeX, int sizeY)
 	presentationParameters.backBufferHeight = app->renderState.size.Y;
 	presentationParameters.deviceWindowHandle = app->renderState.window;
 	presentationParameters.backBufferFormat = FNA3D_SURFACEFORMAT_COLOR;
+	//presentationParameters.presentationInterval = FNA3D_PRESENTINTERVAL_DEFAULT;
+	presentationParameters.presentationInterval = FNA3D_PRESENTINTERVAL_IMMEDIATE;
 	app->renderState.presentationParameters = presentationParameters;
 	
 	if(app->renderState.device == NULL)
@@ -203,4 +210,20 @@ void RenderState_Resize(ApplicationState* app, int sizeX, int sizeY)
 			app->renderState.targets[i] = RenderTarget_Refresh(app, &app->renderState.targets[i]);
 		}
 	}
+}
+
+void RenderState_VSync(RenderState* renderState, bool enabled)
+{
+	if(
+		(enabled && renderState->presentationParameters.presentationInterval == FNA3D_PRESENTINTERVAL_DEFAULT)
+		||
+		(!enabled && renderState->presentationParameters.presentationInterval == FNA3D_PRESENTINTERVAL_IMMEDIATE)
+	)
+	{
+		return;
+	}
+	
+	renderState->presentationParameters.presentationInterval = (enabled ? FNA3D_PRESENTINTERVAL_DEFAULT : FNA3D_PRESENTINTERVAL_IMMEDIATE);
+	
+	FNA3D_ResetBackbuffer(renderState->device, &renderState->presentationParameters);
 }

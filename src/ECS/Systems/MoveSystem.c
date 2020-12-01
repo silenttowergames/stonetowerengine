@@ -86,6 +86,7 @@ void MoveSystem(ecs_iter_t* it)
 	if(key(Pressed, x))
 	{
 		Sound_play(*mapGet(app->assetManager.mapSound, "calm-example.ogg", Sound*), app->assetManager.audioManager.soloud);
+		printf("music\n");
 	}
 	
 	if(key(Pressed, z))
@@ -96,5 +97,20 @@ void MoveSystem(ecs_iter_t* it)
 	if(key(Pressed, c))
 	{
 		Sound_play(*mapGet(app->assetManager.mapSound, "hit.ogg", Sound*), app->assetManager.audioManager.soloud);
+	}
+	
+	if(key(Pressed, v))
+	{
+		app->flecsScene = "map1";
+	}
+	
+	if(key(Pressed, g))
+	{
+		RenderState_VSync(&app->renderState, true);
+	}
+	
+	if(key(Pressed, h))
+	{
+		RenderState_VSync(&app->renderState, false);
 	}
 }

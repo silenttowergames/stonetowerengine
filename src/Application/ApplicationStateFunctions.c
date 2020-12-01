@@ -63,7 +63,26 @@ void ApplicationState_Create(
 
 void ApplicationState_Loop(ApplicationState* app)
 {
-	while(!app->quit)
+    const Uint64 freq = SDL_GetPerformanceFrequency();
+    
+    Uint64 accumulator = 0;
+    Uint64 currentTime;
+    Uint64 deltaTime = 0;
+    Uint64 lastTime = SDL_GetPerformanceCounter();
+    
+    float fDeltaTime;
+    float fFPS;
+    float fMeasurements[60];
+    float fFPSAverage;
+    int frameCounter = 0;
+    
+    Uint64 unit;
+    
+    const Uint64 FPSreal = app->FPS + (app->FPS / 30.0);
+    const Uint64 FPSrealMS = freq / FPSreal;
+    const Uint64 FPSMS = freq / app->FPS;
+    
+    while(!app->quit)
     {
         app->world = Flecs_Init(app);
         
@@ -74,23 +93,53 @@ void ApplicationState_Loop(ApplicationState* app)
             app->flecsScene = NULL;
         }
         
-        while(true)
+        while(!app->quit && app->flecsScene == NULL)
         {
-            SDLEventsSystem(app);
+            currentTime = SDL_GetPerformanceCounter();
+            deltaTime = currentTime - lastTime;
+            accumulator += deltaTime;
             
-            if(app->focused)
+            while(accumulator > FPSrealMS)
             {
-                ecs_progress(app->world, 0);
+                if(accumulator > FPSrealMS * 8)
+                {
+                    accumulator = FPSrealMS;
+                }
+                
+                fDeltaTime = (float)accumulator / (float)freq;
+                fFPS = 1.0f / fDeltaTime;
+                
+                memcpy(&fMeasurements[1], &fMeasurements[0], sizeof(float) * 59);
+                fMeasurements[0] = fFPS;
+                
+                if(++frameCounter >= 60)
+                {
+                    frameCounter = 0;
+                    
+                    fFPSAverage = 0;
+                    for(int i = 0; i < 60; i++)
+                    {
+                        fFPSAverage += fMeasurements[i];
+                    }
+                    fFPSAverage /= 60;
+                    
+                    printf("FPS: %1.5f\n", fFPSAverage);
+                }
+                
+                SDLEventsSystem(app);
+                ecs_progress(app->world, fDeltaTime);
+                
+                unit = FPSMS;
+                if(unit > accumulator)
+                {
+                    unit = accumulator;
+                }
+                
+                accumulator -= unit;
             }
             
-            // FIXME: Is it an issue that it plays two frames when you change scenes?
-            if(app->quit || app->flecsScene != NULL)
-            {
-                break;
-            }
+            lastTime = currentTime;
         }
-        
-        app->world = Flecs_Free(app->world);
     }
 }
 
@@ -144,6 +193,11 @@ void ApplicationState_AddFactory(ApplicationState* app, Factory callable)
 Factory* ApplicationState_GetFactory(ApplicationState* app, const char* key)
 {
     Factory* fac = mapGet(app->entityFactories, key, Factory);
+    
+    if(fac == NULL)
+    {
+        printf("FACTORY MISSING: %s\n", key);
+    }
     
     assert(fac != NULL);
     

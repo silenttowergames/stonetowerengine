@@ -9,4 +9,5 @@ typedef struct Config
     int2d windowedSize;
     bool fullscreen;
     const char* language;
+    bool vsync;
 } Config;

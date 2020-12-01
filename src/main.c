@@ -49,7 +49,7 @@ void init2Scene(ecs_world_t* world)
     
     factoryRun(app, "TextBox", -20, -20, 2, NULL);
     
-    for(int x = 0; x < 24; x++)
+    for(int x = 0; x < 16; x++)
     {
         for(int y = 0; y < 16; y++)
         {
@@ -76,10 +76,11 @@ void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
 int main(int arcg, char* argv[])
 {
     Config config;
-    config.size.X = 1280;
-    config.size.Y = 720;
+    config.windowedSize.X = 1280;
+    config.windowedSize.Y = 720;
     config.fullscreen = false;
     config.language = "en";
+    config.vsync = true;
     
     init(
         "Engine Test",

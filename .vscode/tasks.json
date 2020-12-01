@@ -7,6 +7,11 @@
             "type": "shell",
             "label": "Linux 64-bit Build GCC",
             "command": "./build-linux64-gcc.sh"
+        },
+        {
+            "type": "shell",
+            "label": "Windows 64-bit Build GCC",
+            "command": "./build-win64-gcc.ps1"
         }
     ],
 }

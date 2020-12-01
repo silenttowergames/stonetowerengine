@@ -53,8 +53,6 @@ void Config_Resize(ApplicationState* app, int sizeX, int sizeY, bool fullscreen)
     app->config.size.X = sizeX;
     app->config.size.Y = sizeY;
     
-    printf("%dx%d\n", app->config.size.X, app->config.size.Y);
-    
     if(!fullscreen)
     {
         app->config.windowedSize = app->config.size;

@@ -68,30 +68,6 @@
                  "y":40
                 }, 
                 {
-                 "gid":19,
-                 "height":8,
-                 "id":2,
-                 "name":"",
-                 "rotation":0,
-                 "type":"bed",
-                 "visible":true,
-                 "width":8,
-                 "x":216,
-                 "y":24
-                }, 
-                {
-                 "gid":20,
-                 "height":8,
-                 "id":3,
-                 "name":"",
-                 "rotation":0,
-                 "type":"lamp",
-                 "visible":true,
-                 "width":8,
-                 "x":224,
-                 "y":24
-                }, 
-                {
                  "gid":1,
                  "height":8,
                  "id":4,

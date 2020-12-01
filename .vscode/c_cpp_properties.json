@@ -4,13 +4,13 @@
             "name": "Win64",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:\\C\\SDL2-2.0.12\\x86_64-w64-mingw32\\include",
-                "C:\\C\\FNA3D\\include",
-                "C:\\C\\FNA3D\\MojoShader",
-                "C:\\C\\flecs-master\\include",
-                "C:\\C\\soloud20200207\\include",
-                "C:\\C\\json-c-master",
-                "C:\\C\\lua-5.4.0\\include"
+                "C:\\C\\libs\\gcc\\64\\SDL2-2.0.12\\include",
+                "C:\\C\\libs\\gcc\\64\\FNA3D-master\\include",
+                "C:\\C\\libs\\gcc\\64\\FNA3D-master\\MojoShader",
+                "C:\\C\\libs\\gcc\\64\\flecs-master\\include",
+                "C:\\C\\libs\\gcc\\64\\soloud-custom\\include",
+                "C:\\C\\libs\\gcc\\64\\json-c-master",
+                "C:\\C\\libs\\gcc\\64\\lua-5.4.0\\include"
             ],
             "defines": [
                 "_DEBUG",

@@ -16,6 +16,19 @@
             "externalConsole": false,
             "MIMode": "gdb",
             "preLaunchTask": "Linux 64-bit Build GCC"
+        },
+        {
+            "name": "Windows 64-bit Build GCC",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/bin/win64/gcc/main.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "Windows 64-bit Build GCC"
         }
     ]
 }
