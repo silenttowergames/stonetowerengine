@@ -65,7 +65,7 @@ void ApplicationState_Loop(ApplicationState* app)
 {
     const Uint64 freq = SDL_GetPerformanceFrequency();
     
-    Uint64 accumulator = 0;
+    int64_t accumulator = 0;
     Uint64 currentTime;
     Uint64 deltaTime = 0;
     Uint64 lastTime = SDL_GetPerformanceCounter();
@@ -78,7 +78,11 @@ void ApplicationState_Loop(ApplicationState* app)
     
     Uint64 unit;
     
-    const Uint64 FPSreal = app->FPS + (app->FPS / 30.0);
+    // Below is from the Tyler Glaiel method of mixing 62fps logic with 60fps logic
+    // It caused a lot of tearing, and vsync was unusable. I must be doing something wrong
+    // So for now, this is commented out
+    //const Uint64 FPSreal = app->FPS + (app->FPS / 30.0);
+    const Uint64 FPSreal = app->FPS;
     const Uint64 FPSrealMS = freq / FPSreal;
     const Uint64 FPSMS = freq / app->FPS;
     
@@ -129,13 +133,12 @@ void ApplicationState_Loop(ApplicationState* app)
                 SDLEventsSystem(app);
                 ecs_progress(app->world, fDeltaTime);
                 
-                unit = FPSMS;
-                if(unit > accumulator)
-                {
-                    unit = accumulator;
-                }
+                accumulator -= FPSMS;
                 
-                accumulator -= unit;
+                if(accumulator < 0)
+                {
+                    accumulator = 0;
+                }
             }
             
             lastTime = currentTime;

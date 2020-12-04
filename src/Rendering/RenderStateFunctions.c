@@ -138,7 +138,6 @@ void RenderState_Resize(ApplicationState* app, int sizeX, int sizeY)
 	presentationParameters.backBufferHeight = app->renderState.size.Y;
 	presentationParameters.deviceWindowHandle = app->renderState.window;
 	presentationParameters.backBufferFormat = FNA3D_SURFACEFORMAT_COLOR;
-	//presentationParameters.presentationInterval = FNA3D_PRESENTINTERVAL_DEFAULT;
 	presentationParameters.presentationInterval = FNA3D_PRESENTINTERVAL_IMMEDIATE;
 	app->renderState.presentationParameters = presentationParameters;
 	
