@@ -28,12 +28,12 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/include",
-                "/C/gcc/64/flecs-master/include",
-                "/C/gcc/64/FNA3D-master/include",
-                "/C/gcc/64/FNA3D-master/MojoShader",
-                "/C/gcc/64/soloud-custom/include",
-                "/C/gcc/64/json-c-master",
-                "/C/gcc/64/lua-5.4.0/include"
+                "/C/libs/gcc/64/flecs-master/include",
+                "/C/libs/gcc/64/FNA3D-master/include",
+                "/C/libs/gcc/64/FNA3D-master/MojoShader",
+                "/C/libs/gcc/64/soloud-custom/include",
+                "/C/libs/gcc/64/json-c-master",
+                "/C/libs/gcc/64/lua-5.4.0/include"
             ],
             "cStandard": "c99"
         }
