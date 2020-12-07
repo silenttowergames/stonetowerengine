@@ -8,27 +8,22 @@ void initWorld(ecs_world_t* world)
     ECS_COMPONENT(world, Animate);
     ECS_COMPONENT(world, Body);
     ECS_COMPONENT(world, CameraFollow);
+    ECS_COMPONENT(world, Menu);
     ECS_COMPONENT(world, Renderable);
     ECS_COMPONENT(world, TileLayerCollides);
     
-    //ECS_SYSTEM(world, SDLEventsSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, EngineUpdateSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, AINPCSystem, EcsOnUpdate, AINPC, Body);
     ECS_SYSTEM(world, MoveSystem, EcsOnUpdate, AIPlayer, Body);
     
     BasicAABBSystem_Init();
     
+    ECS_SYSTEM(world, MenuSystem, EcsOnUpdate, Menu);
     ECS_SYSTEM(world, CameraFollowSystem, EcsOnUpdate, Body, CameraFollow);
     ECS_SYSTEM(world, DepthSystem, EcsOnUpdate, Body, Renderable);
     ECS_SYSTEM(world, AnimateSystem, EcsOnUpdate, Animate, Renderable);
-    ECS_SYSTEM(world, DrawSystem, EcsOnUpdate, Body, Renderable);
-    ECS_SYSTEM(world, FinalizeScreenSystem, EcsOnUpdate, 0);
     
-    const EcsQuery* sort = ecs_get(world, DrawSystem, EcsQuery);
-	ecs_query_order_by(world, sort->query, ecs_entity(Renderable), SortByLayerThenY);
-    
-    aabbQuery = ecs_query_new(world, "BasicAABB, Body");
-    aabbMapQuery = ecs_query_new(world, "TileLayerCollides, Renderable, Body");
+    DrawSystem_Init();
 }
 
 void initializeScene(ecs_world_t* world)
@@ -75,12 +70,7 @@ void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
 
 int main(int arcg, char* argv[])
 {
-    Config config;
-    config.windowedSize.X = 1280;
-    config.windowedSize.Y = 720;
-    config.fullscreen = false;
-    config.language = "en";
-    config.vsync = true;
+    configDefault(config, 1280, 720, "en");
     
     init(
         "Engine Test",
@@ -131,7 +121,7 @@ int main(int arcg, char* argv[])
     
     sounds(
         4,
-        Sound_create_load("calm-example.ogg", Play_Default),
+        Sound_create_load("calm-example.ogg", Play_StopAll),
         Sound_create_load("hit.ogg", Play_Default),
         Sound_create_speech("speech0", "Uncompromised", Play_Default),
         Sound_create_sfxr("sfxr", Play_Default)

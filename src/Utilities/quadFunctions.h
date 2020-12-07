@@ -1,6 +1,5 @@
 #pragma once
 
-#include <flecs.h>
 #include "quad.h"
 #include "../Assets/Texture.h"
 

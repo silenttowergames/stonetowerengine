@@ -222,6 +222,15 @@ void RenderState_VSync(RenderState* renderState, bool enabled)
 		return;
 	}
 	
+	if(enabled)
+	{
+		printf("VSync On\n");
+	}
+	else
+	{
+		printf("VSync Off\n");
+	}
+	
 	renderState->presentationParameters.presentationInterval = (enabled ? FNA3D_PRESENTINTERVAL_DEFAULT : FNA3D_PRESENTINTERVAL_IMMEDIATE);
 	
 	FNA3D_ResetBackbuffer(renderState->device, &renderState->presentationParameters);

@@ -11,7 +11,9 @@
 #define BasicAABBSystem_Init()\
     ECS_COMPONENT(world, BasicAABB);\
     ecs_set_component_actions(world, BasicAABB, { .dtor = ecs_dtor(BasicAABB), });\
-    ECS_SYSTEM(world, BasicAABBSystem, EcsOnUpdate, 0);
+    ECS_SYSTEM(world, BasicAABBSystem, EcsOnUpdate, 0);\
+    aabbQuery = ecs_query_new(world, "BasicAABB, Body");\
+    aabbMapQuery = ecs_query_new(world, "TileLayerCollides, Renderable, Body");
 
 ecs_query_t* aabbQuery = NULL;
 ecs_query_t* aabbMapQuery = NULL;

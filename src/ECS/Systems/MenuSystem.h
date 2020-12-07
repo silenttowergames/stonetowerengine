@@ -2,4 +2,4 @@
 
 #include <flecs.h>
 
-void AINPCSystem(ecs_iter_t* it);
+void MenuSystem(ecs_iter_t* it);

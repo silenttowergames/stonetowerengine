@@ -11,3 +11,5 @@ typedef struct Config
     const char* language;
     bool vsync;
 } Config;
+
+#define configDefault(c, w, h, lang) Config c; memset(&c, 0, sizeof(Config)); c.windowedSize.X = w; c.windowedSize.Y = h; c.fullscreen = false; c.language = lang; c.vsync = false;

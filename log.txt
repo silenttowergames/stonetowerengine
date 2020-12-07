@@ -1,14 +1,1 @@
-INFO: Using EXT_swap_control_tear VSync!
-INFO: Using EXT_swap_control_tear VSync!
-Assertion failed!
-
-Program: C:\C\libs\stonetowerengine\bin\win64\gcc\main.exe
-File: src/Application/ApplicationStateFunctions.c, Line 197
-
-Expression: fac != NULL
-Assertion failed!
-
-Program: C:\C\libs\stonetowerengine\bin\win64\gcc\main.exe
-File: src/Application/ApplicationStateFunctions.c, Line 202
-
-Expression: fac != NULL
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.

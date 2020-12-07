@@ -131,7 +131,11 @@ void ApplicationState_Loop(ApplicationState* app)
                 }
                 
                 SDLEventsSystem(app);
-                ecs_progress(app->world, fDeltaTime);
+                
+                if(app->focused)
+                {
+                    ecs_progress(app->world, fDeltaTime);
+                }
                 
                 accumulator -= FPSMS;
                 

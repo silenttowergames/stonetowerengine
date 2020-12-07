@@ -11,3 +11,5 @@ Sound Sound_create_sfxr(const char* key, Play play);
 bool Sound_play(Sound* sound, Soloud* soloud);
 
 void Sound_Free(Sound* sound);
+
+#define soundPlay(key) Sound_play(*mapGet(app->assetManager.mapSound, key, Sound*), app->assetManager.audioManager.soloud)

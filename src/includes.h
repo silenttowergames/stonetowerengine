@@ -73,6 +73,7 @@
 #include "ECS/Systems/DrawSystem.c"
 #include "ECS/Systems/EngineUpdateSystem.c"
 #include "ECS/Systems/FinalizeScreenSystem.c"
+#include "ECS/Systems/MenuSystem.c"
 #include "ECS/Systems/MoveSystem.c"
 #include "ECS/Systems/SDLEventsSystem.c"
 // .
