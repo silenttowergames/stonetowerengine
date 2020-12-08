@@ -1,18 +1,7 @@
 #include "StoneTower.h"
 #include "includes_libs.h"
 #include "includes_vendor.h"
-
-ECS_COMPONENT_DECLARE(AINPC);
-ECS_COMPONENT_DECLARE(AIPlayer);
-ECS_COMPONENT_DECLARE(Animate);
-ECS_COMPONENT_DECLARE(BasicAABB);
-ECS_COMPONENT_DECLARE(Body);
-ECS_COMPONENT_DECLARE(CameraFollow);
-ECS_COMPONENT_DECLARE(Menu);
-ECS_COMPONENT_DECLARE(MenuItem);
-ECS_COMPONENT_DECLARE(Renderable);
-ECS_COMPONENT_DECLARE(TileLayerCollides);
-
+#include "ecs_declarations.h"
 #include "includes.h"
 
 void initWorld(ecs_world_t* world)
@@ -128,8 +117,9 @@ int main(int arcg, char* argv[])
     );
     
     scripts(
-        1,
-        LuaScript_Load("test")
+        2,
+        LuaScript_Load("test"),
+        LuaScript_Load("test2")
     );
     
     fonts(

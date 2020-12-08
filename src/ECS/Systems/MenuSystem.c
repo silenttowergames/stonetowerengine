@@ -1,14 +1,13 @@
 #include "MenuSystem.h"
 #include "../Components/Menu.h"
 #include "../Components/MenuItem.h"
+#include "../Components/Renderable.h"
 #include "../../Application/ApplicationStateFunctions.h"
 #include "../../Input/KeyboardStateFunctions.h"
 
 void MenuSystem(ecs_iter_t* it)
 {
     fctx();
-    
-    //ecs_entity_t ecs_typeid(MenuItem) = ecs_column_entity(it, 2);
     
     Menu* menu = ecs_column(it, Menu, 1);
     MenuItem* menuItem;
@@ -18,11 +17,6 @@ void MenuSystem(ecs_iter_t* it)
     for(int i = 0; i < it->count; i++)
     {
         renderable = ecs_get_mut(it->world, it->entities[i], Renderable, &out);
-        
-        if(key(Pressed, y))
-        {
-            menu[i].active = true;
-        }
         
         renderable->active = menu[i].active;
         

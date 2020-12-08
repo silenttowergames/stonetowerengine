@@ -25,20 +25,6 @@ LuaScript LuaScript_Load(const char* key)
 	return script;
 }
 
-bool LuaScript_Execute(ApplicationState* app, LuaScript* script)
-{
-	int r = luaL_dostring(app->assetManager.lua, script->data);
-	
-    if(r != LUA_OK)
-    {
-		Logger_Log(&app->logger, "ERROR_LUA", lua_tostring(app->assetManager.lua, -1));
-		
-		return false;
-    }
-	
-	return true;
-}
-
 void LuaScript_Free(LuaScript* script)
 {
 	free(script->filename); // LuaScript.filename free
