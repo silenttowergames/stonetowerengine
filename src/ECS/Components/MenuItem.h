@@ -6,18 +6,20 @@
 typedef struct MenuItem
 {
     ecs_entity_t menu;
-    void (*select)(ApplicationState*, ecs_entity_t);
-    void (*hovering)(ApplicationState*, ecs_entity_t);
+    void (*select)(ApplicationState*, ecs_entity_t, Menu*);
+    void (*hovering)(ApplicationState*, ecs_entity_t, Menu*);
 } MenuItem;
 
-void MenuItem_Select_Test(ApplicationState* app, ecs_entity_t entityID)
+void MenuItem_Select_Test(ApplicationState* app, ecs_entity_t entityID, Menu* menu)
 {
-    ECS_COMPONENT(app->world, Renderable);
-    
-    bool out;
-    Renderable* renderable = ecs_get_mut(app->world, entityID, Renderable, &out);
+    const Renderable* renderable = ecs_get(app->world, entityID, Renderable);
     
     printf("Menu item selected: %s\n", (char*)renderable->data);
+}
+
+void MenuItem_Select_Disable(ApplicationState* app, ecs_entity_t entityID, Menu* menu)
+{
+    menu->active = false;
 }
 
 #define menuItemEasy(menuEntityID, itemVarName, itemCountVarName, renderableValue, itemSelectEvent, itemHoveringEvent) \

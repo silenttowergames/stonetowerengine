@@ -312,10 +312,6 @@ void TiledJSON_Map(ecs_world_t* world, TiledJSONLayer* layer, Texture* texture, 
     
     ecs_entity_t e = ecs_new(world, 0);
     
-    ECS_COMPONENT(world, Body);
-    ECS_COMPONENT(world, Renderable);
-    ECS_COMPONENT(world, TileLayerCollides);
-    
     ecs_set(world, e, Body, {
         { 0, 0, },
     });
@@ -333,6 +329,10 @@ void TiledJSON_Map(ecs_world_t* world, TiledJSONLayer* layer, Texture* texture, 
         0.0f,
         0,
         0xFFFFFFFF,
+        NULL,
+        0,
+        0,
+        true,
     });
     
     TiledJSONProperty* prop = getProperty(layer, "collisions");

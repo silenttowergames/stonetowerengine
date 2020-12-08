@@ -26,6 +26,7 @@ typedef struct Renderable
 	float2d (*renderOffset)(int, int);
 	int duration;
 	int renderTargetID;
+	bool active;
 } Renderable;
 
 #define RenderableSprite(tex, frame, layer, depth, parallax, color, renTarID) \
@@ -46,6 +47,7 @@ typedef struct Renderable
 	NULL,\
 	0,\
 	renTarID,\
+	true,\
 }
 
 #define RenderableText(fontName, size, layer, depth, parallax, color, renTarID, string) \
@@ -66,4 +68,5 @@ typedef struct Renderable
 	NULL,\
 	0,\
 	renTarID,\
+	true,\
 }

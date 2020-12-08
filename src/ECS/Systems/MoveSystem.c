@@ -17,8 +17,6 @@ void MoveSystem(ecs_iter_t* it)
 {
 	fctx();
 	
-	ECS_COMPONENT(it->world, BasicAABB);
-	
 	AIPlayer* a = ecs_column(it, AIPlayer, 1);
 	Body* b = ecs_column(it, Body, 2);
 	

@@ -10,9 +10,6 @@ void TextBoxFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONOb
 {
     ctx();
     
-    ECS_COMPONENT(world, Body);
-    ECS_COMPONENT(world, Renderable);
-    
     ecs_entity_t e = ecs_new(world, 0);
     
     ecs_set(world, e, Body, {

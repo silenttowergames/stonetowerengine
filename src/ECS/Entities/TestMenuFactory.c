@@ -10,11 +10,6 @@ void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONO
 {
     ctx();
     
-    ECS_COMPONENT(world, Body);
-    ECS_COMPONENT(world, Menu);
-    ECS_COMPONENT(world, MenuItem);
-    ECS_COMPONENT(world, Renderable);
-    
     ecs_entity_t e = ecs_new(world, 0);
     
     ecs_set(world, e, Body, {
@@ -24,7 +19,7 @@ void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONO
         RenderableText(
             "Bloodyslime/Bloodyslime.ttf",
             32,
-            5,
+            layer,
             1,
             0,
             colorU(255, 0, 0, 255),
@@ -41,7 +36,7 @@ void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONO
         RenderableText(
             "PressStart2P" "/" "PressStart2P.ttf",
             8,
-            5,
+            layer,
             1,
             0,
             colorU(255, 255, 255, 255),
@@ -59,7 +54,7 @@ void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONO
         RenderableText(
             "PressStart2P" "/" "PressStart2P.ttf",
             8,
-            5,
+            layer,
             1,
             0,
             colorU(255, 255, 255, 255),
@@ -77,14 +72,14 @@ void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONO
         RenderableText(
             "PressStart2P" "/" "PressStart2P.ttf",
             8,
-            5,
+            layer,
             1,
             0,
             colorU(255, 255, 255, 255),
             0,
-            "Item 2"
+            "Disable"
         ),
-        MenuItem_Select_Test,
+        MenuItem_Select_Disable,
         NULL
     );
     
@@ -95,7 +90,7 @@ void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONO
         RenderableText(
             "PressStart2P" "/" "PressStart2P.ttf",
             8,
-            5,
+            layer,
             1,
             0,
             colorU(255, 255, 255, 255),
@@ -113,7 +108,7 @@ void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONO
         RenderableText(
             "PressStart2P" "/" "PressStart2P.ttf",
             8,
-            5,
+            layer,
             1,
             0,
             colorU(255, 255, 255, 255),

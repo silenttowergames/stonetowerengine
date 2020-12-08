@@ -30,6 +30,11 @@ void DrawSystem(ecs_iter_t* it)
 			RenderTarget_Start(app, renderable[i].renderTargetID);
 		}
 		
+		if(!renderable[i].active)
+		{
+			continue;
+		}
+		
 		renderable[i].render(app, &app->renderState.spriteBatch, &app->renderState.targets[app->renderState.currentRenderTargetID].camera, &renderable[i], body[i].position);
 	}
 }

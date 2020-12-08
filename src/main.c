@@ -1,16 +1,32 @@
 #include "StoneTower.h"
+#include "includes_libs.h"
+#include "includes_vendor.h"
+
+ECS_COMPONENT_DECLARE(AINPC);
+ECS_COMPONENT_DECLARE(AIPlayer);
+ECS_COMPONENT_DECLARE(Animate);
+ECS_COMPONENT_DECLARE(BasicAABB);
+ECS_COMPONENT_DECLARE(Body);
+ECS_COMPONENT_DECLARE(CameraFollow);
+ECS_COMPONENT_DECLARE(Menu);
+ECS_COMPONENT_DECLARE(MenuItem);
+ECS_COMPONENT_DECLARE(Renderable);
+ECS_COMPONENT_DECLARE(TileLayerCollides);
+
 #include "includes.h"
 
 void initWorld(ecs_world_t* world)
 {
-    ECS_COMPONENT(world, AINPC);
-    ECS_COMPONENT(world, AIPlayer);
-    ECS_COMPONENT(world, Animate);
-    ECS_COMPONENT(world, Body);
-    ECS_COMPONENT(world, CameraFollow);
-    ECS_COMPONENT(world, Menu);
-    ECS_COMPONENT(world, Renderable);
-    ECS_COMPONENT(world, TileLayerCollides);
+    ECS_COMPONENT_DEFINE(world, AINPC);
+    ECS_COMPONENT_DEFINE(world, AIPlayer);
+    ECS_COMPONENT_DEFINE(world, Animate);
+    ECS_COMPONENT_DEFINE(world, BasicAABB);
+    ECS_COMPONENT_DEFINE(world, Body);
+    ECS_COMPONENT_DEFINE(world, CameraFollow);
+    ECS_COMPONENT_DEFINE(world, Menu);
+    ECS_COMPONENT_DEFINE(world, MenuItem);
+    ECS_COMPONENT_DEFINE(world, Renderable);
+    ECS_COMPONENT_DEFINE(world, TileLayerCollides);
     
     ECS_SYSTEM(world, EngineUpdateSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, AINPCSystem, EcsOnUpdate, AINPC, Body);
@@ -18,7 +34,9 @@ void initWorld(ecs_world_t* world)
     
     BasicAABBSystem_Init();
     
-    ECS_SYSTEM(world, MenuSystem, EcsOnUpdate, Menu);
+    ECS_SYSTEM(world, MenuSystem, EcsOnUpdate, Menu, :MenuItem);
+    ecs_set_component_actions(world, Menu, { .dtor = ecs_dtor(Menu), });
+    
     ECS_SYSTEM(world, CameraFollowSystem, EcsOnUpdate, Body, CameraFollow);
     ECS_SYSTEM(world, DepthSystem, EcsOnUpdate, Body, Renderable);
     ECS_SYSTEM(world, AnimateSystem, EcsOnUpdate, Animate, Renderable);
@@ -52,7 +70,7 @@ void init2Scene(ecs_world_t* world)
         }
     }
     
-    factoryRun(app, "TestMenu", -120, -40, 5, NULL);
+    factoryRun(app, "TestMenu", -120, -40, 1, NULL);
 }
 
 void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
@@ -85,10 +103,11 @@ int main(int arcg, char* argv[])
     );
     
     scenes(
-        3,
+        4,
         scene(initialize),
         sceneTiled("map1", NULL),
-        sceneTiled("map0", init2Scene)
+        sceneTiled("map0", init2Scene),
+        scene(init2)
     );
     
     textures(

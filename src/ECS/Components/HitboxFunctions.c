@@ -3,7 +3,7 @@
 #include "HitboxFunctions.h"
 
 ECS_DTOR(BasicAABB, ptr, {
-    free(ptr->hitboxes); // Hitbox* free1
+    free(ptr->hitboxes); // Hitbox* free
 })
 
 Hitbox Hitbox_CreateBasic(float2d size)

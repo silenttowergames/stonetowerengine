@@ -3,9 +3,6 @@
 // Stone Tower Engine
 // Silent Tower Games LLC
 
-#include "includes_libs.h"
-#include "includes_vendor.h"
-
 // ===
 
 // Engine Code

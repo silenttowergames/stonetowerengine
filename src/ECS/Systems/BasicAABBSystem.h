@@ -9,7 +9,6 @@
 #include "../../Utilities/walls.h"
 
 #define BasicAABBSystem_Init()\
-    ECS_COMPONENT(world, BasicAABB);\
     ecs_set_component_actions(world, BasicAABB, { .dtor = ecs_dtor(BasicAABB), });\
     ECS_SYSTEM(world, BasicAABBSystem, EcsOnUpdate, 0);\
     aabbQuery = ecs_query_new(world, "BasicAABB, Body");\

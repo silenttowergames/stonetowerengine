@@ -12,13 +12,7 @@ void NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject
 {
 	ctx();
 	
-    ECS_COMPONENT(world, AINPC);
-    ECS_COMPONENT(world, Animate);
-    ECS_COMPONENT(world, BasicAABB);
-    ECS_COMPONENT(world, Body);
-    ECS_COMPONENT(world, Renderable);
-	
-	ecs_entity_t f = ecs_new(world, 0);
+    ecs_entity_t f = ecs_new(world, 0);
     
     ecs_set(world, f, AINPC, {
         0.25f,

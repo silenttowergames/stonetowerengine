@@ -126,8 +126,6 @@ void ApplicationState_Loop(ApplicationState* app)
                         fFPSAverage += fMeasurements[i];
                     }
                     fFPSAverage /= 60;
-                    
-                    printf("FPS: %1.5f\n", fFPSAverage);
                 }
                 
                 SDLEventsSystem(app);
@@ -147,6 +145,8 @@ void ApplicationState_Loop(ApplicationState* app)
             
             lastTime = currentTime;
         }
+        
+        app->world = Flecs_Free(app->world);
     }
 }
 
