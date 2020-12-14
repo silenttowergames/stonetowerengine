@@ -17,6 +17,36 @@ void MoveSystem(ecs_iter_t* it)
 {
 	fctx();
 	
+	if(keys(Pressed, t))
+	{
+		ecs_set_time_scale(it->world, 0);
+	}
+	
+	if(keys(Pressed, y))
+	{
+		ecs_set_time_scale(it->world, 1);
+	}
+	
+	if(keys(Pressed, u))
+	{
+		ecs_set_time_scale(it->world, 2);
+	}
+	
+	if(keys(Pressed, i))
+	{
+		ecs_set_time_scale(it->world, 0.5f);
+	}
+	
+	if(keys(Pressed, o))
+	{
+		ecs_set_time_scale(it->world, 5);
+	}
+	
+	if(keys(Pressed, p))
+	{
+		ecs_set_time_scale(it->world, 0.125f);
+	}
+	
 	AIPlayer* a = ecs_column(it, AIPlayer, 1);
 	Body* b = ecs_column(it, Body, 2);
 	
@@ -24,24 +54,24 @@ void MoveSystem(ecs_iter_t* it)
 	{
 		memset(&b[i].velocity, 0, sizeof(float2d));
 		
-		if(key(Down, RIGHT) || button(Down, 0, DPAD_RIGHT) || button(Down, 1, STICK_RIGHT_RIGHT) || axis(0, STICK_LEFT_DOWN) >= 0.9f)
+		if(keys(Down, RIGHT) || button(Down, 0, DPAD_RIGHT) || button(Down, 1, STICK_RIGHT_RIGHT) || axis(0, STICK_LEFT_DOWN) >= 0.9f)
 		{
-			b[i].velocity.X += a[i].speed;
+			b[i].velocity.X += a[i].speed * fdelta();
 		}
 		
-		if(key(Down, LEFT) || button(Down, 0, DPAD_LEFT) || button(Down, 0, STICK_RIGHT_LEFT) || button(Released, 0, STICK_LEFT_RIGHT))
+		if(keys(Down, LEFT) || button(Down, 0, DPAD_LEFT) || button(Down, 0, STICK_RIGHT_LEFT) || button(Released, 0, STICK_LEFT_RIGHT))
 		{
-			b[i].velocity.X -= a[i].speed;
+			b[i].velocity.X -= a[i].speed * fdelta();
 		}
 		
-		if(key(Down, DOWN) || button(Down, 0, DPAD_DOWN) || button(Down, 0, STICK_RIGHT_DOWN))
+		if(keys(Down, DOWN) || button(Down, 0, DPAD_DOWN) || button(Down, 0, STICK_RIGHT_DOWN))
 		{
-			b[i].velocity.Y += a[i].speed;
+			b[i].velocity.Y += a[i].speed * fdelta();
 		}
 		
-		if(key(Down, UP) || button(Down, 0, DPAD_UP) || button(Down, 0, STICK_RIGHT_UP))
+		if(keys(Down, UP) || button(Down, 0, DPAD_UP) || button(Down, 0, STICK_RIGHT_UP))
 		{
-			b[i].velocity.Y -= a[i].speed;
+			b[i].velocity.Y -= a[i].speed * fdelta();
 		}
 		
 		if(button(Down, 0, X))
@@ -66,9 +96,9 @@ void MoveSystem(ecs_iter_t* it)
 	}
 	
 	if(
-		(key(Down, LALT) && key(Pressed, RETURN))
+		(keys(Down, LALT) && keys(Pressed, RETURN))
 		||
-		(key(Down, LCTRL) && key(Pressed, f))
+		(keys(Down, LCTRL) && keys(Pressed, f))
 	)
 	{
 		if(app->config.fullscreen)
@@ -81,33 +111,33 @@ void MoveSystem(ecs_iter_t* it)
 		}
 	}
 	
-	if(key(Pressed, x))
+	if(keys(Pressed, x))
 	{
 		soundPlay("calm-example.ogg");
 	}
 	
-	if(key(Pressed, z))
+	if(keys(Pressed, z))
 	{
 		soundPlay("speech0");
 	}
 	
-	if(key(Pressed, c))
+	if(keys(Pressed, c))
 	{
 		soundPlay("hit.ogg");
 	}
 	
-	if(key(Pressed, v))
+	if(keys(Pressed, v))
 	{
 		app->flecsScene = "map1";
 	}
 	
-	if(key(Pressed, g))
+	if(keys(Pressed, g))
 	{
-		RenderState_VSync(&app->renderState, true);
+		RenderState_VSync(app, true);
 	}
 	
-	if(key(Pressed, h))
+	if(keys(Pressed, h))
 	{
-		RenderState_VSync(&app->renderState, false);
+		RenderState_VSync(app, false);
 	}
 }

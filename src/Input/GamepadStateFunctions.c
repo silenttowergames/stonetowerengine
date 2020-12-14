@@ -80,7 +80,6 @@ GamepadState GamepadState_Create(int index)
 	return gamepadState;
 }
 
-// TODO: GamepadState_Close
 void GamepadState_Close(GamepadState* gamepadState)
 {
     gamepadState->instance = -1;

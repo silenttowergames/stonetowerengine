@@ -34,9 +34,7 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObj
         1.0f,
     });
     ecs_set(world, e, BasicAABB, BasicAABB_Create(1, Hitbox_CreateSquare(16)));
-    ecs_set(world, e, Body, {
-        { X, Y, },
-    });
+    ecs_set(world, e, Body, bodyEasy(X, Y));
     ecs_set(world, e, CameraFollow, {
         { 0, 0, },
     });

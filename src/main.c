@@ -14,19 +14,20 @@ void initWorld(ecs_world_t* world)
     ECS_COMPONENT_DEFINE(world, CameraFollow);
     ECS_COMPONENT_DEFINE(world, Menu);
     ECS_COMPONENT_DEFINE(world, MenuItem);
+    ECS_COMPONENT_DEFINE(world, PauseMenu);
     ECS_COMPONENT_DEFINE(world, Renderable);
     ECS_COMPONENT_DEFINE(world, TileLayerCollides);
     
     ECS_SYSTEM(world, EngineUpdateSystem, EcsOnUpdate, 0);
+    ECS_SYSTEM(world, PauseMenuSystem, EcsOnUpdate, Menu, PauseMenu);
     ECS_SYSTEM(world, AINPCSystem, EcsOnUpdate, AINPC, Body);
     ECS_SYSTEM(world, MoveSystem, EcsOnUpdate, AIPlayer, Body);
     
     BasicAABBSystem_Init();
     
-    ECS_SYSTEM(world, MenuSystem, EcsOnUpdate, Menu, :MenuItem);
-    ecs_set_component_actions(world, Menu, { .dtor = ecs_dtor(Menu), });
+    MenuSystem_Init();
     
-    ECS_SYSTEM(world, CameraFollowSystem, EcsOnUpdate, Body, CameraFollow);
+    ECS_SYSTEM(world, CameraFollowSystem, EcsOnUpdate, Body, CameraFollow, Renderable);
     ECS_SYSTEM(world, DepthSystem, EcsOnUpdate, Body, Renderable);
     ECS_SYSTEM(world, AnimateSystem, EcsOnUpdate, Animate, Renderable);
     
@@ -36,8 +37,6 @@ void initWorld(ecs_world_t* world)
 void initializeScene(ecs_world_t* world)
 {
     ctx();
-    
-    printf("called initializeScene()\n");
     
     factoryRun(app, "Player", 0, 0, 0, NULL);
     factoryRun(app, "NPC", 32, 0, 0, NULL);
@@ -51,22 +50,22 @@ void init2Scene(ecs_world_t* world)
     
     factoryRun(app, "TextBox", -20, -20, 2, NULL);
     
-    for(int x = 0; x < 16; x++)
+    for(int x = 0; x < 8; x++)
     {
-        for(int y = 0; y < 16; y++)
+        for(int y = 0; y < 8; y++)
         {
             factoryRun(app, "NPC", 80 + (x * 12), 80 + (y * 12), 2, NULL);
         }
     }
     
-    factoryRun(app, "TestMenu", -120, -40, 1, NULL);
+    factoryRun(app, "TestMenu", -120, -40, 5, NULL);
 }
 
 void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
 {
     sctx();
     
-    if(key(Pressed, s))
+    if(keys(Pressed, s))
     {
         shader->disabled = !shader->disabled;
     }
@@ -77,6 +76,21 @@ void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
 
 int main(int arcg, char* argv[])
 {
+    ini_t* testINI = ini_load("test.ini");
+    
+    char* name = (char*)ini_get(testINI, "strings", "Name");
+    name[1] = 'l';
+    name = (char*)ini_get(testINI, "strings", "Name");
+    printf("%s\n", name);
+    
+    int nOne;
+    ini_sget(testINI, "numbers", "Three", "%d", &nOne);
+    printf("%d\n", nOne);
+    
+    ini_free(testINI);
+    
+    printf("%s\n", name);
+    
     configDefault(config, 1280, 720, "en");
     
     init(
@@ -90,6 +104,61 @@ int main(int arcg, char* argv[])
         "map0",
         RSZ_Floor
     );
+    
+    char* gameDataFileKey = "save.ini";
+    char* gameDataFilename = malloc(sizeof(char) * (strlen(app.savePath) + strlen(gameDataFileKey) + 1));
+    sprintf(gameDataFilename, "%s%s", app.savePath, gameDataFileKey);
+    GameData gameData = GameData_Create(gameDataFilename);
+    gameData.data = malloc(sizeof(GameDataAttribute) * 5);
+    gameData.map = ecs_map_new(GameDataAttribute*, 5);
+    
+    GameDataAttribute* attr;
+    
+    gameData.data[0] = gdAttr("hello", 5, Int);
+    attr = &gameData.data[0];
+    mapSet(gameData.map, attr->key, &attr);
+    
+    gameData.data[1] = gdAttr("hiThere", 7, Int);
+    attr = &gameData.data[1];
+    mapSet(gameData.map, attr->key, &attr);
+    
+    gameData.data[2] = gdAttr("alrighty", "Hello, World!", String);
+    attr = &gameData.data[0];
+    mapSet(gameData.map, attr->key, &attr);
+    
+    printf("`%s`: %d\n", (*mapGet(gameData.map, "hello", GameDataAttribute*))->key, (*mapGet(gameData.map, "hello", GameDataAttribute*))->valueInt);
+    
+    FILE* gdINI = fopen("test2.ini", "w");
+    char* format;
+    char* formatFinal;
+    for(int i = 0; i < 3; i++)
+    {
+        attr = &gameData.data[i];
+        
+        switch(attr->type)
+        {
+            case GAMEDATA_Int:
+            {
+                fprintf(gdINI, "%s = %d\n", attr->key, attr->valueInt);
+            } break;
+            
+            case GAMEDATA_Bool:
+            {
+                fprintf(gdINI, "%s = %d\n", attr->key, attr->valueBool);
+            } break;
+            
+            case GAMEDATA_Float:
+            {
+                fprintf(gdINI, "%s = %.*f\n", DBL_DIG - 1, attr->key, attr->valueFloat);
+            } break;
+            
+            case GAMEDATA_String:
+            {
+                fprintf(gdINI, "%s = \"%s\"\n", attr->key, attr->valueString);
+            } break;
+        }
+    }
+    fclose(gdINI);
     
     scenes(
         4,

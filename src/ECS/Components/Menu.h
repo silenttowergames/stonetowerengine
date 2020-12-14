@@ -18,12 +18,12 @@ typedef struct Menu
 
 int Menu_MenuUpdate_Basic(ApplicationState* app, int itemCount, int itemSelected)
 {
-    if(key(Held, DOWN))
+    if(keys(Held, DOWN))
     {
         itemSelected++;
     }
     
-    if(key(Held, UP))
+    if(keys(Held, UP))
     {
         itemSelected--;
     }
@@ -65,7 +65,7 @@ ECS_DTOR(Menu, ptr, {
     free(ptr->items); // MenuItem* free
 })
 
-#define menuEasy(itemVarName, itemCountVarName, menuEntityID, count, eventItem, eventMenu) \
+#define menuEasy(itemVarName, itemCountVarName, menuEntityID, count, eventItem, eventMenu, active) \
     int itemCountVarName = 0; \
     ecs_entity_t* itemVarName = malloc(sizeof(ecs_entity_t*) * count); \
-    ecs_set(world, menuEntityID, Menu, { itemVarName, count, 0, eventItem, eventMenu, true, })
+    ecs_set(world, menuEntityID, Menu, { itemVarName, count, 0, eventItem, eventMenu, active, })

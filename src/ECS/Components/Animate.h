@@ -7,6 +7,6 @@ typedef struct Animate
     char* nextAnimationKey;
     Animation* animation;
     int frame;
-    int progress;
+    float progress;
     float speed;
 } Animate;

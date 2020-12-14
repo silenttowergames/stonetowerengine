@@ -19,4 +19,4 @@ bool KeyboardState_Held(KeyboardState* keyboardState, SDL_Keycode key);
 
 void KeyboardState_Type(KeyboardState* keyboardState, char character);
 
-#define key(state, key) KeyboardState_##state(&app->inputManager.keyboardState, SDLK_##key)
+#define keys(state, key) KeyboardState_##state(&app->inputManager.keyboardState, SDLK_##key)

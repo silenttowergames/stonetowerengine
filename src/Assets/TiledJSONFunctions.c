@@ -312,9 +312,7 @@ void TiledJSON_Map(ecs_world_t* world, TiledJSONLayer* layer, Texture* texture, 
     
     ecs_entity_t e = ecs_new(world, 0);
     
-    ecs_set(world, e, Body, {
-        { 0, 0, },
-    });
+    ecs_set(world, e, Body, bodyEasy(0, 0));
     ecs_set(world, e, Renderable, {
         texture,
         { 0, 0, },

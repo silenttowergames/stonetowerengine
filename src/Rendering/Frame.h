@@ -5,5 +5,5 @@
 typedef struct Frame
 {
 	int2d position;
-	int duration;
+	float duration;
 } Frame;

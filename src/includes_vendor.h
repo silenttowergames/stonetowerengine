@@ -11,3 +11,5 @@
 #include "vendor/fontstash/fontstash.h"
 // lookup3 for hashing strings
 #include "vendor/lookup3.c"
+// Ini
+#include "vendor/ini/src/ini.c"

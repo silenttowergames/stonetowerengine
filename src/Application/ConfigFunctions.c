@@ -4,36 +4,45 @@
 
 Config Config_Load(ApplicationState* app)
 {
-    Config config;
+    Config config = app->config;
     
-    FILE* r = fopen(app->savePathConfig, "rb");
+    ini_t* r = ini_load(app->savePathConfig);
     
     if(r == NULL)
     {
-        return app->config;
+        return config;
     }
     
-    fseek(r, 0, SEEK_END);
-    uint32_t rLength = ftell(r);
-    fseek(r, 0, SEEK_SET);
+    // TODO: config.ini add language
+    // The issue is, when doing `ini_free`, it will free the language string
+    // This should be a painfully simple fix lol
+    ini_sget(r, "Config", "Width", "%d", &config.windowedSize.X);
+    ini_sget(r, "Config", "Height", "%d", &config.windowedSize.Y);
     
-    if(rLength != sizeof(config))
+    int vsync;
+    if(ini_sget(r, "Config", "Vsync", "%d", &vsync))
     {
-        return app->config;
+        if(vsync)
+        {
+            config.vsync = true;
+        }
+        else
+        {
+            config.vsync = false;
+        }
     }
     
-    fread(&config, sizeof(config), 1, r);
-    fclose(r);
+    config.size = config.windowedSize;
+    
+    ini_free(r);
     
     return config;
 }
 
 void Config_Save(ApplicationState* app, Config config)
 {
-    config.fullscreen = false;
-    
-    FILE* w = fopen(app->savePathConfig, "wb");
-    fwrite(&config, sizeof(config), 1, w);
+    FILE* w = fopen(app->savePathConfig, "w");
+    fprintf(w, "[Config]\nWidth = %d\nHeight = %d\nVsync = %d\n", config.windowedSize.X, config.windowedSize.Y, config.vsync);
     fclose(w);
 }
 

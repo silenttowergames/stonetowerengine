@@ -25,9 +25,7 @@ void NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject
         1.0f,
     });
     ecs_set(world, f, BasicAABB, BasicAABB_Create(1, Hitbox_CreateSquare(8)));
-    ecs_set(world, f, Body, {
-        { X, Y, },
-    });
+    ecs_set(world, f, Body, bodyEasy(X, Y));
     ecs_set(world, f, Renderable, RenderableSprite(
         getTexture("8x8"),
         int2dInit(0, 0),

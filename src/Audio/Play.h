@@ -11,5 +11,3 @@ typedef enum Play
     // Stop all SFX of this type & play this one
     Play_StopAll,
 } Play;
-
-// TODO: When a SFX stops, move all array elements after it back, so the first elements in the array are the oldest

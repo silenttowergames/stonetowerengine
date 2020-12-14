@@ -135,7 +135,6 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 	
 	// Clear the screen with this color
 	
-	// TODO: Use RenderTarget color
 	FNA3D_Vec4 color;
 	
 	if(renderTarget == NULL)

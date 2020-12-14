@@ -19,10 +19,10 @@ void AINPCSystem(ecs_iter_t* it)
         
         _rand = (rand() % 3) - 1;
         
-        b[i].velocity.X += a[i].speed * _rand;
+        b[i].velocity.X += a[i].speed * _rand * fdelta();
         
         _rand = (rand() % 3) - 1;
         
-        b[i].velocity.Y = a[i].speed * _rand;
+        b[i].velocity.Y = a[i].speed * _rand * fdelta();
     }
 }

@@ -40,13 +40,15 @@ void ApplicationState_Create(
     
     app->savePath = SDL_GetPrefPath("Silent Tower Games", app->gameTitle);
     
-    char* configFilename = "config.bin";
+    char* configFilename = "config.ini";
     app->savePathConfig = malloc(sizeof(char) * (strlen(app->savePath) + strlen(configFilename) + 2));
     sprintf(app->savePathConfig, "%s/%s", app->savePath, configFilename);
     
     app->config = config;
     
     app->config = Config_Load(app);
+    
+    printf("%dx%d\n", app->config.size.X, app->config.size.Y);
     
     app->assetManager = AssetManager_Create();
 	
@@ -58,6 +60,7 @@ void ApplicationState_Create(
     
     ecs_os_set_api_defaults();
     
+    // TODO: FontStash texture size should be modifiable by the game's code
     app->fons = FontStashFNA3D_Create(app, 1024, 1024, FONS_ZERO_TOPLEFT);
 }
 
@@ -126,6 +129,8 @@ void ApplicationState_Loop(ApplicationState* app)
                         fFPSAverage += fMeasurements[i];
                     }
                     fFPSAverage /= 60;
+                    
+                    printf("FPS: %1.5f\n", fFPSAverage);
                 }
                 
                 SDLEventsSystem(app);

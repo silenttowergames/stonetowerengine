@@ -12,9 +12,7 @@ void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONO
     
     ecs_entity_t e = ecs_new(world, 0);
     
-    ecs_set(world, e, Body, {
-        { X, Y, },
-    });
+    ecs_set(world, e, Body, bodyEasy(X, Y));
     ecs_set(world, e, Renderable,
         RenderableText(
             "Bloodyslime/Bloodyslime.ttf",
@@ -27,14 +25,15 @@ void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONO
             "This Is A Menu!"
         )
     );
-    menuEasy(items, currentItem, e, 5, Menu_ItemUpdate_Basic, Menu_MenuUpdate_Basic);
+    menuEasy(items, currentItem, e, 5, Menu_ItemUpdate_Basic, Menu_MenuUpdate_Basic, false);
+    ecs_set(world, e, PauseMenu, { true, });
     
     menuItemEasy(
         e,
         items,
         currentItem,
         RenderableText(
-            "PressStart2P" "/" "PressStart2P.ttf",
+            "PressStart2P/PressStart2P.ttf",
             8,
             layer,
             1,
@@ -52,7 +51,7 @@ void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONO
         items,
         currentItem,
         RenderableText(
-            "PressStart2P" "/" "PressStart2P.ttf",
+            "PressStart2P/PressStart2P.ttf",
             8,
             layer,
             1,
@@ -70,7 +69,7 @@ void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONO
         items,
         currentItem,
         RenderableText(
-            "PressStart2P" "/" "PressStart2P.ttf",
+            "PressStart2P/PressStart2P.ttf",
             8,
             layer,
             1,
@@ -88,7 +87,7 @@ void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONO
         items,
         currentItem,
         RenderableText(
-            "PressStart2P" "/" "PressStart2P.ttf",
+            "PressStart2P/PressStart2P.ttf",
             8,
             layer,
             1,
@@ -106,7 +105,7 @@ void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONO
         items,
         currentItem,
         RenderableText(
-            "PressStart2P" "/" "PressStart2P.ttf",
+            "PressStart2P/PressStart2P.ttf",
             8,
             layer,
             1,

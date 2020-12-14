@@ -46,7 +46,7 @@ void MenuSystem(ecs_iter_t* it)
                         menuItem->hovering(app, menu[i].items[j], menu);
                     }
                     
-                    if(key(Pressed, RETURN) && menuItem->select != NULL)
+                    if(menuItem->select != NULL && keys(Pressed, RETURN))
                     {
                         menuItem->select(app, menu[i].items[j], menu);
                     }

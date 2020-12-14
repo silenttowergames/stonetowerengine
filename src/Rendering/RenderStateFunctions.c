@@ -53,6 +53,8 @@ static void RenderState_FNA3D_Init(ApplicationState* app)
 
 void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int resY, RenderState_Zoom windowZoomType)
 {
+	// FIXME: Camera offset is wrong when window size doesn't match renderTarget size
+	
 	memset(&app->renderState, 0, sizeof(RenderState));
 	
 	app->renderState.resolution.X = resX;
@@ -138,7 +140,7 @@ void RenderState_Resize(ApplicationState* app, int sizeX, int sizeY)
 	presentationParameters.backBufferHeight = app->renderState.size.Y;
 	presentationParameters.deviceWindowHandle = app->renderState.window;
 	presentationParameters.backBufferFormat = FNA3D_SURFACEFORMAT_COLOR;
-	presentationParameters.presentationInterval = FNA3D_PRESENTINTERVAL_IMMEDIATE;
+	presentationParameters.presentationInterval = app->config.vsync ? FNA3D_PRESENTINTERVAL_DEFAULT : FNA3D_PRESENTINTERVAL_IMMEDIATE;
 	app->renderState.presentationParameters = presentationParameters;
 	
 	if(app->renderState.device == NULL)
@@ -211,12 +213,12 @@ void RenderState_Resize(ApplicationState* app, int sizeX, int sizeY)
 	}
 }
 
-void RenderState_VSync(RenderState* renderState, bool enabled)
+void RenderState_VSync(ApplicationState* app, bool enabled)
 {
 	if(
-		(enabled && renderState->presentationParameters.presentationInterval == FNA3D_PRESENTINTERVAL_DEFAULT)
+		(enabled && app->renderState.presentationParameters.presentationInterval == FNA3D_PRESENTINTERVAL_DEFAULT)
 		||
-		(!enabled && renderState->presentationParameters.presentationInterval == FNA3D_PRESENTINTERVAL_IMMEDIATE)
+		(!enabled && app->renderState.presentationParameters.presentationInterval == FNA3D_PRESENTINTERVAL_IMMEDIATE)
 	)
 	{
 		return;
@@ -231,7 +233,9 @@ void RenderState_VSync(RenderState* renderState, bool enabled)
 		printf("VSync Off\n");
 	}
 	
-	renderState->presentationParameters.presentationInterval = (enabled ? FNA3D_PRESENTINTERVAL_DEFAULT : FNA3D_PRESENTINTERVAL_IMMEDIATE);
+	app->config.vsync = enabled;
 	
-	FNA3D_ResetBackbuffer(renderState->device, &renderState->presentationParameters);
+	app->renderState.presentationParameters.presentationInterval = (enabled ? FNA3D_PRESENTINTERVAL_DEFAULT : FNA3D_PRESENTINTERVAL_IMMEDIATE);
+	
+	FNA3D_ResetBackbuffer(app->renderState.device, &app->renderState.presentationParameters);
 }

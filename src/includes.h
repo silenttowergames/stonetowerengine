@@ -3,9 +3,6 @@
 // Stone Tower Engine
 // Silent Tower Games LLC
 
-// ===
-
-// Engine Code
 // Application
 #include "Application/ApplicationState.h"
 #include "Application/ApplicationStateFunctions.c"
@@ -51,6 +48,7 @@
 #include "ECS/Components/HitboxFunctions.c"
 #include "ECS/Components/Menu.h"
 #include "ECS/Components/MenuItem.h"
+#include "ECS/Components/PauseMenu.h"
 #include "ECS/Components/Renderable.h"
 #include "ECS/Components/RenderableFunctions.c"
 #include "ECS/Components/RenderOffsetFunctions.c"
@@ -72,10 +70,16 @@
 #include "ECS/Systems/FinalizeScreenSystem.c"
 #include "ECS/Systems/MenuSystem.c"
 #include "ECS/Systems/MoveSystem.c"
+#include "ECS/Systems/PauseMenuSystem.c"
 #include "ECS/Systems/SDLEventsSystem.c"
 // .
 #include "ECS/FlecsFunctions.c"
 #include "ECS/SortByLayerThenY.c"
+
+// GameData
+#include "GameData/GameData.h"
+#include "GameData/GameDataAttribute.h"
+#include "GameData/GameDataFunctions.c"
 
 // Input
 #include "Input/GamepadButtons.h"

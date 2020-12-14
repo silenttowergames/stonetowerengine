@@ -330,7 +330,6 @@ void KeyboardState_EndUpdate(KeyboardState* keyboardState)
     memset(keyboardState->letterQueue, 0, sizeof(keyboardState->letterQueue));
 }
 
-// TODO: All of these state functions need to be abstracted for use with gamepads
 bool KeyboardState_Down(KeyboardState* keyboardState, SDL_Keycode key)
 {
     int state = KeyboardState_GetKey(keyboardState, key);
