@@ -13,11 +13,16 @@ Config Config_Load(ApplicationState* app)
         return config;
     }
     
-    // TODO: config.ini add language
-    // The issue is, when doing `ini_free`, it will free the language string
-    // This should be a painfully simple fix lol
     ini_sget(r, "Config", "Width", "%d", &config.windowedSize.X);
     ini_sget(r, "Config", "Height", "%d", &config.windowedSize.Y);
+    
+    const char* language = ini_get(r, "Config", "Language");
+    if(language)
+    {
+        config.language = malloc(sizeof(char) * (1 + strlen(language)));
+        
+        strcpy(config.language, language);
+    }
     
     int vsync;
     if(ini_sget(r, "Config", "Vsync", "%d", &vsync))
@@ -42,7 +47,7 @@ Config Config_Load(ApplicationState* app)
 void Config_Save(ApplicationState* app, Config config)
 {
     FILE* w = fopen(app->savePathConfig, "w");
-    fprintf(w, "[Config]\nWidth = %d\nHeight = %d\nVsync = %d\n", config.windowedSize.X, config.windowedSize.Y, config.vsync);
+    fprintf(w, "[Config]\nWidth = %d\nHeight = %d\nLanguage = \"%s\"\nVsync = %d\n", config.windowedSize.X, config.windowedSize.Y, config.language, config.vsync);
     fclose(w);
 }
 

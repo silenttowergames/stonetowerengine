@@ -48,8 +48,6 @@ void ApplicationState_Create(
     
     app->config = Config_Load(app);
     
-    printf("%dx%d\n", app->config.size.X, app->config.size.Y);
-    
     app->assetManager = AssetManager_Create();
 	
 	Rendering_Init(app);
