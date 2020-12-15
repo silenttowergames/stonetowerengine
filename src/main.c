@@ -4,19 +4,14 @@
 #include "ecs_declarations.h"
 #include "includes.h"
 
+// FIXME: DirectX & Vulkan not working
+// TODO: UI framework
+// TODO: Debug mode in config
+// TODO: Dialogue system
+
 void initWorld(ecs_world_t* world)
 {
-    ECS_COMPONENT_DEFINE(world, AINPC);
-    ECS_COMPONENT_DEFINE(world, AIPlayer);
-    ECS_COMPONENT_DEFINE(world, Animate);
-    ECS_COMPONENT_DEFINE(world, BasicAABB);
-    ECS_COMPONENT_DEFINE(world, Body);
-    ECS_COMPONENT_DEFINE(world, CameraFollow);
-    ECS_COMPONENT_DEFINE(world, Menu);
-    ECS_COMPONENT_DEFINE(world, MenuItem);
-    ECS_COMPONENT_DEFINE(world, PauseMenu);
-    ECS_COMPONENT_DEFINE(world, Renderable);
-    ECS_COMPONENT_DEFINE(world, TileLayerCollides);
+    ECS_Setup(DEFINE, world)
     
     ECS_SYSTEM(world, EngineUpdateSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, PauseMenuSystem, EcsOnUpdate, Menu, PauseMenu);
@@ -74,6 +69,57 @@ void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
     Shader_ParamCopy(shader, "Height", &renderTarget->size.Y, sizeof(int));
 }
 
+static int uint8_slider(mu_Context *ctx, unsigned char *value, int low, int high) {
+  static float tmp;
+  mu_push_id(ctx, &value, sizeof(value));
+  tmp = *value;
+  int res = mu_slider_ex(ctx, &tmp, low, high, 0, "%.0f", MU_OPT_ALIGNCENTER);
+  *value = tmp;
+  mu_pop_id(ctx);
+  return res;
+}
+static void muiUpdate(void* _app)
+{
+    ApplicationState* app = (ApplicationState*)_app;
+    
+    mu_begin(app->mui);
+    
+    static struct { const char *label; int idx; } colors[] = {
+        { "text:",         MU_COLOR_TEXT        },
+        { "border:",       MU_COLOR_BORDER      },
+        { "windowbg:",     MU_COLOR_WINDOWBG    },
+        { "titlebg:",      MU_COLOR_TITLEBG     },
+        { "titletext:",    MU_COLOR_TITLETEXT   },
+        { "panelbg:",      MU_COLOR_PANELBG     },
+        { "button:",       MU_COLOR_BUTTON      },
+        { "buttonhover:",  MU_COLOR_BUTTONHOVER },
+        { "buttonfocus:",  MU_COLOR_BUTTONFOCUS },
+        { "base:",         MU_COLOR_BASE        },
+        { "basehover:",    MU_COLOR_BASEHOVER   },
+        { "basefocus:",    MU_COLOR_BASEFOCUS   },
+        { "scrollbase:",   MU_COLOR_SCROLLBASE  },
+        { "scrollthumb:",  MU_COLOR_SCROLLTHUMB },
+        { NULL }
+    };
+
+    if (mu_begin_window(app->mui, "Style Editor", mu_rect(350, 250, 300, 240))) {
+        int sw = mu_get_current_container(app->mui)->body.w * 0.14;
+        mu_layout_row(app->mui, 6, (int[]) { 80, sw, sw, sw, sw, -1 }, 0);
+        
+        for (int i = 0; colors[i].label; i++) {
+            mu_label(app->mui, colors[i].label);
+            uint8_slider(app->mui, &app->mui->style->colors[i].r, 0, 255);
+            uint8_slider(app->mui, &app->mui->style->colors[i].g, 0, 255);
+            uint8_slider(app->mui, &app->mui->style->colors[i].b, 0, 255);
+            uint8_slider(app->mui, &app->mui->style->colors[i].a, 0, 255);
+            mu_draw_rect(app->mui, mu_layout_next(app->mui), app->mui->style->colors[i]);
+        }
+        mu_end_window(app->mui);
+    }
+    
+    mu_end(app->mui);
+}
+
 int main(int arcg, char* argv[])
 {
     ini_t* testINI = ini_load("test.ini");
@@ -81,15 +127,11 @@ int main(int arcg, char* argv[])
     char* name = (char*)ini_get(testINI, "strings", "Name");
     name[1] = 'l';
     name = (char*)ini_get(testINI, "strings", "Name");
-    printf("%s\n", name);
     
     int nOne;
     ini_sget(testINI, "numbers", "Three", "%d", &nOne);
-    printf("%d\n", nOne);
     
     ini_free(testINI);
-    
-    printf("%s\n", name);
     
     configDefault(config, 1280, 720, "en");
     
@@ -102,9 +144,11 @@ int main(int arcg, char* argv[])
         320, 180,
         initWorld,
         "map0",
-        RSZ_Floor
+        RSZ_Floor,
+        muiUpdate
     );
     
+    // TODO: GameData save & load INI
     char* gameDataFileKey = "save.ini";
     char* gameDataFilename = malloc(sizeof(char) * (strlen(app.savePath) + strlen(gameDataFileKey) + 1));
     sprintf(gameDataFilename, "%s%s", app.savePath, gameDataFileKey);

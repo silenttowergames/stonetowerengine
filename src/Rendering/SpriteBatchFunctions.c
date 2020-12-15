@@ -42,6 +42,7 @@ void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, Camera* camera, FNA3D_Texture
 		pos.bottomLeft.Y
 	))
 	{
+		printf("n\n");
 		return;
 	}
 	

@@ -104,7 +104,7 @@ void FontStashFNA3D_RenderDraw(void* uptr, const float* verts, const float* tcoo
 
 void FontStashFNA3D_RenderDelete(void* uptr)
 {
-    // TODO: FontStashFNA3D_RenderDelete
+    // Not sure what this is supposed to do actually, lol
 }
 
 FONScontext* FontStashFNA3D_Create(ApplicationState* app, int width, int height, int flags)

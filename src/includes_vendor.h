@@ -12,4 +12,6 @@
 // lookup3 for hashing strings
 #include "vendor/lookup3.c"
 // Ini
-#include "vendor/ini/src/ini.c"
+#include "vendor/rxi/ini/ini.c"
+// Micro UI
+#include "vendor/rxi/microui/microui.c"

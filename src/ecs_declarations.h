@@ -1,13 +1,21 @@
 #pragma once
 
-ECS_COMPONENT_DECLARE(AINPC);
-ECS_COMPONENT_DECLARE(AIPlayer);
-ECS_COMPONENT_DECLARE(Animate);
-ECS_COMPONENT_DECLARE(BasicAABB);
-ECS_COMPONENT_DECLARE(Body);
-ECS_COMPONENT_DECLARE(CameraFollow);
-ECS_COMPONENT_DECLARE(Menu);
-ECS_COMPONENT_DECLARE(MenuItem);
-ECS_COMPONENT_DECLARE(PauseMenu);
-ECS_COMPONENT_DECLARE(Renderable);
-ECS_COMPONENT_DECLARE(TileLayerCollides);
+#define STE_ECS_COMPONENT_DECLARE(w, T) ECS_COMPONENT_DECLARE(T)
+#define STE_ECS_COMPONENT_DEFINE(w, T) ECS_COMPONENT_DEFINE(w, T)
+
+#define ECS_Setup(de, w) \
+    STE_ECS_COMPONENT_ ## de(w, AINPC);\
+    STE_ECS_COMPONENT_ ## de(w, AIPlayer);\
+    STE_ECS_COMPONENT_ ## de(w, Animate);\
+    STE_ECS_COMPONENT_ ## de(w, BasicAABB);\
+    STE_ECS_COMPONENT_ ## de(w, Body);\
+    STE_ECS_COMPONENT_ ## de(w, CameraFollow);\
+    STE_ECS_COMPONENT_ ## de(w, Menu);\
+    STE_ECS_COMPONENT_ ## de(w, MenuItem);\
+    STE_ECS_COMPONENT_ ## de(w, PauseMenu);\
+    STE_ECS_COMPONENT_ ## de(w, Renderable);\
+    STE_ECS_COMPONENT_ ## de(w, TileLayerCollides);
+
+#define ECS_Setup_Define "world,"
+
+ECS_Setup(DECLARE, )

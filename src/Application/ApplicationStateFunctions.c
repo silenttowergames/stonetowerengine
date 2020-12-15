@@ -10,6 +10,30 @@
 #include "../Rendering/RenderingFunctions.h"
 #include "../Rendering/RenderStateFunctions.h"
 #include "../Input/InputManagerFunctions.h"
+#include "../vendor/rxi/microui/atlas.inl"
+
+// BELOW TAKEN FROM THE MicroUI EXAMPLE
+static const int text_size = 18;
+static int r_get_text_width(const char *text, int len) {
+  int res = 0;
+  for (const char *p = text; *p && len--; p++) {
+    if ((*p & 0xc0) == 0x80) { continue; }
+    int chr = mu_min((unsigned char) *p, 127);
+    res += text_size;
+  }
+  return res;
+}
+static int r_get_text_height(void) {
+  return text_size;
+}
+static int text_width(mu_Font font, const char *text, int len) {
+    if (len == -1) { len = strlen(text); }
+    return r_get_text_width(text, len);
+}
+static int text_height(mu_Font font) {
+    return r_get_text_height();
+}
+// ABOVE TAKEN FROM THE MicroUI EXAMPLE
 
 void ApplicationState_Create(
     ApplicationState* app,
@@ -22,7 +46,8 @@ void ApplicationState_Create(
     int resY,
     void (*flecsInit)(ecs_world_t*),
     const char* flecsScene,
-    RenderState_Zoom windowZoomType
+    RenderState_Zoom windowZoomType,
+    void (*muiUpdate)(void*)
 )
 {
 	memset(app, 0, sizeof(ApplicationState));
@@ -60,6 +85,24 @@ void ApplicationState_Create(
     
     // TODO: FontStash texture size should be modifiable by the game's code
     app->fons = FontStashFNA3D_Create(app, 1024, 1024, FONS_ZERO_TOPLEFT);
+    
+    app->mui = malloc(sizeof(mu_Context)); // ApplicationState.mui allocate
+    mu_init(app->mui);
+    app->mui->text_width = text_width;
+    app->mui->text_height = text_height;
+    unsigned char* pixels = malloc(sizeof(unsigned char) * (ATLAS_WIDTH * ATLAS_HEIGHT * 4));
+    for(int i = 0; i < ATLAS_WIDTH * ATLAS_HEIGHT; i++)
+    {
+        pixels[(i * 4) + 0] = atlas_texture[i];
+        pixels[(i * 4) + 1] = atlas_texture[i];
+        pixels[(i * 4) + 2] = atlas_texture[i];
+        pixels[(i * 4) + 3] = 0xFF;
+    }
+    
+    app->muiTexture = Texture_NewFromData(app->renderState.device, ATLAS_WIDTH, ATLAS_HEIGHT, pixels, 4, false);
+    app->muiUpdate = muiUpdate;
+    
+    free(pixels);
 }
 
 void ApplicationState_Loop(ApplicationState* app)
@@ -136,6 +179,11 @@ void ApplicationState_Loop(ApplicationState* app)
                 if(app->focused)
                 {
                     ecs_progress(app->world, fDeltaTime);
+                    
+                    if(app->muiUpdate != NULL)
+                    {
+                        app->muiUpdate((void*)app);
+                    }
                 }
                 
                 accumulator -= FPSMS;
@@ -155,6 +203,9 @@ void ApplicationState_Loop(ApplicationState* app)
 
 void ApplicationState_Free(ApplicationState* app)
 {
+    free(app->mui); // ApplicationState.mui free
+    Texture_Free(app->renderState.device, &app->muiTexture); // ApplicationState.muiTexture free
+    
     ecs_map_free(app->sceneFactories); // ApplicationState.sceneFactories free
     free(app->sceneFactoriesArray); // ApplicationState.sceneFactoriesArray free
     

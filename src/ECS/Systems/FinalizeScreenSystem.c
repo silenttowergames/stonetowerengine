@@ -76,9 +76,57 @@ static void FinalizeScreenSystem_ToWindow(ApplicationState* app)
 		0xFFFFFFFF
 	);
 	
+	FinalizeScreenSystem_UI(app);
+	
 	RenderTarget_Stop(app);
 	
 	FNA3D_SwapBuffers(app->renderState.device, NULL, NULL, app->renderState.window);
+}
+
+static void FinalizeScreenSystem_UI(ApplicationState* app)
+{
+	/*
+	mu_Command *cmd = NULL;
+    while (mu_next_command(ctx, &cmd)) {
+      switch (cmd->type) {
+        case MU_COMMAND_TEXT: r_draw_text(cmd->text.str, cmd->text.pos, cmd->text.color); break;
+        case MU_COMMAND_RECT: r_draw_rect(cmd->rect.rect, cmd->rect.color); break;
+        case MU_COMMAND_ICON: r_draw_icon(cmd->icon.id, cmd->icon.rect, cmd->icon.color); break;
+        case MU_COMMAND_CLIP: r_set_clip_rect(cmd->clip.rect); break;
+      }
+    }
+	*/
+	
+	mu_Command* cmd = NULL;
+	while(mu_next_command(app->mui, &cmd))
+	{
+		switch(cmd->type)
+		{
+			case MU_COMMAND_RECT:
+			{
+				quad pos = quad_Easy(
+					cmd->rect.rect.x / 8,
+					cmd->rect.rect.y / 8,
+					cmd->rect.rect.w / 8,
+					cmd->rect.rect.h / 8,
+					0,
+					0,
+					0
+				);
+				quad src = quad_Easy(
+					atlas[ATLAS_WHITE].x + (atlas[ATLAS_WHITE].w / 2),
+					atlas[ATLAS_WHITE].y + (atlas[ATLAS_WHITE].h / 2),
+					atlas[ATLAS_WHITE].w,
+					atlas[ATLAS_WHITE].h,
+					0,
+					0,
+					0
+				);
+				
+				SpriteBatch_AddQuad(&app->renderState.spriteBatch, &app->renderState.camera, app->muiTexture.asset, pos, src, colorU(255, 255, 255, 255));
+			} break;
+		}
+	}
 }
 
 void FinalizeScreenSystem(ecs_iter_t* it)

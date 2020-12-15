@@ -38,4 +38,7 @@ typedef struct ApplicationState
     Config config;
     const char* savePath;
     char* savePathConfig;
+    mu_Context* mui;
+    void (*muiUpdate)(void*);
+    Texture muiTexture;
 } ApplicationState;
