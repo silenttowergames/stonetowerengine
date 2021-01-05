@@ -303,6 +303,9 @@ void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
 
 void TiledJSON_Map(ecs_world_t* world, TiledJSONLayer* layer, Texture* texture, int layerID)
 {
+    // TODO: Remove this return
+    //return;
+    
     if(strcmp(layer->type, "tilelayer") != 0)
     {
         return;

@@ -14,8 +14,7 @@ void ApplicationState_Create(
     int resY,
     void (*flecsInit)(ecs_world_t*),
     const char* flecsScene,
-    RenderState_Zoom windowZoomType,
-    void (*muiUpdate)(void*)
+    RenderState_Zoom windowZoomType
 );
 void ApplicationState_Loop(ApplicationState* app);
 void ApplicationState_Free(ApplicationState* app);

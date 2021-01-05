@@ -13,5 +13,3 @@
 #include "vendor/lookup3.c"
 // Ini
 #include "vendor/rxi/ini/ini.c"
-// Micro UI
-#include "vendor/rxi/microui/microui.c"

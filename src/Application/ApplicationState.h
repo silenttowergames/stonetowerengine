@@ -3,8 +3,9 @@
 #include <flecs.h>
 #include "Config.h"
 #include "../Assets/AssetManager.h"
-#include "../Input/InputManager.h"
+#include "../Debug/ConsoleState.h"
 #include "../ECS/Entities/Factory.h"
+#include "../Input/InputManager.h"
 #include "../Logging/LoggerFunctions.h"
 #include "../Rendering/RenderState.h"
 #include "../Scenes/Scene.h"
@@ -38,7 +39,5 @@ typedef struct ApplicationState
     Config config;
     const char* savePath;
     char* savePathConfig;
-    mu_Context* mui;
-    void (*muiUpdate)(void*);
-    Texture muiTexture;
+    ConsoleState console;
 } ApplicationState;

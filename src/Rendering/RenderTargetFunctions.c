@@ -73,28 +73,35 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 	
 	RenderTarget* renderTarget;
 	
+	FNA3D_Viewport viewport;
+	viewport.minDepth = 0;
+	viewport.maxDepth = 1;
+	viewport.x = 0;
+	viewport.y = 0;
+	
 	switch(renderTargetID)
 	{
 		case RENDERTARGET_MAIN:
 		{
 			renderTarget = &app->renderState.mainRenderTarget;
 			
-			break;
-		}
+			viewport = renderTarget->viewport;
+		} break;
 		
 		case RENDERTARGET_NONE:
+		case RENDERTARGET_WINDOW:
 		{
 			renderTarget = NULL;
 			
-			break;
-		}
+			viewport = app->renderState.viewport;
+		} break;
 		
 		default:
 		{
 			renderTarget = &app->renderState.targets[renderTargetID];
 			
-			break;
-		}
+			viewport = renderTarget->viewport;
+		} break;
 	}
 	
 	// Open the SpriteBatch
@@ -106,10 +113,10 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 	
 	// Set up the screen
 	
+	FNA3D_SetViewport(app->renderState.device, &viewport);
+	
 	if(renderTarget == NULL)
 	{
-		FNA3D_SetViewport(app->renderState.device, &app->renderState.viewport);
-		
 		FNA3D_SetRenderTargets(
 			app->renderState.device,
 			NULL,
@@ -121,8 +128,6 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 	}
 	else
 	{
-		FNA3D_SetViewport(app->renderState.device, &renderTarget->viewport);
-		
 		FNA3D_SetRenderTargets(
 			app->renderState.device,
 			&renderTarget->binding,
@@ -134,26 +139,29 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 	}
 	
 	// Clear the screen with this color
+	// But only if we aren't using RENDERTARGET_WINDOW
 	
-	FNA3D_Vec4 color;
-	
-	if(renderTarget == NULL)
+	if(renderTargetID != RENDERTARGET_WINDOW)
 	{
-		color = (FNA3D_Vec4){ 0, 0, 0, 1, };
+		FNA3D_Vec4 color;
+		if(renderTarget == NULL)
+		{
+			color = (FNA3D_Vec4){ 0, 0, 0, 1, };
+		}
+		else
+		{
+			color = renderTarget->backgroundColor;
+		}
+		
+		
+		FNA3D_Clear(
+			app->renderState.device,
+			FNA3D_CLEAROPTIONS_TARGET,
+			&color,
+			0,
+			0
+		);
 	}
-	else
-	{
-		color = renderTarget->backgroundColor;
-	}
-	
-	
-	FNA3D_Clear(
-		app->renderState.device,
-		FNA3D_CLEAROPTIONS_TARGET,
-		&color,
-		0,
-		0
-	);
 	
 	// Use RenderTarget camera
 	

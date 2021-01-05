@@ -32,17 +32,18 @@ void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, Camera* camera, FNA3D_Texture
 	//float2d cameraPosition = SpriteBatch_Clamp(camera->)
 	
 	if(!quad_Intersects(
-		camera->position.X - (camera->resolution.X / 2),
-		camera->position.X + (camera->resolution.X / 2),
-		camera->position.Y - (camera->resolution.Y / 2),
-		camera->position.Y + (camera->resolution.Y / 2),
+		camera->position.X - (camera->resolution.X / camera->zoom.X / 2),
+		camera->position.X + (camera->resolution.X / camera->zoom.X / 2),
+		camera->position.Y - (camera->resolution.Y / camera->zoom.Y / 2),
+		camera->position.Y + (camera->resolution.Y / camera->zoom.Y / 2),
 		pos.topLeft.X,
 		pos.bottomRight.X,
 		pos.topRight.Y,
 		pos.bottomLeft.Y
 	))
 	{
-		printf("n\n");
+		printf("===\n%1.1f x %1.1f : %d x %d ? %1.1f x %1.1f\n", camera->position.X, camera->position.Y, camera->resolution.X, camera->resolution.Y, pos.topLeft.X, pos.topLeft.Y);
+		
 		return;
 	}
 	

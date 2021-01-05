@@ -8,6 +8,7 @@
 
 #define RENDERTARGET_MAIN -1
 #define RENDERTARGET_NONE -2
+#define RENDERTARGET_WINDOW -3
 
 RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d position, bool scale, FNA3D_Vec4 backgroundColor);
 RenderTarget RenderTarget_Refresh(ApplicationState* app, RenderTarget* renderTarget);

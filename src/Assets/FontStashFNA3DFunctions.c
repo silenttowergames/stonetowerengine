@@ -67,6 +67,17 @@ void FontStashFNA3D_RenderDraw(void* uptr, const float* verts, const float* tcoo
     quad pos;
     quad src;
     
+    Camera* camera;
+    
+    if(fna->app->renderState.currentRenderTargetID >= 0)
+    {
+        camera = &fna->app->renderState.targets[fna->app->renderState.currentRenderTargetID].camera;
+    }
+    else
+    {
+        camera = &fna->app->renderState.camera;
+    }
+    
     for(int i = 0; i < nverts * 2; i += 12)
     {
         if(fna->renderable->renderOffset != NULL)
@@ -93,7 +104,7 @@ void FontStashFNA3D_RenderDraw(void* uptr, const float* verts, const float* tcoo
         
         SpriteBatch_AddQuad(
             &fna->app->renderState.spriteBatch,
-            &fna->app->renderState.targets[fna->app->renderState.currentRenderTargetID].camera,
+            camera,
             fna->texture.asset,
             pos,
             src,

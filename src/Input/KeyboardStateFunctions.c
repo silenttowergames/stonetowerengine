@@ -370,11 +370,12 @@ bool KeyboardState_Held(KeyboardState* keyboardState, SDL_Keycode key)
 
 void KeyboardState_Type(KeyboardState* keyboardState, char character)
 {
-    for(int i = 0; i < sizeof(keyboardState->letterQueue) / sizeof(char); i++)
+    for(int i = 0; i < (sizeof(keyboardState->letterQueue) / sizeof(char)) - 1; i++)
     {
         if(keyboardState->letterQueue[i] == '\0')
         {
             keyboardState->letterQueue[i] = character;
+            keyboardState->letterQueue[i + 1] = '\0';
             
             break;
         }

@@ -40,4 +40,6 @@ typedef struct RenderState
 	Shader** shaders;
 	float2d windowZoom;
 	RenderState_Zoom windowZoomType;
+	Camera windowCamera;
+	Texture blankTexture;
 } RenderState;

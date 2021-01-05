@@ -70,10 +70,14 @@ void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int 
 	RenderState_FNA3D_Init(app);
 	
 	SpriteBatch_Create(&app->renderState.spriteBatch);
+	
+	app->renderState.blankTexture = Texture_NewBlank(app->renderState.device, 1, 1, 4, false); // RenderState.blankTexture.asset allocate
 }
 
 void RenderState_Free(RenderState* renderState)
 {
+	Texture_Free(renderState->device, &renderState->blankTexture); // RenderState.blankTexture.asset free
+	
 	for(int i = 0; i < renderState->targetsCount; i++)
 	{
 		RenderTarget_Destroy(&renderState->targets[i], renderState->device);
@@ -131,6 +135,8 @@ void RenderState_Resize(ApplicationState* app, int sizeX, int sizeY)
 	{
 		SDL_SetWindowSize(app->renderState.window, sizeX, sizeY);
 	}
+	
+	app->renderState.windowCamera = Camera_Create(sizeX, sizeY);
 	
 	FNA3D_GetDrawableSize(app->renderState.window, &app->renderState.size.X, &app->renderState.size.Y);
 	

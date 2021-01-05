@@ -36,6 +36,9 @@
 #include "Audio/Sound.h"
 #include "Audio/SoundFunctions.c"
 
+// Debug
+#include "Debug/ConsoleState.h"
+
 // ECS
 // Components
 #include "ECS/Components/AINPC.h"
@@ -64,6 +67,7 @@
 #include "ECS/Systems/AnimateSystem.c"
 #include "ECS/Systems/BasicAABBSystem.c"
 #include "ECS/Systems/CameraFollowSystem.c"
+#include "ECS/Systems/ConsoleStateSystem.c"
 #include "ECS/Systems/DepthSystem.c"
 #include "ECS/Systems/DrawSystem.c"
 #include "ECS/Systems/EngineUpdateSystem.c"

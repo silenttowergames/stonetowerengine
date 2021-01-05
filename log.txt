@@ -11,3 +11,18 @@ INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
 INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
 INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
 INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+main: src/Rendering/SpriteBatchFunctions.c:143: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+main: src/Rendering/SpriteBatchFunctions.c:143: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+main: src/Rendering/SpriteBatchFunctions.c:143: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+main: src/Rendering/SpriteBatchFunctions.c:143: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
+INFO: Using VK_PRESENT_MODE_IMMEDIATE_KHR!
+INFO: Using VK_PRESENT_MODE_IMMEDIATE_KHR!
+INFO: Using VK_PRESENT_MODE_IMMEDIATE_KHR!
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
+INFO: EXT_swap_control_tear unsupported. Fall back to standard VSync.
