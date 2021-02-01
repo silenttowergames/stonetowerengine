@@ -3,7 +3,7 @@
 #include <flecs.h>
 
 #define CONSOLESTATE_LINE_LENGTH 256
-#define CONSOLESTATE_HISTORY_LENGTH 10
+#define CONSOLESTATE_HISTORY_LENGTH 1024
 
 typedef struct ConsoleState
 {

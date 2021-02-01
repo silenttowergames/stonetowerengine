@@ -55,12 +55,22 @@ void ConsoleStateSystem(ApplicationState* app)
             app->console.lines[app->console.history] = malloc(sizeof(char) * (app->console.length + 1));
             sprintf(app->console.lines[app->console.history], "%s", app->console.line);
             
-            app->console.history++;
-            
-            app->console.historyMemory = -1;
-            
-            printf("%d\n", app->console.history);
+            if(app->console.history < CONSOLESTATE_HISTORY_LENGTH - 1)
+            {
+                app->console.history++;
+            }
         }
+        else
+        {
+            for(int i = 0; i < CONSOLESTATE_HISTORY_LENGTH - 1; i++)
+            {
+                strcpy(app->console.lines[i], app->console.lines[i + 1]);
+            }
+            
+            sprintf(app->console.lines[app->console.history], "%s", app->console.line);
+        }
+        
+        app->console.historyMemory = -1;
         
         app->console.line[0] = '\0';
     }
@@ -69,9 +79,7 @@ void ConsoleStateSystem(ApplicationState* app)
     {
         app->console.historyMemory++;
         
-        printf("%d\n", app->console.historyMemory);
-        
-        sprintf(app->console.line, "%s", app->console.lines[app->console.history - app->console.historyMemory - 1]);
+        sprintf(app->console.line, "%s", app->console.lines[app->console.history - app->console.historyMemory]);
     }
     
     if(keys(Pressed, DOWN) && app->console.historyMemory >= 0)
@@ -81,16 +89,12 @@ void ConsoleStateSystem(ApplicationState* app)
             app->console.historyMemory = -1;
             
             sprintf(app->console.line, "");
-            
-            printf("done\n");
         }
         else
         {
             app->console.historyMemory--;
             
-            printf("%d\n", app->console.historyMemory);
-            
-            sprintf(app->console.line, "%s", app->console.lines[app->console.history - app->console.historyMemory - 1]);
+            sprintf(app->console.line, "%s", app->console.lines[app->console.history - app->console.historyMemory]);
         }
     }
 }

@@ -133,11 +133,11 @@ void MoveSystem(ecs_iter_t* it)
 	
 	if(keys(Pressed, g))
 	{
-		RenderState_VSync(app, true);
+		//RenderState_VSync(app, true);
 	}
 	
 	if(keys(Pressed, h))
 	{
-		RenderState_VSync(app, false);
+		//RenderState_VSync(app, false);
 	}
 }
