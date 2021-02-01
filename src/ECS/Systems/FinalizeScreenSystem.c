@@ -103,7 +103,7 @@ static void FinalizeScreenSystem_UI(ApplicationState* app)
 		colorU(255, 255, 255, 255)
 	);
 	
-	fonsDrawText(app->fons, app->renderState.resolution.X / 2, app->renderState.resolution.Y / 2, app->console.line, NULL);
+	fonsDrawText(app->fons, -app->renderState.resolution.X, -app->renderState.resolution.Y + 8, app->console.line, NULL);
 }
 
 void FinalizeScreenSystem(ecs_iter_t* it)
