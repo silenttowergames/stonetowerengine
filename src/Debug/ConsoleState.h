@@ -13,4 +13,5 @@ typedef struct ConsoleState
     int length;
     int history;
     int historyMemory;
+    ecs_map_t* commands;
 } ConsoleState;

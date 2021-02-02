@@ -91,7 +91,7 @@ static void FinalizeScreenSystem_ToWindow(ApplicationState* app)
 
 static void FinalizeScreenSystem_UI(ApplicationState* app)
 {
-	quad qPos = quad_Easy(-32, -32, 32, 32, 0, 0, 0);
+	quad qPos = quad_Easy(-32, -42, 32, 32, 0, 0, 0);
 	quad qSrc = quad_Frame(&app->renderState.blankTexture, 0, 0);
 	
 	SpriteBatch_AddQuad(

@@ -70,6 +70,11 @@ void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
     Shader_ParamCopy(shader, "Height", &renderTarget->size.Y, sizeof(int));
 }
 
+void cmdPlaySound(ApplicationState* app, int argc, char** argv)
+{
+    soundPlay("hit.ogg");
+}
+
 int main(int arcg, char* argv[])
 {
     ini_t* testINI = ini_load("test.ini");
@@ -217,6 +222,10 @@ int main(int arcg, char* argv[])
     app.renderState.mainRenderTarget.shaders = malloc(sizeof(Shader*) * app.renderState.mainRenderTarget.shadersCount);
     app.renderState.mainRenderTarget.shaders[0] = *mapGet(app.assetManager.mapShader, "CRTShader", Shader*);
     //*/
+    
+    app.console.commands = ecs_map_new(ConsoleCommand, 1);
+    ConsoleCommand cmd = { "play", cmdPlaySound, };
+    mapSet(app.console.commands, "play", &cmd);
     
     loop();
     

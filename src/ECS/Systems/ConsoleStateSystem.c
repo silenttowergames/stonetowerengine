@@ -1,4 +1,5 @@
 #include "ConsoleStateSystem.h"
+#include "../../Debug/ConsoleCommand.h"
 #include "../../Input/KeyboardStateFunctions.h"
 
 static bool didAllowTyping = false;
@@ -71,6 +72,13 @@ void ConsoleStateSystem(ApplicationState* app)
         }
         
         app->console.historyMemory = -1;
+        
+        ConsoleCommand* cmd = mapGet(app->console.commands, app->console.line, ConsoleCommand);
+        
+        if(cmd != NULL)
+        {
+            cmd->callable(app, 0, NULL);
+        }
         
         app->console.line[0] = '\0';
     }
