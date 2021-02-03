@@ -94,6 +94,8 @@ void ApplicationState_Loop(ApplicationState* app)
         
         if(app->flecsScene != NULL)
         {
+            ((FontStashFNA3D*)app->fons->params.userPtr)->renderable = NULL;
+            
             ApplicationState_RunScene(app, app->flecsScene);
             
             app->flecsScene = NULL;

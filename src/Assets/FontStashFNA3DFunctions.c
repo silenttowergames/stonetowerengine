@@ -80,7 +80,7 @@ void FontStashFNA3D_RenderDraw(void* uptr, const float* verts, const float* tcoo
     
     for(int i = 0; i < nverts * 2; i += 12)
     {
-        if(fna->renderable->renderOffset != NULL)
+        if(fna->renderable != NULL && fna->renderable->renderOffset != NULL)
         {
             offset = fna->renderable->renderOffset(((nverts * 2) - i) / 12, fna->renderable->duration);
         }
