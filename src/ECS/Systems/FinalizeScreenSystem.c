@@ -91,19 +91,42 @@ static void FinalizeScreenSystem_ToWindow(ApplicationState* app)
 
 static void FinalizeScreenSystem_UI(ApplicationState* app)
 {
-	quad qPos = quad_Easy(-32, -42, 32, 32, 0, 0, 0);
-	quad qSrc = quad_Frame(&app->renderState.blankTexture, 0, 0);
-	
-	SpriteBatch_AddQuad(
-		&app->renderState.spriteBatch,
-		&app->renderState.windowCamera,
-		app->renderState.blankTexture.asset,
-		qPos,
-		qSrc,
-		colorU(255, 255, 255, 255)
-	);
-	
-	fonsDrawText(app->fons, -app->renderState.resolution.X, -app->renderState.resolution.Y + 8, app->console.line, NULL);
+	if(app->console.active)
+	{
+		quad qPos = {
+			{ -app->renderState.resolution.X, -app->renderState.resolution.Y, },
+			{ app->renderState.resolution.X, -app->renderState.resolution.Y, },
+			{ -app->renderState.resolution.X, -app->renderState.resolution.Y + 12, },
+			{ app->renderState.resolution.X, -app->renderState.resolution.Y + 12, },
+		};
+		quad qSrc = quad_Frame(&app->renderState.blankTexture, 0, 0);
+		
+		SpriteBatch_AddQuad(
+			&app->renderState.spriteBatch,
+			&app->renderState.windowCamera,
+			app->renderState.blankTexture.asset,
+			qPos,
+			qSrc,
+			colorU(0, 0, 0, 150)
+		);
+		
+		qPos = (quad){
+			{ -app->renderState.resolution.X + (app->console.length * 8) + 2, -app->renderState.resolution.Y + 2, },
+			{ -app->renderState.resolution.X + (app->console.length * 8) + 10, -app->renderState.resolution.Y + 2, },
+			{ -app->renderState.resolution.X + (app->console.length * 8) + 2, -app->renderState.resolution.Y + 10, },
+			{ -app->renderState.resolution.X + (app->console.length * 8) + 10, -app->renderState.resolution.Y + 10, },
+		};
+		SpriteBatch_AddQuad(
+			&app->renderState.spriteBatch,
+			&app->renderState.windowCamera,
+			app->renderState.blankTexture.asset,
+			qPos,
+			qSrc,
+			colorU(255, 255, 255, 255)
+		);
+		
+		fonsDrawText(app->fons, -app->renderState.resolution.X + 2, -app->renderState.resolution.Y + 10, app->console.line, NULL);
+	}
 }
 
 void FinalizeScreenSystem(ecs_iter_t* it)

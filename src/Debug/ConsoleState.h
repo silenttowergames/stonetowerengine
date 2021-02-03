@@ -8,7 +8,7 @@
 typedef struct ConsoleState
 {
     bool active;
-    char line[CONSOLESTATE_LINE_LENGTH];
+    char line[CONSOLESTATE_LINE_LENGTH + 2];
     char* lines[CONSOLESTATE_HISTORY_LENGTH];
     int length;
     int history;

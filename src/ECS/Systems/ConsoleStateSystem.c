@@ -1,8 +1,15 @@
 #include "ConsoleStateSystem.h"
 #include "../../Debug/ConsoleCommand.h"
 #include "../../Input/KeyboardStateFunctions.h"
+#include "../../Utilities/split.h"
 
 static bool didAllowTyping = false;
+static char lineCmd[CONSOLESTATE_LINE_LENGTH + 2];
+static char* paramName;
+static ConsoleCommand* cmd;
+static char* paramsList;
+static char** params;
+static int paramsCount;
 
 void ConsoleStateSystem(ApplicationState* app)
 {
@@ -51,33 +58,47 @@ void ConsoleStateSystem(ApplicationState* app)
     
     if(keys(Pressed, RETURN) && app->console.line[0] != '\0')
     {
-        if(app->console.lines[app->console.history] == NULL)
+        if(app->console.history <= 0 || strcmp(app->console.line, app->console.lines[app->console.history - 1]))
         {
-            app->console.lines[app->console.history] = malloc(sizeof(char) * (app->console.length + 1));
-            sprintf(app->console.lines[app->console.history], "%s", app->console.line);
-            
-            if(app->console.history < CONSOLESTATE_HISTORY_LENGTH - 1)
+            if(app->console.lines[app->console.history] == NULL)
             {
-                app->console.history++;
+                app->console.lines[app->console.history] = malloc(sizeof(char) * (app->console.length + 1));
+                sprintf(app->console.lines[app->console.history], "%s", app->console.line);
+                
+                if(app->console.history < CONSOLESTATE_HISTORY_LENGTH - 1)
+                {
+                    app->console.history++;
+                }
             }
-        }
-        else
-        {
-            for(int i = 0; i < CONSOLESTATE_HISTORY_LENGTH - 1; i++)
+            else
             {
-                strcpy(app->console.lines[i], app->console.lines[i + 1]);
+                for(int i = 0; i < CONSOLESTATE_HISTORY_LENGTH - 1; i++)
+                {
+                    strcpy(app->console.lines[i], app->console.lines[i + 1]);
+                }
+                
+                sprintf(app->console.lines[app->console.history], "%s", app->console.line);
             }
-            
-            sprintf(app->console.lines[app->console.history], "%s", app->console.line);
         }
         
         app->console.historyMemory = -1;
         
-        ConsoleCommand* cmd = mapGet(app->console.commands, app->console.line, ConsoleCommand);
+        strcpy(lineCmd, app->console.line);
         
-        if(cmd != NULL)
+        paramName = strtok(lineCmd, " ");
+        
+        if(paramName != NULL)
         {
-            cmd->callable(app, 0, NULL);
+            paramsList = &lineCmd[strlen(paramName) + 1];
+            
+            cmd = mapGet(app->console.commands, paramName, ConsoleCommand);
+            
+            if(cmd != NULL)
+            {
+                params = split(paramsList, strlen(paramsList), ' ', &paramsCount);
+                
+                cmd->callable(app, paramsCount, params);
+            }
         }
         
         app->console.line[0] = '\0';
@@ -87,7 +108,7 @@ void ConsoleStateSystem(ApplicationState* app)
     {
         app->console.historyMemory++;
         
-        sprintf(app->console.line, "%s", app->console.lines[app->console.history - app->console.historyMemory]);
+        sprintf(app->console.line, "%s", app->console.lines[app->console.history - app->console.historyMemory - 1]);
     }
     
     if(keys(Pressed, DOWN) && app->console.historyMemory >= 0)
@@ -102,7 +123,7 @@ void ConsoleStateSystem(ApplicationState* app)
         {
             app->console.historyMemory--;
             
-            sprintf(app->console.line, "%s", app->console.lines[app->console.history - app->console.historyMemory]);
+            sprintf(app->console.line, "%s", app->console.lines[app->console.history - app->console.historyMemory - 1]);
         }
     }
 }

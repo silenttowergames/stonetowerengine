@@ -19,32 +19,32 @@ void MoveSystem(ecs_iter_t* it)
 	
 	if(keys(Pressed, t))
 	{
-		ecs_set_time_scale(it->world, 0);
+		//ecs_set_time_scale(it->world, 0);
 	}
 	
 	if(keys(Pressed, y))
 	{
-		ecs_set_time_scale(it->world, 1);
+		//ecs_set_time_scale(it->world, 1);
 	}
 	
 	if(keys(Pressed, u))
 	{
-		ecs_set_time_scale(it->world, 2);
+		//ecs_set_time_scale(it->world, 2);
 	}
 	
 	if(keys(Pressed, i))
 	{
-		ecs_set_time_scale(it->world, 0.5f);
+		//ecs_set_time_scale(it->world, 0.5f);
 	}
 	
 	if(keys(Pressed, o))
 	{
-		ecs_set_time_scale(it->world, 5);
+		//ecs_set_time_scale(it->world, 5);
 	}
 	
 	if(keys(Pressed, p))
 	{
-		ecs_set_time_scale(it->world, 0.125f);
+		//ecs_set_time_scale(it->world, 0.125f);
 	}
 	
 	AIPlayer* a = ecs_column(it, AIPlayer, 1);
@@ -113,22 +113,22 @@ void MoveSystem(ecs_iter_t* it)
 	
 	if(keys(Pressed, x))
 	{
-		soundPlay("calm-example.ogg");
+		//soundPlay("calm-example.ogg");
 	}
 	
 	if(keys(Pressed, z))
 	{
-		soundPlay("speech0");
+		//soundPlay("speech0");
 	}
 	
 	if(keys(Pressed, c))
 	{
-		soundPlay("hit.ogg");
+		//soundPlay("hit.ogg");
 	}
 	
 	if(keys(Pressed, v))
 	{
-		app->flecsScene = "map1";
+		//app->flecsScene = "map1";
 	}
 	
 	if(keys(Pressed, g))

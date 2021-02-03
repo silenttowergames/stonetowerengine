@@ -1,0 +1,1 @@
+main: src/Rendering/SpriteBatchFunctions.c:145: SpriteBatch_End: Assertion `spriteBatch->opened' failed.
