@@ -38,7 +38,7 @@
 
 // Debug
 #include "Debug/ConsoleState.h"
-#include "Debug/ConsoleCommand.h"
+#include "Debug/ConsoleCommandFunctions.c"
 
 // ECS
 // Components

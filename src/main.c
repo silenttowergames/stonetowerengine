@@ -236,11 +236,12 @@ int main(int arcg, char* argv[])
     app.renderState.mainRenderTarget.shaders[0] = *mapGet(app.assetManager.mapShader, "CRTShader", Shader*);
     //*/
     
-    app.console.commands = ecs_map_new(ConsoleCommand, 2);
-    ConsoleCommand cmd = { "play", cmdPlaySound, };
-    mapSet(app.console.commands, "play", &cmd);
-    cmd = (ConsoleCommand){ "scene", cmdChangeScene, };
-    mapSet(app.console.commands, "scene", &cmd);
+    ConsoleCommand_AddAll(
+        &app,
+        2,
+        ConsoleCommand_Create("play", cmdPlaySound),
+        ConsoleCommand_Create("scene", cmdChangeScene)
+    );
     
     loop();
     

@@ -83,21 +83,24 @@ void ConsoleStateSystem(ApplicationState* app)
         
         app->console.historyMemory = -1;
         
-        strcpy(lineCmd, app->console.line);
-        
-        paramName = strtok(lineCmd, " ");
-        
-        if(paramName != NULL)
+        if(app->console.commands != NULL)
         {
-            paramsList = &lineCmd[strlen(paramName) + 1];
+            strcpy(lineCmd, app->console.line);
             
-            cmd = mapGet(app->console.commands, paramName, ConsoleCommand);
+            paramName = strtok(lineCmd, " ");
             
-            if(cmd != NULL)
+            if(paramName != NULL)
             {
-                params = split(paramsList, strlen(paramsList), ' ', &paramsCount);
+                paramsList = &lineCmd[strlen(paramName) + 1];
                 
-                cmd->callable(app, paramsCount, params);
+                cmd = mapGet(app->console.commands, paramName, ConsoleCommand);
+                
+                if(cmd != NULL)
+                {
+                    params = split(paramsList, strlen(paramsList), ' ', &paramsCount);
+                    
+                    cmd->callable(app, paramsCount, params);
+                }
             }
         }
         
