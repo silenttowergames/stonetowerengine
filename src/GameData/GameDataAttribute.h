@@ -19,8 +19,8 @@ typedef struct GameDataAttribute
     int valueInt;
     bool valueBool;
     float valueFloat;
-    const char* valueString;
+    char* valueString;
 } GameDataAttribute;
 
 #define gdAttr(_header, _key, _value, T) (GameDataAttribute){ .type = GAMEDATA_ ## T, .key = _key, .header = _header, .value ## T = _value }
-#define gdValue(_header, _key, T) (*mapGet(app->gameData.map, _header":"_key, GameDataAttribute*))->value ## T
+#define gdValue(_header, _key, T) (GameData_Get(&app->gameData, _header, _key))->value ## T

@@ -42,8 +42,6 @@ void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, Camera* camera, FNA3D_Texture
 		pos.bottomLeft.Y
 	))
 	{
-		printf("===\n%1.1f x %1.1f : %d x %d ? %1.1f x %1.1f\n", camera->position.X, camera->position.Y, camera->resolution.X, camera->resolution.Y, pos.topLeft.X, pos.topLeft.Y);
-		
 		return;
 	}
 	

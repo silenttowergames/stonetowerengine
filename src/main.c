@@ -98,6 +98,7 @@ void cmdChangeScene(ApplicationState* app, int argc, char** argv)
 
 int main(int arcg, char* argv[])
 {
+    /*
     ini_t* testINI = ini_load("test.ini");
     
     char* name = (char*)ini_get(testINI, "strings", "Name");
@@ -108,6 +109,7 @@ int main(int arcg, char* argv[])
     ini_sget(testINI, "numbers", "Three", "%d", &nOne);
     
     ini_free(testINI);
+    */
     
     configDefault(config, 1280, 720, "en");
     
@@ -135,9 +137,22 @@ int main(int arcg, char* argv[])
     );
     
     FILE* gdINI = fopen(gameData.filepath, "w");
+    char* header;
     for(int i = 0; i < gameData.length; i++)
     {
         GameDataAttribute* attr = &gameData.data[i];
+        
+        if(header != attr->header)
+        {
+            if(header != NULL)
+            {
+                fprintf(gdINI, "\n", attr->header);
+            }
+            
+            fprintf(gdINI, "[%s]\n", attr->header);
+            
+            header = (char*)attr->header;
+        }
         
         switch(attr->type)
         {

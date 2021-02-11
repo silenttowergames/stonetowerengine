@@ -54,8 +54,6 @@ GameDataAttribute* GameData_Get(GameData* gameData, const char* header, const ch
 {
     sprintf(gameDataMapKey, "%s~%s\n", header, key);
     
-    printf("%s\n%s~%s\n", gameDataMapKey, header, key);
-    
     GameDataAttribute** attr = mapGet(gameData->map, gameDataMapKey, GameDataAttribute*);
     
     return *attr;

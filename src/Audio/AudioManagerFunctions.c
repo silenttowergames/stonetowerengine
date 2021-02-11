@@ -73,8 +73,6 @@ void AudioManager_focus(AssetManager* assetManager)
                 continue;
             }
             
-            //printf("unpause %s # %d (%d)\n", assetManager->arraySound[i].key, j, assetManager->arraySound[i].instances[j] + 1);
-            
             assetManager->arraySound[i].instancesPausedFocus[j] = false;
             
             Soloud_setPause(assetManager->audioManager.soloud, assetManager->arraySound[i].instances[j], false);

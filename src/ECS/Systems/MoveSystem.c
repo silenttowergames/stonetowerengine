@@ -13,6 +13,7 @@
 #include "../../Input/MouseStateFunctions.h"
 #include "../../Utilities/wallsFunctions.h"
 #include "../../GameData/GameDataAttribute.h"
+#include "../../GameData/GameDataFunctions.h"
 
 void MoveSystem(ecs_iter_t* it)
 {
