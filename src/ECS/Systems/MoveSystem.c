@@ -12,6 +12,7 @@
 #include "../../Input/KeyboardStateFunctions.h"
 #include "../../Input/MouseStateFunctions.h"
 #include "../../Utilities/wallsFunctions.h"
+#include "../../GameData/GameDataAttribute.h"
 
 void MoveSystem(ecs_iter_t* it)
 {
@@ -19,6 +20,7 @@ void MoveSystem(ecs_iter_t* it)
 	
 	if(keys(Pressed, t))
 	{
+		printf("%d\n", gdValue("Integers", "hello", Int));
 		//ecs_set_time_scale(it->world, 0);
 	}
 	

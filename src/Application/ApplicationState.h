@@ -2,6 +2,7 @@
 
 #include <flecs.h>
 #include "Config.h"
+#include "../includes_vendor.h"
 #include "../Assets/AssetManager.h"
 #include "../Debug/ConsoleState.h"
 #include "../ECS/Entities/Factory.h"
@@ -9,7 +10,7 @@
 #include "../Logging/LoggerFunctions.h"
 #include "../Rendering/RenderState.h"
 #include "../Scenes/Scene.h"
-#include "../includes_vendor.h"
+#include "../GameData/GameData.h"
 
 typedef struct ApplicationState
 {
@@ -40,4 +41,5 @@ typedef struct ApplicationState
     const char* savePath;
     char* savePathConfig;
     ConsoleState console;
+    GameData gameData;
 } ApplicationState;

@@ -27,6 +27,7 @@
         "type_traits": "cpp",
         "utility": "cpp",
         "initializer_list": "cpp",
-        "split.c": "cpp"
+        "split.c": "cpp",
+        "gamedatafunctions.h": "c"
     }
 }

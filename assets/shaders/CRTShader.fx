@@ -1,4 +1,8 @@
+// This is largely an original shader, but with a bit of inspiration from the following:
+// https://bit-hack.net/2014/07/17/retro-crt-shader/
+
 int Width, Height;
+float tmod;
 
 Texture2D SpriteTexture;
 
@@ -27,8 +31,8 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 		coords.x += (0.5 / Width);
 	}
 	
-	float4 c = tex2D(SpriteTextureSampler, coords) * input.Color;
-    
+	float4 c = tex2D(SpriteTextureSampler, coords) * input.Color * tmod;
+	
 	float Mult = 1.4;
 	
 	if(rc.y % 2 >= 1)

@@ -57,6 +57,8 @@ void init2Scene(ecs_world_t* world)
     factoryRun(app, "TestMenu", -120, -40, 5, NULL);
 }
 
+int Time = 0;
+
 void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
 {
     sctx();
@@ -66,8 +68,14 @@ void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
         shader->disabled = !shader->disabled;
     }
     
+    Time += rand() % 5;
+    
     Shader_ParamCopy(shader, "Width", &renderTarget->size.X, sizeof(int));
     Shader_ParamCopy(shader, "Height", &renderTarget->size.Y, sizeof(int));
+    
+    float tmod = (sinf(Time * 64.0f) * 0.01f) + 0.99f;
+    tmod = 1;
+    Shader_ParamCopy(shader, "tmod", &tmod, sizeof(float));
 }
 
 void cmdPlaySound(ApplicationState* app, int argc, char** argv)
@@ -116,35 +124,20 @@ int main(int arcg, char* argv[])
     );
     
     // TODO: GameData save & load INI
-    char* gameDataFileKey = "save.ini";
-    char* gameDataFilename = malloc(sizeof(char) * (strlen(app.savePath) + strlen(gameDataFileKey) + 1));
-    sprintf(gameDataFilename, "%s%s", app.savePath, gameDataFileKey);
-    GameData gameData = GameData_Create(gameDataFilename);
-    gameData.data = malloc(sizeof(GameDataAttribute) * 5);
-    gameData.map = ecs_map_new(GameDataAttribute*, 5);
+    GameData gameData = GameData_Create(&app, "save.ini", 3);
     
-    GameDataAttribute* attr;
+    GameData_AddAll(
+        &gameData,
+        3,
+        gdAttr("Integers", "hello", 30, Int),
+        gdAttr("Integers", "hiThere", 8, Int),
+        gdAttr("Strings", "alrighty", "Well! Hello.", String)
+    );
     
-    gameData.data[0] = gdAttr("hello", 5, Int);
-    attr = &gameData.data[0];
-    mapSet(gameData.map, attr->key, &attr);
-    
-    gameData.data[1] = gdAttr("hiThere", 7, Int);
-    attr = &gameData.data[1];
-    mapSet(gameData.map, attr->key, &attr);
-    
-    gameData.data[2] = gdAttr("alrighty", "Hello, World!", String);
-    attr = &gameData.data[0];
-    mapSet(gameData.map, attr->key, &attr);
-    
-    printf("`%s`: %d\n", (*mapGet(gameData.map, "hello", GameDataAttribute*))->key, (*mapGet(gameData.map, "hello", GameDataAttribute*))->valueInt);
-    
-    FILE* gdINI = fopen("test2.ini", "w");
-    char* format;
-    char* formatFinal;
-    for(int i = 0; i < 3; i++)
+    FILE* gdINI = fopen(gameData.filepath, "w");
+    for(int i = 0; i < gameData.length; i++)
     {
-        attr = &gameData.data[i];
+        GameDataAttribute* attr = &gameData.data[i];
         
         switch(attr->type)
         {
@@ -170,6 +163,8 @@ int main(int arcg, char* argv[])
         }
     }
     fclose(gdINI);
+    
+    app.gameData = gameData;
     
     scenes(
         4,
