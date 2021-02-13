@@ -44,6 +44,8 @@ void GameData_AddAll(GameData* gameData, int length, ...)
         
         sprintf(gameDataMapKey, "%s~%s\n", attr.header, attr.key);
         
+        printf("%s\n", gameDataMapKey);
+        
         mapSet(gameData->map, gameDataMapKey, &pattr);
     }
     
@@ -59,8 +61,120 @@ GameDataAttribute* GameData_Get(GameData* gameData, const char* header, const ch
     return *attr;
 }
 
+void GameData_Load(GameData* gameData)
+{
+    ini_t* r = ini_load(gameData->filepath);
+    char* str;
+    
+    if(r == NULL)
+    {
+        return;
+    }
+    
+    printf("%s\n", gameData->data[2].valueString);
+    
+    for(int i = 0; i < gameData->length; i++)
+    {
+        GameDataAttribute* attr = &gameData->data[i];
+        
+        switch(attr->type)
+        {
+            case GAMEDATA_Int:
+            {
+                ini_sget(r, attr->header, attr->key, "%d", &attr->valueInt);
+            } break;
+            
+            case GAMEDATA_Bool:
+            {
+                ini_sget(r, attr->header, attr->key, "%d", &attr->valueBool);
+            } break;
+            
+            case GAMEDATA_Float:
+            {
+                ini_sget(r, attr->header, attr->key, "%.*f", &attr->valueFloat);
+            } break;
+            
+            case GAMEDATA_String:
+            {
+                str = (char*)ini_get(r, attr->header, attr->key);
+                
+                if(str == NULL)
+                {
+                    break;
+                }
+                
+                if(attr->wasAllocated)
+                {
+                    free(attr->valueString);
+                }
+                
+                attr->valueString = malloc(sizeof(char) * (strlen(str) + 1));
+                strcpy(attr->valueString, str);
+                
+                attr->wasAllocated = true;
+            } break;
+        }
+    }
+    
+    printf("%s\n", gameData->data[2].valueString);
+}
+
+void GameData_Save(GameData* gameData)
+{
+    FILE* gdINI = fopen(gameData->filepath, "w");
+    char* header = NULL;
+    for(int i = 0; i < gameData->length; i++)
+    {
+        GameDataAttribute* attr = &gameData->data[i];
+        
+        if(header != attr->header)
+        {
+            if(header != NULL)
+            {
+                fprintf(gdINI, "\n", attr->header);
+            }
+            
+            fprintf(gdINI, "[%s]\n", attr->header);
+            
+            header = (char*)attr->header;
+        }
+        
+        switch(attr->type)
+        {
+            case GAMEDATA_Int:
+            {
+                fprintf(gdINI, "%s = %d\n", attr->key, attr->valueInt);
+            } break;
+            
+            case GAMEDATA_Bool:
+            {
+                fprintf(gdINI, "%s = %d\n", attr->key, attr->valueBool);
+            } break;
+            
+            case GAMEDATA_Float:
+            {
+                fprintf(gdINI, "%s = %.*f\n", DBL_DIG - 1, attr->key, attr->valueFloat);
+            } break;
+            
+            case GAMEDATA_String:
+            {
+                fprintf(gdINI, "%s = \"%s\"\n", attr->key, attr->valueString);
+            } break;
+        }
+    }
+    fclose(gdINI);
+}
+
 void GameData_Free(GameData* gameData)
 {
+    for(int i = 0; i < gameData->length; i++)
+    {
+        if(gameData->data[i].type == GAMEDATA_String && gameData->data[i].wasAllocated)
+        {
+            free(gameData->data[i].valueString);
+        }
+    }
+    
     ecs_map_free(gameData->map); // GameData.map free
     free(gameData->data); // GameData.data free
     free(gameData->filepath); // GameData.filepath free

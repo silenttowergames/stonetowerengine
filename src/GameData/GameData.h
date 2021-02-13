@@ -9,4 +9,5 @@ typedef struct GameData
     int length;
     GameDataAttribute* data;
     ecs_map_t* map;
+    ini_t* loadedFile;
 } GameData;

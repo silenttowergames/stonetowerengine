@@ -98,25 +98,12 @@ void cmdChangeScene(ApplicationState* app, int argc, char** argv)
 
 int main(int arcg, char* argv[])
 {
-    /*
-    ini_t* testINI = ini_load("test.ini");
-    
-    char* name = (char*)ini_get(testINI, "strings", "Name");
-    name[1] = 'l';
-    name = (char*)ini_get(testINI, "strings", "Name");
-    
-    int nOne;
-    ini_sget(testINI, "numbers", "Three", "%d", &nOne);
-    
-    ini_free(testINI);
-    */
-    
     configDefault(config, 1280, 720, "en");
     
     init(
         "Engine Test",
         STE_VERSION,
-        "OpenGL",
+        NULL,
         60,
         config,
         320, 180,
@@ -125,61 +112,12 @@ int main(int arcg, char* argv[])
         RSZ_Floor
     );
     
-    // TODO: GameData save & load INI
-    GameData gameData = GameData_Create(&app, "save.ini", 3);
-    
-    GameData_AddAll(
-        &gameData,
+    gameDataInit(
         3,
-        gdAttr("Integers", "hello", 30, Int),
+        gdAttr("Integers", "hello", 27, Int),
         gdAttr("Integers", "hiThere", 8, Int),
         gdAttr("Strings", "alrighty", "Well! Hello.", String)
     );
-    
-    FILE* gdINI = fopen(gameData.filepath, "w");
-    char* header;
-    for(int i = 0; i < gameData.length; i++)
-    {
-        GameDataAttribute* attr = &gameData.data[i];
-        
-        if(header != attr->header)
-        {
-            if(header != NULL)
-            {
-                fprintf(gdINI, "\n", attr->header);
-            }
-            
-            fprintf(gdINI, "[%s]\n", attr->header);
-            
-            header = (char*)attr->header;
-        }
-        
-        switch(attr->type)
-        {
-            case GAMEDATA_Int:
-            {
-                fprintf(gdINI, "%s = %d\n", attr->key, attr->valueInt);
-            } break;
-            
-            case GAMEDATA_Bool:
-            {
-                fprintf(gdINI, "%s = %d\n", attr->key, attr->valueBool);
-            } break;
-            
-            case GAMEDATA_Float:
-            {
-                fprintf(gdINI, "%s = %.*f\n", DBL_DIG - 1, attr->key, attr->valueFloat);
-            } break;
-            
-            case GAMEDATA_String:
-            {
-                fprintf(gdINI, "%s = \"%s\"\n", attr->key, attr->valueString);
-            } break;
-        }
-    }
-    fclose(gdINI);
-    
-    app.gameData = gameData;
     
     scenes(
         4,
@@ -254,6 +192,8 @@ int main(int arcg, char* argv[])
     );
     
     loop();
+    
+    GameData_Save(&app.gameData);
     
     quit();
 }

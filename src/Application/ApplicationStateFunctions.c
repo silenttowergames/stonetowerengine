@@ -1,3 +1,4 @@
+#include <SDL2/SDL.h>
 #include "ApplicationStateFunctions.h"
 #include "ConfigFunctions.h"
 #include "../Assets/AssetManagerFunctions.h"
@@ -39,7 +40,7 @@ void ApplicationState_Create(
 	app->flecsInit = flecsInit;
 	app->flecsScene = flecsScene;
     
-    app->savePath = SDL_GetPrefPath("Silent Tower Games", app->gameTitle);
+    app->savePath = SDL_GetPrefPath("Silent Tower Games", app->gameTitle); // ApplicationState.savePath allocate
     
     char* configFilename = "config.ini";
     app->savePathConfig = malloc(sizeof(char) * (strlen(app->savePath) + strlen(configFilename) + 2));
@@ -58,6 +59,7 @@ void ApplicationState_Create(
     app->inputManager = InputManager_Create();
     
     ecs_os_set_api_defaults();
+    SDL_SetHint(SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS, "0");
     
     // TODO: FontStash texture size should be modifiable by the game's code
     app->fons = FontStashFNA3D_Create(app, 1024, 1024, FONS_ZERO_TOPLEFT);
@@ -166,12 +168,14 @@ void ApplicationState_Free(ApplicationState* app)
     ecs_map_free(app->entityFactories); // ApplicationState.entityFactories free
     free(app->entityFactoriesArray); // ApplicationState.entityFactoriesArray free
     
-    free(app->savePathConfig);
+    free(app->savePathConfig); // ApplicationState.savePathConfig free
     
     FontStashFNA3D_Free(app->fons->params.userPtr);
     
     AssetManager_Destroy(app->renderState.device, &app->assetManager);
     RenderState_Free(&app->renderState);
+    
+    SDL_free(app->savePath); // ApplicationState.savePath free
 }
 
 void ApplicationState_InitFactories(ApplicationState* app, int length)

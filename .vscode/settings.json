@@ -28,6 +28,7 @@
         "utility": "cpp",
         "initializer_list": "cpp",
         "split.c": "cpp",
-        "gamedatafunctions.h": "c"
+        "gamedatafunctions.h": "c",
+        "ini.h": "c"
     }
 }

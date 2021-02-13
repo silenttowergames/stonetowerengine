@@ -38,7 +38,7 @@ typedef struct ApplicationState
     int sceneFactoriesLengthSoFar;
     FONScontext* fons;
     Config config;
-    const char* savePath;
+    char* savePath;
     char* savePathConfig;
     ConsoleState console;
     GameData gameData;
