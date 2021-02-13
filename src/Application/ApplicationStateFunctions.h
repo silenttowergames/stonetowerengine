@@ -12,6 +12,8 @@ void ApplicationState_Create(
     Config config,
     int resX,
     int resY,
+    int fsW,
+    int fsH,
     void (*flecsInit)(ecs_world_t*),
     const char* flecsScene,
     RenderState_Zoom windowZoomType

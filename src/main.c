@@ -4,11 +4,12 @@
 #include "ecs_declarations.h"
 #include "includes.h"
 
-// FIXME: DirectX & Vulkan not working
-// TODO: UI framework
-// TODO: Debug mode in config
+// FIXME: DirectX not working
 // TODO: Dialogue system
 // TODO: Hot-reload map (give factories a unique ID based on X, Y, key, prop?)
+// TODO: Window icon
+// TODO: Get relative DLL paths working
+// TODO: Turn engine into DLL, create example project
 
 void initWorld(ecs_world_t* world)
 {
@@ -98,15 +99,16 @@ void cmdChangeScene(ApplicationState* app, int argc, char** argv)
 
 int main(int arcg, char* argv[])
 {
-    configDefault(config, 1280, 720, "en");
+    configDefault(config, 1280, 720, "en", false);
     
     init(
         "Engine Test",
-        STE_VERSION,
+        "v1.0.5 alpha",
         NULL,
         60,
         config,
         320, 180,
+        1024, 1024,
         initWorld,
         "map0",
         RSZ_Floor

@@ -13,6 +13,11 @@ static int paramsCount;
 
 void ConsoleStateSystem(ApplicationState* app)
 {
+    if(!app->config.debug)
+    {
+        return;
+    }
+    
     if(keys(Down, LCTRL) && keys(Pressed, BACKQUOTE))
     {
         app->console.active = !app->console.active;

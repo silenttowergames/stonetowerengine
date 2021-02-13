@@ -44,8 +44,6 @@ void GameData_AddAll(GameData* gameData, int length, ...)
         
         sprintf(gameDataMapKey, "%s~%s\n", attr.header, attr.key);
         
-        printf("%s\n", gameDataMapKey);
-        
         mapSet(gameData->map, gameDataMapKey, &pattr);
     }
     
@@ -70,8 +68,6 @@ void GameData_Load(GameData* gameData)
     {
         return;
     }
-    
-    printf("%s\n", gameData->data[2].valueString);
     
     for(int i = 0; i < gameData->length; i++)
     {
@@ -115,8 +111,6 @@ void GameData_Load(GameData* gameData)
             } break;
         }
     }
-    
-    printf("%s\n", gameData->data[2].valueString);
 }
 
 void GameData_Save(GameData* gameData)
