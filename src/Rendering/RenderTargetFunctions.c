@@ -69,6 +69,8 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 {
 	// Sort out which RenderTarget we're using
 	
+	bool first = app->renderState.currentRenderTargetID < 0 && renderTargetID >= 0;
+	
 	app->renderState.currentRenderTargetID = renderTargetID;
 	
 	RenderTarget* renderTarget;
@@ -113,6 +115,12 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 	
 	// Set up the screen
 	
+	// I really hate this hack lol
+	if(first)
+	{
+		viewport.y += app->renderState.size.Y - (app->renderState.resolution.Y * app->renderState.windowZoom.Y);
+	}
+	
 	FNA3D_SetViewport(app->renderState.device, &viewport);
 	
 	if(renderTarget == NULL)
@@ -153,7 +161,6 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 			color = renderTarget->backgroundColor;
 		}
 		
-		
 		FNA3D_Clear(
 			app->renderState.device,
 			FNA3D_CLEAROPTIONS_TARGET,
@@ -169,12 +176,10 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 	assert(shaderMatrix != NULL);
 	if(renderTarget == NULL)
 	{
-		printf("%1.1f\n", app->renderState.camera.position.Y);
 		Camera_LoadInto(&app->renderState.camera, shaderMatrix->value.values);
 	}
 	else
 	{
-		printf("%1.1f\n", renderTarget->camera.position.Y);
 		Camera_LoadInto(&renderTarget->camera, shaderMatrix->value.values);
 	}
 	

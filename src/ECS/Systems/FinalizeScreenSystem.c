@@ -147,6 +147,4 @@ void FinalizeScreenSystem(ecs_iter_t* it)
 	
 	FinalizeScreenSystem_ToMainRT(app);
 	FinalizeScreenSystem_ToWindow(app);
-	
-	printf("===\n");
 }

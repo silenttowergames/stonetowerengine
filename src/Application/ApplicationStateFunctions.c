@@ -126,7 +126,7 @@ void ApplicationState_Create(
     ecs_os_set_api_defaults();
     SDL_SetHint(SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS, "0");
     
-    printf("%dx%d\n", fsW, fsH);
+    printf("FontStash texture size: %dx%d\n", fsW, fsH);
     app->fons = FontStashFNA3D_Create(app, fsW, fsH, FONS_ZERO_TOPLEFT);
     
     // Load window icon
