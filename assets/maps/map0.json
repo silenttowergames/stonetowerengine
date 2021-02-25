@@ -51,8 +51,26 @@
                  "type":"Player",
                  "visible":true,
                  "width":8,
-                 "x":16,
-                 "y":40
+                 "x":88,
+                 "y":64
+                }, 
+                {
+                 "gid":1,
+                 "height":8,
+                 "id":20,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"test",
+                         "type":"string",
+                         "value":"hello!"
+                        }],
+                 "rotation":0,
+                 "type":"NPC",
+                 "visible":true,
+                 "width":8,
+                 "x":32,
+                 "y":48
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -73,7 +91,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":20,
+ "nextobjectid":22,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.1",

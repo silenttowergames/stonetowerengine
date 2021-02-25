@@ -103,6 +103,7 @@ void FontStashFNA3D_RenderDraw(void* uptr, const float* verts, const float* tcoo
         };
         
         SpriteBatch_AddQuad(
+            fna->app,
             &fna->app->renderState.spriteBatch,
             camera,
             fna->texture.asset,

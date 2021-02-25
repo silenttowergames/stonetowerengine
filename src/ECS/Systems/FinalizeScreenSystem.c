@@ -34,6 +34,7 @@ static void FinalizeScreenSystem_ToMainRT(ApplicationState* app)
 		};
 		
 		SpriteBatch_AddQuad(
+			app,
 			&app->renderState.spriteBatch,
 			&app->renderState.camera,
 			renderTarget->texture.asset,
@@ -55,6 +56,12 @@ static void FinalizeScreenSystem_ToWindow(ApplicationState* app)
 		app->renderState.resolution.Y / 2,
 	};
 	quad pos = (quad){
+		/*
+		{ -size.X, -size.Y - (app->renderState.viewport.y / (app->renderState.windowZoom.Y / 2)), },
+		{ size.X, -size.Y - (app->renderState.viewport.y / (app->renderState.windowZoom.Y / 2)), },
+		{ -size.X, size.Y - (app->renderState.viewport.y / (app->renderState.windowZoom.Y / 2)), },
+		{ size.X, size.Y - (app->renderState.viewport.y / (app->renderState.windowZoom.Y / 2)), },
+		*/
 		{ -size.X, -size.Y, },
 		{ size.X, -size.Y, },
 		{ -size.X, size.Y, },
@@ -68,6 +75,7 @@ static void FinalizeScreenSystem_ToWindow(ApplicationState* app)
 	};
 	
 	SpriteBatch_AddQuad(
+		app,
 		&app->renderState.spriteBatch,
 		&app->renderState.camera,
 		app->renderState.mainRenderTarget.texture.asset,
@@ -78,13 +86,13 @@ static void FinalizeScreenSystem_ToWindow(ApplicationState* app)
 	
 	RenderTarget_Stop(app);
 	
-	app->renderState.camera.zoom.X = 0.5f;
-	app->renderState.camera.zoom.Y = 0.5f;
+	app->renderState.camera.zoom.X /= app->renderState.windowZoom.X;
+	app->renderState.camera.zoom.Y /= app->renderState.windowZoom.Y;
 	RenderTarget_Start(app, RENDERTARGET_WINDOW);
 	FinalizeScreenSystem_UI(app);
 	RenderTarget_Stop(app);
-	app->renderState.camera.zoom.X = 1;
-	app->renderState.camera.zoom.Y = 1;
+	app->renderState.camera.zoom.X *= app->renderState.windowZoom.X;
+	app->renderState.camera.zoom.Y *= app->renderState.windowZoom.Y;
 	
 	FNA3D_SwapBuffers(app->renderState.device, NULL, NULL, app->renderState.window);
 }
@@ -94,14 +102,15 @@ static void FinalizeScreenSystem_UI(ApplicationState* app)
 	if(app->console.active)
 	{
 		quad qPos = {
-			{ -app->renderState.resolution.X, -app->renderState.resolution.Y, },
-			{ app->renderState.resolution.X, -app->renderState.resolution.Y, },
-			{ -app->renderState.resolution.X, -app->renderState.resolution.Y + 12, },
-			{ app->renderState.resolution.X, -app->renderState.resolution.Y + 12, },
+			{ -(app->renderState.resolution.X / 2) * app->renderState.windowZoom.X, -(app->renderState.resolution.Y / 2) * app->renderState.windowZoom.Y, },
+			{ (app->renderState.resolution.X / 2) * app->renderState.windowZoom.X, -(app->renderState.resolution.Y / 2) * app->renderState.windowZoom.Y, },
+			{ -(app->renderState.resolution.X / 2) * app->renderState.windowZoom.X, -((app->renderState.resolution.Y / 2) * app->renderState.windowZoom.Y) + 12, },
+			{ (app->renderState.resolution.X / 2) * app->renderState.windowZoom.X, -((app->renderState.resolution.Y / 2) * app->renderState.windowZoom.Y) + 12, },
 		};
 		quad qSrc = quad_Frame(&app->renderState.blankTexture, 0, 0);
 		
 		SpriteBatch_AddQuad(
+			app,
 			&app->renderState.spriteBatch,
 			&app->renderState.windowCamera,
 			app->renderState.blankTexture.asset,
@@ -111,12 +120,13 @@ static void FinalizeScreenSystem_UI(ApplicationState* app)
 		);
 		
 		qPos = (quad){
-			{ -app->renderState.resolution.X + (app->console.length * 8) + 2, -app->renderState.resolution.Y + 2, },
-			{ -app->renderState.resolution.X + (app->console.length * 8) + 10, -app->renderState.resolution.Y + 2, },
-			{ -app->renderState.resolution.X + (app->console.length * 8) + 2, -app->renderState.resolution.Y + 10, },
-			{ -app->renderState.resolution.X + (app->console.length * 8) + 10, -app->renderState.resolution.Y + 10, },
+			{ -((app->renderState.resolution.X / 2) * app->renderState.windowZoom.X) + (app->console.length * 8) + 2, -((app->renderState.resolution.Y / 2) * app->renderState.windowZoom.Y) + 2, },
+			{ -((app->renderState.resolution.X / 2) * app->renderState.windowZoom.X) + (app->console.length * 8) + 10, -((app->renderState.resolution.Y / 2) * app->renderState.windowZoom.Y) + 2, },
+			{ -((app->renderState.resolution.X / 2) * app->renderState.windowZoom.X) + (app->console.length * 8) + 2, -((app->renderState.resolution.Y / 2) * app->renderState.windowZoom.Y) + 10, },
+			{ -((app->renderState.resolution.X / 2) * app->renderState.windowZoom.X) + (app->console.length * 8) + 10, -((app->renderState.resolution.Y / 2) * app->renderState.windowZoom.Y) + 10, },
 		};
 		SpriteBatch_AddQuad(
+			app,
 			&app->renderState.spriteBatch,
 			&app->renderState.windowCamera,
 			app->renderState.blankTexture.asset,
@@ -125,7 +135,7 @@ static void FinalizeScreenSystem_UI(ApplicationState* app)
 			colorU(255, 255, 255, 255)
 		);
 		
-		fonsDrawText(app->fons, -app->renderState.resolution.X + 2, -app->renderState.resolution.Y + 10, app->console.line, NULL);
+		fonsDrawText(app->fons, -((app->renderState.resolution.X / 2) * app->renderState.windowZoom.X) + 2, -((app->renderState.resolution.Y / 2) * app->renderState.windowZoom.Y) + 10, app->console.line, NULL);
 	}
 }
 
@@ -137,4 +147,6 @@ void FinalizeScreenSystem(ecs_iter_t* it)
 	
 	FinalizeScreenSystem_ToMainRT(app);
 	FinalizeScreenSystem_ToWindow(app);
+	
+	printf("===\n");
 }

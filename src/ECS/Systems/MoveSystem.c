@@ -74,7 +74,7 @@ void MoveSystem(ecs_iter_t* it)
 		
 		if(keys(Down, UP) || button(Down, 0, DPAD_UP) || button(Down, 0, STICK_RIGHT_UP))
 		{
-			b[i].velocity.Y -= a[i].speed * fdelta();
+			b[i].velocity.Y -= a[i].speed * fdelta() * (keys(Down, LSHIFT) ? 0.0375f : 1);
 		}
 		
 		if(button(Down, 0, X))

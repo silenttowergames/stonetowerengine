@@ -24,7 +24,7 @@ bool SpriteBatch_Begin(SpriteBatch* spriteBatch)
 	spriteBatch->opened = true;
 }
 
-void SpriteBatch_AddQuad(SpriteBatch* spriteBatch, Camera* camera, FNA3D_Texture* texture, quad pos, quad src, uint32_t color)
+void SpriteBatch_AddQuad(ApplicationState* app, SpriteBatch* spriteBatch, Camera* camera, FNA3D_Texture* texture, quad pos, quad src, uint32_t color)
 {
 	assert(spriteBatch->indicesThisFrame <= (MAX_INDICES - 6));
 	

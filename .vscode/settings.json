@@ -30,6 +30,7 @@
         "split.c": "cpp",
         "gamedatafunctions.h": "c",
         "ini.h": "c",
-        "applicationstatefunctions.h": "c"
+        "applicationstatefunctions.h": "c",
+        "spritebatchfunctions.h": "c"
     }
 }

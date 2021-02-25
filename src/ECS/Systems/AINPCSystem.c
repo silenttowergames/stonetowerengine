@@ -5,6 +5,8 @@
 
 void AINPCSystem(ecs_iter_t* it)
 {
+    return;
+    
     fctx();
 	
 	AINPC* a = ecs_column(it, AINPC, 1);

@@ -13,6 +13,11 @@ void Renderable_Sprite_Render(ApplicationState* app, SpriteBatch* spriteBatch, C
 	_position.X += (camera->position.X * (1 - renderable->parallax));
 	_position.Y += (camera->position.Y * (1 - renderable->parallax));
 	
+	if(_position.Y > 50)
+	{
+		renderable->renderTargetID = 1;
+	}
+	
 	quad pos = quad_Easy(
 		_position.X,
 		_position.Y,
@@ -51,7 +56,7 @@ void Renderable_Sprite_Render(ApplicationState* app, SpriteBatch* spriteBatch, C
 		}
 	}
 	
-	SpriteBatch_AddQuad(spriteBatch, camera, renderable->texture->asset, pos, src, renderable->color);
+	SpriteBatch_AddQuad(app, spriteBatch, camera, renderable->texture->asset, pos, src, renderable->color);
 }
 
 void Renderable_TextBox_Render(ApplicationState* app, SpriteBatch* spriteBatch, Camera* camera, void* _renderable, float2d position)
@@ -70,6 +75,11 @@ void Renderable_TextBox_Render(ApplicationState* app, SpriteBatch* spriteBatch, 
 	}
 	
 	renderable->duration++;
+	
+	if(renderable->duration > 60)
+	{
+		renderable->renderTargetID = 1;
+	}
 	
 	FontStashFNA3D* fna = (FontStashFNA3D*)app->fons->params.userPtr;
 	
@@ -149,7 +159,7 @@ void Renderable_Tilemap_Render(ApplicationState* app, SpriteBatch* spriteBatch, 
 			);
 			src = quad_Frame(renderable->texture, frame.X, frame.Y);
 			
-			SpriteBatch_AddQuad(spriteBatch, camera, renderable->texture->asset, pos, src, renderable->color);
+			SpriteBatch_AddQuad(app, spriteBatch, camera, renderable->texture->asset, pos, src, renderable->color);
 		}
 	}
 }

@@ -12,12 +12,11 @@
 
 void DrawSystem(ecs_iter_t* it)
 {
-	ApplicationState* app = (ApplicationState*)ecs_get_context(it->world);
+	fctx();
 	
 	Body* body = ecs_column(it, Body, 1);
 	Renderable* renderable = ecs_column(it, Renderable, 2);
-	quad pos, src;
-	float2d size;
+	
 	for(int i = 0; i < it->count; i++)
 	{
 		if(app->renderState.currentRenderTargetID != renderable[i].renderTargetID)

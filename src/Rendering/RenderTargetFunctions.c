@@ -37,7 +37,7 @@ RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d 
 	
 	if(renderTarget.scale)
 	{
-		renderTarget.viewport.y = app->renderState.viewport.y * 2;
+		renderTarget.viewport.y = app->renderState.viewport.y;
 	}
 	else
 	{
@@ -169,10 +169,12 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 	assert(shaderMatrix != NULL);
 	if(renderTarget == NULL)
 	{
+		printf("%1.1f\n", app->renderState.camera.position.Y);
 		Camera_LoadInto(&app->renderState.camera, shaderMatrix->value.values);
 	}
 	else
 	{
+		printf("%1.1f\n", renderTarget->camera.position.Y);
 		Camera_LoadInto(&renderTarget->camera, shaderMatrix->value.values);
 	}
 	
