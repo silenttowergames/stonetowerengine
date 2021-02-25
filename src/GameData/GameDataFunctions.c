@@ -147,7 +147,7 @@ void GameData_Save(GameData* gameData)
             
             case GAMEDATA_Float:
             {
-                fprintf(gdINI, "%s = %.*f\n", DBL_DIG - 1, attr->key, attr->valueFloat);
+                fprintf(gdINI, "%s = %.*f\n", attr->key, attr->valueFloat);
             } break;
             
             case GAMEDATA_String:
