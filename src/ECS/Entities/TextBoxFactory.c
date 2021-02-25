@@ -21,7 +21,7 @@ void TextBoxFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONOb
             1,
             1,
             colorU(0, 0, 255, 255),
-            2,
+            0,
             "Retro"
         )
     );

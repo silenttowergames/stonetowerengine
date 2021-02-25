@@ -208,7 +208,7 @@ void RenderState_Resize(ApplicationState* app, int sizeX, int sizeY)
 		app->renderState.mainRenderTarget = RenderTarget_Create(app, app->renderState.resolution, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 0, 0, 0, 1, });
 	}
 	
-	app->renderState.currentRenderTargetID = -1;
+	app->renderState.currentRenderTargetID = RENDERTARGET_CLOSED;
 	
 	if(app->renderState.targets != NULL)
 	{

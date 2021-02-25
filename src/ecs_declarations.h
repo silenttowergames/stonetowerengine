@@ -16,6 +16,4 @@
     STE_ECS_COMPONENT_ ## de(w, Renderable);\
     STE_ECS_COMPONENT_ ## de(w, TileLayerCollides);
 
-#define ECS_Setup_Define "world,"
-
 ECS_Setup(DECLARE, )

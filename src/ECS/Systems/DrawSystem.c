@@ -21,10 +21,7 @@ void DrawSystem(ecs_iter_t* it)
 	{
 		if(app->renderState.currentRenderTargetID != renderable[i].renderTargetID)
 		{
-			if(app->renderState.currentRenderTargetID >= 0)
-			{
-				RenderTarget_Stop(app);
-			}
+			RenderTarget_Stop(app);
 			
 			RenderTarget_Start(app, renderable[i].renderTargetID);
 		}

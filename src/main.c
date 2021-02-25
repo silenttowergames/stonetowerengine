@@ -5,7 +5,6 @@
 #include "includes.h"
 
 // NOW
-// FIXME: Terrible viewport / camera / something bug on first-drawn-to RenderTarget; has top padding matching offset of window vs res Y
 // TODO: Window icon
 // TODO: SoundInstance containing sound ID, relative volume, etc
 // TODO: Change volume function for sound ID, which also updates SoundInstance local volume
@@ -44,7 +43,6 @@ void initializeScene(ecs_world_t* world)
     ctx();
     
     factoryRun(app, "Player", -32, 0, 0, NULL);
-    //factoryRun(app, "Player", -32, 32, 0, NULL);
     
     factoryRun(app, "NPC", 32, 0, 0, NULL);
     factoryRun(app, "NPC", 0, 32, 0, NULL);
@@ -203,12 +201,9 @@ int main(int arcg, char* argv[])
     );
     
     renderTargets(
-        3,
-        //RenderTarget_Create(&app, (int2d){ 320, 180, }, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 0, 0, 1, 1, }),
-        RenderTarget_Create(&app, (int2d){ 10, 10, }, (int2d){ 10, 10, }, false, (FNA3D_Vec4){ 0, 1, 0, 0.5f, }),
-        RenderTarget_Create(&app, (int2d){ 160, 180, }, (int2d){ 80, 0, }, true, (FNA3D_Vec4){ 1, 0, 1, 1, }),
-        RenderTarget_Create(&app, (int2d){ 160, 180, }, (int2d){ -80, 0, }, true, (FNA3D_Vec4){ 1, 0, 1, 1, })
-        //RenderTarget_Create(&app, (int2d){ 80, 80, }, (int2d){ 40, 40, }, false, (FNA3D_Vec4){ 0, 1, 0, 0.5f, })
+        2,
+        RenderTarget_Create(&app, (int2d){ 320, 180, }, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 1, 0, 1, 1, }),
+        RenderTarget_Create(&app, (int2d){ 80, 80, }, (int2d){ 40, 40, }, false, (FNA3D_Vec4){ 1, 1, 1, 0.5f, })
     );
     
     /*

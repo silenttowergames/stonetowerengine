@@ -73,6 +73,8 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 	
 	app->renderState.currentRenderTargetID = renderTargetID;
 	
+	SpriteBatch_Begin(&app->renderState.spriteBatch);
+	
 	RenderTarget* renderTarget;
 	
 	FNA3D_Viewport viewport;
@@ -104,13 +106,6 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 			
 			viewport = renderTarget->viewport;
 		} break;
-	}
-	
-	// Open the SpriteBatch
-	
-	if(!app->renderState.spriteBatch.opened)
-	{
-		SpriteBatch_Begin(&app->renderState.spriteBatch);
 	}
 	
 	// Set up the screen
@@ -214,6 +209,13 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 
 void RenderTarget_Stop(ApplicationState* app)
 {
+	if(app->renderState.currentRenderTargetID == RENDERTARGET_CLOSED)
+	{
+		return;
+	}
+	
+	app->renderState.currentRenderTargetID = RENDERTARGET_CLOSED;
+	
 	SpriteBatch_Flush(&app->renderState);
 	
 	SpriteBatch_End(&app->renderState.spriteBatch);
