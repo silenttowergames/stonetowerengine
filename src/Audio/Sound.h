@@ -3,6 +3,7 @@
 #include <flecs.h>
 #include <soloud_c.h>
 #include "Play.h"
+#include "SoundInstance.h"
 
 typedef enum SoundType
 {
@@ -16,9 +17,7 @@ typedef struct Sound
 {
     AudioSource* source;
     Play play;
-    unsigned int instances[8];
-    bool instancesPausedTimer[8];
-    bool instancesPausedFocus[8];
+    SoundInstance instances[8];
     const char* key;
     char* filename;
     SoundType type;

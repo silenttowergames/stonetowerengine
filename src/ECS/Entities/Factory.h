@@ -6,5 +6,5 @@
 typedef struct Factory
 {
 	const char* key;
-	void (*callable)(ecs_world_t*, float, float, int, TiledJSONObject*);
+	ecs_entity_t (*callable)(ecs_world_t*, float, float, int, TiledJSONObject*);
 } Factory;

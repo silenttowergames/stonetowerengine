@@ -21,7 +21,7 @@ void MoveSystem(ecs_iter_t* it)
 	
 	if(keys(Pressed, t))
 	{
-		printf("%d\n", gdValue("Integers", "hello", Int));
+		//printf("%d\n", gdValue("Integers", "hello", Int));
 		//ecs_set_time_scale(it->world, 0);
 	}
 	

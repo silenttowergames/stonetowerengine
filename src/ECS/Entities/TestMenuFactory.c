@@ -6,7 +6,7 @@
 #include "../Components/RenderableFunctions.h"
 #include "../../Application/ApplicationStateFunctions.h"
 
-void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
+ecs_entity_t TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
 {
     ctx();
     
@@ -117,4 +117,6 @@ void TestMenuFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONO
         MenuItem_Select_Test,
         NULL
     );
+    
+    return e;
 }

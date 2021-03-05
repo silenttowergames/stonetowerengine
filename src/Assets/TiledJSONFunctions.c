@@ -287,13 +287,18 @@ void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
                     continue;
                 }
                 
-                factory->callable(
+                ecs_entity_t e = factory->callable(
                     app->world,
                     tiled->layers[i].objects[j].position.X,
                     tiled->layers[i].objects[j].position.Y,
                     layer,
                     &tiled->layers[i].objects[j]
                 );
+                
+                if(e != 0)
+                {
+                    //ecs_set()
+                }
             }
         }
         

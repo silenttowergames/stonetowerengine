@@ -8,7 +8,7 @@
 #include "../../Application/ApplicationStateFunctions.h"
 #include "../../Utilities/colorFunctions.h"
 
-void NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
+ecs_entity_t NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
 {
 	ctx();
 	
@@ -33,6 +33,8 @@ void NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject
         (rand() % 10) / 10.0f,
         1,
         0xFFFFFFFF,
-        1
+        0
     ));
+    
+    return f;
 }

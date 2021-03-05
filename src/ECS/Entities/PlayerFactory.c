@@ -10,7 +10,7 @@
 #include "../../Assets/TiledJSONProperty.h"
 #include "../../Application/ApplicationStateFunctions.h"
 
-void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
+ecs_entity_t PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
 {
     ctx();
     
@@ -47,4 +47,6 @@ void PlayerFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObj
         0xFFFFFFFF,
         0
     ));
+    
+    return e;
 }

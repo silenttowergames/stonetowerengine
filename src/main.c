@@ -5,7 +5,6 @@
 #include "includes.h"
 
 // NOW
-// TODO: Window icon
 // TODO: SoundInstance containing sound ID, relative volume, etc
 // TODO: Change volume function for sound ID, which also updates SoundInstance local volume
 // TODO: Config volume
@@ -13,7 +12,9 @@
 // TODO: Save state, including gameData
 
 // LATER
+// TODO: Window icon
 // FIXME: DirectX not working
+// TODO: Clean up code
 // TODO: Dialogue system
 // TODO: Get relative DLL paths working
 // TODO: Turn engine into DLL, create example project
@@ -34,6 +35,7 @@ void initWorld(ecs_world_t* world)
     ECS_SYSTEM(world, CameraFollowSystem, EcsOnUpdate, Body, CameraFollow, Renderable);
     ECS_SYSTEM(world, DepthSystem, EcsOnUpdate, Body, Renderable);
     ECS_SYSTEM(world, AnimateSystem, EcsOnUpdate, Animate, Renderable);
+    ECS_SYSTEM(world, DebugMovableSystem, EcsOnUpdate, Renderable, Body);
     
     DrawSystem_Init();
 }
@@ -123,6 +125,11 @@ void cmdExit(ApplicationState* app, int argc, char** argv)
     app->quit = true;
 }
 
+void cmdMovable(ApplicationState* app, int argc, char** argv)
+{
+    app->movable = !app->movable;
+}
+
 int main(int arcg, char* argv[])
 {
     configDefault(config, 1280, 720, "en", false);
@@ -136,7 +143,7 @@ int main(int arcg, char* argv[])
         320, 180,
         1024, 1024,
         initWorld,
-        "initialize",
+        "map0",
         RSZ_Floor
     );
     
@@ -201,9 +208,9 @@ int main(int arcg, char* argv[])
     );
     
     renderTargets(
-        2,
-        RenderTarget_Create(&app, (int2d){ 320, 180, }, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 1, 0, 1, 1, }),
-        RenderTarget_Create(&app, (int2d){ 80, 80, }, (int2d){ 40, 40, }, false, (FNA3D_Vec4){ 1, 1, 1, 0.5f, })
+        1,
+        RenderTarget_Create(&app, (int2d){ 320, 180, }, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 1, 0, 1, 1, })
+        //RenderTarget_Create(&app, (int2d){ 80, 80, }, (int2d){ 40, 40, }, false, (FNA3D_Vec4){ 1, 1, 1, 0.5f, })
     );
     
     /*
@@ -214,10 +221,11 @@ int main(int arcg, char* argv[])
     
     ConsoleCommand_AddAll(
         &app,
-        3,
+        4,
         ConsoleCommand_Create("exit", cmdExit),
         ConsoleCommand_Create("play", cmdPlaySound),
-        ConsoleCommand_Create("scene", cmdChangeScene)
+        ConsoleCommand_Create("scene", cmdChangeScene),
+        ConsoleCommand_Create("movable", cmdMovable)
     );
     
     loop();

@@ -42,4 +42,6 @@ typedef struct ApplicationState
     char* savePathConfig;
     ConsoleState console;
     GameData gameData;
+    const char* flecsSceneCurrent;
+    bool movable;
 } ApplicationState;

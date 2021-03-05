@@ -23,26 +23,26 @@ void AudioManager_update(AudioManager* audioManager)
     {
         for(int j = 0; j < sizeof(audioManager->sounds[i].instances) / sizeof(unsigned int); j++)
         {
-            if(audioManager->sounds[i].instances[j] == 0)
+            if(audioManager->sounds[i].instances[j].id == 0)
             {
                 continue;
             }
             
-            if(Soloud_getStreamTime(audioManager->soloud, audioManager->sounds[i].instances[j]) != 0)
+            if(Soloud_getStreamTime(audioManager->soloud, audioManager->sounds[i].instances[j].id) != 0)
             {
-                audioManager->sounds[i].instancesPausedTimer[j] = false;
+                audioManager->sounds[i].instances[j].pausedTimer = false;
                 
                 continue;
             }
             
-            if(!audioManager->sounds[i].instancesPausedTimer[j])
+            if(!audioManager->sounds[i].instances[j].pausedTimer)
             {
-                audioManager->sounds[i].instancesPausedTimer[j] = true;
+                audioManager->sounds[i].instances[j].pausedTimer = true;
                 
                 continue;
             }
             
-            audioManager->sounds[i].instancesPausedTimer[j] = false;
+            audioManager->sounds[i].instances[j].pausedTimer = false;
             
             if(j < sizeof(audioManager->sounds[i].instances) / sizeof(unsigned int) - 1)
             {
@@ -52,11 +52,11 @@ void AudioManager_update(AudioManager* audioManager)
                     audioManager->sounds[i].instances[x - 1] = audioManager->sounds[i].instances[x];
                 }
                 
-                audioManager->sounds[i].instances[x] = 0;
+                audioManager->sounds[i].instances[x].id = 0;
             }
             else
             {
-                audioManager->sounds[i].instances[j] = 0;
+                audioManager->sounds[i].instances[j].id = 0;
             }
         }
     }
@@ -68,14 +68,14 @@ void AudioManager_focus(AssetManager* assetManager)
     {
         for(int j = 0; j < sizeof(assetManager->arraySound[i].instances) / sizeof(unsigned int); j++)
         {
-            if(!assetManager->arraySound[i].instancesPausedFocus[j])
+            if(!assetManager->arraySound[i].instances[j].pausedFocus)
             {
                 continue;
             }
             
-            assetManager->arraySound[i].instancesPausedFocus[j] = false;
+            assetManager->arraySound[i].instances[j].pausedFocus = false;
             
-            Soloud_setPause(assetManager->audioManager.soloud, assetManager->arraySound[i].instances[j], false);
+            Soloud_setPause(assetManager->audioManager.soloud, assetManager->arraySound[i].instances[j].id, false);
         }
     }
 }
@@ -86,14 +86,14 @@ void AudioManager_blur(AssetManager* assetManager)
     {
         for(int j = 0; j < sizeof(assetManager->arraySound[i].instances) / sizeof(unsigned int); j++)
         {
-            if(Soloud_getPause(assetManager->audioManager.soloud, assetManager->arraySound[i].instances[j]))
+            if(Soloud_getPause(assetManager->audioManager.soloud, assetManager->arraySound[i].instances[j].id))
             {
                 continue;
             }
             
-            assetManager->arraySound[i].instancesPausedFocus[j] = true;
+            assetManager->arraySound[i].instances[j].pausedFocus = true;
             
-            Soloud_setPause(assetManager->audioManager.soloud, assetManager->arraySound[i].instances[j], true);
+            Soloud_setPause(assetManager->audioManager.soloud, assetManager->arraySound[i].instances[j].id, true);
         }
     }
 }

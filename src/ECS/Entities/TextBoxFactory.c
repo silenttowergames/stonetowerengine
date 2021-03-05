@@ -6,7 +6,7 @@
 #include "../../Application/ApplicationStateFunctions.h"
 #include "../../Utilities/colorFunctions.h"
 
-void TextBoxFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
+ecs_entity_t TextBoxFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
 {
     ctx();
     
@@ -25,4 +25,6 @@ void TextBoxFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONOb
             "Retro"
         )
     );
+    
+    return e;
 }

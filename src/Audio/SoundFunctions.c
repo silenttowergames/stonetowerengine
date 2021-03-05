@@ -1,6 +1,7 @@
 #include <math.h>
 #include <soloud_c.h>
 #include "SoundFunctions.h"
+#include "SoundInstanceFunctions.h"
 
 Sound Sound_create_load(const char* key, Play play)
 {
@@ -51,7 +52,7 @@ Sound Sound_create_sfxr(const char* key, Play play)
     return sound;
 }
 
-bool Sound_play(Sound* sound, Soloud* soloud)
+SoundInstance* Sound_play(Sound* sound, Soloud* soloud)
 {
     switch(sound->play)
     {
@@ -62,7 +63,7 @@ bool Sound_play(Sound* sound, Soloud* soloud)
             
             for(int i = 0; i < sizeof(sound->instances) / sizeof(unsigned int); i++)
             {
-                if(sound->instances[i] != 0)
+                if(sound->instances[i].id != 0)
                 {
                     continue;
                 }
@@ -75,14 +76,14 @@ bool Sound_play(Sound* sound, Soloud* soloud)
                     sound->instances[j - 1] = sound->instances[j];
                 }
                 
-                sound->instances[j - 1] = Soloud_play(soloud, sound->source);
+                sound->instances[j - 1] = SoundInstance_Create(soloud, sound);
                 
-                return true;
+                return &sound->instances[j - 1];
             }
             
             if(!available)
             {
-                Soloud_stop(soloud, sound->instances[0]);
+                Soloud_stop(soloud, sound->instances[0].id);
                 
                 int j;
                 for(j = 1; j < sizeof(sound->instances) / sizeof(unsigned int); j++)
@@ -90,9 +91,9 @@ bool Sound_play(Sound* sound, Soloud* soloud)
                     sound->instances[j - 1] = sound->instances[j];
                 }
                 
-                sound->instances[j - 1] = Soloud_play(soloud, sound->source);
+                sound->instances[j - 1] = SoundInstance_Create(soloud, sound);
                 
-                return true;
+                return &sound->instances[j - 1];
             }
         }
         
@@ -100,38 +101,41 @@ bool Sound_play(Sound* sound, Soloud* soloud)
         {
             for(int i = 0; i < sizeof(sound->instances) / sizeof(unsigned int); i++)
             {
-                Soloud_stop(soloud, sound->instances[i]);
+                Soloud_stop(soloud, sound->instances[i].id);
                 
-                sound->instances[i] = 0;
+                sound->instances[i].id = 0;
             }
             
-            sound->instances[0] = Soloud_play(soloud, sound->source);
+            sound->instances[0] = SoundInstance_Create(soloud, sound);
             
-            return true;
+            return &sound->instances[0];
         }
         
         case Play_IfAvailable:
         {
             for(int i = 0; i < sizeof(sound->instances) / sizeof(unsigned int); i++)
             {
-                if(sound->instances[i] != 0)
+                if(sound->instances[i].id != 0)
                 {
                     continue;
                 }
                 
-                sound->instances[i] = Soloud_play(soloud, sound->source);
+                sound->instances[i] = SoundInstance_Create(soloud, sound);
                 
-                return true;
+                return &sound->instances[i];
             }
             
-            return false;
+            return NULL;
         }
     }
 }
 
 void Sound_Free(Sound* sound)
 {
-    free(sound->filename);
+    if(sound->filename != NULL)
+    {
+        free(sound->filename);
+    }
     
     switch(sound->type)
     {

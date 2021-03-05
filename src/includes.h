@@ -35,6 +35,7 @@
 #include "Audio/Play.h"
 #include "Audio/Sound.h"
 #include "Audio/SoundFunctions.c"
+#include "Audio/SoundInstanceFunctions.c"
 
 // Debug
 #include "Debug/ConsoleState.h"
@@ -56,6 +57,7 @@
 #include "ECS/Components/Renderable.h"
 #include "ECS/Components/RenderableFunctions.c"
 #include "ECS/Components/RenderOffsetFunctions.c"
+#include "ECS/Components/TiledObject.h"
 #include "ECS/Components/TileLayerCollides.h"
 // Entities
 #include "ECS/Entities/Factory.h"
@@ -69,6 +71,7 @@
 #include "ECS/Systems/BasicAABBSystem.c"
 #include "ECS/Systems/CameraFollowSystem.c"
 #include "ECS/Systems/ConsoleStateSystem.c"
+#include "ECS/Systems/DebugMovableSystem.c"
 #include "ECS/Systems/DepthSystem.c"
 #include "ECS/Systems/DrawSystem.c"
 #include "ECS/Systems/EngineUpdateSystem.c"
