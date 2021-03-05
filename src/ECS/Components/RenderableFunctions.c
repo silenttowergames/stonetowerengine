@@ -1,9 +1,23 @@
 #include <math.h>
 #include "RenderableFunctions.h"
+#include "../../Application/ApplicationState.h"
+#include "../../Assets/FontStashFNA3D.h"
 #include "../../Assets/TiledJSONFunctions.h"
 #include "../../Rendering/SpriteBatchFunctions.h"
 #include "../../Utilities/quadFunctions.h"
-#include "../../Assets/FontStashFNA3D.h"
+
+quad Renderable_Sprite_GetPosQuad(Renderable* renderable, float2d position)
+{
+	return quad_Easy(
+		position.X,
+		position.Y,
+		renderable->texture->tilesize.X * renderable->scale.X,
+		renderable->texture->tilesize.Y * renderable->scale.Y,
+		renderable->offset.X * renderable->scale.X,
+		renderable->offset.Y * renderable->scale.Y,
+		renderable->rotation
+	);
+}
 
 void Renderable_Sprite_Render(ApplicationState* app, SpriteBatch* spriteBatch, Camera* camera, void* _renderable, float2d position)
 {
@@ -13,15 +27,7 @@ void Renderable_Sprite_Render(ApplicationState* app, SpriteBatch* spriteBatch, C
 	_position.X += (camera->position.X * (1 - renderable->parallax));
 	_position.Y += (camera->position.Y * (1 - renderable->parallax));
 	
-	quad pos = quad_Easy(
-		_position.X,
-		_position.Y,
-		renderable->texture->tilesize.X * renderable->scale.X,
-		renderable->texture->tilesize.Y * renderable->scale.Y,
-		renderable->offset.X * renderable->scale.X,
-		renderable->offset.Y * renderable->scale.Y,
-		renderable->rotation
-	);
+	quad pos = Renderable_Sprite_GetPosQuad(renderable, _position);
 	quad src = quad_Frame(renderable->texture, renderable->frame.X, renderable->frame.Y);
 	
 	if(renderable->flipX || renderable->flipY)

@@ -128,6 +128,8 @@ void cmdExit(ApplicationState* app, int argc, char** argv)
 void cmdMovable(ApplicationState* app, int argc, char** argv)
 {
     app->movable = !app->movable;
+    
+    printf("%d\n", app->movable);
 }
 
 int main(int arcg, char* argv[])

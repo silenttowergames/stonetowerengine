@@ -41,6 +41,9 @@
         "menuitem.h": "c",
         "testmenufactory.h": "c",
         "debugmovablesystem.h": "c",
-        "flecsfunctions.h": "c"
+        "flecsfunctions.h": "c",
+        "renderablefunctions.h": "c",
+        "quadfunctions.h": "c",
+        "mousestatefunctions.h": "c"
     }
 }
