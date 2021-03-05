@@ -4,6 +4,7 @@
 #include "../Assets/Shader.h"
 #include "../Assets/Texture.h"
 #include "../Rendering/Camera.h"
+#include "../Utilities/float2d.h"
 #include "../Utilities/int2d.h"
 
 typedef struct RenderTarget
@@ -18,4 +19,6 @@ typedef struct RenderTarget
 	Texture texture;
 	FNA3D_Vec4 backgroundColor;
 	bool scale;
+	float2d mouse;
+	bool hovered;
 } RenderTarget;

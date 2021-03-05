@@ -6,6 +6,11 @@ void CameraFollowSystem(ecs_iter_t* it)
 {
 	fctx();
 	
+	if(app->movable)
+	{
+		return;
+	}
+	
 	Body* b = ecs_column(it, Body, 1);
 	CameraFollow* c = ecs_column(it, CameraFollow, 2);
 	Renderable* r = ecs_column(it, Renderable, 3);

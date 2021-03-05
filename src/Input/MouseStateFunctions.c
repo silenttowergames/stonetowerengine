@@ -17,8 +17,8 @@ void MouseState_Update(ApplicationState* app, MouseState* mouseState)
 {
     uint32_t currentMouseState = SDL_GetMouseState(&mouseState->positionReal.X, &mouseState->positionReal.Y);
     
-    mouseState->position.X = mouseState->positionReal.X / app->renderState.windowZoom.X;
-    mouseState->position.Y = mouseState->positionReal.Y / app->renderState.windowZoom.Y;
+    mouseState->position.X = (mouseState->positionReal.X - app->renderState.viewport.x) / app->renderState.windowZoom.X;
+    mouseState->position.Y = (mouseState->positionReal.Y - app->renderState.viewport.y) / app->renderState.windowZoom.Y;
     
     bool isDown;
     
@@ -34,6 +34,23 @@ void MouseState_Update(ApplicationState* app, MouseState* mouseState)
         }
         
         mouseState->down[i - 1] = fmax(1, mouseState->down[i - 1] + 1);
+    }
+    
+    for(int i = 0; i < app->renderState.targetsCount; i++)
+    {
+        app->renderState.targets[i].mouse = app->inputManager.mouseState.position;
+        app->renderState.targets[i].mouse.X -= (app->renderState.targets[i].camera.resolution.X / 2) - app->renderState.targets[i].camera.position.X;
+        app->renderState.targets[i].mouse.Y -= (app->renderState.targets[i].camera.resolution.Y / 2) - app->renderState.targets[i].camera.position.Y;
+        
+        app->renderState.targets[i].hovered = (
+            app->inputManager.mouseState.position.X >= app->renderState.targets[i].position.X
+            &&
+            app->inputManager.mouseState.position.Y >= app->renderState.targets[i].position.Y
+            &&
+            app->inputManager.mouseState.position.X < app->renderState.targets[i].position.X + app->renderState.targets[i].camera.resolution.X
+            &&
+            app->inputManager.mouseState.position.Y < app->renderState.targets[i].position.Y + app->renderState.targets[i].camera.resolution.Y
+        );
     }
 }
 
