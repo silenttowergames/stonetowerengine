@@ -30,6 +30,10 @@ void ConsoleStateSystem(ApplicationState* app)
         }
         else
         {
+            app->console.historyMemory = 0;
+            
+            app->console.line[0] = '\0';
+            
             app->inputManager.keyboardState.acceptingTyping = didAllowTyping;
         }
         

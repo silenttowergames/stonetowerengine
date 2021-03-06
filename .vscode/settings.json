@@ -44,6 +44,7 @@
         "flecsfunctions.h": "c",
         "renderablefunctions.h": "c",
         "quadfunctions.h": "c",
-        "mousestatefunctions.h": "c"
+        "mousestatefunctions.h": "c",
+        "basicaabbsystem.h": "c"
     }
 }

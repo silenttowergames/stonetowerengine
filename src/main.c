@@ -128,8 +128,83 @@ void cmdExit(ApplicationState* app, int argc, char** argv)
 void cmdMovable(ApplicationState* app, int argc, char** argv)
 {
     app->movable = !app->movable;
+}
+
+void cmdPause(ApplicationState* app, int argc, char** argv)
+{
+    ecs_set_time_scale(app->world, 0.0f);
+}
+
+void cmdUnpause(ApplicationState* app, int argc, char** argv)
+{
+    ecs_set_time_scale(app->world, 1.0f);
+}
+
+ecs_query_t* query;
+void cmdReloadMap(ApplicationState* app, int argc, char** argv)
+{
+    char* key;
     
-    printf("%d\n", app->movable);
+    if(argc <= 0)
+    {
+        key = app->flecsSceneCurrent;
+    }
+    else
+    {
+        key = argv[0];
+    }
+    
+    assert(app->assetManager.mapTiled != NULL);
+    
+    TiledJSON* map = (*mapGet(app->assetManager.mapTiled, key, TiledJSON*));
+    
+    if(map == NULL)
+    {
+        return;
+    }
+    
+    const char* key = map->key;
+    
+    TiledJSON_Free(map);
+    
+    *map = TiledJSON_Load(app, key);
+    
+    // TODO: Query for TiledObject components. If they're unique, delete them
+    // TODO: Check for TiledObjects that are new to this map (compare before free? check for ones not in world?) and create those
+}
+
+void website(const char* url)
+{
+    char* format;
+    
+    #ifdef __MINGW32__
+    format = "start";
+    #endif
+    
+    #ifdef __APPLE__
+    format = "open";
+    #endif
+    
+    #ifdef __linux__
+    format = "xdg-open";
+    #endif
+    
+    char* cmd = malloc(sizeof(char) * (strlen(url) + strlen(format) + 2));
+    sprintf(cmd, "%s %s", format, url);
+    
+    system(cmd);
+    
+    free(cmd);
+}
+
+void cmdWebsite(ApplicationState* app, int argc, char** argv)
+{
+    if(argc <= 0)
+    {
+        return;
+    }
+    
+    website(argv[0]);
 }
 
 int main(int arcg, char* argv[])
@@ -223,10 +298,14 @@ int main(int arcg, char* argv[])
     
     ConsoleCommand_AddAll(
         &app,
-        4,
+        8,
         ConsoleCommand_Create("exit", cmdExit),
         ConsoleCommand_Create("play", cmdPlaySound),
         ConsoleCommand_Create("scene", cmdChangeScene),
+        ConsoleCommand_Create("pause", cmdPause),
+        ConsoleCommand_Create("unpause", cmdUnpause),
+        ConsoleCommand_Create("website", cmdWebsite),
+        ConsoleCommand_Create("reload-map", cmdReloadMap),
         ConsoleCommand_Create("movable", cmdMovable)
     );
     

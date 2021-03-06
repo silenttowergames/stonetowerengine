@@ -4,6 +4,7 @@
 #include "../Application/ApplicationStateFunctions.h"
 #include "../ECS/Components/Body.h"
 #include "../ECS/Components/RenderableFunctions.h"
+#include "../ECS/Components/TiledObject.h"
 #include "../ECS/Components/TileLayerCollides.h"
 #include "../ECS/FlecsFunctions.h"
 
@@ -297,7 +298,9 @@ void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
                 
                 if(e != 0)
                 {
-                    //ecs_set()
+                    ecs_set(app->world, e, TiledObject, {
+                        tiled->layers[i].objects[j].id,
+                    });
                 }
             }
         }

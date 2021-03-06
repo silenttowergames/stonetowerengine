@@ -8,6 +8,7 @@
 #include "../../Rendering/SpriteBatch.h"
 #include "../../Utilities/walls.h"
 
+// TODO: Free these two queries!!!!!
 #define BasicAABBSystem_Init()\
     ecs_set_component_actions(world, BasicAABB, { .dtor = ecs_dtor(BasicAABB), });\
     ECS_SYSTEM(world, BasicAABBSystem, EcsOnUpdate, 0);\

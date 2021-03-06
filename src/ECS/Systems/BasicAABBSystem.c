@@ -241,6 +241,8 @@ static void BasicAABBSystem_Phase_Narrow()
 void BasicAABBSystemFree()
 {
     free(aabbEnitities);
+    free(aabbBasics);
+    free(aabbBodies);
 }
 
 static void BasicAABB_TryHitboxes(

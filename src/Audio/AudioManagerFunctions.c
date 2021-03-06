@@ -1,4 +1,5 @@
 #include <string.h>
+#include "../Assets/AssetManager.h"
 #include "AudioManagerFunctions.h"
 
 void AudioManager_create(AudioManager* audioManager)
@@ -66,9 +67,9 @@ void AudioManager_focus(AssetManager* assetManager)
 {
     for(int i = 0; i < assetManager->lengthSound; i++)
     {
-        for(int j = 0; j < sizeof(assetManager->arraySound[i].instances) / sizeof(unsigned int); j++)
+        for(int j = 0; j < sizeof(assetManager->arraySound[i].instances) / sizeof(SoundInstance); j++)
         {
-            if(!assetManager->arraySound[i].instances[j].pausedFocus)
+            if(!assetManager->arraySound[i].instances[j].pausedFocus || !assetManager->arraySound[i].instances[j].id)
             {
                 continue;
             }
@@ -84,10 +85,12 @@ void AudioManager_blur(AssetManager* assetManager)
 {
     for(int i = 0; i < assetManager->lengthSound; i++)
     {
-        for(int j = 0; j < sizeof(assetManager->arraySound[i].instances) / sizeof(unsigned int); j++)
+        for(int j = 0; j < sizeof(assetManager->arraySound[i].instances) / sizeof(SoundInstance); j++)
         {
             if(Soloud_getPause(assetManager->audioManager.soloud, assetManager->arraySound[i].instances[j].id))
             {
+                printf("%s[%d]: %d\n", assetManager->arraySound[i].key, j, assetManager->arraySound[i].instances[j]);
+                
                 continue;
             }
             
