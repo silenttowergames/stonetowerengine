@@ -46,6 +46,8 @@
         "quadfunctions.h": "c",
         "mousestatefunctions.h": "c",
         "basicaabbsystem.h": "c",
-        "keyboardstatefunctions.h": "c"
+        "keyboardstatefunctions.h": "c",
+        "tiledjsonfunctions.h": "c",
+        "json.h": "c"
     }
 }

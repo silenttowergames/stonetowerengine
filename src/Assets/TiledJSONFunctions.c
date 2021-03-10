@@ -4,6 +4,7 @@
 #include "../Application/ApplicationStateFunctions.h"
 #include "../ECS/Components/Body.h"
 #include "../ECS/Components/RenderableFunctions.h"
+#include "../ECS/Components/TiledMap.h"
 #include "../ECS/Components/TiledObject.h"
 #include "../ECS/Components/TileLayerCollides.h"
 #include "../ECS/FlecsFunctions.h"
@@ -263,8 +264,6 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
     return tiled;
 }
 
-// TODO: Add this to .h file
-// TODO: Use this in reloading map for new IDs
 void TiledJSON_Build_Object(ApplicationState* app, TiledJSONObject* obj, int layer)
 {
     if(obj == NULL || obj->type == NULL || strlen(obj->type) == 0)
@@ -348,6 +347,9 @@ void TiledJSON_Map(ecs_world_t* world, TiledJSONLayer* layer, Texture* texture, 
         0,
         0,
         true,
+    });
+    ecs_set(world, e, TiledMap, {
+        layer->id,
     });
     
     TiledJSONProperty* prop = getProperty(layer, "collisions");

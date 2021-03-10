@@ -176,8 +176,6 @@ void ApplicationState_Loop(ApplicationState* app)
                 
                 if(app->focused)
                 {
-                    printf("%1.5f\n", fDeltaTime);
-                    
                     ecs_progress(app->world, fDeltaTime);
                     
                     ConsoleStateSystem(app);

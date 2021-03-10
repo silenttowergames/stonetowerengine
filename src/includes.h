@@ -57,6 +57,7 @@
 #include "ECS/Components/Renderable.h"
 #include "ECS/Components/RenderableFunctions.c"
 #include "ECS/Components/RenderOffsetFunctions.c"
+#include "ECS/Components/TiledMap.h"
 #include "ECS/Components/TiledObject.h"
 #include "ECS/Components/TileLayerCollides.h"
 // Entities

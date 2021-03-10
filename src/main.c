@@ -170,7 +170,7 @@ void cmdReloadMap(ApplicationState* app, int argc, char** argv)
     }
     
     TiledJSON* map = *_map;
-    TiledJSON* oldMap = map;
+    TiledJSON oldMap = *map;
     
     TiledJSON newMap = TiledJSON_Load(app, key);
     
@@ -189,8 +189,6 @@ void cmdReloadMap(ApplicationState* app, int argc, char** argv)
                 for(int j = 0; j < map->layerCount; j++)
                 {
                     // FIXME: Only sometimes, after reload where map is changed, accessing type throws a segfault
-                    printf("Old Map: Layer %d: Count %d:\n", j, map->layers[j].count);
-                    printf("%s\n", map->layers[j].type);
                     
                     if(strcmp(map->layers[j].type, "tilelayer") == 0)
                     {
@@ -240,10 +238,34 @@ void cmdReloadMap(ApplicationState* app, int argc, char** argv)
             printf("%d\n", objIDsNew[i].id);
         }
         
-        *map = newMap;
+        ecs_query_t* query;
+        ecs_iter_t it;
         
-        ecs_query_t* query = ecs_query_new(app->world, "TiledObject");
-        ecs_iter_t it = ecs_query_iter(query);
+        query = ecs_query_new(app->world, "TiledMap");
+        it = ecs_query_iter(query);
+        
+        while(ecs_query_next(&it))
+        {
+            for(int i = 0; i < it.count; i++)
+            {
+                ecs_delete(app->world, it.entities[i]);
+            }
+        }
+        
+        free(query);
+        
+        for(int i = 0; i < newMap.layerCount; i++)
+        {
+            if(strcmp(newMap.layers[i].type, "tilelayer") != 0)
+            {
+                continue;
+            }
+            
+            TiledJSON_Map(app->world, &newMap.layers[i], newMap.texture, i);
+        }
+        
+        query = ecs_query_new(app->world, "TiledObject");
+        it = ecs_query_iter(query);
         
         while(ecs_query_next(&it))
         {
@@ -265,11 +287,12 @@ void cmdReloadMap(ApplicationState* app, int argc, char** argv)
                 
                 if(delete)
                 {
-                    printf("Deleting: %d\n", obj[i].id);
                     ecs_delete(app->world, it.entities[i]);
                 }
             }
         }
+        
+        free(query);
         
         for(int i = 0; i < newMap.objCount; i++)
         {
@@ -287,16 +310,24 @@ void cmdReloadMap(ApplicationState* app, int argc, char** argv)
             
             if(isNew)
             {
-                //TiledJSON_Build_Object(app, &objIDsNew[i], objIDsNew[i].layer);
+                TiledJSON_Build_Object(app, &objIDsNew[i], objIDsNew[i].layer);
             }
         }
     }
     
-    TiledJSON_Free(oldMap);
+    for(int i = 0; i < app->assetManager.lengthTiled; i++)
+        {
+            if(strcmp(app->assetManager.arrayTiled[i].key, key) != 0)
+            {
+                continue;
+            }
+            
+            app->assetManager.arrayTiled[i] = newMap;
+            
+            break;
+        }
     
-    // TODO: Query for TiledObject components. If they're unique, delete them
-    // TODO: Check for TiledObjects that are new to this map (compare before free? check for ones not in world?) and create those
-    // TODO: Reload tile maps every time?
+    TiledJSON_Free(&oldMap);
 }
 
 void cmdWebsite(ApplicationState* app, int argc, char** argv)
