@@ -162,6 +162,8 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
             json_object_object_get_ex(layer, "objects", &obj);
             tlayer.count = json_object_array_length(obj);
             
+            tiled.objCount += tlayer.count;
+            
             tlayer.objects = malloc(sizeof(TiledJSONObject) * tlayer.count); // TiledJSONLayer.objects allocate
             
             for(int j = 0; j < tlayer.count; j++)
@@ -261,6 +263,38 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
     return tiled;
 }
 
+// TODO: Add this to .h file
+// TODO: Use this in reloading map for new IDs
+void TiledJSON_Build_Object(ApplicationState* app, TiledJSONObject* obj, int layer)
+{
+    if(obj == NULL || obj->type == NULL || strlen(obj->type) == 0)
+    {
+        return;
+    }
+    
+    Factory* factory = ApplicationState_GetFactory(app, obj->type);
+    
+    if(factory == NULL)
+    {
+        return;
+    }
+    
+    ecs_entity_t e = factory->callable(
+        app->world,
+        obj->position.X,
+        obj->position.Y,
+        layer,
+        obj
+    );
+    
+    if(e != 0)
+    {
+        ecs_set(app->world, e, TiledObject, {
+            obj->id,
+        });
+    }
+}
+
 void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
 {
     int layer = 0;
@@ -276,32 +310,7 @@ void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
         {
             for(int j = 0; j < tiled->layers[i].count; j++)
             {
-                if(tiled->layers[i].objects[j].type == NULL || strlen(tiled->layers[i].objects[j].type) == 0)
-                {
-                    continue;
-                }
-                
-                factory = ApplicationState_GetFactory(app, tiled->layers[i].objects[j].type);
-                
-                if(factory == NULL)
-                {
-                    continue;
-                }
-                
-                ecs_entity_t e = factory->callable(
-                    app->world,
-                    tiled->layers[i].objects[j].position.X,
-                    tiled->layers[i].objects[j].position.Y,
-                    layer,
-                    &tiled->layers[i].objects[j]
-                );
-                
-                if(e != 0)
-                {
-                    ecs_set(app->world, e, TiledObject, {
-                        tiled->layers[i].objects[j].id,
-                    });
-                }
+                TiledJSON_Build_Object(app, &tiled->layers[i].objects[j], layer);
             }
         }
         

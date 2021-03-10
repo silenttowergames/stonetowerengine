@@ -23,11 +23,13 @@ void MoveSystem(ecs_iter_t* it)
 	{
 		//printf("%d\n", gdValue("Integers", "hello", Int));
 		//ecs_set_time_scale(it->world, 0);
+		printf("test\n");
 	}
 	
 	if(keys(Pressed, y))
 	{
 		//ecs_set_time_scale(it->world, 1);
+		app->flecsScene = "map1";
 	}
 	
 	if(keys(Pressed, u))

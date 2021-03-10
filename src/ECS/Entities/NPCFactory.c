@@ -11,6 +11,9 @@
 ecs_entity_t NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJSONObject* object)
 {
 	ctx();
+    
+    X -= 4;
+    Y -= 12;
 	
     ecs_entity_t f = ecs_new(world, 0);
     

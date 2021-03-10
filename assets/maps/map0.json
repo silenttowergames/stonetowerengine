@@ -65,25 +65,7 @@
                 {
                  "gid":1,
                  "height":8,
-                 "id":24,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"test",
-                         "type":"string",
-                         "value":"hello!"
-                        }],
-                 "rotation":0,
-                 "type":"NPC",
-                 "visible":true,
-                 "width":8,
-                 "x":48,
-                 "y":48
-                }, 
-                {
-                 "gid":1,
-                 "height":8,
-                 "id":25,
+                 "id":28,
                  "name":"",
                  "properties":[
                         {
@@ -96,7 +78,7 @@
                  "visible":true,
                  "width":8,
                  "x":32,
-                 "y":64
+                 "y":40
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -117,7 +99,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":26,
+ "nextobjectid":36,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",

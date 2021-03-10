@@ -45,6 +45,7 @@
         "renderablefunctions.h": "c",
         "quadfunctions.h": "c",
         "mousestatefunctions.h": "c",
-        "basicaabbsystem.h": "c"
+        "basicaabbsystem.h": "c",
+        "keyboardstatefunctions.h": "c"
     }
 }

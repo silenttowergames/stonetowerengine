@@ -21,6 +21,8 @@ void ApplicationState_Create(
 void ApplicationState_Loop(ApplicationState* app);
 void ApplicationState_Free(ApplicationState* app);
 
+void ApplicationState_SetScene(ApplicationState* app, char* scene);
+
 void ApplicationState_InitFactories(ApplicationState* app, int length);
 void ApplicationState_AddFactories(ApplicationState* app, int length, ...);
 void ApplicationState_AddFactory(ApplicationState* app, Factory callable);

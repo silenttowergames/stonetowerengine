@@ -94,23 +94,19 @@ void ConsoleStateSystem(ApplicationState* app)
         
         if(app->console.commands != NULL)
         {
-            strcpy(lineCmd, app->console.line);
+            params = split(app->console.line, strlen(app->console.line), ' ', &paramsCount);
             
-            paramName = strtok(lineCmd, " ");
-            
-            if(paramName != NULL)
+            if(params != NULL && paramsCount > 0 && params[0] != NULL)
             {
-                paramsList = &lineCmd[strlen(paramName) + 1];
-                
-                cmd = mapGet(app->console.commands, paramName, ConsoleCommand);
+                cmd = mapGet(app->console.commands, params[0], ConsoleCommand);
                 
                 if(cmd != NULL)
                 {
-                    params = split(paramsList, strlen(paramsList), ' ', &paramsCount);
-                    
-                    cmd->callable(app, paramsCount, params);
+                    cmd->callable(app, paramsCount - 1, &params[1]);
                 }
             }
+            
+            split_free(params, paramsCount);
         }
         
         app->console.line[0] = '\0';

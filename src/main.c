@@ -10,6 +10,9 @@
 // TODO: Config volume
 // TODO: Hot-reload map (give factories a unique ID based on X, Y, key, prop?)
 // TODO: Save state, including gameData
+// TODO: Console cursor navigation: arrow left, arrow right, Home, End?
+// TODO: Console feedback? Maybe write it on the next line or something?
+// TODO: Console scaling?
 
 // LATER
 // TODO: Window icon
@@ -114,7 +117,7 @@ void cmdChangeScene(ApplicationState* app, int argc, char** argv)
 {
     for(int i = 0; i < argc; i++)
     {
-        app->flecsScene = argv[i];
+        ApplicationState_SetScene(app, argv[i]);
         
         break;
     }
@@ -140,12 +143,13 @@ void cmdUnpause(ApplicationState* app, int argc, char** argv)
     ecs_set_time_scale(app->world, 1.0f);
 }
 
-ecs_query_t* query;
 void cmdReloadMap(ApplicationState* app, int argc, char** argv)
 {
-    char* key;
+    // First, find the map we want to reload
+    const char* key;
     
-    if(argc <= 0)
+    // If the user doesn't specify a map, assume the one that's currently loaded
+    if(argc == 0 || argv[0][0] == '\0')
     {
         key = app->flecsSceneCurrent;
     }
@@ -154,47 +158,145 @@ void cmdReloadMap(ApplicationState* app, int argc, char** argv)
         key = argv[0];
     }
     
-    assert(app->assetManager.mapTiled != NULL);
+    TiledJSON** _map = mapGet(app->assetManager.mapTiled, key, TiledJSON*);
     
-    TiledJSON* map = (*mapGet(app->assetManager.mapTiled, key, TiledJSON*));
+    printf("Current map: `%s`\n", (*_map)->key);
     
-    if(map == NULL)
+    // If the map doesn't exist, just return
+    // Maybe in the future there will be feedback from the console
+    if(_map == NULL)
     {
         return;
     }
     
-    const char* key = map->key;
+    TiledJSON* map = *_map;
+    TiledJSON* oldMap = map;
     
-    TiledJSON_Free(map);
+    TiledJSON newMap = TiledJSON_Load(app, key);
     
-    *map = TiledJSON_Load(app, key);
+    if(strcmp(key, app->flecsSceneCurrent) == 0)
+    {
+        TiledJSONObject* objIDsOld = malloc(sizeof(TiledJSONObject) * map->objCount);
+        TiledJSONObject* objIDsNew = malloc(sizeof(TiledJSONObject) * newMap.objCount);
+        
+        TiledJSON* m;
+        int currentCountOld = 0;
+        int currentCountNew = 0;
+        for(int i = 0; i < fmax(map->objCount, newMap.objCount); i++)
+        {
+            if(i < map->objCount)
+            {
+                for(int j = 0; j < map->layerCount; j++)
+                {
+                    // FIXME: Only sometimes, after reload where map is changed, accessing type throws a segfault
+                    printf("Old Map: Layer %d: Count %d:\n", j, map->layers[j].count);
+                    printf("%s\n", map->layers[j].type);
+                    
+                    if(strcmp(map->layers[j].type, "tilelayer") == 0)
+                    {
+                        continue;
+                    }
+                    
+                    if((i - currentCountOld) >= map->layers[j].count)
+                    {
+                        currentCountOld += map->layers[j].count;
+                        
+                        continue;
+                    }
+                    
+                    objIDsOld[i] = map->layers[j].objects[i - currentCountOld];
+                }
+            }
+            
+            if(i < newMap.objCount)
+            {
+                for(int j = 0; j < newMap.layerCount; j++)
+                {
+                    if(strcmp(newMap.layers[j].type, "tilelayer") == 0)
+                    {
+                        continue;
+                    }
+                    
+                    if((i - currentCountNew) >= newMap.layers[j].count)
+                    {
+                        currentCountNew += newMap.layers[j].count;
+                        
+                        continue;
+                    }
+                    
+                    objIDsNew[i] = newMap.layers[j].objects[i - currentCountNew];
+                }
+            }
+        }
+        
+        printf("Old Map:\n");
+        for(int i = 0; i < map->objCount; i++)
+        {
+            printf("%d\n", objIDsOld[i].id);
+        }
+        printf("New map:\n");
+        for(int i = 0; i < newMap.objCount; i++)
+        {
+            printf("%d\n", objIDsNew[i].id);
+        }
+        
+        *map = newMap;
+        
+        ecs_query_t* query = ecs_query_new(app->world, "TiledObject");
+        ecs_iter_t it = ecs_query_iter(query);
+        
+        while(ecs_query_next(&it))
+        {
+            TiledObject* obj = ecs_column(&it, TiledObject, 1);
+            
+            for(int i = 0; i < it.count; i++)
+            {
+                bool delete = true;
+                
+                for(int j = 0; j < newMap.objCount; j++)
+                {
+                    if(objIDsNew[j].id == obj[i].id)
+                    {
+                        delete = false;
+                        
+                        break;
+                    }
+                }
+                
+                if(delete)
+                {
+                    printf("Deleting: %d\n", obj[i].id);
+                    ecs_delete(app->world, it.entities[i]);
+                }
+            }
+        }
+        
+        for(int i = 0; i < newMap.objCount; i++)
+        {
+            bool isNew = true;
+            
+            for(int j = 0; j < map->objCount; j++)
+            {
+                if(objIDsNew[i].id == objIDsOld[j].id)
+                {
+                    isNew = false;
+                    
+                    break;
+                }
+            }
+            
+            if(isNew)
+            {
+                //TiledJSON_Build_Object(app, &objIDsNew[i], objIDsNew[i].layer);
+            }
+        }
+    }
+    
+    TiledJSON_Free(oldMap);
     
     // TODO: Query for TiledObject components. If they're unique, delete them
     // TODO: Check for TiledObjects that are new to this map (compare before free? check for ones not in world?) and create those
-}
-
-void website(const char* url)
-{
-    char* format;
-    
-    #ifdef __MINGW32__
-    format = "start";
-    #endif
-    
-    #ifdef __APPLE__
-    format = "open";
-    #endif
-    
-    #ifdef __linux__
-    format = "xdg-open";
-    #endif
-    
-    char* cmd = malloc(sizeof(char) * (strlen(url) + strlen(format) + 2));
-    sprintf(cmd, "%s %s", format, url);
-    
-    system(cmd);
-    
-    free(cmd);
+    // TODO: Reload tile maps every time?
 }
 
 void cmdWebsite(ApplicationState* app, int argc, char** argv)
@@ -204,7 +306,7 @@ void cmdWebsite(ApplicationState* app, int argc, char** argv)
         return;
     }
     
-    website(argv[0]);
+    SDL_OpenURL(argv[0]);
 }
 
 int main(int arcg, char* argv[])

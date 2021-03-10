@@ -14,6 +14,7 @@
 #include "../Rendering/RenderStateFunctions.h"
 
 static SDL_Surface* windowIcon = NULL;
+static char* nextSceneName = NULL;
 
 static void ApplicationState_SetWindowIcon(ApplicationState* app, char* filename)
 {
@@ -127,7 +128,13 @@ void ApplicationState_Loop(ApplicationState* app)
             
             ApplicationState_RunScene(app, app->flecsScene);
             
-            app->flecsSceneCurrent = app->flecsScene;
+            if(app->flecsSceneCurrent != NULL)
+            {
+                free(app->flecsSceneCurrent);
+            }
+            
+            app->flecsSceneCurrent = malloc(sizeof(char) * (strlen(app->flecsScene) + 1));
+            strcpy(app->flecsSceneCurrent, app->flecsScene);
             
             app->flecsScene = NULL;
         }
@@ -169,6 +176,8 @@ void ApplicationState_Loop(ApplicationState* app)
                 
                 if(app->focused)
                 {
+                    printf("%1.5f\n", fDeltaTime);
+                    
                     ecs_progress(app->world, fDeltaTime);
                     
                     ConsoleStateSystem(app);
@@ -204,12 +213,26 @@ void ApplicationState_Free(ApplicationState* app)
     AssetManager_Destroy(app->renderState.device, &app->assetManager);
     RenderState_Free(&app->renderState);
     
+    free(app->flecsSceneCurrent);
+    
+    free(nextSceneName);
+    
     if(windowIcon != NULL)
     {
         SDL_FreeSurface(windowIcon); // windowIcon free
     }
     
     SDL_free(app->savePath); // ApplicationState.savePath free
+}
+
+void ApplicationState_SetScene(ApplicationState* app, char* scene)
+{
+    free(nextSceneName);
+    
+    nextSceneName = malloc(sizeof(char) * (strlen(scene) + 1));
+    strcpy(nextSceneName, scene);
+    
+    app->flecsScene = nextSceneName;
 }
 
 void ApplicationState_InitFactories(ApplicationState* app, int length)

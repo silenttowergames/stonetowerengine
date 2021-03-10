@@ -20,4 +20,6 @@ typedef struct TiledJSON
     json_object* tilesets;
     json_object* obj;
     json_object* objEx;
+    //
+    int objCount;
 } TiledJSON;
