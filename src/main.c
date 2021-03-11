@@ -160,8 +160,6 @@ void cmdReloadMap(ApplicationState* app, int argc, char** argv)
     
     TiledJSON** _map = mapGet(app->assetManager.mapTiled, key, TiledJSON*);
     
-    printf("Current map: `%s`\n", (*_map)->key);
-    
     // If the map doesn't exist, just return
     // Maybe in the future there will be feedback from the console
     if(_map == NULL)
@@ -227,20 +225,10 @@ void cmdReloadMap(ApplicationState* app, int argc, char** argv)
             }
         }
         
-        printf("Old Map:\n");
-        for(int i = 0; i < map->objCount; i++)
-        {
-            printf("%d\n", objIDsOld[i].id);
-        }
-        printf("New map:\n");
-        for(int i = 0; i < newMap.objCount; i++)
-        {
-            printf("%d\n", objIDsNew[i].id);
-        }
-        
         ecs_query_t* query;
         ecs_iter_t it;
         
+        // TODO: Store these queries long-term?
         query = ecs_query_new(app->world, "TiledMap");
         it = ecs_query_iter(query);
         
@@ -248,11 +236,14 @@ void cmdReloadMap(ApplicationState* app, int argc, char** argv)
         {
             for(int i = 0; i < it.count; i++)
             {
-                ecs_delete(app->world, it.entities[i]);
+                printf("Entity %d: %d\n", i, it.entities[i]);
+                
+                //ecs_delete(app->world, it.entities[i]);
+                ecs_delete(app->world, 349857345);
             }
         }
         
-        free(query);
+        ecs_query_free(query);
         
         for(int i = 0; i < newMap.layerCount; i++)
         {
@@ -292,7 +283,7 @@ void cmdReloadMap(ApplicationState* app, int argc, char** argv)
             }
         }
         
-        free(query);
+        ecs_query_free(query);
         
         for(int i = 0; i < newMap.objCount; i++)
         {
@@ -313,6 +304,9 @@ void cmdReloadMap(ApplicationState* app, int argc, char** argv)
                 TiledJSON_Build_Object(app, &objIDsNew[i], objIDsNew[i].layer);
             }
         }
+        
+        free(objIDsOld);
+        free(objIDsNew);
     }
     
     for(int i = 0; i < app->assetManager.lengthTiled; i++)

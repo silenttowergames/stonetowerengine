@@ -1,7 +1,7 @@
 #include "SortByLayerThenY.h"
 #include "Components/Renderable.h"
 
-int SortByLayerThenY(ecs_entity_t ea, void* _ra, ecs_entity_t eb, void* _rb)
+int SortByLayerThenY(ecs_entity_t ea, const void* _ra, ecs_entity_t eb, const void* _rb)
 {
     Renderable* ra = (Renderable*)_ra;
     Renderable* rb = (Renderable*)_rb;

@@ -1,0 +1,4 @@
+free(): invalid pointer
+free(): invalid pointer
+double free or corruption (out)
+double free or corruption (out)

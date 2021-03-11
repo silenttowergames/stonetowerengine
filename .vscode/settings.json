@@ -48,6 +48,7 @@
         "basicaabbsystem.h": "c",
         "keyboardstatefunctions.h": "c",
         "tiledjsonfunctions.h": "c",
-        "json.h": "c"
+        "json.h": "c",
+        "sortbylayertheny.c": "cpp"
     }
 }
