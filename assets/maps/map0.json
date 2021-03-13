@@ -83,24 +83,6 @@
                 {
                  "gid":1,
                  "height":8,
-                 "id":36,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"test",
-                         "type":"string",
-                         "value":"hello!"
-                        }],
-                 "rotation":0,
-                 "type":"NPC",
-                 "visible":true,
-                 "width":8,
-                 "x":40,
-                 "y":48
-                }, 
-                {
-                 "gid":1,
-                 "height":8,
                  "id":38,
                  "name":"",
                  "properties":[

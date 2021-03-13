@@ -52,6 +52,8 @@ Sound Sound_create_sfxr(const char* key, Play play)
     return sound;
 }
 
+// TODO: Sound_playFull
+
 SoundInstance* Sound_play(Sound* sound, Soloud* soloud)
 {
     switch(sound->play)
@@ -61,7 +63,7 @@ SoundInstance* Sound_play(Sound* sound, Soloud* soloud)
         {
             bool available = false;
             
-            for(int i = 0; i < sizeof(sound->instances) / sizeof(unsigned int); i++)
+            for(int i = 0; i < sizeof(sound->instances) / sizeof(SoundInstance); i++)
             {
                 if(sound->instances[i].id != 0)
                 {
@@ -71,7 +73,7 @@ SoundInstance* Sound_play(Sound* sound, Soloud* soloud)
                 available = true;
                 
                 int j;
-                for(j = 1 + 1; j < sizeof(sound->instances) / sizeof(unsigned int); j++)
+                for(j = i + 1; j < sizeof(sound->instances) / sizeof(SoundInstance); j++)
                 {
                     sound->instances[j - 1] = sound->instances[j];
                 }
@@ -86,7 +88,7 @@ SoundInstance* Sound_play(Sound* sound, Soloud* soloud)
                 Soloud_stop(soloud, sound->instances[0].id);
                 
                 int j;
-                for(j = 1; j < sizeof(sound->instances) / sizeof(unsigned int); j++)
+                for(j = 1; j < sizeof(sound->instances) / sizeof(SoundInstance); j++)
                 {
                     sound->instances[j - 1] = sound->instances[j];
                 }
@@ -99,7 +101,7 @@ SoundInstance* Sound_play(Sound* sound, Soloud* soloud)
         
         case Play_StopAll:
         {
-            for(int i = 0; i < sizeof(sound->instances) / sizeof(unsigned int); i++)
+            for(int i = 0; i < sizeof(sound->instances) / sizeof(SoundInstance); i++)
             {
                 Soloud_stop(soloud, sound->instances[i].id);
                 
@@ -113,7 +115,7 @@ SoundInstance* Sound_play(Sound* sound, Soloud* soloud)
         
         case Play_IfAvailable:
         {
-            for(int i = 0; i < sizeof(sound->instances) / sizeof(unsigned int); i++)
+            for(int i = 0; i < sizeof(sound->instances) / sizeof(SoundInstance); i++)
             {
                 if(sound->instances[i].id != 0)
                 {

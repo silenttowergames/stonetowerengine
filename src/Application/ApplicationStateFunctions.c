@@ -215,6 +215,8 @@ void ApplicationState_Free(ApplicationState* app)
     
     free(nextSceneName);
     
+    free(app->config.language);
+    
     if(windowIcon != NULL)
     {
         SDL_FreeSurface(windowIcon); // windowIcon free

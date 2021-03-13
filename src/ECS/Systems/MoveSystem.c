@@ -19,14 +19,14 @@ void MoveSystem(ecs_iter_t* it)
 {
 	fctx();
 	
-	if(keys(Pressed, t))
+	if(keys(Pressed, v))
 	{
 		//printf("%d\n", gdValue("Integers", "hello", Int));
 		//ecs_set_time_scale(it->world, 0);
-		printf("test\n");
+		SoundInstance* sound = soundPlay("hit.ogg");
 	}
 	
-	if(keys(Pressed, y))
+	if(keys(Pressed, x))
 	{
 		//ecs_set_time_scale(it->world, 1);
 		app->flecsScene = "map1";

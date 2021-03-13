@@ -13,4 +13,4 @@ typedef struct Config
     bool debug;
 } Config;
 
-#define configDefault(c, w, h, lang, _debug) Config c; memset(&c, 0, sizeof(Config)); c.windowedSize.X = w; c.windowedSize.Y = h; c.fullscreen = false; c.language = lang; c.vsync = false; c.debug = _debug;
+#define configDefault(c, w, h, lang, _debug) Config c; memset(&c, 0, sizeof(Config)); c.windowedSize.X = w; c.windowedSize.Y = h; c.fullscreen = false; c.language = malloc(sizeof(char) * (strlen(lang) + 1)); strcpy(c.language, lang); c.vsync = false; c.debug = _debug;

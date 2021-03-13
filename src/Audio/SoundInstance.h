@@ -7,7 +7,7 @@ typedef struct SoundInstance
 {
     int id;
     float volume;
-    float2d pan;
+    float pan;
     float sampleRate;
     float speed;
     bool loop;

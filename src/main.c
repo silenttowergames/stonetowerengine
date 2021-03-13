@@ -5,14 +5,13 @@
 #include "includes.h"
 
 // NOW
-// TODO: SoundInstance containing sound ID, relative volume, etc
-// TODO: Change volume function for sound ID, which also updates SoundInstance local volume
-// TODO: Config volume
-// TODO: Hot-reload map (give factories a unique ID based on X, Y, key, prop?)
+// TODO: Config volumes for music, sfx, and master
+// TODO: Euler number for volume: volumeUse = pow(volume, 2.7183) UNLESS IT GOES OVER 1, IN WHICH CASE USE THE RAW NUMBER!!!! 2 = 6.5!!!!!
 // TODO: Save state, including gameData
 // TODO: Console cursor navigation: arrow left, arrow right, Home, End?
 // TODO: Console feedback? Maybe write it on the next line or something?
 // TODO: Console scaling?
+// TODO: Fullscreen buttons system?
 
 // LATER
 // TODO: Window icon
@@ -105,235 +104,6 @@ void ShaderUpdate_Disable(void* _app, void* _renderTarget, void* _shader)
     Shader_ParamCopy(shader, "tmod", &tmod, sizeof(float));
 }
 
-void cmdPlaySound(ApplicationState* app, int argc, char** argv)
-{
-    for(int i = 0; i < argc; i++)
-    {
-        soundPlay(argv[i]);
-    }
-}
-
-void cmdChangeScene(ApplicationState* app, int argc, char** argv)
-{
-    for(int i = 0; i < argc; i++)
-    {
-        ApplicationState_SetScene(app, argv[i]);
-        
-        break;
-    }
-}
-
-void cmdExit(ApplicationState* app, int argc, char** argv)
-{
-    app->quit = true;
-}
-
-void cmdMovable(ApplicationState* app, int argc, char** argv)
-{
-    app->movable = !app->movable;
-}
-
-void cmdPause(ApplicationState* app, int argc, char** argv)
-{
-    ecs_set_time_scale(app->world, 0.0f);
-}
-
-void cmdUnpause(ApplicationState* app, int argc, char** argv)
-{
-    ecs_set_time_scale(app->world, 1.0f);
-}
-
-void cmdReloadMap(ApplicationState* app, int argc, char** argv)
-{
-    // First, find the map we want to reload
-    const char* key;
-    
-    // If the user doesn't specify a map, assume the one that's currently loaded
-    if(argc == 0 || argv[0][0] == '\0')
-    {
-        key = app->flecsSceneCurrent;
-    }
-    else
-    {
-        key = argv[0];
-    }
-    
-    TiledJSON** _map = mapGet(app->assetManager.mapTiled, key, TiledJSON*);
-    
-    // If the map doesn't exist, just return
-    // Maybe in the future there will be feedback from the console
-    if(_map == NULL)
-    {
-        return;
-    }
-    
-    TiledJSON* map = *_map;
-    TiledJSON oldMap = *map;
-    
-    TiledJSON newMap = TiledJSON_Load(app, key);
-    
-    if(strcmp(key, app->flecsSceneCurrent) == 0)
-    {
-        TiledJSONObject* objIDsOld = malloc(sizeof(TiledJSONObject) * map->objCount);
-        TiledJSONObject* objIDsNew = malloc(sizeof(TiledJSONObject) * newMap.objCount);
-        
-        TiledJSON* m;
-        int currentCountOld = 0;
-        int currentCountNew = 0;
-        for(int i = 0; i < fmax(map->objCount, newMap.objCount); i++)
-        {
-            if(i < map->objCount)
-            {
-                for(int j = 0; j < map->layerCount; j++)
-                {
-                    // FIXME: Only sometimes, after reload where map is changed, accessing type throws a segfault
-                    
-                    if(strcmp(map->layers[j].type, "tilelayer") == 0)
-                    {
-                        continue;
-                    }
-                    
-                    if((i - currentCountOld) >= map->layers[j].count)
-                    {
-                        currentCountOld += map->layers[j].count;
-                        
-                        continue;
-                    }
-                    
-                    objIDsOld[i] = map->layers[j].objects[i - currentCountOld];
-                }
-            }
-            
-            if(i < newMap.objCount)
-            {
-                for(int j = 0; j < newMap.layerCount; j++)
-                {
-                    if(strcmp(newMap.layers[j].type, "tilelayer") == 0)
-                    {
-                        continue;
-                    }
-                    
-                    if((i - currentCountNew) >= newMap.layers[j].count)
-                    {
-                        currentCountNew += newMap.layers[j].count;
-                        
-                        continue;
-                    }
-                    
-                    objIDsNew[i] = newMap.layers[j].objects[i - currentCountNew];
-                }
-            }
-        }
-        
-        ecs_query_t* query;
-        ecs_iter_t it;
-        
-        // TODO: Store these queries long-term?
-        query = ecs_query_new(app->world, "TiledMap");
-        it = ecs_query_iter(query);
-        
-        while(ecs_query_next(&it))
-        {
-            for(int i = 0; i < it.count; i++)
-            {
-                printf("Entity %d: %d\n", i, it.entities[i]);
-                
-                //ecs_delete(app->world, it.entities[i]);
-                ecs_delete(app->world, 349857345);
-            }
-        }
-        
-        ecs_query_free(query);
-        
-        for(int i = 0; i < newMap.layerCount; i++)
-        {
-            if(strcmp(newMap.layers[i].type, "tilelayer") != 0)
-            {
-                continue;
-            }
-            
-            TiledJSON_Map(app->world, &newMap.layers[i], newMap.texture, i);
-        }
-        
-        query = ecs_query_new(app->world, "TiledObject");
-        it = ecs_query_iter(query);
-        
-        while(ecs_query_next(&it))
-        {
-            TiledObject* obj = ecs_column(&it, TiledObject, 1);
-            
-            for(int i = 0; i < it.count; i++)
-            {
-                bool delete = true;
-                
-                for(int j = 0; j < newMap.objCount; j++)
-                {
-                    if(objIDsNew[j].id == obj[i].id)
-                    {
-                        delete = false;
-                        
-                        break;
-                    }
-                }
-                
-                if(delete)
-                {
-                    ecs_delete(app->world, it.entities[i]);
-                }
-            }
-        }
-        
-        ecs_query_free(query);
-        
-        for(int i = 0; i < newMap.objCount; i++)
-        {
-            bool isNew = true;
-            
-            for(int j = 0; j < map->objCount; j++)
-            {
-                if(objIDsNew[i].id == objIDsOld[j].id)
-                {
-                    isNew = false;
-                    
-                    break;
-                }
-            }
-            
-            if(isNew)
-            {
-                TiledJSON_Build_Object(app, &objIDsNew[i], objIDsNew[i].layer);
-            }
-        }
-        
-        free(objIDsOld);
-        free(objIDsNew);
-    }
-    
-    for(int i = 0; i < app->assetManager.lengthTiled; i++)
-        {
-            if(strcmp(app->assetManager.arrayTiled[i].key, key) != 0)
-            {
-                continue;
-            }
-            
-            app->assetManager.arrayTiled[i] = newMap;
-            
-            break;
-        }
-    
-    TiledJSON_Free(&oldMap);
-}
-
-void cmdWebsite(ApplicationState* app, int argc, char** argv)
-{
-    if(argc <= 0)
-    {
-        return;
-    }
-    
-    SDL_OpenURL(argv[0]);
-}
-
 int main(int arcg, char* argv[])
 {
     configDefault(config, 1280, 720, "en", false);
@@ -341,7 +111,7 @@ int main(int arcg, char* argv[])
     init(
         "Engine Test",
         "v1.0.5 alpha",
-        NULL,
+        "OpenGL",
         60,
         config,
         320, 180,
@@ -398,7 +168,7 @@ int main(int arcg, char* argv[])
     sounds(
         4,
         Sound_create_load("calm-example.ogg", Play_StopAll),
-        Sound_create_load("hit.ogg", Play_Default),
+        Sound_create_load("hit.ogg", Play_StopOne),
         Sound_create_speech("speech0", "Uncompromised", Play_Default),
         Sound_create_sfxr("sfxr", Play_Default)
     );

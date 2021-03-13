@@ -50,6 +50,7 @@ void AssetManager_Destroy(FNA3D_Device* device, AssetManager* assetManager)
 	
 	for(i = 0; i < assetManager->lengthFont; i++)
 	{
+		// TODO: Free fonts
 		//Font_Free()
 	}
 	

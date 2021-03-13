@@ -20,7 +20,7 @@ Config Config_Load(ApplicationState* app)
     const char* language = ini_get(r, "Config", "Language");
     if(language)
     {
-        config.language = malloc(sizeof(char) * (1 + strlen(language)));
+        config.language = malloc(sizeof(char) * (1 + strlen(language))); // config.language allocate
         
         strcpy(config.language, language);
     }
