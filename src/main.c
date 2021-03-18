@@ -8,6 +8,11 @@
 // TODO: Finish up gamepads; connecting new ones, etc
 // TODO: RenderTarget draw resolution (e.g. Retro Slasher's resolution vs size; X stretch)
 
+// FINALIZE
+// TODO: Clean up code
+// TODO: Get relative DLL paths working
+// TODO: Turn engine into DLL, create example project
+
 // LATER
 // TODO: Save state, including gameData
 // TODO: Console cursor navigation: arrow left, arrow right, Home, End?
@@ -15,10 +20,8 @@
 // TODO: Console scaling?
 // TODO: Window icon
 // FIXME: DirectX not working
-// TODO: Clean up code
 // TODO: Dialogue system
-// TODO: Get relative DLL paths working
-// TODO: Turn engine into DLL, create example project
+// TODO: Sound: only play if there are none playing currently
 
 void initWorld(ecs_world_t* world)
 {

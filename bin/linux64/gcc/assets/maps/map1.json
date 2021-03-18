@@ -1,12 +1,4 @@
-{ "compressionlevel":-1,
- "editorsettings":
-    {
-     "export":
-        {
-         "target":"."
-        }
-    },
- "height":21,
+{ "height":21,
  "infinite":false,
  "layers":[
         {
@@ -68,30 +60,6 @@
                  "y":40
                 }, 
                 {
-                 "gid":19,
-                 "height":8,
-                 "id":2,
-                 "name":"",
-                 "rotation":0,
-                 "type":"bed",
-                 "visible":true,
-                 "width":8,
-                 "x":216,
-                 "y":24
-                }, 
-                {
-                 "gid":20,
-                 "height":8,
-                 "id":3,
-                 "name":"",
-                 "rotation":0,
-                 "type":"lamp",
-                 "visible":true,
-                 "width":8,
-                 "x":224,
-                 "y":24
-                }, 
-                {
                  "gid":1,
                  "height":8,
                  "id":4,
@@ -131,7 +99,7 @@
  "nextobjectid":5,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.4.1",
+ "tiledversion":"1.2.1",
  "tileheight":8,
  "tilesets":[
         {
@@ -149,6 +117,6 @@
         }],
  "tilewidth":8,
  "type":"map",
- "version":1.4,
+ "version":1.2,
  "width":30
 }
