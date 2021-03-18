@@ -23,7 +23,7 @@ void MoveSystem(ecs_iter_t* it)
 	{
 		//printf("%d\n", gdValue("Integers", "hello", Int));
 		//ecs_set_time_scale(it->world, 0);
-		SoundInstance* sound = soundPlay("hit.ogg");
+		SoundInstance* sound = soundPlayFull("hit.ogg", 1.0f, 0.0f, 0.0f, 1.0f, false);
 	}
 	
 	if(keys(Pressed, x))
@@ -82,22 +82,6 @@ void MoveSystem(ecs_iter_t* it)
 		if(button(Down, 0, X))
 		{
 			rumble(0, 1.0f, 500);
-		}
-	}
-	
-	if(
-		(keys(Down, LALT) && keys(Pressed, RETURN))
-		||
-		(keys(Down, LCTRL) && keys(Pressed, f))
-	)
-	{
-		if(app->config.fullscreen)
-		{
-			Config_Resize(app, 1280, 720, false);
-		}
-		else
-		{
-			Config_Resize(app, -1, -1, true);
 		}
 	}
 	

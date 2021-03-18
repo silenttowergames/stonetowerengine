@@ -11,7 +11,7 @@ void AudioManager_create(AudioManager* audioManager)
     
     Soloud_init(audioManager->soloud);
     
-    Soloud_setGlobalVolume(audioManager->soloud, 0.5f);
+    Soloud_setGlobalVolume(audioManager->soloud, 1.0f);
 }
 
 void AudioManager_Free(AudioManager* audioManager)
@@ -25,50 +25,48 @@ void AudioManager_addSounds(AudioManager* audioManager, Sound* sounds, int sound
     audioManager->soundsCount = soundsCount;
 }
 
-void AudioManager_update(AudioManager* audioManager)
+void AudioManager_update(ApplicationState* app)
 {
-    for(int i = 0; i < audioManager->soundsCount; i++)
+    for(int i = 0; i < app->assetManager.audioManager.soundsCount; i++)
     {
-        for(int j = 0; j < sizeof(audioManager->sounds[i].instances) / sizeof(SoundInstance); j++)
+        for(int j = 0; j < sizeof(app->assetManager.audioManager.sounds[i].instances) / sizeof(SoundInstance); j++)
         {
-            if(audioManager->sounds[i].instances[j].id == 0)
+            if(app->assetManager.audioManager.sounds[i].instances[j].id == 0)
             {
-                break;
+                continue;
             }
             
-            printf("ok: %d\n", j);
+            SoundInstance_Update(app, &app->assetManager.audioManager.sounds[i], &app->assetManager.audioManager.sounds[i].instances[j]);
             
-            SoundInstance_Update(audioManager->soloud, &audioManager->sounds[i].instances[j]);
-            
-            if(Soloud_getStreamTime(audioManager->soloud, audioManager->sounds[i].instances[j].id) != 0)
+            if(Soloud_getStreamTime(app->assetManager.audioManager.soloud, app->assetManager.audioManager.sounds[i].instances[j].id) != 0)
             {
-                audioManager->sounds[i].instances[j].pausedTimer = false;
+                app->assetManager.audioManager.sounds[i].instances[j].pausedTimer = false;
                 
                 continue;
             }
             
-            if(!audioManager->sounds[i].instances[j].pausedTimer)
+            if(!app->assetManager.audioManager.sounds[i].instances[j].pausedTimer)
             {
-                audioManager->sounds[i].instances[j].pausedTimer = true;
+                app->assetManager.audioManager.sounds[i].instances[j].pausedTimer = true;
                 
                 continue;
             }
             
-            audioManager->sounds[i].instances[j].pausedTimer = false;
+            app->assetManager.audioManager.sounds[i].instances[j].pausedTimer = false;
             
-            if(j < sizeof(audioManager->sounds[i].instances) / sizeof(SoundInstance) - 1)
+            if(j < sizeof(app->assetManager.audioManager.sounds[i].instances) / sizeof(SoundInstance) - 1)
             {
                 int x;
-                for(x = j + 1; x < sizeof(audioManager->sounds[i].instances) / sizeof(SoundInstance); x++)
+                for(x = j + 1; x < sizeof(app->assetManager.audioManager.sounds[i].instances) / sizeof(SoundInstance); x++)
                 {
-                    audioManager->sounds[i].instances[x - 1] = audioManager->sounds[i].instances[x];
+                    app->assetManager.audioManager.sounds[i].instances[x - 1] = app->assetManager.audioManager.sounds[i].instances[x];
                 }
                 
-                audioManager->sounds[i].instances[x].id = 0;
+                app->assetManager.audioManager.sounds[i].instances[x].id = 0;
             }
             else
             {
-                audioManager->sounds[i].instances[j].id = 0;
+                app->assetManager.audioManager.sounds[i].instances[j].id = 0;
             }
         }
     }

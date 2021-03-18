@@ -49,6 +49,9 @@
         "keyboardstatefunctions.h": "c",
         "tiledjsonfunctions.h": "c",
         "json.h": "c",
-        "sortbylayertheny.c": "cpp"
+        "sortbylayertheny.c": "cpp",
+        "audiomanagerfunctions.h": "c",
+        "sound.h": "c",
+        "consolecommanddefaults.h": "c"
     }
 }

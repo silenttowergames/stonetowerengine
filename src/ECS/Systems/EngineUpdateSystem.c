@@ -10,7 +10,7 @@ void EngineUpdateSystem(ecs_iter_t* it)
 {
 	fctx();
 	
-	AudioManager_update(&app->assetManager.audioManager);
+	AudioManager_update(app);
 	
 	KeyboardState_Update(&app->inputManager.keyboardState);
 	MouseState_Update(app, &app->inputManager.mouseState);

@@ -3,12 +3,13 @@
 #include "SoundFunctions.h"
 #include "SoundInstanceFunctions.h"
 
-Sound Sound_create_load(const char* key, Play play)
+Sound Sound_create_load(const char* key, Play play, SoundCategory category)
 {
     Sound sound;
     memset(&sound, 0, sizeof(Sound));
     sound.play = play;
     sound.key = key;
+    sound.category = category;
     
     const char* filepath = "assets/sounds/%s";
     
@@ -23,12 +24,13 @@ Sound Sound_create_load(const char* key, Play play)
     return sound;
 }
 
-Sound Sound_create_speech(const char* key, const char* words, Play play)
+Sound Sound_create_speech(const char* key, const char* words, Play play, SoundCategory category)
 {
     Sound sound;
     memset(&sound, 0, sizeof(Sound));
     sound.play = play;
     sound.key = key;
+    sound.category = category;
     
     sound.source = Speech_create();
     Speech_setText(sound.source, words);
@@ -38,12 +40,13 @@ Sound Sound_create_speech(const char* key, const char* words, Play play)
     return sound;
 }
 
-Sound Sound_create_sfxr(const char* key, Play play)
+Sound Sound_create_sfxr(const char* key, Play play, SoundCategory category)
 {
     Sound sound;
     memset(&sound, 0, sizeof(Sound));
     sound.play = play;
     sound.key = key;
+    sound.category = category;
     
     sound.source = Sfxr_create();
     
@@ -52,10 +55,10 @@ Sound Sound_create_sfxr(const char* key, Play play)
     return sound;
 }
 
-// TODO: Sound_playFull
-
-SoundInstance* Sound_play(Sound* sound, Soloud* soloud)
+SoundInstance* Sound_playFull(ApplicationState* app, Sound* sound, float volume, float pan, float sampleRate, float speed, bool loop)
 {
+    Soloud* soloud = app->assetManager.audioManager.soloud;
+    
     switch(sound->play)
     {
         case Play_Default:
@@ -78,7 +81,7 @@ SoundInstance* Sound_play(Sound* sound, Soloud* soloud)
                     sound->instances[j - 1] = sound->instances[j];
                 }
                 
-                sound->instances[j - 1] = SoundInstance_Create(soloud, sound);
+                sound->instances[j - 1] = SoundInstance_CreateFull(app, sound, volume, pan, sampleRate, speed, loop);
                 
                 return &sound->instances[j - 1];
             }
@@ -93,7 +96,7 @@ SoundInstance* Sound_play(Sound* sound, Soloud* soloud)
                     sound->instances[j - 1] = sound->instances[j];
                 }
                 
-                sound->instances[j - 1] = SoundInstance_Create(soloud, sound);
+                sound->instances[j - 1] = SoundInstance_CreateFull(app, sound, volume, pan, sampleRate, speed, loop);
                 
                 return &sound->instances[j - 1];
             }
@@ -108,7 +111,7 @@ SoundInstance* Sound_play(Sound* sound, Soloud* soloud)
                 sound->instances[i].id = 0;
             }
             
-            sound->instances[0] = SoundInstance_Create(soloud, sound);
+            sound->instances[0] = SoundInstance_CreateFull(app, sound, volume, pan, sampleRate, speed, loop);
             
             return &sound->instances[0];
         }
@@ -122,7 +125,7 @@ SoundInstance* Sound_play(Sound* sound, Soloud* soloud)
                     continue;
                 }
                 
-                sound->instances[i] = SoundInstance_Create(soloud, sound);
+                sound->instances[i] = SoundInstance_CreateFull(app, sound, volume, pan, sampleRate, speed, loop);
                 
                 return &sound->instances[i];
             }
@@ -130,6 +133,11 @@ SoundInstance* Sound_play(Sound* sound, Soloud* soloud)
             return NULL;
         }
     }
+}
+
+SoundInstance* Sound_play(ApplicationState* app, Sound* sound)
+{
+    Sound_playFull(app, sound, 1.0f, 0.0f, 0.0f, 1.0f, false);
 }
 
 void Sound_Free(Sound* sound)

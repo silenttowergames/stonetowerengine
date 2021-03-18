@@ -3,6 +3,7 @@
 #include "../Application/ApplicationState.h"
 
 void cmdPlaySound(ApplicationState* app, int argc, char** argv);
+void cmdVolume(ApplicationState* app, int argc, char** argv);
 void cmdChangeScene(ApplicationState* app, int argc, char** argv);
 void cmdExit(ApplicationState* app, int argc, char** argv);
 void cmdMovable(ApplicationState* app, int argc, char** argv);

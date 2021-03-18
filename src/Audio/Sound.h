@@ -13,6 +13,12 @@ typedef enum SoundType
     SoundType_SPEECH,
 } SoundType;
 
+typedef enum SoundCategory
+{
+    SoundCategory_SFX,
+    SoundCategory_Music,
+} SoundCategory;
+
 typedef struct Sound
 {
     AudioSource* source;
@@ -21,4 +27,7 @@ typedef struct Sound
     const char* key;
     char* filename;
     SoundType type;
+    SoundCategory category;
 } Sound;
+
+#define euler(vol) powf(volume, 2.7183)

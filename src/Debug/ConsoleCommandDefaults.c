@@ -10,6 +10,44 @@ void cmdPlaySound(ApplicationState* app, int argc, char** argv)
     }
 }
 
+void cmdVolume(ApplicationState* app, int argc, char** argv)
+{
+    if(argc != 2 || argv[0] == NULL || argv[1] == NULL)
+    {
+        return;
+    }
+    
+    uint64_t keyMaster = Flecs_Map_Key("master");
+    uint64_t keyMusic = Flecs_Map_Key("music");
+    uint64_t keySFX = Flecs_Map_Key("sfx");
+    uint64_t key = Flecs_Map_Key(argv[0]);
+    float* value;
+    float volume;
+    
+    if(key == keyMusic)
+    {
+        value = &app->config.volumeMusic;
+    }
+    else if(key == keyMaster)
+    {
+        value = &app->config.volumeMaster;
+    }
+    else if(key == keySFX)
+    {
+        value = &app->config.volumeSFX;
+    }
+    else
+    {
+        return;
+    }
+    
+    volume = strtof(argv[1], NULL);
+    
+    *value = volume;
+    
+    printf("M: %f\nS: %f\nM: %f\n", app->config.volumeMaster, app->config.volumeSFX, app->config.volumeMusic);
+}
+
 void cmdChangeScene(ApplicationState* app, int argc, char** argv)
 {
     for(int i = 0; i < argc; i++)

@@ -16,6 +16,9 @@ Config Config_Load(ApplicationState* app)
     ini_sget(r, "Config", "Width", "%d", &config.windowedSize.X);
     ini_sget(r, "Config", "Height", "%d", &config.windowedSize.Y);
     ini_sget(r, "Config", "Debug", "%d", &config.debug);
+    ini_sget(r, "Config", "VolumeMaster", "%f", &config.volumeMaster);
+    ini_sget(r, "Config", "VolumeSFX", "%f", &config.volumeSFX);
+    ini_sget(r, "Config", "VolumeMusic", "%f", &config.volumeMusic);
     
     const char* language = ini_get(r, "Config", "Language");
     if(language)
@@ -48,7 +51,28 @@ Config Config_Load(ApplicationState* app)
 void Config_Save(ApplicationState* app, Config config)
 {
     FILE* w = fopen(app->savePathConfig, "w");
-    fprintf(w, "[Config]\nWidth = %d\nHeight = %d\nLanguage = \"%s\"\nVsync = %d\nDebug = %d\n", config.windowedSize.X, config.windowedSize.Y, config.language, config.vsync, config.debug);
+    
+    fprintf(
+        w,
+        "[Config]\n"
+        "Width = %d\n"
+        "Height = %d\n"
+        "Language = \"%s\"\n"
+        "Vsync = %d\n"
+        "Debug = %d\n"
+        "VolumeMaster = %f\n"
+        "VolumeSFX = %f\n"
+        "VolumeMusic = %f\n",
+        config.windowedSize.X,
+        config.windowedSize.Y,
+        config.language,
+        config.vsync,
+        config.debug,
+        config.volumeMaster,
+        config.volumeSFX,
+        config.volumeMusic
+    );
+    
     fclose(w);
 }
 

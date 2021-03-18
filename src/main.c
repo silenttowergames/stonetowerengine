@@ -5,15 +5,14 @@
 #include "includes.h"
 
 // NOW
-// TODO: Config volumes for music, sfx, and master
-// TODO: Euler number for volume: volumeUse = pow(volume, 2.7183) UNLESS IT GOES OVER 1, IN WHICH CASE USE THE RAW NUMBER!!!! 2 = 6.5!!!!!
+// TODO: Finish up gamepads; connecting new ones, etc
+// TODO: RenderTarget draw resolution (e.g. Retro Slasher's resolution vs size; X stretch)
+
+// LATER
 // TODO: Save state, including gameData
 // TODO: Console cursor navigation: arrow left, arrow right, Home, End?
 // TODO: Console feedback? Maybe write it on the next line or something?
 // TODO: Console scaling?
-// TODO: Fullscreen buttons system?
-
-// LATER
 // TODO: Window icon
 // FIXME: DirectX not working
 // TODO: Clean up code
@@ -23,9 +22,10 @@
 
 void initWorld(ecs_world_t* world)
 {
-    ECS_Setup(DEFINE, world)
+    ECS_Setup(DEFINE, world);
     
     ECS_SYSTEM(world, EngineUpdateSystem, EcsOnUpdate, 0);
+    ECS_SYSTEM(world, FullscreenShortcutSystem, EcsOnUpdate, 0);
     ECS_SYSTEM(world, PauseMenuSystem, EcsOnUpdate, Menu, PauseMenu);
     ECS_SYSTEM(world, AINPCSystem, EcsOnUpdate, AINPC, Body);
     ECS_SYSTEM(world, MoveSystem, EcsOnUpdate, AIPlayer, Body);
@@ -108,6 +108,8 @@ int main(int arcg, char* argv[])
 {
     configDefault(config, 1280, 720, "en", false);
     
+    printf("M: %f\nS: %f\nM: %f\n", config.volumeMaster, config.volumeSFX, config.volumeMusic);
+    
     init(
         "Engine Test",
         "v1.0.5 alpha",
@@ -167,10 +169,10 @@ int main(int arcg, char* argv[])
     
     sounds(
         4,
-        Sound_create_load("calm-example.ogg", Play_StopAll),
-        Sound_create_load("hit.ogg", Play_StopOne),
-        Sound_create_speech("speech0", "Uncompromised", Play_Default),
-        Sound_create_sfxr("sfxr", Play_Default)
+        Sound_create_load("calm-example.ogg", Play_StopAll, SoundCategory_Music),
+        Sound_create_load("hit.ogg", Play_StopOne, SoundCategory_SFX),
+        Sound_create_speech("speech0", "Uncompromised", Play_Default, SoundCategory_SFX),
+        Sound_create_sfxr("sfxr", Play_Default, SoundCategory_SFX)
     );
     
     factories(
@@ -182,9 +184,9 @@ int main(int arcg, char* argv[])
     );
     
     renderTargets(
-        1,
-        RenderTarget_Create(&app, (int2d){ 320, 180, }, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 1, 0, 1, 1, })
-        //RenderTarget_Create(&app, (int2d){ 80, 80, }, (int2d){ 40, 40, }, false, (FNA3D_Vec4){ 1, 1, 1, 0.5f, })
+        2,
+        RenderTarget_Create(&app, (int2d){ 320, 180, }, (int2d){ 0, 0, }, true, (FNA3D_Vec4){ 1, 0, 1, 1, }),
+        RenderTarget_Create(&app, (int2d){ 80, 80, }, (int2d){ 40, 40, }, false, (FNA3D_Vec4){ 1, 1, 1, 0.5f, })
     );
     
     /*
@@ -195,9 +197,10 @@ int main(int arcg, char* argv[])
     
     ConsoleCommand_AddAll(
         &app,
-        8,
+        9,
         ConsoleCommand_Create("exit", cmdExit),
         ConsoleCommand_Create("play", cmdPlaySound),
+        ConsoleCommand_Create("volume", cmdVolume),
         ConsoleCommand_Create("scene", cmdChangeScene),
         ConsoleCommand_Create("pause", cmdPause),
         ConsoleCommand_Create("unpause", cmdUnpause),

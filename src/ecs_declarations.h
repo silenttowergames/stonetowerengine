@@ -16,6 +16,6 @@
     STE_ECS_COMPONENT_ ## de(w, Renderable);\
     STE_ECS_COMPONENT_ ## de(w, TiledMap);\
     STE_ECS_COMPONENT_ ## de(w, TiledObject);\
-    STE_ECS_COMPONENT_ ## de(w, TileLayerCollides);
+    STE_ECS_COMPONENT_ ## de(w, TileLayerCollides)
 
-ECS_Setup(DECLARE, )
+ECS_Setup(DECLARE, );
