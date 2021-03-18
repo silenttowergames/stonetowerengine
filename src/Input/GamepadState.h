@@ -14,4 +14,7 @@ typedef struct GamepadState
     int axesValues[6];
     int instance;
     SDL_Haptic* haptic;
+    const char* name;
+    Uint16 vendor;
+    Uint16 product;
 } GamepadState;

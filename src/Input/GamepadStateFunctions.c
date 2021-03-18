@@ -6,6 +6,13 @@ GamepadState GamepadState_Create(int index)
     GamepadState gamepadState;
 	memset(&gamepadState, 0, sizeof(GamepadState));
     
+    if(index == -1)
+    {
+        gamepadState.instance = -1;
+        
+        return gamepadState;
+    }
+    
 	SDL_GameControllerButton buttons[15] = {
         SDL_CONTROLLER_BUTTON_A,
         SDL_CONTROLLER_BUTTON_B,
@@ -65,6 +72,21 @@ GamepadState GamepadState_Create(int index)
 	memcpy(&gamepadState.axes, axes, sizeof(axes));
 	
 	gamepadState.joystick = SDL_JoystickOpen(index); // GamepadState.joystick allocate
+    
+    gamepadState.name = SDL_JoystickNameForIndex(index);
+    
+    printf("%x\n", SDL_JoystickGetVendor(gamepadState.joystick));
+    printf("%x\n", SDL_JoystickGetProduct(gamepadState.joystick));
+    printf("%x\n", SDL_JoystickGetGUID(gamepadState.joystick));
+    
+    char guid[33];
+    SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(gamepadState.joystick), guid, sizeof(guid));
+    printf("%s\n", guid);
+    
+    if(gamepadState.name != NULL)
+    {
+        printf("%s\n", gamepadState.name);
+    }
     
     gamepadState.haptic = SDL_HapticOpen(index); // GamepadState.haptic allocate
     

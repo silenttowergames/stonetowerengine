@@ -7,6 +7,12 @@
 // NOW
 // TODO: Finish up gamepads; connecting new ones, etc
 // TODO: RenderTarget draw resolution (e.g. Retro Slasher's resolution vs size; X stretch)
+// TODO: Print and/or log an error when an asset can't be loaded
+// FIXME: Low framerate speed seems broken
+// FIXME: Vsync seems broken, maybe do no manual timestep for vsync?
+// TODO: Option for Flecs timestep, since it doesn't burn CPU
+// TODO: Get controller type, for displaying correct button
+// TODO: Keybinding example?
 
 // FINALIZE
 // TODO: Clean up code

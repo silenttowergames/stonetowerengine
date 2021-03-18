@@ -36,7 +36,7 @@ ecs_entity_t NPCFactory(ecs_world_t* world, float X, float Y, int layer, TiledJS
         (rand() % 10) / 10.0f,
         1,
         0xFFFFFFFF,
-        1
+        0
     ));
     
     return f;
