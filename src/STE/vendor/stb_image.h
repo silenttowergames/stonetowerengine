@@ -354,6 +354,9 @@ extern "C" {
 #endif
 #endif
 
+// SILENT TOWER GAMES EDIT
+#include <math.h>
+
 //////////////////////////////////////////////////////////////////////////////
 //
 // PRIMARY API - works on images of any type

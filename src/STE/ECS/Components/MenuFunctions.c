@@ -1,20 +1,4 @@
-#pragma once
-
-#include <flecs.h>
-#include "../../Input/KeyboardStateFunctions.h"
-#include "../../Utilities/colorFunctions.h"
-
-typedef struct Menu
-{
-    ecs_entity_t* items;
-    int itemCount;
-    int itemSelected;
-    // applicationState, menuID, itemID, renderable, itemCount, itemSelected, itemIndex
-    void (*itemUpdate)(ApplicationState*, ecs_entity_t, ecs_entity_t, Renderable*, int, int, int);
-    // applicationState, itemCount, itemSelected; returns new value of itemSelected
-    int (*menuUpdate)(ApplicationState*, int, int);
-    bool active;
-} Menu;
+#include "MenuFunctions.h"
 
 int Menu_MenuUpdate_Basic(ApplicationState* app, int itemCount, int itemSelected)
 {
@@ -60,12 +44,3 @@ void Menu_ItemUpdate_Basic(ApplicationState* app, ecs_entity_t menuID, ecs_entit
     body->position.Y = mBody->position.Y + 24 + (10 * itemIndex);
     renderable->color = c;
 }
-
-ECS_DTOR(Menu, ptr, {
-    free(ptr->items); // MenuItem* free
-})
-
-#define menuEasy(itemVarName, itemCountVarName, menuEntityID, count, eventItem, eventMenu, active) \
-    int itemCountVarName = 0; \
-    ecs_entity_t* itemVarName = malloc(sizeof(ecs_entity_t*) * count); \
-    ecs_set(world, menuEntityID, Menu, { itemVarName, count, 0, eventItem, eventMenu, active, })

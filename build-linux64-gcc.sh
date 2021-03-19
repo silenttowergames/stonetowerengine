@@ -1,1 +1,1 @@
-gcc -pedantic -g -c src/StoneTower.c `sdl2-config --cflags` -I/C/libs/gcc/64/FNA3D-master/include -I/C/libs/gcc/64/FNA3D-master/MojoShader -I/C/libs/gcc/64/flecs-master/include -I/C/libs/gcc/64/soloud20200207/include -I/C/libs/gcc/64/json-c-master -I/C/libs/gcc/64/lua-5.4.0/include
+gcc -pedantic -g -c src/STE/StoneTower.c `sdl2-config --cflags` -I/C/libs/gcc/64/FNA3D-master/include -I/C/libs/gcc/64/FNA3D-master/MojoShader -I/C/libs/gcc/64/flecs-master/include -I/C/libs/gcc/64/soloud20200207/include -I/C/libs/gcc/64/json-c-master -I/C/libs/gcc/64/lua-5.4.0/include

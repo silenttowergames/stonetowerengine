@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameDataAttribute.h"
+#include "../vendor/rxi/ini/ini.h"
 
 typedef struct GameData
 {

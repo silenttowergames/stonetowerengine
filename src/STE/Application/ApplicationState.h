@@ -1,8 +1,8 @@
 #pragma once
 
 #include <flecs.h>
+#include "../vendor/fontstash/fontstash.h"
 #include "Config.h"
-#include "../includes_vendor.h"
 #include "../Assets/AssetManager.h"
 #include "../Debug/ConsoleState.h"
 #include "../ECS/Entities/Factory.h"

@@ -57,6 +57,9 @@
         "includes.h": "c",
         "ecs_declarations.h": "c",
         "includes_vendor.h": "c",
-        "tiledjsonproperty.h": "c"
+        "tiledjsonproperty.h": "c",
+        "fontstash.h": "c",
+        "menu.h": "c",
+        "menufunctions.h": "c"
     }
 }

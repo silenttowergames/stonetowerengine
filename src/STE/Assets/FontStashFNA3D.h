@@ -1,7 +1,6 @@
 #pragma once
 
 #include <stdlib.h>
-#include "../includes_vendor.h"
 
 #include "Texture.h"
 #include "../Application/ApplicationState.h"

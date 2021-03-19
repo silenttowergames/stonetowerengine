@@ -1,6 +1,7 @@
 #pragma once
 
 #include <flecs.h>
+#include <json.h>
 #include "../Rendering/Animation.h"
 #include "../Utilities/int2d.h"
 

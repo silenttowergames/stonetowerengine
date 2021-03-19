@@ -5,6 +5,7 @@
 #ifdef __MINGW32__
 #define STBI_NO_THREAD_LOCALS
 #endif
+#define STB_IMAGE_IMPLEMENTATION
 #include "vendor/stb_image.h"
 // FontStash
 #define FONTSTASH_IMPLEMENTATION
