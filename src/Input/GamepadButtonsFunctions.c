@@ -19,6 +19,7 @@ GamepadButtons GamepadButton_FromSDLButton(SDL_GameControllerButton button)
         case SDL_CONTROLLER_BUTTON_DPAD_DOWN: return GPB_DPAD_DOWN;
         case SDL_CONTROLLER_BUTTON_DPAD_LEFT: return GPB_DPAD_LEFT;
         case SDL_CONTROLLER_BUTTON_DPAD_RIGHT: return GPB_DPAD_RIGHT;
+        default: break;
     }
     
     return GPB_INVALID;
@@ -50,6 +51,7 @@ SDL_GameControllerAxis GamepadButton_ToSDLAxis(GamepadButtons axis)
         {
             return SDL_CONTROLLER_AXIS_RIGHTY;
         }
+        default: break;
     }
     
     return SDL_CONTROLLER_AXIS_INVALID;

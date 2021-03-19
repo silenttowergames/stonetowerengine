@@ -44,8 +44,6 @@
 
 // ECS
 // Components
-#include "ECS/Components/AINPC.h"
-#include "ECS/Components/AIPlayer.h"
 #include "ECS/Components/Animate.h"
 #include "ECS/Components/BasicAABB.h"
 #include "ECS/Components/Body.h"
@@ -63,12 +61,7 @@
 #include "ECS/Components/TileLayerCollides.h"
 // Entities
 #include "ECS/Entities/Factory.h"
-#include "ECS/Entities/NPCFactory.c"
-#include "ECS/Entities/PlayerFactory.c"
-#include "ECS/Entities/TestMenuFactory.c"
-#include "ECS/Entities/TextBoxFactory.c"
 // Systems
-#include "ECS/Systems/AINPCSystem.c"
 #include "ECS/Systems/AnimateSystem.c"
 #include "ECS/Systems/BasicAABBSystem.c"
 #include "ECS/Systems/CameraFollowSystem.c"
@@ -80,7 +73,6 @@
 #include "ECS/Systems/FinalizeScreenSystem.c"
 #include "ECS/Systems/FullscreenShortcutSystem.c"
 #include "ECS/Systems/MenuSystem.c"
-#include "ECS/Systems/MoveSystem.c"
 #include "ECS/Systems/PauseMenuSystem.c"
 #include "ECS/Systems/SDLEventsSystem.c"
 // .

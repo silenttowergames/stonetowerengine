@@ -4,10 +4,12 @@
 #include "RenderTarget.h"
 #include "SpriteBatchFunctions.h"
 
+/*
 static float2d SpriteBatch_Clamp(float clamp, float2d value)
 {
 	return value;
 }
+//*/
 
 void SpriteBatch_Create(SpriteBatch* spriteBatch)
 {
@@ -17,7 +19,7 @@ void SpriteBatch_Create(SpriteBatch* spriteBatch)
 	spriteBatch->textures = malloc(sizeof(FNA3D_Texture*) * MAX_INDICES); // SpriteBatch.textures allocate
 }
 
-bool SpriteBatch_Begin(SpriteBatch* spriteBatch)
+void SpriteBatch_Begin(SpriteBatch* spriteBatch)
 {
 	assert(!spriteBatch->opened);
 	
@@ -29,7 +31,7 @@ void SpriteBatch_AddQuad(ApplicationState* app, SpriteBatch* spriteBatch, Camera
 	assert(spriteBatch->indicesThisFrame <= (MAX_INDICES - 6));
 	
 	// TODO: Clamp drawing positions to zoom to get rid of ugly borders
-	//float2d cameraPosition = SpriteBatch_Clamp(camera->)
+	//float2d cameraPosition = SpriteBatch_Clamp(0.0f, camera->position);
 	
 	if(!quad_Intersects(
 		camera->position.X - (camera->resolution.X / camera->zoom.X / 2),
@@ -138,7 +140,7 @@ void SpriteBatch_Flush(RenderState* renderState)
 	FNA3D_DrawPrimitives(renderState->device, FNA3D_PRIMITIVETYPE_TRIANGLELIST, thisTextureStartsAt, (renderState->spriteBatch.indicesThisFrame - thisTextureStartsAt) / 3);
 }
 
-bool SpriteBatch_End(SpriteBatch* spriteBatch)
+void SpriteBatch_End(SpriteBatch* spriteBatch)
 {
 	assert(spriteBatch->opened);
 	

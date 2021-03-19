@@ -189,6 +189,8 @@ void RenderState_Resize(ApplicationState* app, int sizeX, int sizeY)
 			
 			break;
 		}
+		
+		default: break;
 	}
 	
 	FNA3D_Viewport viewport;

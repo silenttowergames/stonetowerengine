@@ -12,10 +12,7 @@ bool Rendering_Init(ApplicationState* app)
 	
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC) < 0)
 	{
-		char* log;
-		sprintf(log, "Failed to initialize SDL\n\t%s\n", SDL_GetError());
-		
-		Logger_Log(&app->logger, "ERROR", log);
+		Logger_Log(&app->logger, "ERROR", SDL_GetError());
 		
 		return false;
 	}

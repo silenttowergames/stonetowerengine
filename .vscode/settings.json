@@ -52,6 +52,11 @@
         "sortbylayertheny.c": "cpp",
         "audiomanagerfunctions.h": "c",
         "sound.h": "c",
-        "consolecommanddefaults.h": "c"
+        "consolecommanddefaults.h": "c",
+        "stonetower.h": "c",
+        "includes.h": "c",
+        "ecs_declarations.h": "c",
+        "includes_vendor.h": "c",
+        "tiledjsonproperty.h": "c"
     }
 }

@@ -17,4 +17,5 @@ typedef struct GamepadState
     const char* name;
     Uint16 vendor;
     Uint16 product;
+    SDL_JoystickGUID guid;
 } GamepadState;

@@ -75,17 +75,13 @@ GamepadState GamepadState_Create(int index)
     
     gamepadState.name = SDL_JoystickNameForIndex(index);
     
-    printf("%x\n", SDL_JoystickGetVendor(gamepadState.joystick));
-    printf("%x\n", SDL_JoystickGetProduct(gamepadState.joystick));
-    printf("%x\n", SDL_JoystickGetGUID(gamepadState.joystick));
-    
-    char guid[33];
-    SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(gamepadState.joystick), guid, sizeof(guid));
-    printf("%s\n", guid);
+    gamepadState.vendor = SDL_JoystickGetVendor(gamepadState.joystick);
+    gamepadState.product = SDL_JoystickGetProduct(gamepadState.joystick);
+    gamepadState.guid = SDL_JoystickGetGUID(gamepadState.joystick);
     
     if(gamepadState.name != NULL)
     {
-        printf("%s\n", gamepadState.name);
+        printf("Connected: `%s`\n", gamepadState.name);
     }
     
     gamepadState.haptic = SDL_HapticOpen(index); // GamepadState.haptic allocate
@@ -106,9 +102,9 @@ void GamepadState_Close(GamepadState* gamepadState)
 {
     gamepadState->instance = -1;
     
-    SDL_JoystickClose(gamepadState->joystick); // GamepadState.joystick free
     SDL_GameControllerClose(gamepadState->controller); // GamepadState.joystick free
     SDL_HapticClose(gamepadState->haptic); // GamepadState.haptic free
+    SDL_JoystickClose(gamepadState->joystick); // GamepadState.joystick free
 }
 
 int GamepadState_GetIndexAxis(GamepadState* gamepadState, SDL_GameControllerAxis axis)

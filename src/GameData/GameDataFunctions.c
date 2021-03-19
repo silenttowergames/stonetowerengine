@@ -109,6 +109,8 @@ void GameData_Load(GameData* gameData)
                 
                 attr->wasAllocated = true;
             } break;
+            
+            default: break;
         }
     }
 }
@@ -125,7 +127,7 @@ void GameData_Save(GameData* gameData)
         {
             if(header != NULL)
             {
-                fprintf(gdINI, "\n", attr->header);
+                fprintf(gdINI, "\n");
             }
             
             fprintf(gdINI, "[%s]\n", attr->header);
@@ -147,13 +149,15 @@ void GameData_Save(GameData* gameData)
             
             case GAMEDATA_Float:
             {
-                fprintf(gdINI, "%s = %.*f\n", attr->key, attr->valueFloat);
+                fprintf(gdINI, "%s = %f\n", attr->key, attr->valueFloat);
             } break;
             
             case GAMEDATA_String:
             {
                 fprintf(gdINI, "%s = \"%s\"\n", attr->key, attr->valueString);
             } break;
+            
+            default: break;
         }
     }
     fclose(gdINI);

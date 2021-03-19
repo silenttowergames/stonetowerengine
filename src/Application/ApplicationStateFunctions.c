@@ -108,12 +108,9 @@ void ApplicationState_Loop(ApplicationState* app)
     float fFPSAverage;
     int frameCounter = 0;
     
-    Uint64 unit;
-    
     // Below is from the Tyler Glaiel method of mixing 62fps logic with 60fps logic
     // It caused a lot of tearing, and vsync was unusable. I must be doing something wrong
     // So for now, this is commented out
-    //const Uint64 FPSreal = app->FPS + (app->FPS / 30.0);
     const Uint64 FPSreal = app->FPS;
     const Uint64 FPSrealMS = freq / FPSreal;
     const Uint64 FPSMS = freq / app->FPS;

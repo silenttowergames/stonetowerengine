@@ -98,8 +98,6 @@ void AudioManager_blur(AssetManager* assetManager)
         {
             if(Soloud_getPause(assetManager->audioManager.soloud, assetManager->arraySound[i].instances[j].id))
             {
-                printf("%s[%d]: %d\n", assetManager->arraySound[i].key, j, assetManager->arraySound[i].instances[j]);
-                
                 continue;
             }
             

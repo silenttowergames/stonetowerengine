@@ -1,6 +1,0 @@
-free(): invalid pointer
-free(): invalid pointer
-double free or corruption (out)
-double free or corruption (out)
-main: src/Application/ApplicationStateFunctions.c:276: ApplicationState_GetFactory: Assertion `fac != NULL' failed.
-free(): invalid pointer

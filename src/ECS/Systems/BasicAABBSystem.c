@@ -4,13 +4,12 @@
 
 void BasicAABBSystem(ecs_iter_t* it)
 {
-    fctx();
-    
     assert(aabbQuery != NULL);
     assert(aabbMapQuery != NULL);
     
     BasicAABBSystem_FindSolidMapLayer();
     BasicAABBSystem_GetAllEntities();
+    BasicAABBSystem_Phase_Broad();
     BasicAABBSystem_Phase_Narrow();
 }
 
@@ -165,12 +164,16 @@ static void BasicAABBSystem_Entity_Tilemap(walls wall, BasicAABB* aabb, int h0, 
     //*/
 }
 
+static void BasicAABBSystem_Phase_Broad()
+{
+    // nothing yet
+}
+
 static void BasicAABBSystem_Phase_Narrow()
 {
     // TODO: Hash table. For now it brute-forces
     
     walls w0;
-    walls w1;
     
     for(int e0 = 0; e0 < entitiesCount; e0++)
     {

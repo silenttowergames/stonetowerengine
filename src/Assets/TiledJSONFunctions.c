@@ -88,7 +88,6 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
             json_object* property;
             json_object* propertyChild;
             TiledJSONProperty* prop;
-            char* propertyType;
             
             tlayer.propertiesCount = json_object_array_length(obj);
             tlayer.propertiesArray = malloc(sizeof(TiledJSONProperty) * tlayer.propertiesCount); // TiledJSONLayer.propertiesArray allocate
@@ -199,7 +198,6 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
                     json_object* property;
                     json_object* propertyChild;
                     TiledJSONProperty* prop;
-                    char* propertyType;
                     
                     object.propertiesCount = json_object_array_length(item);
                     object.propertiesArray = malloc(sizeof(TiledJSONProperty) * object.propertiesCount); // TiledJSONObject.propertiesArray allocate
@@ -297,7 +295,6 @@ void TiledJSON_Build_Object(ApplicationState* app, TiledJSONObject* obj, int lay
 void TiledJSON_Build(ApplicationState* app, TiledJSON* tiled)
 {
     int layer = 0;
-    Factory* factory;
     
     for(int i = 0; i < tiled->layerCount; i++)
     {
@@ -323,8 +320,6 @@ void TiledJSON_Map(ecs_world_t* world, TiledJSONLayer* layer, Texture* texture, 
     {
         return;
     }
-    
-    ctx();
     
     ecs_entity_t e = ecs_new(world, 0);
     

@@ -112,7 +112,6 @@ void cmdReloadMap(ApplicationState* app, int argc, char** argv)
         TiledJSONObject* objIDsOld = malloc(sizeof(TiledJSONObject) * map->objCount);
         TiledJSONObject* objIDsNew = malloc(sizeof(TiledJSONObject) * newMap.objCount);
         
-        TiledJSON* m;
         int currentCountOld = 0;
         int currentCountNew = 0;
         for(int i = 0; i < fmax(map->objCount, newMap.objCount); i++)

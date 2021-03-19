@@ -137,7 +137,7 @@ SoundInstance* Sound_playFull(ApplicationState* app, Sound* sound, float volume,
 
 SoundInstance* Sound_play(ApplicationState* app, Sound* sound)
 {
-    Sound_playFull(app, sound, 1.0f, 0.0f, 0.0f, 1.0f, false);
+    return Sound_playFull(app, sound, 1.0f, 0.0f, 0.0f, 1.0f, false);
 }
 
 void Sound_Free(Sound* sound)
@@ -169,5 +169,7 @@ void Sound_Free(Sound* sound)
             
             break;
         }
+        
+        default: break;
     }
 }
