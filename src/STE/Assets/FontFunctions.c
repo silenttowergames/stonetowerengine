@@ -16,3 +16,8 @@ Font Font_Create(ApplicationState* app, const char* key)
     
     return font;
 }
+
+void Font_Free(Font* font)
+{
+    free(font->filename);
+}

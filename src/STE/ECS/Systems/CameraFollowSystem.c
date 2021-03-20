@@ -1,5 +1,6 @@
 #include <flecs.h>
 #include "CameraFollowSystem.h"
+#include "../Components/Renderable.h"
 #include "../../Application/ApplicationStateFunctions.h"
 
 void CameraFollowSystem(ecs_iter_t* it)
@@ -23,11 +24,4 @@ void CameraFollowSystem(ecs_iter_t* it)
 		
 		rt = r[i].renderTargetID;
 	}
-	
-	if(rt != 2)
-	{
-		app->renderState.targets[2].camera.position = app->renderState.targets[1].camera.position;
-	}
-	
-	//app->renderState.targets[0].camera.position.Y = -16;
 }

@@ -29,3 +29,4 @@ void ConsoleCommand_AddAll(ApplicationState* app, int count, ...)
     
     va_end(args);
 }
+

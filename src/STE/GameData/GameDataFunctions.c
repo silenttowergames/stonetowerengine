@@ -113,6 +113,8 @@ void GameData_Load(GameData* gameData)
             default: break;
         }
     }
+    
+    ini_free(r);
 }
 
 void GameData_Save(GameData* gameData)

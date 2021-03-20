@@ -11,7 +11,7 @@
 #define RENDERTARGET_WINDOW -3
 #define RENDERTARGET_CLOSED -4
 
-RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d position, bool scale, FNA3D_Vec4 backgroundColor);
+RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d drawResolution, int2d position, bool scale, FNA3D_Vec4 backgroundColor);
 RenderTarget RenderTarget_Refresh(ApplicationState* app, RenderTarget* renderTarget);
 void RenderTarget_Start(ApplicationState* app, int renderTargetID);
 void RenderTarget_Stop(ApplicationState* app);

@@ -145,9 +145,13 @@ FONScontext* FontStashFNA3D_Create(ApplicationState* app, int width, int height,
     return fonsCreateInternal(&params);
 }
 
-void FontStashFNA3D_Free(void* uptr)
+void FontStashFNA3D_Free(FONScontext* fons, void* uptr)
 {
     FontStashFNA3D* fna = (FontStashFNA3D*)uptr;
     
+    fonsDeleteInternal(fons);
+    
     FNA3D_AddDisposeTexture(fna->app->renderState.device, fna->texture.asset);
+    
+    free(fna);
 }

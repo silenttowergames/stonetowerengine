@@ -1,4 +1,5 @@
 #include "AssetManagerFunctions.h"
+#include "FontFunctions.h"
 #include "../Audio/SoundFunctions.h"
 
 AssetManager AssetManager_Create()
@@ -50,8 +51,7 @@ void AssetManager_Destroy(FNA3D_Device* device, AssetManager* assetManager)
 	
 	for(i = 0; i < assetManager->lengthFont; i++)
 	{
-		// TODO: Free fonts
-		//Font_Free()
+		Font_Free(&assetManager->arrayFont[i]);
 	}
 	
 	free(assetManager->arrayLua); // AssetManager.arrayLua free

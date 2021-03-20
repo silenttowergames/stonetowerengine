@@ -17,8 +17,14 @@ static void FinalizeScreenSystem_ToMainRT(ApplicationState* app)
 		RenderTarget* renderTarget = &app->renderState.targets[i];
 		
 		int2d size = (int2d){
+			//*
+			renderTarget->drawResolution.X / 2,
+			renderTarget->drawResolution.Y / 2,
+			//*/
+			/*
 			renderTarget->camera.resolution.X / 2,
 			renderTarget->camera.resolution.Y / 2,
+			//*/
 		};
 		quad pos = (quad){
 			{ -size.X + renderTarget->position.X, -size.Y + renderTarget->position.Y, },

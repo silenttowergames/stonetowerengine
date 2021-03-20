@@ -21,4 +21,5 @@ typedef struct RenderTarget
 	bool scale;
 	float2d mouse;
 	bool hovered;
+	int2d drawResolution;
 } RenderTarget;

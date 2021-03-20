@@ -10,4 +10,4 @@ void FontStashFNA3D_RenderDelete(void* uptr);
 
 FONScontext* FontStashFNA3D_Create(ApplicationState* app, int width, int height, int flags);
 
-void FontStashFNA3D_Free(void* uptr);
+void FontStashFNA3D_Free(FONScontext* fons, void* uptr);

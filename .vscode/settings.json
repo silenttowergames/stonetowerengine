@@ -60,6 +60,10 @@
         "tiledjsonproperty.h": "c",
         "fontstash.h": "c",
         "menu.h": "c",
-        "menufunctions.h": "c"
+        "menufunctions.h": "c",
+        "rendertargetfunctions.h": "c",
+        "fontstashfna3dfunctions.h": "c",
+        "configfunctions.h": "c",
+        "fontfunctions.h": "c"
     }
 }

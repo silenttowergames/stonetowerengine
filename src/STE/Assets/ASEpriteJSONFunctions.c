@@ -25,10 +25,10 @@ ASEpriteJSON ASEpriteJSON_Load(const char* key)
     size_t n_frames, n_anims;
     int2d size = { -1, };
     
-    f = fopen(aseprite.filename, "r");
+    f = fopen(aseprite.filename, "rb");
     fseek(f, 0, SEEK_END);
     int length = ftell(f);
-    buffer = malloc(length); // buffer allocate
+    buffer = malloc((length + 1) * sizeof(char)); // buffer allocate
     fseek(f, 0, SEEK_SET);
     fread(buffer, length, 1, f);
     fclose(f);

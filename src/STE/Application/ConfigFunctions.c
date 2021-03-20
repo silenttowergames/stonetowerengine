@@ -23,6 +23,11 @@ Config Config_Load(ApplicationState* app)
     const char* language = ini_get(r, "Config", "Language");
     if(language)
     {
+        if(config.language != NULL)
+        {
+            free(config.language);
+        }
+        
         config.language = malloc(sizeof(char) * (1 + strlen(language))); // config.language allocate
         
         strcpy(config.language, language);
@@ -104,4 +109,9 @@ void Config_Resize(ApplicationState* app, int sizeX, int sizeY, bool fullscreen)
     RenderState_Resize(app, sizeX, sizeY);
     
     SDL_SetWindowPosition(app->renderState.window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+}
+
+void Config_Free(Config* config)
+{
+    free(config->language);
 }

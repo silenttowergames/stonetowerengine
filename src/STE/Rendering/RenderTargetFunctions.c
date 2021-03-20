@@ -6,7 +6,7 @@
 #include "../Assets/ShaderFunctions.h"
 #include "../Rendering/CameraFunctions.h"
 
-RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d position, bool scale, FNA3D_Vec4 backgroundColor)
+RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d drawResolution, int2d position, bool scale, FNA3D_Vec4 backgroundColor)
 {
 	RenderTarget renderTarget;
 	memset(&renderTarget, 0, sizeof(renderTarget));
@@ -31,18 +31,10 @@ RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d 
 	
 	renderTarget.size = size;
 	renderTarget.position = position;
+	renderTarget.drawResolution = drawResolution;
 	
 	renderTarget.viewport.w = size.X;
 	renderTarget.viewport.h = size.Y;
-	
-	if(renderTarget.scale)
-	{
-		renderTarget.viewport.y = app->renderState.viewport.y;
-	}
-	else
-	{
-		renderTarget.viewport.y = app->renderState.size.Y - renderTarget.size.Y;
-	}
 	
 	renderTarget.viewport.y = 0;
 	
@@ -53,7 +45,7 @@ RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d 
 
 RenderTarget RenderTarget_Refresh(ApplicationState* app, RenderTarget* renderTarget)
 {
-	RenderTarget ret = RenderTarget_Create(app, renderTarget->camera.resolution, renderTarget->position, renderTarget->scale, renderTarget->backgroundColor);
+	RenderTarget ret = RenderTarget_Create(app, renderTarget->camera.resolution, renderTarget->drawResolution, renderTarget->position, renderTarget->scale, renderTarget->backgroundColor);
 	
 	size_t shadersSize = sizeof(Shader*) * renderTarget->shadersCount;
 	ret.shadersCount = renderTarget->shadersCount;
@@ -113,7 +105,9 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 	// I really hate this hack lol
 	if(first)
 	{
-		viewport.y += app->renderState.size.Y - (app->renderState.resolution.Y * app->renderState.windowZoom.Y);
+		viewport.y += app->renderState.size.Y;
+		viewport.y -= renderTarget->drawResolution.Y * app->renderState.windowZoom.Y;
+		viewport.y += (renderTarget->drawResolution.Y - renderTarget->camera.resolution.Y) * app->renderState.windowZoom.Y;
 	}
 	
 	FNA3D_SetViewport(app->renderState.device, &viewport);

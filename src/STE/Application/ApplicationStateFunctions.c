@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include "ApplicationStateFunctions.h"
 #include "ConfigFunctions.h"
+#include "../GameData/GameDataFunctions.h"
 #include "../Assets/AssetManagerFunctions.h"
 #include "../Assets/FontStashFNA3DFunctions.h"
 #include "../Assets/TiledJSONFunctions.h"
@@ -203,7 +204,7 @@ void ApplicationState_Free(ApplicationState* app)
     
     free(app->savePathConfig); // ApplicationState.savePathConfig free
     
-    FontStashFNA3D_Free(app->fons->params.userPtr);
+    FontStashFNA3D_Free(app->fons, (void*)(app->fons->params.userPtr));
     
     AssetManager_Destroy(app->renderState.device, &app->assetManager);
     RenderState_Free(&app->renderState);
@@ -212,7 +213,11 @@ void ApplicationState_Free(ApplicationState* app)
     
     free(nextSceneName);
     
-    free(app->config.language);
+    ecs_map_free(app->console.commands);
+    
+    GameData_Free(&app->gameData);
+    
+    Config_Free(&app->config);
     
     if(windowIcon != NULL)
     {
