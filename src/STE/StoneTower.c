@@ -1,21 +1,15 @@
 #include "StoneTower.h"
 
 // NOW
-// TODO: Print and/or log an error when an asset can't be loaded
-// FIXME: Low framerate speed seems broken
-// FIXME: Vsync seems broken, maybe do no manual timestep if vsync is on?
-// TODO: Option for Flecs timestep, since it doesn't burn CPU
-// TODO: Get controller type, for displaying correct button
+// FIXME: Fix vsync, or just totally disable it
 // TODO: Keybinding example?
 // TODO: Hide pause menu before first draw
 
 // FINALIZE
 // TODO: Clean up code
-// TODO: Get relative DLL paths working
-// TODO: Turn engine into DLL, create example project
-// TODO: Clang compilation flow
 
 // LATER
+// TODO: Get controller type, for displaying correct button
 // TODO: Save state, including gameData
 // TODO: Console cursor navigation: arrow left, arrow right, Home, End?
 // TODO: Console feedback? Maybe write it on the next line or something?
@@ -23,7 +17,7 @@
 // TODO: Window icon
 // FIXME: DirectX not working
 // TODO: Dialogue system
-// TODO: Sound: only play if there are none playing currently
+// TODO: Sound play type: only play if there are none playing currently
 // TODO: Different kinds of windowZoom
 
 // There needs to be something seemingly-meaningful in this file or the compiler will yell at me

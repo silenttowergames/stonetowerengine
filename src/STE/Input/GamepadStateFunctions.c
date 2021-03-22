@@ -84,14 +84,14 @@ GamepadState GamepadState_Create(int index)
         printf("Connected: `%s`\n", gamepadState.name);
     }
     
-    gamepadState.haptic = SDL_HapticOpen(index); // GamepadState.haptic allocate
+	gamepadState.controller = SDL_GameControllerOpen(index); // GamepadState.controller allocate
+    
+    gamepadState.haptic = SDL_HapticOpenFromJoystick(gamepadState.joystick); // GamepadState.haptic allocate
     
     if(gamepadState.haptic != NULL)
     {
         SDL_HapticRumbleInit(gamepadState.haptic);
     }
-    
-	gamepadState.controller = SDL_GameControllerOpen(index); // GamepadState.controller allocate
     
     gamepadState.instance = SDL_JoystickInstanceID(gamepadState.joystick);
     
@@ -102,8 +102,8 @@ void GamepadState_Close(GamepadState* gamepadState)
 {
     gamepadState->instance = -1;
     
-    SDL_GameControllerClose(gamepadState->controller); // GamepadState.joystick free
     SDL_HapticClose(gamepadState->haptic); // GamepadState.haptic free
+    SDL_GameControllerClose(gamepadState->controller); // GamepadState.joystick free
     SDL_JoystickClose(gamepadState->joystick); // GamepadState.joystick free
 }
 

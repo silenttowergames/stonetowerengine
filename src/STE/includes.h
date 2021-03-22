@@ -73,6 +73,7 @@
 #include "ECS/Systems/DrawSystem.c"
 #include "ECS/Systems/EngineUpdateSystem.c"
 #include "ECS/Systems/FinalizeScreenSystem.c"
+#include "ECS/Systems/FPSPrintSystem.c"
 #include "ECS/Systems/FullscreenShortcutSystem.c"
 #include "ECS/Systems/MenuSystem.c"
 #include "ECS/Systems/PauseMenuSystem.c"

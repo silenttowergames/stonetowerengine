@@ -68,6 +68,7 @@
         "texturefunctions.h": "c",
         "shaderfunctions.h": "c",
         "luascriptfunctions.h": "c",
-        "asepritejsonfunctions.h": "c"
+        "asepritejsonfunctions.h": "c",
+        "gamepadstatefunctions.h": "c"
     }
 }

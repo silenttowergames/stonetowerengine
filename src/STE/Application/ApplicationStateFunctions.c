@@ -92,6 +92,70 @@ void ApplicationState_Create(
     
     // Load window icon
     ApplicationState_SetWindowIcon(app, "test.bmp");
+    
+    app->averageFPS = (float)app->FPS;
+}
+
+static void ApplicationState_Loop_Frame(
+    ApplicationState* app,
+    int64_t* accumulator,
+    const Uint64 freq,
+    const Uint64 FPSMS,
+    const Uint64 FPSrealMS,
+    float* fDeltaTime
+)
+{
+    if(accumulator != NULL)
+    {
+        if(*accumulator > FPSrealMS * 8)
+        {
+            *accumulator = FPSrealMS;
+        }
+        
+        *fDeltaTime = (float)(*accumulator) / (float)freq;
+    }
+    
+    SDLEventsSystem(app);
+    
+    if(app->focused)
+    {
+        ecs_progress(app->world, *fDeltaTime);
+        
+        ConsoleStateSystem(app);
+    }
+    
+    if(accumulator != NULL)
+    {
+        *accumulator -= FPSMS;
+        
+        if(*accumulator < 0)
+        {
+            *accumulator = 0;
+        }
+    }
+}
+
+static void ApplicationState_Loop_FPSCounter(ApplicationState* app, float* fFPS, float* fMeasurements, float* fDeltaTime, int* frameCounter)
+{
+    *fFPS = 1.0f / *fDeltaTime;
+    
+    memcpy(&fMeasurements[1], &fMeasurements[0], sizeof(float) * 59);
+    fMeasurements[0] = *fFPS;
+    
+    *frameCounter = *frameCounter + 1;
+    if(*frameCounter >= 60)
+    {
+        *frameCounter = 0;
+        
+        float fFPSAverage = 0;
+        for(int i = 0; i < 60; i++)
+        {
+            fFPSAverage += fMeasurements[i];
+        }
+        fFPSAverage /= 60;
+        
+        app->averageFPS = fFPSAverage;
+    }
 }
 
 void ApplicationState_Loop(ApplicationState* app)
@@ -109,9 +173,6 @@ void ApplicationState_Loop(ApplicationState* app)
     float fFPSAverage;
     int frameCounter = 0;
     
-    // Below is from the Tyler Glaiel method of mixing 62fps logic with 60fps logic
-    // It caused a lot of tearing, and vsync was unusable. I must be doing something wrong
-    // So for now, this is commented out
     const Uint64 FPSreal = app->FPS;
     const Uint64 FPSrealMS = freq / FPSreal;
     const Uint64 FPSMS = freq / app->FPS;
@@ -143,52 +204,42 @@ void ApplicationState_Loop(ApplicationState* app)
             deltaTime = currentTime - lastTime;
             accumulator += deltaTime;
             
-            while(accumulator > FPSrealMS)
+            if(app->config.vsync)
             {
-                if(accumulator > FPSrealMS * 8)
-                {
-                    accumulator = FPSrealMS;
-                }
-                
-                fDeltaTime = (float)accumulator / (float)freq;
-                fFPS = 1.0f / fDeltaTime;
-                
-                memcpy(&fMeasurements[1], &fMeasurements[0], sizeof(float) * 59);
-                fMeasurements[0] = fFPS;
-                
-                if(++frameCounter >= 60)
-                {
-                    frameCounter = 0;
-                    
-                    fFPSAverage = 0;
-                    for(int i = 0; i < 60; i++)
-                    {
-                        fFPSAverage += fMeasurements[i];
-                    }
-                    fFPSAverage /= 60;
-                    
-                    printf("FPS: %1.5f\n", fFPSAverage);
-                }
-                
-                SDLEventsSystem(app);
-                
-                if(app->focused)
-                {
-                    ecs_progress(app->world, fDeltaTime);
-                    
-                    ConsoleStateSystem(app);
-                }
-                
-                accumulator -= FPSMS;
-                
-                if(accumulator < 0)
-                {
-                    accumulator = 0;
-                }
+                ApplicationState_Loop_Frame(
+                    app,
+                    &accumulator,
+                    freq,
+                    FPSMS,
+                    FPSrealMS,
+                    &fDeltaTime
+                );
             }
+            else
+            {
+                while(accumulator > FPSrealMS)
+                {
+                    ApplicationState_Loop_Frame(
+                        app,
+                        &accumulator,
+                        freq,
+                        FPSMS,
+                        FPSrealMS,
+                        &fDeltaTime
+                    );
+                    
+                    ApplicationState_Loop_FPSCounter(
+                        app,
+                        &fFPS,
+                        fMeasurements,
+                        &fDeltaTime,
+                        &frameCounter
+                    );
+                } // while accumulator > FPSrealMS
+            } // if vsync
             
             lastTime = currentTime;
-        }
+        } // while !app->quit
         
         app->world = Flecs_Free(app->world);
     }
