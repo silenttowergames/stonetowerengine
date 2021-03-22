@@ -1,7 +1,7 @@
 #include "../includes.h"
 #include "ShaderFunctions.h"
 
-Shader Shader_Create(FNA3D_Device* device, char* key, void (*update)(void*, void*, void*))
+Shader Shader_Create(ApplicationState* app, char* key, void (*update)(void*, void*, void*))
 {
 	Shader shader;
 	memset(&shader, 0, sizeof(Shader));
@@ -16,6 +16,14 @@ Shader Shader_Create(FNA3D_Device* device, char* key, void (*update)(void*, void
 	sprintf(shader.filename, formatStr, shader.key);
 	
 	FILE *effectFile = fopen(shader.filename, "rb");
+	
+	if(effectFile == NULL)
+	{
+		Logger_Log(&app->logger, "Shader Not Found", shader.filename);
+		
+		assert(effectFile != NULL);
+	}
+	
 	fseek(effectFile, 0, SEEK_END);
 	uint32_t effectCodeLength = ftell(effectFile);
 	fseek(effectFile, 0, SEEK_SET);
@@ -23,7 +31,7 @@ Shader Shader_Create(FNA3D_Device* device, char* key, void (*update)(void*, void
 	fread(effectCode, 1, effectCodeLength, effectFile);
 	fclose(effectFile);
 	
-	FNA3D_CreateEffect(device, effectCode, effectCodeLength, &shader.effect, &shader.effectData);
+	FNA3D_CreateEffect(app->renderState.device, effectCode, effectCodeLength, &shader.effect, &shader.effectData);
 	
 	free(effectCode);
 	

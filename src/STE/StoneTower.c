@@ -7,6 +7,7 @@
 // TODO: Option for Flecs timestep, since it doesn't burn CPU
 // TODO: Get controller type, for displaying correct button
 // TODO: Keybinding example?
+// TODO: Hide pause menu before first draw
 
 // FINALIZE
 // TODO: Clean up code
@@ -25,4 +26,5 @@
 // TODO: Sound: only play if there are none playing currently
 // TODO: Different kinds of windowZoom
 
-typedef int StoneTowerEngine___thisExistsForShuttingUpTheCompiler;
+// There needs to be something seemingly-meaningful in this file or the compiler will yell at me
+typedef int StoneTowerEngine_compilerShutUp;

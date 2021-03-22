@@ -160,7 +160,7 @@ void RenderState_Resize(ApplicationState* app, int sizeX, int sizeY)
 	
 	if(app->renderState.shaderSpriteEffect.effect == NULL)
 	{
-		app->renderState.shaderSpriteEffect = Shader_Create(app->renderState.device, "SpriteEffect", NULL);
+		app->renderState.shaderSpriteEffect = Shader_Create(app, "SpriteEffect", NULL);
 	}
 	
 	app->renderState.vertexBuffer = FNA3D_GenVertexBuffer(app->renderState.device, 1, FNA3D_BUFFERUSAGE_WRITEONLY, MAX_INDICES * sizeof(Vertex)); // RenderState.vertexBuffer allocate

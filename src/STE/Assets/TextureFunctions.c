@@ -32,7 +32,7 @@ Texture Texture_NewBlank(FNA3D_Device* device, int width, int height, int channe
 	return texture;
 }
 
-Texture Texture_Load(FNA3D_Device* device, const char* key)
+Texture Texture_Load(ApplicationState* app, const char* key)
 {
 	char* filename;
 	int2d size;
@@ -43,20 +43,27 @@ Texture Texture_Load(FNA3D_Device* device, const char* key)
 	
 	unsigned char* pixels = stbi_load(filename, &size.X, &size.Y, &channels, 4);
 	
-	Texture texture = Texture_NewFromData(device, size.X, size.Y, pixels, channels, false);
+	if(pixels == NULL)
+	{
+		Logger_Log(&app->logger, "Texture Not Found", filename);
+		
+		assert(pixels != NULL);
+	}
+	
+	Texture texture = Texture_NewFromData(app->renderState.device, size.X, size.Y, pixels, channels, false);
 	texture.key = key;
 	texture.filename = filename;
 	
-	texture.aseprite = ASEpriteJSON_Load(key);
+	texture.aseprite = ASEpriteJSON_Load(app, key);
 	
 	stbi_image_free(pixels);
 	
 	return texture;
 }
 
-Texture Texture_Create(FNA3D_Device* device, const char* key, int tilesizeX, int tilesizeY, int paddingX, int paddingY, int borderX, int borderY)
+Texture Texture_Create(ApplicationState* app, const char* key, int tilesizeX, int tilesizeY, int paddingX, int paddingY, int borderX, int borderY)
 {
-	Texture texture = Texture_Load(device, key);
+	Texture texture = Texture_Load(app, key);
 	
 	texture.tilesize.X = tilesizeX;
 	texture.tilesize.Y = tilesizeY;

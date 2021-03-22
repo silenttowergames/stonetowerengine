@@ -14,6 +14,13 @@ Font Font_Create(ApplicationState* app, const char* key)
     
     font.fonsID = fonsAddFont(app->fons, key, filename);
     
+    if(font.fonsID == FONS_INVALID)
+    {
+        Logger_Log(&app->logger, "Font Not Found", font.filename);
+        
+        assert(font.fonsID != FONS_INVALID);
+    }
+    
     return font;
 }
 

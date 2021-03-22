@@ -2,7 +2,7 @@
 #include "../includes_libs.h"
 #include "LuaScriptFunctions.h"
 
-LuaScript LuaScript_Load(const char* key)
+LuaScript LuaScript_Load(ApplicationState* app, const char* key)
 {
 	LuaScript script;
 	
@@ -13,6 +13,14 @@ LuaScript LuaScript_Load(const char* key)
 	sprintf(script.filename, formatStr, script.key);
 	
 	FILE* f = fopen(script.filename, "rb");
+	
+	if(f == NULL)
+	{
+		Logger_Log(&app->logger, "Lua Script Not Found", script.filename);
+		
+		assert(f != NULL);
+	}
+	
 	fseek(f, 0, SEEK_END);
 	uint32_t length = ftell(f);
 	fseek(f, 0, SEEK_SET);

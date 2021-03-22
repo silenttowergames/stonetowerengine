@@ -3,7 +3,7 @@
 #include "ASEpriteJSONFunctions.h"
 #include "../Utilities/int2d.h"
 
-ASEpriteJSON ASEpriteJSON_Load(const char* key)
+ASEpriteJSON ASEpriteJSON_Load(ApplicationState* app, const char* key)
 {
 	ASEpriteJSON aseprite;
     memset(&aseprite, 0, sizeof(ASEpriteJSON));
@@ -23,9 +23,17 @@ ASEpriteJSON ASEpriteJSON_Load(const char* key)
     json_object* objEx;
     json_object* objExEx;
     size_t n_frames, n_anims;
-    int2d size = { -1, };
+    int2d size = { -1, -1, };
     
     f = fopen(aseprite.filename, "rb");
+    
+    if(f == NULL)
+    {
+        Logger_Log(&app->logger, "ASEprite JSON Not Found", aseprite.filename);
+        
+        assert(f != NULL);
+    }
+    
     fseek(f, 0, SEEK_END);
     int length = ftell(f);
     buffer = malloc((length + 1) * sizeof(char)); // buffer allocate

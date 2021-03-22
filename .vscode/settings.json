@@ -64,6 +64,10 @@
         "rendertargetfunctions.h": "c",
         "fontstashfna3dfunctions.h": "c",
         "configfunctions.h": "c",
-        "fontfunctions.h": "c"
+        "fontfunctions.h": "c",
+        "texturefunctions.h": "c",
+        "shaderfunctions.h": "c",
+        "luascriptfunctions.h": "c",
+        "asepritejsonfunctions.h": "c"
     }
 }

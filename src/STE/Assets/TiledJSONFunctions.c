@@ -29,6 +29,14 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
     json_object* objEx;
     
     f = fopen(tiled.filename, "r");
+    
+    if(f == NULL)
+    {
+        Logger_Log(&app->logger, "TiledJSON Map Not Found", tiled.filename);
+        
+        assert(f != NULL);
+    }
+    
     fseek(f, 0, SEEK_END);
     int length = ftell(f);
     buffer = malloc(length);
