@@ -6,6 +6,8 @@ GamepadState GamepadState_Create(int index)
     GamepadState gamepadState;
 	memset(&gamepadState, 0, sizeof(GamepadState));
     
+    memset(&gamepadState.down, -3, sizeof(gamepadState.down));
+    
     if(index == -1)
     {
         gamepadState.instance = -1;
@@ -70,7 +72,7 @@ GamepadState GamepadState_Create(int index)
 		SDL_CONTROLLER_AXIS_TRIGGERRIGHT,
 	};
 	memcpy(&gamepadState.axes, axes, sizeof(axes));
-	
+    
 	gamepadState.joystick = SDL_JoystickOpen(index); // GamepadState.joystick allocate
     
     gamepadState.name = SDL_JoystickNameForIndex(index);
@@ -81,7 +83,7 @@ GamepadState GamepadState_Create(int index)
     
     if(gamepadState.name != NULL)
     {
-        printf("Connected: `%s`\n", gamepadState.name);
+        printf("Connected: `%s` (%dx%d)\n", gamepadState.name, SDL_JoystickGetVendor(gamepadState.joystick), SDL_JoystickGetProduct(gamepadState.joystick));
     }
     
 	gamepadState.controller = SDL_GameControllerOpen(index); // GamepadState.controller allocate
@@ -217,11 +219,11 @@ void GamepadState_Update(GamepadState* gamepadState)
     {
         if(gamepadState->down[i] > 0)
         {
-            gamepadState->down[i] = fmin(5000, fmax(1, gamepadState->down[i] + 1));
+            gamepadState->down[i] = fmin(INT_MAX - 1, fmax(1, gamepadState->down[i] + 1));
         }
         else
         {
-            gamepadState->down[i] = fmax(-5000, fmin(-1, gamepadState->down[i] - 1));
+            gamepadState->down[i] = fmax(INT_MIN + 1, fmin(-1, gamepadState->down[i] - 1));
         }
     }
     
@@ -269,6 +271,7 @@ bool GamepadState_Pressed(GamepadState* gamepadState, GamepadButtons button)
     
     int state = GamepadState_GetButton(gamepadState, button);
     
+    // FIXME: Why does this default to 2?
     if(state == 1)
     {
         return true;

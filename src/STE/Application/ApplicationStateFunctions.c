@@ -59,6 +59,8 @@ void ApplicationState_Create(
 	app->flecsInit = flecsInit;
 	app->flecsScene = flecsScene;
     
+    SDL_GameControllerAddMappingsFromFile("gcdb/gamecontrollerdb.txt");
+    
     app->savePath = SDL_GetPrefPath("Silent Tower Games", app->gameTitle); // ApplicationState.savePath allocate
     
     char* configFilename = "config.ini";

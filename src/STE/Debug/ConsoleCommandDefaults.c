@@ -105,7 +105,7 @@ void cmdReloadMap(ApplicationState* app, int argc, char** argv)
     TiledJSON* map = *_map;
     TiledJSON oldMap = *map;
     
-    TiledJSON newMap = TiledJSON_Load(app, key);
+    TiledJSON newMap = TiledJSON_Load(app, oldMap.key);
     
     if(strcmp(key, app->flecsSceneCurrent) == 0)
     {
@@ -239,16 +239,16 @@ void cmdReloadMap(ApplicationState* app, int argc, char** argv)
     }
     
     for(int i = 0; i < app->assetManager.lengthTiled; i++)
+    {
+        if(strcmp(app->assetManager.arrayTiled[i].key, key) != 0)
         {
-            if(strcmp(app->assetManager.arrayTiled[i].key, key) != 0)
-            {
-                continue;
-            }
-            
-            app->assetManager.arrayTiled[i] = newMap;
-            
-            break;
+            continue;
         }
+        
+        app->assetManager.arrayTiled[i] = newMap;
+        
+        break;
+    }
     
     TiledJSON_Free(&oldMap);
 }

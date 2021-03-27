@@ -368,11 +368,6 @@ void TiledJSON_Free(TiledJSON* tiled)
     {
         free(tiled->layers[i].tiles);
         
-        for(int x = 0; x < tiled->layers[i].propertiesCount; x++)
-        {
-            //free(tiled->layers[i].propertiesArray[x].valueString);
-        }
-        
         ecs_map_free(tiled->layers[i].properties); // TiledJSONLayer.properties free
         free(tiled->layers[i].propertiesArray); // TiledJSONLayer.propertiesArray free
         
@@ -406,4 +401,3 @@ void TiledJSON_Free(TiledJSON* tiled)
     
     json_object_put(tiled->parsed_json);
 }
-

@@ -10,13 +10,10 @@ InputManager InputManager_Create()
 	MouseState_Create(&inputManager.mouseState);
 	KeyboardState_Create(&inputManager.keyboardState);
 	
-	printf("ok\n");
-	//*
 	for(int i = 0; i < sizeof(inputManager.gamepadStates) / sizeof(GamepadState); i++)
 	{
 		inputManager.gamepadStates[i] = GamepadState_Create(-1);
 	}
-	//*/
 	
 	return inputManager;
 }

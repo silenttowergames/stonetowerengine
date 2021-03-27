@@ -141,6 +141,7 @@ static void FinalizeScreenSystem_UI(ApplicationState* app)
 			colorU(255, 255, 255, 255)
 		);
 		
+		fonsSetSize(app->fons, 8.0f);
 		fonsSetColor(app->fons, colorU(255, 255, 255, 255));
 		fonsDrawText(app->fons, -((app->renderState.resolution.X / 2) * app->renderState.windowZoom.X) + 2, -((app->renderState.resolution.Y / 2) * app->renderState.windowZoom.Y) + 10, app->console.line, NULL);
 	}

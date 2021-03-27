@@ -22,4 +22,13 @@ float GamepadState_AxisF(GamepadState* gamepadState, SDL_GameControllerAxis axis
 
 #define button(state, index, button) GamepadState_##state(&app->inputManager.gamepadStates[index], GPB_##button)
 #define axis(index, axis) GamepadState_AxisF(&app->inputManager.gamepadStates[index], GamepadButton_ToSDLAxis(GPB_##axis))
-#define rumble(index, strength, duration) SDL_HapticRumblePlay(app->inputManager.gamepadStates[index].haptic, strength, duration)
+#define rumble(index, strength0, strength1, duration) {\
+    if(app->inputManager.gamepadStates[index].haptic != NULL)\
+    {\
+        SDL_HapticRumblePlay(app->inputManager.gamepadStates[index].haptic, 1.0f / ((float)0xFFFF / (float)strength0), duration);\
+    }\
+    else\
+    {\
+        SDL_JoystickRumble(app->inputManager.gamepadStates[index].joystick, strength0, strength1, duration);\
+    }\
+}
