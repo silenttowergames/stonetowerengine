@@ -268,6 +268,11 @@ void ApplicationState_Free(ApplicationState* app)
     
     ecs_map_free(app->console.commands);
     
+    for(int i = 0; i < app->console.history; i++)
+    {
+        free(app->console.lines[i]);
+    }
+    
     GameData_Free(&app->gameData);
     
     Config_Free(&app->config);

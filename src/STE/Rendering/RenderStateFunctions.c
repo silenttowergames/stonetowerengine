@@ -53,8 +53,6 @@ static void RenderState_FNA3D_Init(ApplicationState* app)
 
 void RenderState_New(ApplicationState* app, int sizeX, int sizeY, int resX, int resY, RenderState_Zoom windowZoomType)
 {
-	// FIXME: Camera offset is wrong when window size doesn't match renderTarget size
-	
 	memset(&app->renderState, 0, sizeof(RenderState));
 	
 	app->renderState.resolution.X = resX;

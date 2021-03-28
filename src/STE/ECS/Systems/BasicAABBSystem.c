@@ -1,6 +1,9 @@
 #include <math.h>
 #include <flecs.h>
 #include "BasicAABBSystem.h"
+#include "../../Utilities/HashTable.h"
+
+static HashTable hashTable;
 
 void BasicAABBSystem(ecs_iter_t* it)
 {
@@ -35,11 +38,12 @@ static void BasicAABBSystem_FindSolidMapLayer()
 
 static void BasicAABBSystem_GetAllEntities()
 {
-    if(aabbEnitities == NULL)
+    if(aabbItems == NULL)
     {
-        aabbEnitities = malloc(sizeof(ecs_entity_t) * MAX_SPRITES); // aabbEnitities allocate
-        aabbBasics = malloc(sizeof(BasicAABB*) * MAX_SPRITES); // aabbBasics allocate
-        aabbBodies = malloc(sizeof(Body*) * MAX_SPRITES); // aabbBodies allocate
+        HashTable_Free(&hashTable);
+        hashTable = HashTable_New(8);
+        
+        aabbItems = malloc(sizeof(BasicAABBItem) * MAX_SPRITES); // aabbEnitities allocate
     }
     
     ecs_iter_t iter = ecs_query_iter(aabbQuery);
@@ -52,9 +56,11 @@ static void BasicAABBSystem_GetAllEntities()
         
         for(int i = 0; i < iter.count; i++)
         {
-            aabbEnitities[entitiesCount] = iter.entities[i];
-            aabbBasics[entitiesCount] = &basicAABB[i];
-            aabbBodies[entitiesCount] = &body[i];
+            aabbItems[entitiesCount] = (BasicAABBItem){
+                .entity = iter.entities[i],
+                .basicAABB = &basicAABB[i],
+                .body = &body[i],
+            };
             
             entitiesCount++;
             
@@ -70,15 +76,16 @@ static void BasicAABBSystem_GetAllEntities()
         }
     }
     
+    /*
     if(entitiesCount < MAX_SPRITES)
     {
         aabbEnitities[entitiesCount] = -1;
     }
+    //*/
 }
 
 static void BasicAABBSystem_Entity_Tilemap(walls wall, BasicAABB* aabb, int h0, Body* body, Renderable* tileMapSolid, Body* tileMapSolidBody, bool isY)
 {
-    //*
     TiledJSONLayer* layer = (TiledJSONLayer*)tileMapSolid->data;
     
     Hitbox tileHitbox = Hitbox_CreateBasic((float2d){
@@ -161,12 +168,22 @@ static void BasicAABBSystem_Entity_Tilemap(walls wall, BasicAABB* aabb, int h0, 
             );
         }
     }
-    //*/
 }
 
 static void BasicAABBSystem_Phase_Broad()
 {
-    // nothing yet
+    // 1. Fill hash table
+    //    a. Math to see how many cells an entity can fit inside
+    // 2. Perform narrow X checks on each cell
+    //    a. Don't check entity against itself
+    // 3. Go through all entities, move on X
+    // 4. Perform narrow Y checks on each cell
+    // 5. Go through all entities, move on Y
+    return;
+    for(int i = 0; i < entitiesCount; i++)
+    {
+        //
+    }
 }
 
 static void BasicAABBSystem_Phase_Narrow()
@@ -177,51 +194,51 @@ static void BasicAABBSystem_Phase_Narrow()
     
     for(int e0 = 0; e0 < entitiesCount; e0++)
     {
-        if(aabbBasics[e0]->hitboxesCount <= 0)
+        if(aabbItems[e0].basicAABB->hitboxesCount <= 0)
         {
             continue;
         }
         
         for(int isY = 0; isY <= 1; isY++)
         {
-            for(int h0 = 0; h0 < aabbBasics[e0]->hitboxesCount; h0++)
+            for(int h0 = 0; h0 < aabbItems[e0].basicAABB->hitboxesCount; h0++)
             {
-                if(!aabbBasics[e0]->hitboxes[h0].active)
+                if(!aabbItems[e0].basicAABB->hitboxes[h0].active)
                 {
                     continue;
                 }
                 
-                w0 = Hitbox_GetWalls(&aabbBasics[e0]->hitboxes[h0], aabbBodies[e0]->position);
+                w0 = Hitbox_GetWalls(&aabbItems[e0].basicAABB->hitboxes[h0], aabbItems[e0].body->position);
                 
                 // Map collisions
                 if(tileMapSolid != NULL)
                 {
-                    BasicAABBSystem_Entity_Tilemap(w0, aabbBasics[e0], h0, aabbBodies[e0], tileMapSolid, tileMapSolidBody, isY);
+                    BasicAABBSystem_Entity_Tilemap(w0, aabbItems[e0].basicAABB, h0, aabbItems[e0].body, tileMapSolid, tileMapSolidBody, isY);
                 }
                 
                 // Object collisions
                 for(int e1 = 0; e1 < entitiesCount; e1++)
                 {
-                    if(e0 == e1 || aabbBasics[e1]->hitboxesCount <= 0)
+                    if(e0 == e1 || aabbItems[e1].basicAABB->hitboxesCount <= 0)
                     {
                         continue;
                     }
                     
-                    for(int h1 = 0; h1 < aabbBasics[e1]->hitboxesCount; h1++)
+                    for(int h1 = 0; h1 < aabbItems[e1].basicAABB->hitboxesCount; h1++)
                     {
-                        if(!aabbBasics[e1]->hitboxes[h1].active)
+                        if(!aabbItems[e1].basicAABB->hitboxes[h1].active)
                         {
                             continue;
                         }
                         
                         BasicAABB_TryHitboxes(
-                            aabbBasics[e0],
-                            aabbBodies[e0],
-                            &aabbBasics[e0]->hitboxes[h0],
+                            aabbItems[e0].basicAABB,
+                            aabbItems[e0].body,
+                            &aabbItems[e0].basicAABB->hitboxes[h0],
                             &w0,
-                            aabbBasics[e1],
-                            aabbBodies[e1],
-                            &aabbBasics[e1]->hitboxes[h1],
+                            aabbItems[e1].basicAABB,
+                            aabbItems[e1].body,
+                            &aabbItems[e1].basicAABB->hitboxes[h1],
                             NULL,
                             isY
                         );
@@ -230,11 +247,11 @@ static void BasicAABBSystem_Phase_Narrow()
                 
                 if(!isY)
                 {
-                    aabbBodies[e0]->position.X += aabbBodies[e0]->velocity.X;
+                    aabbItems[e0].body->position.X += aabbItems[e0].body->velocity.X;
                 }
                 else
                 {
-                    aabbBodies[e0]->position.Y += aabbBodies[e0]->velocity.Y;
+                    aabbItems[e0].body->position.Y += aabbItems[e0].body->velocity.Y;
                 }
             }
         }
@@ -243,9 +260,8 @@ static void BasicAABBSystem_Phase_Narrow()
 
 void BasicAABBSystemFree()
 {
-    free(aabbEnitities);
-    free(aabbBasics);
-    free(aabbBodies);
+    HashTable_Free(&hashTable);
+    free(aabbItems);
 }
 
 static void BasicAABB_TryHitboxes(

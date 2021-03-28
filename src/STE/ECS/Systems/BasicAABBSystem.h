@@ -8,18 +8,22 @@
 #include "../../Rendering/SpriteBatch.h"
 #include "../../Utilities/walls.h"
 
-// TODO: Free these two queries!!!!!
 #define BasicAABBSystem_Init()\
     ecs_set_component_actions(world, BasicAABB, { .dtor = ecs_dtor(BasicAABB), });\
     ECS_SYSTEM(world, BasicAABBSystem, EcsOnUpdate, 0);\
     aabbQuery = ecs_query_new(world, "BasicAABB, Body");\
     aabbMapQuery = ecs_query_new(world, "TileLayerCollides, Renderable, Body");
 
+typedef struct BasicAABBItem
+{
+    ecs_entity_t entity;
+    BasicAABB* basicAABB;
+    Body* body;
+} BasicAABBItem;
+
 ecs_query_t* aabbQuery = NULL;
 ecs_query_t* aabbMapQuery = NULL;
-static ecs_entity_t* aabbEnitities = NULL;
-static BasicAABB** aabbBasics = NULL;
-static Body** aabbBodies = NULL;
+static BasicAABBItem* aabbItems;
 static ecs_map_t* aabbHashTable = NULL;
 static int entitiesCount;
 static Renderable* tileMapSolid = NULL;

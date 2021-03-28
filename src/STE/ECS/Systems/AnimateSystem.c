@@ -38,7 +38,7 @@ void AnimateSystem(ecs_iter_t* it)
         }
         else
         {
-            a[i].progress += (1000.0 / app->FPS) * a[i].speed * fdelta();
+            a[i].progress += (1000.0 / app->FPS) * a[i].speed;
             
             if(a[i].progress > s[i].texture->aseprite.frames[a[i].frame].duration)
             {

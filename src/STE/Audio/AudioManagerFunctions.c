@@ -17,6 +17,7 @@ void AudioManager_create(AudioManager* audioManager)
 void AudioManager_Free(AudioManager* audioManager)
 {
     Soloud_deinit(audioManager->soloud);
+    Soloud_destroy(audioManager->soloud);
 }
 
 void AudioManager_addSounds(AudioManager* audioManager, Sound* sounds, int soundsCount)

@@ -10,6 +10,8 @@ AssetManager AssetManager_Create()
 	assetManager.lua = luaL_newstate();
 	luaL_openlibs(assetManager.lua);
 	
+	AudioManager_create(&assetManager.audioManager);
+	
 	return assetManager;
 }
 
@@ -60,6 +62,8 @@ void AssetManager_Destroy(FNA3D_Device* device, AssetManager* assetManager)
 	free(assetManager->arrayTexture); // AssetManager.arrayTexture free
 	free(assetManager->arrayTiled); // AssetManager.arrayTiled free
 	free(assetManager->arrayFont); // AssetManager.arrayFont free
+	
+	AudioManager_Free(&assetManager->audioManager);
 	
 	lua_close(assetManager->lua); // AssetManager.lua free
 }
@@ -195,8 +199,6 @@ void AssetManager_AddLuas(AssetManager* assetManager, int length, ...)
 
 void AssetManager_InitSound(AssetManager* assetManager, int length)
 {
-	AudioManager_create(&assetManager->audioManager);
-	
 	assetManager->arraySound = malloc(sizeof(Sound) * length); // AssetManager.arraySound allocate
 	assetManager->mapSound = ecs_map_new(Sound*, length); // AssetManager.mapSound allocate
 	assetManager->lengthSound = length;
@@ -231,8 +233,6 @@ void AssetManager_AddSounds(AssetManager* assetManager, int length, ...)
 
 void AssetManager_InitFont(AssetManager* assetManager, int length)
 {
-	AudioManager_create(&assetManager->audioManager);
-	
 	assetManager->arrayFont = malloc(sizeof(Font) * length); // AssetManager.arrayFont allocate
 	assetManager->mapFont = ecs_map_new(Font*, length); // AssetManager.mapFont allocate
 	assetManager->lengthFont = length;

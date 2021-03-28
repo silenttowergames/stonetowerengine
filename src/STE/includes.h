@@ -124,6 +124,7 @@
 #include "Utilities/colorFunctions.c"
 #include "Utilities/float2d.h"
 #include "Utilities/float4d.h"
+#include "Utilities/HashTable.c"
 #include "Utilities/int2d.h"
 #include "Utilities/quad.h"
 #include "Utilities/quadFunctions.c"

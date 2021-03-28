@@ -4,6 +4,7 @@
 #include "../Application/ApplicationState.h"
 
 void AudioManager_create(AudioManager* audioManager);
+void AudioManager_Free(AudioManager* audioManager);
 void AudioManager_addSounds(AudioManager* audioManager, Sound* sounds, int soundsCount);
 void AudioManager_update(ApplicationState* app);
 void AudioManager_focus(AssetManager* assetManager);
