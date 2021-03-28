@@ -25,19 +25,16 @@ void DebugMovableSystem(ecs_iter_t* it)
     
     ecs_iter_t iter = ecs_query_iter(DebugMovableSystemQuery);
     
-    printf("===\n");
     while(ecs_query_next(&iter))
     {
-        printf("%d\n", iter.count);
-        
         Renderable* r = ecs_column(&iter, Renderable, 1);
         Body* b = ecs_column(&iter, Body, 2);
         
         if(dragging == 0 && !camDrag)
         {
-            if(mouse(Down, LEFTCLICK))
+            if(mouse(Pressed, LEFTCLICK))
             {
-                for(int i = iter.count; i >= 0; i--)
+                for(int i = iter.count - 1; i >= 0; i--)
                 {
                     if(!r[i].active || r[i].render != Renderable_Sprite_Render)
                     {
@@ -47,26 +44,19 @@ void DebugMovableSystem(ecs_iter_t* it)
                     pos = Renderable_Sprite_GetPosQuad(&r[i], b[i].position);
                     
                     if(
-                        app->renderState.targets[i].mouse.X < pos.topLeft.X
+                        app->renderState.targets[r[i].renderTargetID].mouse.X < pos.topLeft.X
                         ||
-                        app->renderState.targets[i].mouse.X > pos.bottomRight.X
+                        app->renderState.targets[r[i].renderTargetID].mouse.X > pos.bottomRight.X
                         ||
-                        app->renderState.targets[i].mouse.Y < pos.bottomLeft.Y
+                        app->renderState.targets[r[i].renderTargetID].mouse.Y < pos.bottomLeft.Y
                         ||
-                        app->renderState.targets[i].mouse.Y > pos.topRight.Y
+                        app->renderState.targets[r[i].renderTargetID].mouse.Y > pos.topRight.Y
                     )
                     {
-                        // FIXME: Why is this happening on NPCs from init2Scene callable? Not Players though
-                        if(iter.count == 576)
-                        {
-                            printf("c\n");
-                        }
-                        
                         continue;
                     }
                     
                     dragging = iter.entities[i];
-                    printf("Dragging: %" PRIu64 "\n", dragging);
                     
                     diff = app->inputManager.mouseState.position;
                     diff.X -= b[i].position.X;
