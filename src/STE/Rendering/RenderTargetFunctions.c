@@ -62,7 +62,7 @@ RenderTarget RenderTarget_Refresh(ApplicationState* app, RenderTarget* renderTar
 	return ret;
 }
 
-void RenderTarget_Start(ApplicationState* app, int renderTargetID)
+MOJOSHADER_effectStateChanges RenderTarget_Start(ApplicationState* app, int renderTargetID)
 {
 	// Sort out which RenderTarget we're using
 	
@@ -185,7 +185,8 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 	FNA3D_ApplyEffect(app->renderState.device, app->renderState.shaderSpriteEffect.effect, 0, &stateChanges);
 	
 	// Then, the optional shaders
-	// TODO: Swap back & forth between shaders here!
+	// TODO: More permanent solution for swapping back & forth between shaders
+	/*
 	if(renderTarget != NULL)
 	{
 		Shader* shader = NULL;
@@ -204,6 +205,9 @@ void RenderTarget_Start(ApplicationState* app, int renderTargetID)
 			}
 		}
 	}
+	//*/
+	
+	return stateChanges;
 }
 
 void RenderTarget_Stop(ApplicationState* app)

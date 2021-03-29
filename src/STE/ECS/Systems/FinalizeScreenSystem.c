@@ -51,6 +51,62 @@ static void FinalizeScreenSystem_ToMainRT(ApplicationState* app)
 	}
 	
 	RenderTarget_Stop(app);
+	
+	// Main RT shaders
+	
+	Texture swap;
+	MOJOSHADER_effectStateChanges stateChanges;
+	Shader* shader = NULL;
+	for(int i = 0; i < app->renderState.mainRenderTarget.shadersCount; i++)
+	{
+		swap = app->renderState.mainRenderTarget.backupTexture;
+		app->renderState.mainRenderTarget.backupTexture = app->renderState.mainRenderTarget.texture;
+		app->renderState.mainRenderTarget.texture = swap;
+		app->renderState.mainRenderTarget.binding.texture = swap.asset;
+		
+		stateChanges = RenderTarget_Start(app, RENDERTARGET_MAIN);
+		
+		shader = app->renderState.mainRenderTarget.shaders[i];
+		
+		if(shader->update != NULL)
+		{
+			shader->update(app, &app->renderState.mainRenderTarget, shader);
+		}
+		
+		if(!shader->disabled)
+		{
+			FNA3D_ApplyEffect(app->renderState.device, shader->effect, 0, &stateChanges);
+		}
+		
+		int2d size = (int2d){
+			app->renderState.mainRenderTarget.drawResolution.X / 2,
+			app->renderState.mainRenderTarget.drawResolution.Y / 2,
+		};
+		quad pos = (quad){
+			{ -size.X + app->renderState.mainRenderTarget.position.X, -size.Y + app->renderState.mainRenderTarget.position.Y, },
+			{ size.X + app->renderState.mainRenderTarget.position.X, -size.Y + app->renderState.mainRenderTarget.position.Y, },
+			{ -size.X + app->renderState.mainRenderTarget.position.X, size.Y + app->renderState.mainRenderTarget.position.Y, },
+			{ size.X + app->renderState.mainRenderTarget.position.X, size.Y + app->renderState.mainRenderTarget.position.Y, },
+		};
+		quad src = (quad){
+			{ 0, 0, },
+			{ 1, 0, },
+			{ 0, 1, },
+			{ 1, 1, },
+		};
+		
+		SpriteBatch_AddQuad(
+			app,
+			&app->renderState.spriteBatch,
+			&app->renderState.camera,
+			app->renderState.mainRenderTarget.backupTexture.asset,
+			pos,
+			src,
+			0xFFFFFFFF
+		);
+		
+		RenderTarget_Stop(app);
+	}
 }
 
 static void FinalizeScreenSystem_ToWindow(ApplicationState* app)

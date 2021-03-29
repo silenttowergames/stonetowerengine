@@ -55,11 +55,11 @@ walls Hitbox_GetWalls(Hitbox* hitbox, float2d position)
     sUnit.X = hitbox->size.X / 2;
     sUnit.Y = hitbox->size.Y / 2;
     
-    h.top = position.Y + hitbox->offset.Y - (hitbox->size.X / 2);
-    h.bottom = h.top + hitbox->size.X;
+    h.top = position.Y + hitbox->offset.Y - (hitbox->size.Y / 2);
+    h.bottom = h.top + hitbox->size.Y;
     
-    h.left = position.X + hitbox->offset.X - (hitbox->size.Y / 2);
-    h.right = h.left + hitbox->size.Y;
+    h.left = position.X + hitbox->offset.X - (hitbox->size.X / 2);
+    h.right = h.left + hitbox->size.X;
     
     return h;
 }
