@@ -50,7 +50,7 @@ typedef struct Renderable
 	true,\
 }
 
-#define RenderableText(fontName, size, layer, depth, parallax, color, renTarID, string) \
+#define RenderableText(fontName, size, layer, depth, parallax, color, renTarID, string, active) \
 {\
 	NULL,\
 	{ 0, 0, },\
@@ -68,5 +68,5 @@ typedef struct Renderable
 	NULL,\
 	0,\
 	renTarID,\
-	true,\
+	active,\
 }

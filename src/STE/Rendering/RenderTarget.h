@@ -22,4 +22,5 @@ typedef struct RenderTarget
 	float2d mouse;
 	bool hovered;
 	int2d drawResolution;
+	Texture backupTexture;
 } RenderTarget;

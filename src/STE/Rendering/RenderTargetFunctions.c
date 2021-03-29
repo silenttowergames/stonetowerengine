@@ -22,6 +22,11 @@ RenderTarget RenderTarget_Create(ApplicationState* app, int2d resolution, int2d 
 	renderTarget.texture.tilesize.X = size.X;
 	renderTarget.texture.tilesize.Y = size.Y;
 	
+	// FIXME: This should only be used if there's shaders
+	renderTarget.backupTexture = Texture_NewBlank(app->renderState.device, size.X, size.Y, 4, true); // RenderTarget.backupTexture allocate
+	renderTarget.backupTexture.tilesize.X = size.X;
+	renderTarget.backupTexture.tilesize.Y = size.Y;
+	
 	renderTarget.binding.type = FNA3D_RENDERTARGET_TYPE_2D;
 	renderTarget.binding.texture = renderTarget.texture.asset;
 	
@@ -208,16 +213,59 @@ void RenderTarget_Stop(ApplicationState* app)
 		return;
 	}
 	
+	int oldRTID = app->renderState.currentRenderTargetID;
 	app->renderState.currentRenderTargetID = RENDERTARGET_CLOSED;
 	
 	SpriteBatch_Flush(&app->renderState);
 	
 	SpriteBatch_End(&app->renderState.spriteBatch);
+	
+	/*
+	RenderTarget* renderTarget = NULL;
+	
+	if(oldRTID >= 0)
+	{
+		renderTarget = &app->renderState.targets[oldRTID];
+	}
+	else if(oldRTID == RENDERTARGET_MAIN)
+	{
+		renderTarget = &app->renderState.mainRenderTarget;
+	}
+	else
+	{
+		return;
+	}
+	
+	Shader* shader = NULL;
+	for(int i = 0; i < renderTarget->shadersCount; i++)
+	{
+		shader = renderTarget->shaders[i];
+		
+		if(shader->update != NULL)
+		{
+			shader->update(app, renderTarget, shader);
+		}
+		
+		if(!shader->disabled)
+		{
+			FNA3D_ApplyEffect(app->renderState.device, shader->effect, 0, &stateChanges);
+		}
+	}
+	
+	SpriteBatch_Flush(&app->renderState);
+	
+	SpriteBatch_End(&app->renderState.spriteBatch);
+	//*/
 }
 
 void RenderTarget_Destroy(RenderTarget* renderTarget, FNA3D_Device* device)
 {
 	FNA3D_AddDisposeTexture(device, renderTarget->binding.texture); // RenderTarget.texture free
+	
+	if(renderTarget->backupTexture.asset != NULL)
+	{
+		FNA3D_AddDisposeTexture(device, renderTarget->backupTexture.asset); // Rendertarget.backupTexture free
+	}
 	
 	free(renderTarget->shaders); // RenderTarget.shaders free
 }

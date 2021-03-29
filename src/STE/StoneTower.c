@@ -1,14 +1,12 @@
 #include "StoneTower.h"
 
-// NOW
-// FIXME: Fix vsync, or just totally disable it
-// TODO: Keybinding example?
-// TODO: Hide pause menu before first draw
-
 // FINALIZE
 // TODO: Clean up code
 
 // LATER
+// TODO: Broad phase in AABB
+// FIXME: Fix vsync, or just totally disable it
+// TODO: Keybinding example?
 // TODO: Get controller type, for displaying correct button
 // TODO: Save state, including gameData
 // TODO: Console cursor navigation: arrow left, arrow right, Home, End?
