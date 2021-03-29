@@ -1,7 +1,7 @@
 #pragma once
 
 #ifndef STE_VERSION
-#define STE_VERSION "v1.0.0 alpha"
+#define STE_VERSION "v0.9.0"
 #endif
 
 #ifndef STE_DEBUG
