@@ -56,6 +56,8 @@ static void BasicAABBSystem_GetAllEntities()
         
         for(int i = 0; i < iter.count; i++)
         {
+            body[i].initialVelocity = body[i].velocity;
+            
             aabbItems[entitiesCount] = (BasicAABBItem){
                 .entity = iter.entities[i],
                 .basicAABB = &basicAABB[i],
@@ -248,10 +250,12 @@ static void BasicAABBSystem_Phase_Narrow()
                 if(!isY)
                 {
                     aabbItems[e0].body->position.X += aabbItems[e0].body->velocity.X;
+                    aabbItems[e0].body->effectiveVelocity.X = aabbItems[e0].body->velocity.X;
                 }
                 else
                 {
                     aabbItems[e0].body->position.Y += aabbItems[e0].body->velocity.Y;
+                    aabbItems[e0].body->effectiveVelocity.Y = aabbItems[e0].body->velocity.Y;
                 }
             }
         }
