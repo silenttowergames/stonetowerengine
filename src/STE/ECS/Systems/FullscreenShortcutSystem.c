@@ -14,7 +14,7 @@ void FullscreenShortcutSystem(ecs_iter_t* it)
 	{
 		if(app->config.fullscreen)
 		{
-			Config_Resize(app, 1280, 720, false);
+			Config_Resize(app, app->config.windowedSize.X, app->config.windowedSize.Y, false);
 		}
 		else
 		{
