@@ -113,10 +113,10 @@ void Renderable_Tilemap_Render(ApplicationState* app, SpriteBatch* spriteBatch, 
 	int tile;
 	int2d frame;
 	
-	int Left = ((camera->position.X - (camera->resolution.X / 2)) / renderable->texture->tilesize.X) + 1;
-	int Top = ((camera->position.Y - (camera->resolution.Y / 2)) / renderable->texture->tilesize.Y) + 1;
-	int Right = ((camera->position.X + (camera->resolution.X / 2)) / renderable->texture->tilesize.X) + 2;
-	int Bottom = ((camera->position.Y + (camera->resolution.Y / 2)) / renderable->texture->tilesize.Y) + 2;
+	int Left = ((camera->position.X - position.X - (camera->resolution.X / 2)) / renderable->texture->tilesize.X) + 1;
+	int Top = ((camera->position.Y - position.Y - (camera->resolution.Y / 2)) / renderable->texture->tilesize.Y) + 1;
+	int Right = ((camera->position.X - position.X + (camera->resolution.X / 2)) / renderable->texture->tilesize.X) + 2;
+	int Bottom = ((camera->position.Y - position.Y + (camera->resolution.Y / 2)) / renderable->texture->tilesize.Y) + 2;
 	
 	for(int Y = fmax(0, Top); Y < Bottom; Y++)
 	{
