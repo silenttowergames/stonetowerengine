@@ -38,8 +38,9 @@ void MouseState_Update(ApplicationState* app, MouseState* mouseState)
     
     for(int i = 0; i < app->renderState.targetsCount; i++)
     {
+        // FIXME: If drawResolution is stretched, mouseX is off
         app->renderState.targets[i].mouse = app->inputManager.mouseState.position;
-        app->renderState.targets[i].mouse.X -= (app->renderState.targets[i].camera.resolution.X / 2) - app->renderState.targets[i].camera.position.X;
+        app->renderState.targets[i].mouse.X -= ((app->renderState.targets[i].camera.resolution.X) / 2) - app->renderState.targets[i].camera.position.X;
         app->renderState.targets[i].mouse.Y -= (app->renderState.targets[i].camera.resolution.Y / 2) - app->renderState.targets[i].camera.position.Y;
         
         app->renderState.targets[i].hovered = (
