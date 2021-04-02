@@ -159,3 +159,27 @@ void Renderable_Tilemap_Render(ApplicationState* app, SpriteBatch* spriteBatch, 
 		}
 	}
 }
+
+void Renderable_Box_Render(ApplicationState* app, SpriteBatch* spriteBatch, Camera* camera, void* _renderable, float2d position)
+{
+	Renderable* renderable = (Renderable*)_renderable;
+	
+	float2d _position = position;
+	_position.X += (camera->position.X) - renderable->offset.X;
+	_position.Y += (camera->position.Y) - renderable->offset.Y;
+	
+	quad pos = {
+        { _position.X - (renderable->scale.X / 2), _position.Y - (renderable->scale.Y / 2), },
+        { _position.X + (renderable->scale.X / 2), _position.Y - (renderable->scale.Y / 2), },
+        { _position.X - (renderable->scale.X / 2), _position.Y + (renderable->scale.Y / 2), },
+        { _position.X + (renderable->scale.X / 2), _position.Y + (renderable->scale.Y / 2), },
+    };
+	quad src = {
+        { 0, 0, },
+        { 1, 0, },
+        { 0, 1, },
+        { 1, 1, },
+    };
+    
+	SpriteBatch_AddQuad(app, spriteBatch, camera, app->renderState.blankTexture.asset, pos, src, renderable->color);
+}
