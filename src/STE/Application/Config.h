@@ -16,4 +16,4 @@ typedef struct Config
     float volumeMusic;
 } Config;
 
-#define configDefault(c, w, h, lang, _debug) Config c; memset(&c, 0, sizeof(Config)); c.windowedSize.X = w; c.windowedSize.Y = h; c.fullscreen = false; c.language = malloc(sizeof(char) * (strlen(lang) + 1)); strcpy(c.language, lang); c.vsync = false; c.debug = _debug; c.volumeMaster = 1.0f; c.volumeSFX = 0.5f; c.volumeMusic = 0.5f;
+#define configDefault(c, w, h, lang, _debug) Config c; memset(&c, 0, sizeof(Config)); c.windowedSize.X = w; c.windowedSize.Y = h; c.fullscreen = false; c.language = malloc(sizeof(char) * (strlen(lang) + 1)); strcpy(c.language, lang); c.vsync = false; c.debug = _debug; c.volumeMaster = 1.0f; c.volumeSFX = 0.8f; c.volumeMusic = 0.8f;
