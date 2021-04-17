@@ -4,6 +4,8 @@
 // TODO: Clean up code
 
 // LATER
+// FIXME: Large images drawing incorrectly?
+// FIXME: Dragging with RT stretching doesn't work perfectly
 // TODO: Broad phase in AABB
 // FIXME: Fix vsync, or just totally disable it
 // TODO: Keybinding example?
