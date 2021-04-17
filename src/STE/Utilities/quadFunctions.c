@@ -59,6 +59,8 @@ bool quad_Intersects(float ALeft, float ARight, float ATop, float ABottom, float
 		!(ARight >= BLeft && ALeft <= BLeft)
 		&&
 		!(ARight >= BRight && ALeft <= BRight)
+		&&
+		!(ARight <= BRight && ALeft >= BLeft)
 	)
 	{
 		return false;
@@ -70,6 +72,8 @@ bool quad_Intersects(float ALeft, float ARight, float ATop, float ABottom, float
 		!(ABottom >= BTop && ATop <= BTop)
 		&&
 		!(ABottom >= BBottom && ATop <= BBottom)
+		&&
+		!(ABottom <= BTop && ATop >= BBottom)
 	)
 	{
 		return false;
