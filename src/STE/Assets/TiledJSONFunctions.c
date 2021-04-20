@@ -61,7 +61,16 @@ TiledJSON TiledJSON_Load(ApplicationState* app, const char* key)
         json_object_object_get_ex(obj, "name", &objEx);
         
         const char* texture = json_object_get_string(objEx);
-        tiled.texture = *mapGet(app->assetManager.mapTexture, texture, Texture*);
+        Texture** _texture = mapGet(app->assetManager.mapTexture, texture, Texture*);
+        
+        if(_texture == NULL)
+        {
+            Logger_Log(&app->logger, "Texture Not Found", texture);
+        }
+        
+        assert(_texture != NULL);
+        
+        tiled.texture = *_texture;
         
         assert(tiled.texture != NULL);
         
