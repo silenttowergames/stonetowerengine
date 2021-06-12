@@ -125,7 +125,7 @@ void RenderState_Resize(ApplicationState* app, int sizeX, int sizeY)
 {
 	if(app->renderState.window == NULL)
 	{
-		app->renderState.window = SDL_CreateWindow(app->renderState.windowTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, sizeX, sizeY, FNA3D_PrepareWindowAttributes()); // RenderState.window allocate
+		app->renderState.window = SDL_CreateWindow(app->renderState.windowTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, sizeX, sizeY, FNA3D_PrepareWindowAttributes() | SDL_WINDOW_ALLOW_HIGHDPI); // RenderState.window allocate
 		
 		app->renderState.camera = Camera_Create(app->renderState.resolution.X, app->renderState.resolution.Y);
 	}
