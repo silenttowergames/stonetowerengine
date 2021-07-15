@@ -71,6 +71,9 @@
         "asepritejsonfunctions.h": "c",
         "gamepadstatefunctions.h": "c",
         "hashtable.h": "c",
-        "basicaabb.h": "c"
+        "basicaabb.h": "c",
+        "hitboxfunctions.h": "c",
+        "gamedata.h": "c",
+        "menuitemfunctions.h": "c"
     }
 }
