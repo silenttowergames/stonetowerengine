@@ -92,9 +92,6 @@ void ApplicationState_Create(
     printf("FontStash texture size: %dx%d\n", fsW, fsH);
     app->fons = FontStashFNA3D_Create(app, fsW, fsH, FONS_ZERO_TOPLEFT);
     
-    // Load window icon
-    ApplicationState_SetWindowIcon(app, "test.bmp");
-    
     app->averageFPS = (float)app->FPS;
 }
 
@@ -219,7 +216,18 @@ void ApplicationState_Loop(ApplicationState* app)
             }
             else
             {
-                while(accumulator > FPSrealMS)
+                // TODO: Sleeping for 1ms to avoid burning the CPU
+                // Copying this method from the FNA C# game_loop_timing branch that cosmonaut made
+                // https://github.com/FNA-XNA/FNA/tree/game_loop_timing
+                // Sleep for 1ms. Cache the worst sleep accuracy so far. Don't burn the CPU until it's off by less than the worst ms so far
+                /*
+                while(accumulator < FPSrealMS)
+                {
+                    //sleep(1);
+                }
+                */
+                
+                while(accumulator >= FPSrealMS)
                 {
                     ApplicationState_Loop_Frame(
                         app,
