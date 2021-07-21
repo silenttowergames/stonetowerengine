@@ -9,6 +9,10 @@ void MenuSystem(ecs_iter_t* it)
 {
     fctx();
     
+    // FIXME: MenuSystem is completely broken with Flecs update
+    
+    return;
+    
     Menu* menu = ecs_column(it, Menu, 1);
     MenuItem* menuItem;
     Renderable* renderable;
