@@ -1,9 +1,12 @@
+#include "../../Application/ApplicationStateFunctions.h"
 #include "PauseMenuSystem.h"
 #include "../Components/Menu.h"
 #include "../Components/PauseMenu.h"
 
 void PauseMenuSystem(ecs_iter_t* it)
 {
+    fctx();
+    
     Menu* menu = ecs_column(it, Menu, 1);
     PauseMenu* pauseMenu = ecs_column(it, PauseMenu, 2);
     

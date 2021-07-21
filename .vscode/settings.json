@@ -74,6 +74,9 @@
         "basicaabb.h": "c",
         "hitboxfunctions.h": "c",
         "gamedata.h": "c",
-        "menuitemfunctions.h": "c"
+        "menuitemfunctions.h": "c",
+        "loggerfunctions.h": "c",
+        "flecs.h": "c",
+        "os_api.h": "c"
     }
 }
