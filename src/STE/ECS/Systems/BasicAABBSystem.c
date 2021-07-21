@@ -29,8 +29,11 @@ static void BasicAABBSystem_FindSolidMapLayer()
             return;
         }
         
-        tileMapSolid = &ecs_column(&iter, Renderable, 2)[0];
-        tileMapSolidBody = &ecs_column(&iter, Body, 3)[0];
+        Renderable* tileMapSolids = ecs_column(&iter, Renderable, 2);
+        Body* tileMapSolidBodies = ecs_column(&iter, Body, 3);
+        
+        tileMapSolid = &tileMapSolids[0];
+        tileMapSolidBody = &tileMapSolidBodies[0];
         
         break;
     }
