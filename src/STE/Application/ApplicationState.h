@@ -45,4 +45,5 @@ typedef struct ApplicationState
     char* flecsSceneCurrent;
     bool movable;
     float averageFPS;
+    bool showFPS;
 } ApplicationState;

@@ -262,3 +262,8 @@ void cmdWebsite(ApplicationState* app, int argc, char** argv)
     
     SDL_OpenURL(argv[0]);
 }
+
+void cmdShowFPS(ApplicationState* app, int argc, char** argv)
+{
+    app->showFPS = !app->showFPS;
+}

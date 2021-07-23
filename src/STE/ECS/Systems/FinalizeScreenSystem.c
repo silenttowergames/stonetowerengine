@@ -8,6 +8,8 @@
 #include "../../Utilities/float4d.h"
 #include "../../Utilities/quadFunctions.h"
 
+static char FinalizeScreenSystem_UI_FPS[14];
+
 static void FinalizeScreenSystem_ToMainRT(ApplicationState* app)
 {
 	RenderTarget_Start(app, RENDERTARGET_MAIN);
@@ -161,6 +163,9 @@ static void FinalizeScreenSystem_ToWindow(ApplicationState* app)
 
 static void FinalizeScreenSystem_UI(ApplicationState* app)
 {
+	fonsSetFont(app->fons, (*mapGet(app->assetManager.mapFont, "PressStart2P/PressStart2P.ttf", Font*))->fonsID);
+	fonsSetColor(app->fons, colorU(255, 255, 255, 255));
+	
 	if(app->console.active)
 	{
 		quad qPos = {
@@ -197,10 +202,22 @@ static void FinalizeScreenSystem_UI(ApplicationState* app)
 			colorU(255, 255, 255, 255)
 		);
 		
-		fonsSetFont(app->fons, (*mapGet(app->assetManager.mapFont, "PressStart2P/PressStart2P.ttf", Font*))->fonsID);
 		fonsSetSize(app->fons, 8.0f);
-		fonsSetColor(app->fons, colorU(255, 255, 255, 255));
 		fonsDrawText(app->fons, -((app->renderState.resolution.X / 2) * app->renderState.windowZoom.X) + 2, -((app->renderState.resolution.Y / 2) * app->renderState.windowZoom.Y) + 10, app->console.line, NULL);
+	}
+	
+	// Render FPS
+	if(app->showFPS)
+	{
+		sprintf(FinalizeScreenSystem_UI_FPS, "%1.5f FPS", app->averageFPS);
+		fonsSetSize(app->fons, 16.0f);
+		fonsDrawText(
+			app->fons,
+			-((app->renderState.resolution.X / 2) * app->renderState.windowZoom.X) + 2,
+			((app->renderState.resolution.Y / 2) * app->renderState.windowZoom.Y),
+			FinalizeScreenSystem_UI_FPS,
+			NULL
+		);
 	}
 }
 

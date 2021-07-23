@@ -93,6 +93,8 @@ void ApplicationState_Create(
     app->fons = FontStashFNA3D_Create(app, fsW, fsH, FONS_ZERO_TOPLEFT);
     
     app->averageFPS = (float)app->FPS;
+    
+    app->showFPS = false;
 }
 
 static void ApplicationState_Loop_Frame(
@@ -159,6 +161,7 @@ static void ApplicationState_Loop_FPSCounter(ApplicationState* app, float* fFPS,
 
 void ApplicationState_Loop(ApplicationState* app)
 {
+    // FIXME: FPS counter seems broken, like it doesn't count slowdowns properly. Loop seems okay, but eh
     const Uint64 freq = SDL_GetPerformanceFrequency();
     
     int64_t accumulator = 0;
