@@ -1,6 +1,6 @@
 #include "MenuFunctions.h"
 
-int Menu_MenuUpdate_Basic(ApplicationState* app, int itemCount, int itemSelected)
+int Menu_MenuUpdate_Basic(ApplicationState* app, ecs_world_t* world, int itemCount, int itemSelected)
 {
     if(keys(Held, DOWN))
     {
@@ -22,12 +22,12 @@ int Menu_MenuUpdate_Basic(ApplicationState* app, int itemCount, int itemSelected
     return itemSelected;
 }
 
-void Menu_ItemUpdate_Basic(ApplicationState* app, ecs_entity_t menuID, ecs_entity_t itemID, Renderable* renderable, int itemCount, int itemSelected, int itemIndex)
+void Menu_ItemUpdate_Basic(ApplicationState* app, ecs_world_t* world, ecs_entity_t menuID, ecs_entity_t itemID, Renderable* renderable, int itemCount, int itemSelected, int itemIndex)
 {
     bool out;
-    Body* body = ecs_get_mut(app->world, itemID, Body, &out);
+    Body* body = ecs_get_mut(world, itemID, Body, &out);
     
-    const Body* mBody = ecs_get(app->world, menuID, Body);
+    const Body* mBody = ecs_get(world, menuID, Body);
     
     uint64_t c;
     

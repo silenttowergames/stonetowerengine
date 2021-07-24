@@ -11,8 +11,6 @@ void MenuSystem(ecs_iter_t* it)
     
     // FIXME: MenuSystem is completely broken with Flecs update
     
-    return;
-    
     Menu* menu = ecs_column(it, Menu, 1);
     MenuItem* menuItem;
     Renderable* renderable;
@@ -26,7 +24,7 @@ void MenuSystem(ecs_iter_t* it)
         
         if(menu[i].active && menu[i].menuUpdate != NULL)
         {
-            menu[i].itemSelected = menu[i].menuUpdate(app, menu[i].itemCount, menu[i].itemSelected);
+            menu[i].itemSelected = menu[i].menuUpdate(app, it->world, menu[i].itemCount, menu[i].itemSelected);
         }
         
         for(int j = 0; j < menu[i].itemCount; j++)
@@ -40,19 +38,19 @@ void MenuSystem(ecs_iter_t* it)
             {
                 if(menu[i].itemUpdate != NULL)
                 {
-                    menu[i].itemUpdate(app, it->entities[i], menu[i].items[j], renderable, menu[i].itemCount, menu[i].itemSelected, j);
+                    menu[i].itemUpdate(app, it->world, it->entities[i], menu[i].items[j], renderable, menu[i].itemCount, menu[i].itemSelected, j);
                 }
                 
                 if(menu[i].itemSelected == j)
                 {
                     if(menuItem->hovering != NULL)
                     {
-                        menuItem->hovering(app, menu[i].items[j], menu);
+                        menuItem->hovering(app, it->world, menu[i].items[j], menu);
                     }
                     
                     if(menuItem->select != NULL && keys(Pressed, RETURN))
                     {
-                        menuItem->select(app, menu[i].items[j], menu);
+                        menuItem->select(app, it->world, menu[i].items[j], menu);
                     }
                 }
             }

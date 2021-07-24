@@ -2,9 +2,9 @@
 
 #include "Menu.h"
 
-int Menu_MenuUpdate_Basic(ApplicationState* app, int itemCount, int itemSelected);
+int Menu_MenuUpdate_Basic(ApplicationState* app, ecs_world_t* world, int itemCount, int itemSelected);
 
-void Menu_ItemUpdate_Basic(ApplicationState* app, ecs_entity_t menuID, ecs_entity_t itemID, Renderable* renderable, int itemCount, int itemSelected, int itemIndex);
+void Menu_ItemUpdate_Basic(ApplicationState* app, ecs_world_t* world, ecs_entity_t menuID, ecs_entity_t itemID, Renderable* renderable, int itemCount, int itemSelected, int itemIndex);
 
 #define menuEasy(itemVarName, itemCountVarName, menuEntityID, count, eventItem, eventMenu, active) \
     int itemCountVarName = 0; \
