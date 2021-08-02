@@ -39,13 +39,13 @@ void MenuSystem(ecs_iter_t* it)
                     menu[i].itemUpdate(app, it->world, it->entities[i], menu[i].items[j], renderable, menu[i].itemCount, menu[i].itemSelected, j);
                 }
                 
+                if(menuItem->hovering != NULL)
+                {
+                    menuItem->hovering(app, it->world, menu[i].items[j], menu, menu[i].itemSelected == j);
+                }
+                
                 if(menu[i].itemSelected == j)
                 {
-                    if(menuItem->hovering != NULL)
-                    {
-                        menuItem->hovering(app, it->world, menu[i].items[j], menu);
-                    }
-                    
                     if(menuItem->select != NULL && keys(Pressed, RETURN))
                     {
                         menuItem->select(app, it->world, menu[i].items[j], menu);

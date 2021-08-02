@@ -28,6 +28,8 @@ void AudioManager_addSounds(AudioManager* audioManager, Sound* sounds, int sound
 
 void AudioManager_update(ApplicationState* app)
 {
+    // TODO: Update volume each frame?
+    
     for(int i = 0; i < app->assetManager.audioManager.soundsCount; i++)
     {
         for(int j = 0; j < sizeof(app->assetManager.audioManager.sounds[i].instances) / sizeof(SoundInstance); j++)
