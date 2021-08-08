@@ -81,11 +81,6 @@ GamepadState GamepadState_Create(int index)
     gamepadState.product = SDL_JoystickGetProduct(gamepadState.joystick);
     gamepadState.guid = SDL_JoystickGetGUID(gamepadState.joystick);
     
-    if(gamepadState.name != NULL)
-    {
-        printf("Connected: `%s` (%dx%d)\n", gamepadState.name, SDL_JoystickGetVendor(gamepadState.joystick), SDL_JoystickGetProduct(gamepadState.joystick));
-    }
-    
 	gamepadState.controller = SDL_GameControllerOpen(index); // GamepadState.controller allocate
     
     gamepadState.haptic = SDL_HapticOpenFromJoystick(gamepadState.joystick); // GamepadState.haptic allocate

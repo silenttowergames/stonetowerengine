@@ -45,7 +45,7 @@ void cmdVolume(ApplicationState* app, int argc, char** argv)
     
     *value = volume;
     
-    printf("M: %f\nS: %f\nM: %f\n", app->config.volumeMaster, app->config.volumeSFX, app->config.volumeMusic);
+    printf("Volumes:\nMaster: %f\nSFX: %f\nMusic: %f\n", app->config.volumeMaster, app->config.volumeSFX, app->config.volumeMusic);
 }
 
 void cmdChangeScene(ApplicationState* app, int argc, char** argv)

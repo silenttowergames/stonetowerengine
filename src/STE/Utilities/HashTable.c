@@ -69,7 +69,6 @@ int HashTable_Cell_GetIndex(HashTable* hashTable, int cellIndex, void* entity)
 {
     if(cellIndex >= hashTable->length)
     {
-        printf("fail\n");
         return -1;
     }
     

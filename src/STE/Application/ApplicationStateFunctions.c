@@ -71,13 +71,6 @@ void ApplicationState_Create(
     
     app->config = Config_Load(app);
     
-    printf("%s %s\nStone Tower Engine %s by Silent Tower Games\n", app->gameTitle, app->gameVersion, STE_VERSION);
-    
-    if(app->config.debug)
-    {
-        printf("===\nDEBUG MODE ACTIVE\n===\n");
-    }
-    
     app->assetManager = AssetManager_Create();
 	
 	Rendering_Init(app);
@@ -89,7 +82,6 @@ void ApplicationState_Create(
     ecs_os_set_api_defaults();
     SDL_SetHint(SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS, "0");
     
-    printf("FontStash texture size: %dx%d\n", fsW, fsH);
     app->fons = FontStashFNA3D_Create(app, fsW, fsH, FONS_ZERO_TOPLEFT);
     
     app->averageFPS = (float)app->FPS;
