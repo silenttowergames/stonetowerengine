@@ -165,8 +165,8 @@ void Renderable_Box_Render(ApplicationState* app, SpriteBatch* spriteBatch, Came
 	Renderable* renderable = (Renderable*)_renderable;
 	
 	float2d _position = position;
-	_position.X += (camera->position.X) - renderable->offset.X;
-	_position.Y += (camera->position.Y) - renderable->offset.Y;
+	_position.X += (camera->position.X * (1 - renderable->parallax));
+	_position.Y += (camera->position.Y * (1 - renderable->parallax));
 	
 	quad pos = {
         { _position.X - (renderable->scale.X / 2), _position.Y - (renderable->scale.Y / 2), },

@@ -29,6 +29,27 @@ typedef struct Renderable
 	bool active;
 } Renderable;
 
+#define RenderableBox(width, height, color, layer, depth, parallax, renTarID) \
+{\
+	NULL,\
+	{ 0, 0, },\
+	{ 0, 0, },\
+	{ width, height, },\
+	false,\
+	false,\
+	0.0f,\
+	NULL,\
+	Renderable_Box_Render,\
+	layer,\
+	depth,\
+	parallax,\
+	color,\
+	NULL,\
+	0,\
+	renTarID,\
+	true,\
+}
+
 #define RenderableSprite(tex, frame, layer, depth, parallax, color, renTarID) \
 {\
 	tex,\
